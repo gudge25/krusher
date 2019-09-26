@@ -1,0 +1,383 @@
+
+<div  style="min-height: 520px; " >
+    <div class="nav-tabs-custom card card-info card-outline" style="border: none;">
+        <uib-tabset >
+            <uib-tab index="0" >
+                <uib-tab-heading>
+                    <span> {{'contact' | translate}} </span>  <span class="badge badge-info" > {{contactsL[36].length + contactsL[37].length + contactsL[44].length}} </span>
+                </uib-tab-heading>
+                <div style=" height: 539px; overflow-y: auto; overflow-x: hidden;">
+                    <div  ng-repeat="(key, val) in contactsL | limitTo:limit track by $index" ng-init="x[$index].length = val.length;x[$index].status = manyAction.xCheck(x[$index])" style='padding:3% 0 0 2%'>
+
+                        <div class="row" > <!--  -->
+                            <div class="col-xs-3 col-md-2">
+                                <b ng-show="key == 36">{{'phone' | translate}}</b>
+                                <b ng-show="key == 37">{{'Email' | translate}}</b>
+                                <b ng-show="key == 44">{{'addedPhone' | translate}}</b>
+                                <b ng-show="key == 43">{{'site' | translate}}</b>
+                                <b ng-show="key == 38">{{'Fax' | translate}}</b>
+                                <b ng-show="key == 39">{{'Skype' | translate}}</b>
+                            </div>
+
+                            <div class="col-xs-9  col-md-7">
+                                <div ng-repeat="e in val">
+                                    <nobr>
+                                        <!-- Phones -->
+                                        <div class="row" ng-show="key == 36 || key == 44 || key == 38">
+                                            <div class="col-lg-5">
+                                                <a ng-show="x[$parent.$index].status" style="color:gray;float: left;" ng-hide="call != e.ccName && call">
+                                                    <nobr  ng-hide="call != e.ccName && call && key==36">
+                                                        <!-- <span ng-hide="call != c.ccName && call && key==36" >
+                                                              <i class="fa fa-phone" aria-hidden="true" ng-hide="WS" ></i>
+                                                              <a style="cursor: pointer;" ng-show="c.ccName && WS" ng-click="manyAction.Call(c)"><i class="fa fa-phone" aria-hidden="true" uib-tooltip-html="'Call to phone'" ></i></a>
+                                                              <span style="color: darkgreen" ng-show="key==36"  ng-bind="c.ccName" uib-tooltip="{{c.regName}}"> </span>
+                                                        </span> -->
+                                                        <div ng-hide="call != e.ccName && call && key==36" ng-include="'/Views/DialButton.html'"></div>
+                                                    </nobr>
+
+                                                    <nobr  ng-show="key==37">
+                                                        <i class="fa fa-envelope-o" aria-hidden="true" ></i>
+                                                        <span style="color: darkgreen" ng-bind="e.ccName" uib-tooltip="{{e.regName}}"> </span>
+                                                    </nobr>
+                                                </a>
+                                            </div>
+                                            <div class="col-lg-1">
+                                                <i class="fa fa-flag" ng-show="e.isPrimary" uib-tooltip="{{'mainNumber' | translate}}" ></i>
+                                            </div>
+                                            <div class="col-lg-1">
+                                                 <i class="fa fa-times" ng-hide="e.isActive" uib-tooltip="{{'contactDisabled' | translate}}"></i>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <span style="color:gray;margin-left: 2%;"> {{e.ccStatus | enums}} </span>
+                                            </div>
+                                        </div>
+                                        <!-- Email -->
+                                        <div class="row" ng-show="key == 37">
+                                            <div class="col-lg-5">
+                                                <a ng-show="x[$parent.$index].status" style="color:gray;" ng-hide="call != e.ccName && call">
+                                                    <nobr>
+                                                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                                        <span style="color: darkgreen" ng-bind="e.ccName" uib-tooltip="{{e.regName}}" tooltip-trigger ="mouseenter" tooltip-placement="top"> </span>
+                                                    </nobr>
+                                                </a>
+                                            </div>
+                                            <div class="col-lg-1">
+                                                <i class="fa fa-flag" ng-show="e.isPrimary" uib-tooltip="{{'mainNumber' | translate}}" ></i>
+                                            </div>
+                                            <div class="col-lg-1">
+                                                 <i class="fa fa-times" ng-hide="e.isActive" uib-tooltip="{{'contactDisabled' | translate}}"></i>
+                                            </div>
+                                        </div>
+                                        <!-- Web -->
+                                        <div class="row" ng-show="key == 43">
+                                            <div class="col-lg-5">
+                                                <a ng-show="x[$parent.$index].status" style="color:gray;" ng-hide="call != e.ccName && call">
+                                                    <nobr>
+                                                        <a href="{{e.ccName}}" target="_blank">
+                                                            <i class="fa fa-link" aria-hidden="true"></i>
+                                                        </a>
+                                                        <span style="color: darkgreen" ng-bind="e.ccName" uib-tooltip="{{e.regName}}" tooltip-trigger ="mouseenter" tooltip-placement="top"> </span>
+                                                    </nobr>
+                                                </a>
+                                            </div>
+                                            <div class="col-lg-1">
+                                                <i class="fa fa-flag" ng-show="e.isPrimary" uib-tooltip="{{'mainNumber' | translate}}" ></i>
+                                            </div>
+                                            <div class="col-lg-1">
+                                                 <i class="fa fa-times" ng-hide="e.isActive" uib-tooltip="{{'contactDisabled' | translate}}"></i>
+                                            </div>
+                                        </div>
+                                        <!-- Skype -->
+                                        <div class="row" ng-show="key == 39">
+                                            <div class="col-lg-5">
+                                                <a ng-show="x[$parent.$index].status" style="color:gray;" ng-hide="call != e.ccName && call">
+                                                    <nobr>
+                                                        <i class="fa fa-skype" aria-hidden="true"></i>
+                                                        <span style="color: darkgreen" ng-bind="e.ccName" uib-tooltip="{{e.regName}}" tooltip-trigger ="mouseenter" tooltip-placement="top"> </span>
+                                                    </nobr>
+                                                </a>
+                                            </div>
+                                            <div class="col-lg-1">
+                                                <i class="fa fa-flag" ng-show="e.isPrimary" uib-tooltip="{{'mainNumber' | translate}}" ></i>
+                                            </div>
+                                            <div class="col-lg-1">
+                                                 <i class="fa fa-times" ng-hide="e.isActive" uib-tooltip="{{'contactDisabled' | translate}}"></i>
+                                            </div>
+                                        </div>
+                                    </nobr>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </uib-tab>
+
+            <uib-tab index="1" ng-show="Parents.length > 0">
+                <uib-tab-heading>
+                    <span> {{'connected' | translate}} </span>     <span class="badge badge-info" > {{Parents.length}} </span>
+                </uib-tab-heading>
+                <div style=" height: 519px; overflow-y: auto;">
+                    <table ng-table="table" class="table table-head-fixed table-hover borderless">
+                            <tr>
+                                <th>{{'fullName' | translate}}</th>
+                                <th>{{'contact' | translate}}</th>
+                                <th>{{'position' | translate}}</th>
+                            </tr>
+                            <tr ng-repeat="items in Parents track by $index">
+                                <td>
+                                    <img ng-hide="items.isActive" src="/images/ContactNotActive_Small.png" class="summaryImg">
+                                    <i class="fa fa-user" ng-show="items.IsPerson"      uib-tooltip="{{items.IsPerson | Person}}" tooltip-trigger="mouseenter" tooltip-placement="top"></i>
+                                    <i class="fa fa-building" ng-hide="items.IsPerson"  uib-tooltip="{{items.IsPerson | Person}}" tooltip-trigger="mouseenter" tooltip-placement="top"></i>
+                                    <a ng-href="/#!/clientPreView/{{items.clID}}" ng-bind="items.clName" ></a>
+                                </td>
+                                <td>
+                                    <div ng-repeat="a in items.Contacts" ng-bind="a">  </div>
+                                </td>
+                                <td ng-bind="items.Position | enums"></td>
+                            </tr>
+                    </table>
+                </div>
+            </uib-tab>
+
+            <uib-tab index="2" ng-show="cc_contacts.length > 0">
+                <uib-tab-heading>
+                    <span> {{'callHistory' | translate}}  </span>     <span class="badge badge-info"  title="Количество звонков"> {{client.ccQty}} </span>
+                </uib-tab-heading>
+                <div style=" height: 519px; overflow-y: auto;" can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="100">
+                        <table class="table table-head-fixed table-hover borderless" >
+                            <thead>
+                                <tr>
+                                    <th>{{'phone' | translate}}</th>
+                                    <th>{{'date' | translate}}</th>
+                                    <th>{{'status' | translate}}</th>
+                                    <th>{{'type' | translate}}</th>
+                                    <th>{{'responsible' | translate}}</th>
+                                    <th>{{'source' | translate}}</th>
+                                    <th>{{'recording' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="e in cc_contacts | limitTo:limit track by $index" >
+                                    <td width="1%">  <div ng-include="'/Views/DialButton.html'"></div> </td>
+                                    <td  width="1%">
+                                        <nobr  uib-popover-html="htmlPopover3(e)" popover-trigger="'mouseenter'" >
+                                            <span  class="text-muted" ng-hide="e.isToday" ng-bind="e.Created | date:'MMM d, HH:mm'"> </span>
+                                            <span class="text-muted" ng-show="e.isToday" ng-bind="e.Created | date:'HH:mm'"> </span>
+                                        </nobr>
+                                    </td>
+                                    <td  width="1%">
+                                        <div class="btn-group" ng-show="e.dcStatusName">
+                                            <nobr>
+                                                <button class="btn btn-link btn-xs" style="cursor: default;">
+                                                    <i class="fa fa-arrow-circle-up fa-lg"  ng-show="e.IsOut"    aria-hidden="true" uib-tooltip="{{e.IsOut | CallTypeFilters}}" style="color:grey;"></i>
+                                                    <i class="fa fa-arrow-circle-down fa-lg"  ng-show="!e.IsOut"   aria-hidden="true" uib-tooltip="{{e.IsOut | CallTypeFilters}}" style="color:black;"></i>
+                                                </button>
+
+                                                <span class="badge badge-primary" ng-show="e.transferFrom || e.transferTo" uib-tooltip="{{'transfer' | translate}} {{'from' | translate}} {{e.transferFrom}} {{'to' | translate}} {{e.transferTo}}">{{'t' | translate}}</span>
+
+                                                <button ng-if="e.dcStatusName != 'BLOCKED'" uib-tooltip="{{e.CallType | enums | translate}}" style="cursor: default;" class="btn {{(e.dcStatusName | CallStatus).color}} btn-xs" ng-bind="(e.dcStatusName | CallStatus).disposition"></button>
+                                                <a ng-if="e.dcStatusName == 'BLOCKED'"  uib-tooltip="{{'BLOCKEDdesc'| translate}}" href="//krusher.biz/price/" target="_blank" style="cursor: pointer;" class="btn {{(e.dcStatusName | CallStatus).color}} btn-xs" ng-bind="(e.dcStatusName | CallStatus).disposition"></a>
+                                                <i class="fa fa-comment-dots" uib-popover-html="htmlPopover(e)" popover-trigger="'mouseenter'" ng-show="e.ContactStatus || e.Comment"></i>
+                                                <i  ng-if="e.isMissed && !e.IsOut" class="fa fa-paper-plane text-red" uib-tooltip="{{'missedCall' | translate}}" ></i>
+                                            </nobr>
+                                        </div>
+                                    </td>
+                                    <td width="1%">
+                                            <nobr ng-show="e.CallType"> 
+                                                <span ng-bind="e.CallType | enums | translate" ng-if="e.id_scenario || e.id_autodial" uib-popover-html="htmlPopover2(e)" popover-trigger="'mouseenter'"></span>
+                                                <span ng-bind="e.CallType | enums | translate" ng-if="!e.id_scenario && !e.id_autodial" ></span>
+                                            </nobr>
+                                    </td>
+                                    <td>
+                                        <div uib-dropdown ng-show="e.clID && e.dcStatusName == 'ANSWERED' " uib-tooltip="{{'action'| translate}}">
+                                            <a id="single-button" href="#" ng-click="$event.stopPropagation()" uib-dropdown-toggle  >
+                                                <i class="fa fa-user" ng-show="e.IsPerson"      uib-tooltip="{{e.IsPerson | Person}}" tooltip-placement="left"></i>
+                                                <i class="fa fa-building" ng-hide="e.IsPerson"  uib-tooltip="{{e.IsPerson | Person}}" tooltip-placement="left"></i>
+                                                <span ng-bind="e.clName"></span> <span class="caret"></span>
+                                            </a>
+                                            <div class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
+                                                <a class="dropdown-item" ng-click="$event.stopPropagation()"><create-deal data="{{e}}" ></create-deal></a>
+                                                <a class="dropdown-item" ng-click="$event.stopPropagation()"><create-form data="{{e}}" ></create-form></a>
+                                                <a class="dropdown-item" ng-click="$event.stopPropagation()"><edit-callingcard data="{{e}}" ></edit-callingcard></a>
+                                            </div>
+                                        </div>
+                                        <span  ng-show="e.clID && e.dcStatusName != 'ANSWERED'" uib-tooltip="SIP/{{e.SIP}}">
+                                            <i class="fa fa-user"     ng-show="e.IsPerson"  uib-tooltip="{{e.IsPerson | Person}}" tooltip-placement="left"></i>
+                                            <i class="fa fa-building" ng-hide="e.IsPerson"  uib-tooltip="{{e.IsPerson | Person}}" tooltip-placement="left"></i>
+                                            <span ng-bind="e.clName"></span>
+                                        </span>
+                                        
+                                    </td>
+                                    <td  width="1%"> <span ng-bind="e.channel" uib-tooltip-html="'<span>{{'file'| translate}}:{{e.ffName }}</span>'"></span> </td>
+                                    <td  width="1%"> <audio-player index = {{$index}} source="{{manyAction.MonitorUrl(e.LinkFile)}}" ng-show="e.LinkFile && e.dcStatusName == 'ANSWERED'"> </audio-player> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </uib-tab>
+
+                <uib-tab index="3" ng-show="address.length > 0">
+                    <uib-tab-heading>
+                        <span> {{'address' | translate}}  </span>     <span class="badge badge-info" > {{address.length}} </span>
+                    </uib-tab-heading>
+                    <div style=" height: 519px; overflow-y: auto;">
+                        <table ng-table="table" class="table table-head-fixed table-hover borderless">
+                                <tr>
+                                    <th>{{'address' | translate}}</th>
+                                    <th>{{'index' | translate}}</th>
+                                    <th>{{'type' | translate}}</th>
+                                </tr>
+                                <tr ng-repeat="items in address track by $index">
+                                    <td ng-bind="items.adsName" ></td>
+                                    <td ng-bind="items.Postcode"></td>
+                                    <td style="width: 25%" ng-bind="items.adtID | enums"></td>
+                                </tr>
+                        </table>
+                    </div>
+                </uib-tab>
+
+                <uib-tab index="5" heading="Дубликаты" ng-show="link.length > 0">
+                    <uib-tab-heading>
+                        <span> {{'duplicates' | translate}}  </span>     <span class="badge badge-info" > {{link.length}} </span>
+                    </uib-tab-heading>
+                    <div style=" height: 519px; overflow-y: auto;">
+                        <table ng-table="table" class="table table-head-fixed table-hover borderless">
+                                <tr>
+                                    <th>{{'client' | translate}}</th>
+                                    <th>{{'connected' | translate}}</th>
+                                    <th>{{'duplicateByNumber' | translate}}</th>
+                                    <th>{{'file' | translate}}</th>
+                                </tr>
+                                <tr ng-repeat="a in link track by $index">
+                                    <td><a ui-sref="preView( {'clID': a.clID })" ng-bind="a.clName"></a></td>
+                                    <td ><a ui-sref="preView( {'clID': a.ParentID })" ng-bind="a.ParentName"></a></td>
+                                    <td>
+                                        <span ng-hide="(call != a.ccName && call) || !a.ccName" >
+                                                <i class="fa fa-phone" aria-hidden="true" ng-hide="WS" ></i>
+                                                <a style="cursor: pointer;" ng-click="manyAction.Call(a)" ng-show="WS"><i class="fa fa-phone" aria-hidden="true" uib-tooltip-html="'Call to phone'" ></i></a>
+                                                <span style="color: darkgreen" ng-bind="a.ccName" uib-tooltip="{{a.regName}}"> </span>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <nobr ng-show="a.ffID">
+                                          <i class="fa fa-file"></i> <span ng-bind="a.ffName"> </span>
+                                        </nobr>
+                                    </td>
+                               </tr>
+                       </table>
+                   </div>
+               </uib-tab>
+
+               <uib-tab index="6" heading="Товар" ng-show="Products.length > 0">
+                        <uib-tab-heading>
+                            <span> {{'product' | translate}}  </span>     <span class="badge badge-info" > {{Products.length}} </span>
+                        </uib-tab-heading>
+                        <div style=" height: 519px; overflow-y: auto;">
+                            <table ng-table="table" class="table table-head-fixed table-hover borderless">
+                                    <tr>
+                                        <th style="text-align: center;">{{'product' | translate}} </th>
+                                        <th style="text-align: center;">{{'number' | translate}} </th>
+                                    </tr>
+                                    <tr ng-repeat="a in Products track by $index"  >
+                                        <td style="text-align: center;" class="col-md-4">
+                                            <nobr>
+                                                <i class="fa fa-shopping-cart " style="margin-right: 3%;color:brown;"> </i>
+                                                <select style="background-color: white;border: none;appearance: none;-webkit-appearance: none;-moz-appearance: none;" disabled
+                                                    ng-model    ="a.psID"
+                                                    ng-options  ="c.psID as c.psName for c in product">
+                                                    <option value="">Выберете категорию</option>
+                                                </select>
+                                            </nobr>
+                                        </td>
+                                        <td style="text-align: center;" uib-tooltip="{{'price' | translate}} {{a.cpPrice }}  грн." tooltip-trigger="mouseenter" tooltip-placement="top">
+                                            {{a.cpQty}}
+                                            <span  ng-repeat="b in product" ng-show="a.psID==b.psID">
+                                                {{::b.msName}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                        </table>
+                    </div>
+                </uib-tab>
+
+            <uib-tab index="7" ng-show="deals[2].length > 0">
+                    <uib-tab-heading>
+                        <span> {{'dealStats' | translate}}</span> 
+                    </uib-tab-heading>
+                    <div style=" height: 519px; overflow-y: auto;">
+                        <deal-statistic></deal-statistic>
+                    </div>
+            </uib-tab>
+
+            <uib-tab index="8" heading="Text to speech" ng-show="client.curID || client.langID || client.sum || client.ttsText">
+                        <uib-tab-heading>
+                            <span> {{'TTS' | translate}}  </span>     <span class="badge badge-info" > {{sum}} </span>
+                        </uib-tab-heading>
+                        <div style=" height: 519px; overflow-y: auto;">
+                            <table ng-table="table" class="table table-head-fixed table-hover borderless">
+                                    <tr>
+                                        <th >{{'currencyNew' | translate}} </th>
+                                        <th >{{'languages' | translate}} </th>
+                                        <th >{{'sum' | translate}} </th>
+                                        <th >{{'text' | translate}} </th>
+                                    </tr>
+                                    <tr>
+                                        <td><span ng-bind="client.curID | enums"></span></td>
+                                        <td><span ng-bind="client.langID | enums"></span></td>
+                                        <td><span ng-bind="client.sum"> </span></td>
+                                        <td><span ng-bind="client.ttsText"> </span></td>
+                                    </tr>
+                            </table>
+                    </div>
+            </uib-tab>
+
+            <uib-tab index="9" ng-show="deals[4].length > 0">
+                    <uib-tab-heading>
+                        <span> {{'forms' | translate}}  </span> <span class="badge badge-info" > {{deals[4].length}} </span>
+                    </uib-tab-heading>
+                                <table ng-table="table" class="table table-head-fixed table-hover borderless">
+                                    <tr>
+                                        <th> {{'numberNum' | translate }} {{'forms' | translate}}</th>
+                                        <th >{{'date' | translate}} </th>
+                                        <th >{{'responsible' | translate}} </th>
+                                    </tr>
+                                    <tr  ng-repeat="a in deals[4] track by $index">
+                                        <td>
+                                            <a  ng-href="/#!/form/{{a.dcID}}"> <span ng-bind="a.dcNo"></span></a>
+                                        </td>
+                                        <td><span ng-bind="a.dcDate | date:'MMM d' "></span></td>
+                                        <td><span ng-bind="a.emName"> </span></td>
+                                    </tr>
+                                </table>
+            </uib-tab>
+
+            <uib-tab index="10" ng-show="deals[2].length > 0">
+                    <uib-tab-heading>
+                        <span> {{'deals' | translate}}  </span> <span class="badge badge-info" > {{deals[2].length}} </span>
+                    </uib-tab-heading>
+                                <table ng-table="table" class="table table-head-fixed table-hover borderless">
+                                    <tr>
+                                        <th> {{'named' | translate }} </th>
+                                        <th >{{'date' | translate}} </th>
+                                        <th >{{'responsible' | translate}} </th>
+                                        <th >{{'status' | translate}} </th>
+                                    </tr>
+                                    <tr  ng-repeat="a in deals[2] track by $index">
+                                        <td>
+                                            <a  ng-href="/#!/DealEdit/{{a.dcID}}"> <span ng-bind="a.dcNo"></span></a>
+                                        </td>
+                                        <td><span ng-bind="a.dcDate | date:'MMM d' "></span></td>
+                                        <td><span ng-bind="a.emName"> </span></td>
+                                        <td> 
+                                            <span ng-class="{'badge badge-success' : a.dcStatus === 6002, 'badge badge-warning' : a.dcStatus === 6003 || a.dcStatus === 6006 || a.dcStatus === 6008, 'badge badge-danger' : a.dcStatus === 6010, 'badge badge-info': a.dcStatus === 6001 || a.dcStatus === 6004 || a.dcStatus === 6005 || a.dcStatus === 6007 || a.dcStatus === 6009}"> {{ a.dcStatus | enums | translate }} </span>
+                                        </td>
+                                    </tr>
+                                </table>
+
+            </uib-tab>
+
+    </uib-tabset>
+</div>
+</div>
+

@@ -1,0 +1,65 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"  uib-tooltip="{{'Collapse' | translate}}"><i class="fa fa-minus"></i> </button>
+              </div>
+            </div>
+
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tr>
+                        <td width="40%">{{'names' | translate}}</td>
+                        <td width="60%">
+                            <div class="has-feedback" ng-class="{ 'has-error' : !upd.record_name.length, 'has-success' : upd.record_name }">
+                                <input ng-model="upd.record_name"  class="form-control" ng-change="edit2=true;"
+                                      only-clear ng-maxlength="200" required
+                                />
+                                <span class="glyphicon glyphicon-asterisk form-control-feedback"></span>
+                                <span class="help-block" ng-show="!upd.record_name.length && edit2">{{'typeSIPLeng'| translate}}</span>
+                            </div>    
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>{{'record_name' | translate}}</td>
+                        <td><span ng-bind="upd.record_source" ></td>
+                    </tr>
+                    <tr>
+                        <td>{{'action' | translate}}</td>
+                        <td><audio-player source="{{manyAction.MonitorUrl(upd.record_source,'records')}}" index="{{$index}}"></audio-player></td>
+                    </tr>
+                    <tr>
+                        <td> {{'recommendation' | translate}}!</td>
+                        <td>
+                            <div class="alert alert-success">
+                                <i class="icon fa fa-asterisk"></i> {{'recommendationWav' | translate}}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'active' | translate}}</td>
+                        <td><label><input type="checkbox" cb-switch ng-model="upd.isActive"></label></td>
+                    </tr>
+                    <tr ng-include="'/Views/tableEdit.html'" ng-show="upd.Created"></tr>
+                    <tr ng-include="'/Views/tableEdit2.html'" ng-show="upd.Changed || upd.Changed==0"></tr>
+                </table>
+            </ul>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-8">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-hide="manyAction.Check_upd_old()" ng-disabled="!upd.record_name" ng-click="manyAction.Update(upd,'Record');">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="Record">{{'cancel' | translate}}</button>
+                    </div>
+        </div>
+    </div>
+</section>

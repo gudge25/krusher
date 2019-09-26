@@ -1,0 +1,383 @@
+<section class="content">
+      <div class="row">
+            <div class="col-lg-4">
+                    <!--TAGS-->
+                    <div class="card card-info card-outline">
+                      <div class="card-header with-border">
+                        <h3 class="card-title"><i class="fas fa-edit"></i> {{'queueData' | translate}}</h3>
+          
+                        <div class="card-tools">
+                                  </div>
+                      </div>
+                      <div class="card-body p-0">
+                          <table class="table table-head-fixed table-hover borderless">
+                              <tr>
+                                  <td width="50%">{{'queue' | translate}}</td>
+                                  <td width="50%">
+                                      <div class="has-feedback" ng-class="{ 'has-error' : !new.name.length, 'has-success' : new.name }">
+                                                  <input ng-model="new.name" class="form-control" placeholder="{{'enterTitle' | translate}}" ng-change="edit2=true;" only-clear ng-maxlength="200" required/>                                    
+                                                  <span class="glyphicon glyphicon-asterisk form-control-feedback"></span>
+                                                  <span class="help-block" ng-show="!new.name.length && edit2">{{'typeSIPLeng'| translate}}</span>
+                                      </div>                            
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>{{'strategy' | translate}} &#160  <a class="btn btn-link" ng-click="infoStrategyF();" ><i class="fa fa-question-circle"></i><i ng-show="infoStrategy" class="fa fa-caret-down"></i></a> </td>
+                                  <td>
+                                      <ui-select ng-model="new.strategy" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                                  <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                                                  <ui-select-choices repeat="c.Name as c in Strategy| filter: $select.search" >
+                                                   {{c.Name}}
+                                                  </ui-select-choices>
+                                      </ui-select>
+                                  </td>
+                              </tr>
+                              <tr ng-show="infoStrategy">
+                                  <td colspan="2">
+                                      ringall - <small class="text-muted">{{'ringall' | translate}}</small> <br/>
+                                      leastrecent - <small class="text-muted">{{'leastrecent' | translate}}</small><br/>
+                                      fewestcalls - <small class="text-muted">{{'fewestcalls' | translate}}</small><br/>
+                                      random - <small class="text-muted">{{'random' | translate}}</small><br/>
+                                      rrmemory - <small class="text-muted">{{'rrmemory' | translate}}</small><br/>
+                                      linear - <small class="text-muted">{{'linear' | translate}}</small><br/>
+                                      wrandom - <small class="text-muted">{{'wrandom' | translate}}</small>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>{{'max_wait_time' | translate}}</td>
+                                  <td>
+                                      <div class="input-group">
+                                          <input numeric-only class="form-control" ng-model="new.max_wait_time">
+                                          <span class="input-group-append">
+                                              <button type="button" class="btn btn-default" ng-click="new.max_wait_time=new.max_wait_time+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                              <button type="button" class="btn btn-default" ng-click="new.max_wait_time=new.max_wait_time-1" ng-disabled="new.max_wait_time <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                          </span>
+                                      </div>
+                                  </td>
+                              </tr>
+                              <tr>
+                                      <td>{{'fail_destination' | translate}}</td>
+                                      <td>
+                                          <div class="input-group" style="width: 100%">
+                                              <ui-select ng-model="new.fail_destination" ng-change="new.fail_destdata=null" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                                          <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                                          <ui-select-choices repeat="c.tvID as c in DestType | filter: $select.search"  ui-disable-choice="c.tvID == 101411 || c.tvID == 101406">
+                                                          {{c.Name | translate}}
+                                                          </ui-select-choices>
+                                              </ui-select>
+                                              <span class="input-group-append">
+                                                      <button ng-show="new.fail_destination" type="button" class="btn btn-default" ng-click="new.fail_destination = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                              </span>
+                                          </div>  
+                                      </td>
+                                  </tr>
+                                  <tr ng-show="new.fail_destination"  ng-switch="new.fail_destination" >
+                                      <td>{{'destdata' | translate}}</td>
+                                      <td>
+                                          <div ng-switch-when="101401">
+                                              <ui-select  ng-model="new.fail_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                                      <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.name}}</ui-select-match>
+                                                      <ui-select-choices repeat="a.queID as a in Queues.data | filter: $select.search ">
+                                                          {{a.name}}
+                                                      </ui-select-choices>
+                                              </ui-select>
+                                          </div>
+          
+                                          <div ng-switch-when="101402">
+                                              <ui-select ng-model="new.fail_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                                      <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.emName}}</ui-select-match>
+                                                      <ui-select-choices repeat="a.emID as a in employees.data | filter: $select.search" ui-disable-choice="a.SipNum === null ? true : false;">
+                                                          <b> {{a.emName}} </b> <small ng-show="a.sipName"> SIP/{{a.sipName}} </small>
+                                                      </ui-select-choices>
+                                              </ui-select>
+                                          </div>
+                                          <div ng-switch-when="101403">
+                                              <ui-select ng-model="new.fail_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                                      <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.trName}}</ui-select-match>
+                                                      <ui-select-choices repeat="a.trID as a in Trunk.data | filter: $select.search ">
+                                                          {{a.trName}}
+                                                      </ui-select-choices>
+                                              </ui-select>
+                                          </div>
+                                          <div ng-switch-when="101405">
+                                              <ui-select ng-model="new.fail_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                                      <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.ivr_name}}</ui-select-match>
+                                                      <ui-select-choices repeat="a.id_ivr_config as a in IVR.data | filter: $select.search ">
+                                                          {{a.ivr_name}}
+                                                      </ui-select-choices>
+                                              </ui-select>
+                                          </div>
+          
+                                          <div ng-switch-when="101407">
+                                              <ui-select ng-model="new.fail_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                                      <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.record_name}}</ui-select-match>
+                                                      <ui-select-choices repeat="a.record_id as a in Record.data | filter: $select.search ">
+                                                          {{a.record_name}}
+                                                      </ui-select-choices>
+                                              </ui-select>
+                                          </div>
+          
+                                          <div ng-switch-when="101408" class="input-group" style="width: 100%">
+                                              <ui-select ng-model="new.fail_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                                  <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.cdName}}</ui-select-match>
+                                                  <ui-select-choices repeat="a.cdID as a in CustomDestenation.data | filter: $select.search ">{{a.cdName}}</ui-select-choices>
+                                              </ui-select>
+                                              <span class="input-group-append">
+                                                  <button ng-show="new.fail_destdata" type="button" class="btn btn-default" ng-click="new.fail_destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                              </span>
+                                          </div>
+                                          <div ng-switch-when="101409" class="input-group" style="width: 100%">
+                                              <ui-select ng-model="new.fail_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                                  <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.poolName}}</ui-select-match>
+                                                  <ui-select-choices repeat="a.poolID as a in TrunkPool.data | filter: $select.search ">{{a.poolName}}</ui-select-choices>
+                                              </ui-select>
+                                              <span class="input-group-append">
+                                                  <button ng-show="new.fail_destdata" type="button" class="btn btn-default" ng-click="new.fail_destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                              </span>
+                                          </div>
+                                          <div ng-switch-when="101410" class="input-group" style="width: 100%">
+                                              <ui-select ng-model="new.fail_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                                  <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.tgName}}</ui-select-match>
+                                                  <ui-select-choices repeat="a.tgID as a in TimeGroup.data | filter: $select.search ">{{a.tgName}}</ui-select-choices>
+                                              </ui-select>
+                                              <span class="input-group-append">
+                                                  <button ng-show="new.fail_destdata" type="button" class="btn btn-default" ng-click="new.fail_destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                              </span>
+                                          </div>
+          
+                                      </td>
+                                      <tr ng-show="(new.fail_destination == 101403 || new.fail_destination == 101409)&& new.fail_destdata">
+                                          <td>{{'destdata2' | translate}}</td>
+                                          <td>
+                                              <div class="input-group" style="width: 100%">
+                                                      <input  class="form-control" ng-model="new.fail_destdata2"/>
+                                                      <span class="input-group-append">
+                                                          <button ng-show="new.fail_destdata2" type="button" class="btn btn-default" ng-click="new.fail_destdata2 = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                                      </span>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                  </tr>
+          
+                              <tr>
+                                  <td>{{'timeOut' | translate}}</td>
+                                  <td>
+                                      <div class="input-group">
+                                          <input numeric-only class="form-control" ng-model="new.timeout">
+                                          <span class="input-group-append">
+                                              <button type="button" class="btn btn-default" ng-click="new.timeout=new.timeout+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                              <button type="button" class="btn btn-default" ng-click="new.timeout=new.timeout-1" ng-disabled="new.timeout <= 0" ><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                          </span>
+                                      </div>
+                                  </td>
+                              </tr>
+                              <tr><td>{{'repeat' | translate}}</td>
+                                  <td>
+                                      <div class="input-group">
+                                          <input numeric-only class="form-control" ng-model="new.retry">
+                                          <span class="input-group-append">
+                                              <button type="button" class="btn btn-default" ng-click="new.retry=new.retry+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                              <button type="button" class="btn btn-default" ng-click="new.retry=new.retry-1" ng-disabled="new.retry <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                          </span>
+                                      </div>
+                                  </td>
+                              </tr>
+                              <tr><td>{{'timeoutRetry' | translate}}</td>
+                                  <td>
+                                      <div class="input-group">
+                                          <input numeric-only class="form-control" ng-model="new.timeoutrestart">
+                                          <span class="input-group-append">
+                                              <button type="button" class="btn btn-default" ng-click="new.timeoutrestart=new.timeoutrestart+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                              <button type="button" class="btn btn-default" ng-click="new.timeoutrestart=new.timeoutrestart-1" ng-disabled="new.timeoutrestart <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                          </span>
+                                      </div>
+                                  </td>
+                              </tr>
+                              <tr><td>{{'pauseAnswered' | translate}}</td>
+                                  <td>
+                                      <div class="input-group">
+                                          <input numeric-only class="form-control" ng-model="new.wrapuptime">
+                                          <span class="input-group-append">
+                                              <button type="button" class="btn btn-default" ng-click="new.wrapuptime=new.wrapuptime+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                              <button type="button" class="btn btn-default" ng-click="new.wrapuptime=new.wrapuptime-1" ng-disabled="new.wrapuptime <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                          </span>
+                                      </div>
+                                  </td>
+                              </tr>
+                              <tr ng-include="'/Views/tableEdit.html'" ng-show="new.Created"></tr>
+                              <tr ng-include="'/Views/tableEdit2.html'" ng-show="new.Changed || new.Changed==0"></tr>
+                              <tr>
+                                  <td colspan="2"><checkbox class="btn-info" ng-model="addoption"></checkbox> &#160 {{' additional options' | translate}}</td>
+                              </tr>
+                              <tr ng-show="addoption" > 
+                                      <td>{{'serviceLevel' | translate}} </td>
+                                      <td>
+                                          <div class="input-group">
+                                                  <input numeric-only class="form-control" ng-model="new.servicelevel">
+                                                  <span class="input-group-append">
+                                                      <button type="button" class="btn btn-default" ng-click="new.servicelevel=new.servicelevel+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                                      <button type="button" class="btn btn-default" ng-click="new.servicelevel=new.servicelevel-1" ng-disabled="new.servicelevel <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                                  </span>
+                                          </div>
+                                      </td> 
+                              </tr>
+                              <tr ng-show="addoption" ><td>{{'joinempty' | translate}}  </td>             <td><input only-clear class="form-control" ng-model="new.joinempty"></td></tr>
+                              <tr ng-show="addoption" ><td>{{'leavewhenempty' | translate}}</td>          <td><input only-clear class="form-control" ng-model="new.leavewhenempty"></td></tr>
+                              <tr ng-show="addoption" > 
+                                      <td>{{'delayUser' | translate}} </td>
+                                      <td>
+                                          <div class="input-group">
+                                                  <input numeric-only class="form-control" ng-model="new.memberdelay">
+                                                  <span class="input-group-append">
+                                                      <button type="button" class="btn btn-default" ng-click="new.memberdelay=new.memberdelay+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                                      <button type="button" class="btn btn-default" ng-click="new.memberdelay=new.memberdelay-1" ng-disabled="new.memberdelay <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                                  </span>
+                                          </div>
+                                      </td> 
+                              </tr>
+                              <tr ng-show="addoption" ><td>{{'callBusy' | translate}}</td>                <td><label><input ng-model="new.ringinuse" type="checkbox" cb-switch ng-true-value="1" ng-false-value="0"></label></td></tr>
+                              <tr ng-show="addoption" ><td>{{'announce' | translate}}</td>                <td><input only-clear class="form-control" ng-model="new.announce"></td></tr>
+                              <tr ng-show="addoption" > <td>{{'musiconhold' | translate}}</td>            <td><input only-clear class="form-control" ng-model="new.musiconhold"></td> </tr>
+          
+                              <tr ng-show="addoption" > 
+                                      <td>{{'announce_frequency' | translate}} </td>
+                                      <td>
+                                          <div class="input-group">
+                                                  <input numeric-only class="form-control" ng-model="new.announce_frequency">
+                                                  <span class="input-group-append">
+                                                      <button type="button" class="btn btn-default" ng-click="new.announce_frequency=new.announce_frequency+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                                      <button type="button" class="btn btn-default" ng-click="new.announce_frequency=new.announce_frequency-1" ng-disabled="new.announce_frequency <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                                  </span>
+                                          </div>
+                                      </td> 
+                              </tr>
+                              <tr ng-show="addoption" > 
+                                      <td>{{'announce_round_seconds' | translate}} </td>
+                                      <td>
+                                          <div class="input-group">
+                                                  <input numeric-only class="form-control" ng-model="new.announce_round_seconds">
+                                                  <span class="input-group-append">
+                                                      <button type="button" class="btn btn-default" ng-click="new.announce_round_seconds=new.announce_round_seconds+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                                      <button type="button" class="btn btn-default" ng-click="new.announce_round_seconds=new.announce_round_seconds-1" ng-disabled="new.announce_round_seconds <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                                  </span>
+                                          </div>
+                                      </td> 
+                              </tr>
+                              <tr ng-show="addoption" > 
+                                      <td>{{'maxlen' | translate}} </td>
+                                      <td>
+                                          <div class="input-group">
+                                                  <input numeric-only class="form-control" ng-model="new.maxlen">
+                                                  <span class="input-group-append">
+                                                      <button type="button" class="btn btn-default" ng-click="new.maxlen=new.maxlen+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                                      <button type="button" class="btn btn-default" ng-click="new.maxlen=new.maxlen-1" ng-disabled="new.maxlen <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                                  </span>
+                                          </div>
+                                      </td> 
+                              </tr>
+                              <tr ng-show="addoption" > <td>{{'announce_holdtime' | translate}} </td>     <td><input only-clear class="form-control" ng-model="new.announce_holdtime"></td> </tr>
+                              <tr ng-show="addoption" > 
+                                      <td>{{'eventmemberstatus' | translate}} </td>
+                                      <td>
+                                          <div class="input-group">
+                                                  <input numeric-only class="form-control" ng-model="new.eventmemberstatus">
+                                                  <span class="input-group-append">
+                                                      <button type="button" class="btn btn-default" ng-click="new.eventmemberstatus=new.eventmemberstatus+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                                      <button type="button" class="btn btn-default" ng-click="new.eventmemberstatus=new.eventmemberstatus-1" ng-disabled="new.eventmemberstatus <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                                  </span>
+                                          </div>
+                                      </td> 
+                              </tr>
+                              <tr ng-show="addoption" > 
+                                      <td>{{'eventwhencalled' | translate}} </td>
+                                      <td>
+                                          <div class="input-group">
+                                                  <input numeric-only class="form-control" ng-model="new.eventwhencalled">
+                                                  <span class="input-group-append">
+                                                      <button type="button" class="btn btn-default" ng-click="new.eventwhencalled=new.eventwhencalled+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                                      <button type="button" class="btn btn-default" ng-click="new.eventwhencalled=new.eventwhencalled-1" ng-disabled="new.eventwhencalled <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                                  </span>
+                                          </div>
+                                      </td> 
+                              </tr>
+                              <tr ng-show="addoption" > 
+                                      <td>{{'reportholdtime' | translate}} </td>
+                                      <td>
+                                          <div class="input-group">
+                                                  <input numeric-only class="form-control" ng-model="new.reportholdtime">
+                                                  <span class="input-group-append">
+                                                      <button type="button" class="btn btn-default" ng-click="new.reportholdtime=new.reportholdtime+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                                      <button type="button" class="btn btn-default" ng-click="new.reportholdtime=new.reportholdtime-1" ng-disabled="new.reportholdtime <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                                  </span>
+                                          </div>
+                                      </td> 
+                              </tr>
+                              <tr ng-show="addoption" > 
+                                      <td>{{'weight' | translate}} </td>
+                                      <td>
+                                          <div class="input-group">
+                                                  <input numeric-only class="form-control" ng-model="new.weight">
+                                                  <span class="input-group-append">
+                                                      <button type="button" class="btn btn-default" ng-click="new.weight=new.weight+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                                      <button type="button" class="btn btn-default" ng-click="new.weight=new.weight-1" ng-disabled="new.weight <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                                  </span>
+                                          </div>
+                                      </td> 
+                              </tr>
+                              <tr ng-show="addoption" > 
+                                      <td>{{'periodic_announce_frequency' | translate}} </td>
+                                      <td>
+                                          <div class="input-group">
+                                                  <input numeric-only class="form-control" ng-model="new.periodic_announce_frequency">
+                                                  <span class="input-group-append">
+                                                      <button type="button" class="btn btn-default" ng-click="new.periodic_announce_frequency=new.periodic_announce_frequency+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                                      <button type="button" class="btn btn-default" ng-click="new.periodic_announce_frequency=new.periodic_announce_frequency-1" ng-disabled="new.periodic_announce_frequency <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                                  </span>
+                                          </div>
+                                      </td> 
+                              </tr>                     
+                              <tr ng-show="addoption" ><td>{{'setinterfacevar' | translate}}</td> <td><label><input ng-model="new.setinterfacevar" type="checkbox" cb-switch ng-true-value="1" ng-false-value="0"></label></td></tr>
+                              <tr ng-show="addoption" > <td>{{'active' | translate}} </td> <td><label><input type="checkbox" cb-switch ng-model="new.isActive"></label> </td></tr>
+                          </table>
+                       </div>
+                    </div>
+          
+                                <!-- About Me Box -->
+                    <div class="card card-info card-outline" ng-show="addoption">
+                      <div class="card-header with-border">
+                        <h3 class="card-title"><i class="fas fa-edit"></i> {{'queue_file_action' | translate}} </h3>
+                        <br/><small class="text-muted">{{'queue_file_action_sm' | translate}}</small>
+                      </div>
+                      <div class="card-body">
+                              <table class="table table-head-fixed table-hover borderless">
+                                  <tr ng-show="addoption" > <td width="50%">{{'queue_youarenext' | translate}}  </td>     <td><input class="form-control" ng-model="new.queue_youarenext"></td> </tr>
+                                  <tr ng-show="addoption" > <td>{{'queue_thereare' | translate}} </td>       <td><input class="form-control" ng-model="new.queue_thereare"></td> </tr>
+                                  <tr ng-show="addoption" > <td>{{'queue_callswaiting' | translate}} </td>   <td><input class="form-control" ng-model="new.queue_callswaiting"></td> </tr>
+                                  <tr ng-show="addoption" > <td>{{'queue_holdtime' | translate}} </td>       <td><input class="form-control" ng-model="new.queue_holdtime"></td> </tr>
+                                  <tr ng-show="addoption" > <td>{{'queue_minutes' | translate}} </td>        <td><input class="form-control" ng-model="new.queue_minutes"></td> </tr>
+                                  <tr ng-show="addoption" > <td>{{'queue_seconds' | translate}} </td>        <td><input class="form-control" ng-model="new.queue_seconds"></td> </tr>
+                                  <tr ng-show="addoption" > <td>{{'queue_lessthan' | translate}} </td>       <td><input class="form-control" ng-model="new.queue_lessthan"></td> </tr>
+                                  <tr ng-show="addoption" > <td>{{'queue_thankyou' | translate}} </td>       <td><input class="form-control" ng-model="new.queue_thankyou"></td> </tr>
+                                  <tr ng-show="addoption" > <td>{{'queue_reporthold' | translate}} </td>     <td><input class="form-control" ng-model="new.queue_reporthold"></td> </tr>
+                                  <tr ng-show="addoption" > <td>{{'periodic_announce' | translate}} </td>    <td><input class="form-control" ng-model="new.periodic_announce"></td></tr>
+          
+                              </table>
+                      </div>
+                     </div>
+          
+        </div>    
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-8">
+         <!--  <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"> {{'info' | translate}}</h3> -->
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-disabled="!new.name" ng-click="manyAction.Save(new,'Queue')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="Queue">{{'cancel' | translate}}</button>
+                    </div>
+            <!--  </div>
+          </div> -->
+        </div>
+    </div>
+</section>

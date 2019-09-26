@@ -1,0 +1,30 @@
+<!-- <div class="col-lg-2" style="border-right: 1px solid #e7e7e7;">
+
+</div> -->
+
+
+<div class="col-lg-10">
+    <div style="display: inline-block;float: right; margin:10px 17px 5px; border: none;">
+                <global-button url="CommentsNew"></global-button>
+    </div>
+
+
+    <br>
+    <br>
+    <table ng-table="tableParams" show-filter="false" class="table table-head-fixed table-hover borderless">
+        <tbody>
+        <tr ng-repeat="e in data | filter:searh"  >
+            <td style="width: 3%" header="'Views/ng-table/checkbox.html'" class="text-center">
+                <checkbox class="btn-info" ng-model="e.isChecked" ng-change="selectEntity();" ng-class="{selected: e.isChecked}"></checkbox>
+            </td>
+            <td data-title="'ИД'" header-class="'text-left'"  >
+                {{e.uID}}
+            </td>
+            <td data-title="'Комментарий'" header-class="'text-left'">
+                {{e.uComment}}
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>

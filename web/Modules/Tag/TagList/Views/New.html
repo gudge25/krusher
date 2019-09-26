@@ -1,0 +1,43 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-3">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i> {{'newTag' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tbody>
+                    <tr>
+                        <td>{{'tag' |translate}}</td>
+                        <td><input class="form-control" ng-model="new.tagName"></td>
+                    </tr>
+                    <tr>
+                        <td>{{'description' |translate}}</td>
+                        <td><input class="form-control" ng-model="new.tagDesc"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-9">
+<!--           <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"> {{'info' | translate}}</h3> -->
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-click="manyAction.Save(new,'TagList')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="TagList">{{'cancel' | translate}}</button>
+                    </div>
+<!--              </div>
+          </div> -->
+        </div>
+    </div>
+</section>

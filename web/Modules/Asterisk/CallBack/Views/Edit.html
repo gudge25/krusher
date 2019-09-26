@@ -1,0 +1,99 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body">
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'names' | translate}}</div>
+                    <div class="col-lg-6 no-padding">
+                        <input only-clear class="form-control" ng-model="upd.cbName">
+                    </div>
+                </div>
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'timeOut' | translate}}</div>
+                    <div class="col-lg-6 no-padding">
+                        <div class="input-group">
+                            <input numeric-only class="form-control" ng-model="upd.timeout">
+                            <span class="input-group-append">
+                                <button type="button" class="btn btn-default" ng-click="upd.timeout=upd.timeout+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                <button type="button" class="btn btn-default" ng-click="upd.timeout=upd.timeout-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">
+                        <span ng-if="upd.isFirstClient">
+                                    {{'isFirstClient' | translate}} <b>{{upd.destination | enums | translate}} ({{upd.destdata | destdata:upd.destination}})</b>
+                        </span>    
+                        <span ng-if="!upd.isFirstClient">
+                                    {{'isFirstClient2' | translate}} <b>{{upd.destination | enums | translate}} ({{upd.destdata | destdata:upd.destination}}) </b> {{'isFirstClient3' | translate}} 
+                        </span> 
+                    </div>
+                    <div class="col-lg-6 no-padding">
+                         <label><input type="checkbox" cb-switch ng-model="upd.isFirstClient"></label>
+                    </div>
+                </div>
+                <div class="row hoverDiv">
+                        <div class="col-lg-6 no-padding">{{'active' | translate}} </div>
+                        <div class="col-lg-6 no-padding"><label><input type="checkbox" cb-switch ng-model="upd.isActive"></label> </div>
+                </div>
+                <ng-include src="'/Views/divEdit.html'"></ng-include>
+            </div>
+         </div>
+
+            <!-- About Me Box -->
+            <div class="card card-info card-outline">
+                <div class="card-header with-border">
+                  <h3 class="card-title"><i class="fas fa-edit"></i>  {{'action' | translate}}, {{'ifAnswer' | translate}}</h3>
+                </div>
+                <div class="card-body ">
+                    <div class="row hoverDiv">
+                            <div class="col-lg-6 no-padding">{{'destination' | translate}} </div>
+                            <div class="col-lg-6 no-padding">
+                                <div class="input-group" style="width: 100%">
+                                    <ui-select ng-model="upd.destination" ng-change="upd.destdata=null" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                            <ui-select-choices repeat="c.tvID as c in Enums.group[1014] | filter: $select.search" ui-disable-choice="c.tvID == 101411 || c.tvID == 101406" >
+                                                {{c.Name | translate}}
+                                            </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                    </div>
+                    <ng-include src="'/Views/destdataUpd.html'"></ng-include>
+                    <div class="row hoverDiv" ng-show="(upd.destination == 101403 || upd.destination == 101409) && upd.destdata">
+                            <div class="col-lg-6 no-padding">{{'destdata2' | translate}} </div>
+                            <div class="col-lg-6 no-padding">
+                                <div class="input-group" style="width: 100%">
+                                    <input only-clear class="form-control" ng-model="upd.destdata2"/>
+                                    <span class="input-group-append">
+                                        <button ng-show="upd.destdata2" type="button" class="btn btn-default" ng-click="upd.destdata2 = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-8">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-hide="manyAction.Check_upd_old()" ng-disabled="!upd.cbName || !upd.destination"  ng-click="manyAction.Update(upd,'CallBack');manyAction.ItemsEdit('CallBack');">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="CallBack">{{'cancel' | translate}}</button>
+                    </div>
+        </div>
+    </div>
+</section>
+

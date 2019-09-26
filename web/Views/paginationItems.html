@@ -1,0 +1,28 @@
+<div class="mailbox-controls" ng-hide="total_count == 0 || global.Loading" >
+        <div class="row">
+            <div class="col-lg-9">
+                <ul uib-pagination
+                    ng-hide         = "numPages==1"
+                    total-items     = "total_count"
+                    ng-model        = "modelItems.CurrentPage"
+                    items-per-page  = "modelItems.limit"
+                    max-size        = "5"
+                    class           = "pagination-sm"
+                    boundary-links  = "true"
+                    rotate          = "false"
+                    num-pages       = "numPages"
+                    ng-click        = "PagintionItems(modelItems.limit)"
+                    previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                    >
+                </ul>
+            </div>
+            <div class="col-lg-3 float-right">
+                <ui-select ng-model="modelItems.limit" theme="bootstrap4-1" ng-change="modelItems.CurrentPage=1;PagintionItems(modelItems.limit)" class="normal" size="100%">
+                    <ui-select-match placeholder="{{'limit' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices position="up" repeat="a.Name as a in limitList | filter: $select.search">
+                       {{a.Name}}
+                   </ui-select-choices>
+               </ui-select>
+            </div>
+        </div>
+</div>

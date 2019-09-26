@@ -1,0 +1,39 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+              <div class="card-tools">
+                
+              </div>
+            </div>
+
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tr>
+                        <td width="50%">{{'named' | translate}}</td>
+                        <td width="50%"><input class="form-control" ng-model="upd.dbName" placeholder="{{'enterTitle' | translate}}"/></td>
+                    </tr>
+
+                <tr >
+                    <td>{{'activeShe' | translate}}</td>
+                    <td><label><input type="checkbox" cb-switch ng-model="upd.isActive"></label></td>
+                </tr>
+                <tr ng-include="'/Views/tableEdit.html'" ng-show="upd.Created"></tr>
+                <tr ng-include="'/Views/tableEdit2.html'" ng-show="upd.Changed || upd.Changed==0"></tr>
+            </table>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-8">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-click="manyAction.Update(upd,'Bases')" ng-hide="manyAction.Check_upd_old()">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="Bases">{{'cancel' | translate}}</button>
+                    </div>
+        </div>
+    </div>
+</section>

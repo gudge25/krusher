@@ -1,0 +1,172 @@
+<div class="nav-tabs-custom card card-info card-outline" style="border: none;">
+    <uib-tabset >
+        <uib-tab index="0" heading="{{'contats' | translate}}">
+            <table ng-table="table"  class="table table-head-fixed table-hover borderless" style="width: 100%" ng-show="contacts.length > 0">
+                 <tr>
+                    <th>{{'contact' | translate}}</th>
+                    <th>{{'type' | translate}}</th>
+                    <th>{{'status' | translate}}</th>
+                    <th>{{'main' | translate}} </th>
+                    <th>{{'active' | translate}} </th>
+                    <th></th>
+                </tr>
+
+                <tr ng-repeat="c in contacts">
+                    <td ng-hide="c.ccID == 'new'" width="25%">
+                        <input ng-if="c.ccType != 36 && c.ccType != 44 && c.ccType != 38" style="white-space: normal;" class="form-control" ng-model="c.ccName" placeholder="{{c.ccName}}" ng-change="c.isEdit=true;"/>
+                        <input ng-if="c.ccType == 36 || c.ccType == 44 || c.ccType == 38" style="white-space: normal;" class="form-control" ng-model="c.ccName" placeholder="{{c.ccName}}" ng-change="c.isEdit=true;ClearPhone(c);"/>
+                    </td>
+                    <td  data-title="'Тип'"  width="25%">
+                        <ui-select ng-model="c.ccType" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                            <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                            <ui-select-choices repeat="a.tvID as a in Enums.group[4]| filter: $select.search" >
+                             {{a.Name}}
+                         </ui-select-choices>
+                    </td>
+                    <td  width="25%">
+                        <ui-select ng-model="c.ccStatus" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" ng-show="c.ccType == 36 || c.ccType == 38 || c.ccType == 44">
+                            <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                            <ui-select-choices repeat="a.tvID as a in Enums.group[15]| filter: $select.search" >
+                             {{a.Name}}
+                         </ui-select-choices>
+                    </td>
+                    <td width="1%">
+                        <checkbox class="btn" ng-model="c.isPrimary" ng-change="c.isEdit=true" uib-tooltip="{{'main' | translate}}"></checkbox>
+                    </td>
+                    <td width="1%">
+                        <checkbox class="btn" ng-model="c.isActive" ng-change="c.isEdit=true" uib-tooltip="{{'active' | translate}}"></checkbox>
+                    </td>
+                    <td ng-show="c.ccID == 'new'">
+                        <div class="row">
+                            <div class="col-lg-9"  ng-show = "c.ccType">
+                                <input class="form-control" ng-model="c.ccName" />
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" ng-click="Cancel($index)" class="btn btn-warning">{{'cancel' | translate}}</button>
+                            </div>
+                        </div>
+                    </td>
+                    <th width="1%" ng-hide="c.ccID == 'new'" scope="row" >
+                        <a uib-tooltip="{{'remove' | translate}}" class="btn" ng-click="dellCC(c)"  ng-click="$event.stopPropagation()">        <i class="fa fa-trash fa-lg"></i>       </a>
+                    </th>
+                </tr>
+             </table>
+            <div class="row">
+                <div class="col-lg-3 ">
+                    <button class="btn btn-outline-primary btn-sm" ng-click="addContact()" style="margin: 2%" translate="add"></button>
+                </div>
+            </div>
+
+        </uib-tab>
+
+        <uib-tab index="1" heading="{{'address' | translate}}" >
+            <table ng-table="table" class="table table-head-fixed table-hover borderless" ng-show="address.length > 0">
+                <tbody>
+                <tr >
+                    <th>{{'address' | translate}}</th>
+                    <th>{{'index' | translate}}</th>
+                    <th>{{'type' | translate}}</th>
+                </tr>
+                <tr ng-repeat="c in address" >
+                    <td width="43%" ng-hide="c.ccID == 'new'">
+                        <div class="has-feedback" ng-class="{ 'has-error' : !c.adsName.length && edit3, 'has-success' : c.adsName }">
+                                <input ng-change="edit3=true;" ng-model="c.adsName"  class="form-control" ng-maxlength="200" placeholder="{{'address' | translate}}" pattern="^[ЇїІіЙйА-Яа-яa-zA-Z0-9.\-\/\s]+$" required>
+                                <span class="glyphicon glyphicon-globe form-control-feedback"></span>
+                                <span class="help-block" ng-show="!c.adsName.length && edit3">{{'typeLeng'| translate}},- / .</span>
+                        </div>
+                    </td>
+                    <td width="28%" ng-hide="c.ccID == 'new'" scope="row">
+                        <input class="form-control" numeric-only ng-model="c.Postcode" placeholder="{{'index' | translate}}"/>
+                    </td>
+                    <td width="28%" ng-hide="c.ccID == 'new'" scope="row">
+                        <select class       ="form-control"
+                                ng-model    ="c.adtID"
+                                ng-options  ="e.tvID as e.Name for e in Enums.group[13]"
+                                >
+                        </select>
+                    </td>
+                    <th width="1%" ng-hide="c.ccID == 'new'" scope="row" >
+                        <a class="btn" ng-click="dellAddress(c)"  ng-click="$event.stopPropagation()">        <i class="fa fa-trash fa-lg"></i>       </a>
+                    </th>
+                </tr>
+            </table>
+            <div class="row">
+                <div class="col-lg-3">
+                    <button class="btn btn-outline-primary btn-sm" ng-click="addAddress()" style="margin: 2%" translate="add"></button>
+                </div>
+            </div>
+        </uib-tab>
+
+        <uib-tab index="3" heading="{{'product' | translate}}">
+            <table class="table table-head-fixed table-hover borderless" ng-table="tableParams" style="margin: 1% 0;" ng-show="Products.length > 0">
+                <tr>
+                    <th>{{'name' | translate}}</th>
+                    <th>{{'price' | translate}}</th>
+                    <th>{{'number' | translate}}</th>
+                    <th>{{'del' | translate}}</th>
+                </tr>
+                <tr ng-repeat="e in Products"  >
+                    <td header-class="'text-left'" style="width: 70%;">
+                        <select class       ="form-control"
+                                ng-model    ="e.psID;"
+                                ng-options  ="c.psID as c.psName for c in product"
+                                >
+                            <option value="">{{'selectStatus' | translate}}</option>
+                        </select>
+                    </td>
+                    <td header-class="'text-left'">
+                        <input ng-model="e.cpPrice" ng-change="Sum()" numeric-only type="number" class="form-control"/>
+                    </td>
+                    <td header-class="'text-left'">
+                        <input ng-model="e.cpQty" ng-change="Sum()" numeric-only type="number" class="form-control"/>
+                    </td>
+                    <td header-class="'text-left'" ng-click="dellItems($index)">
+                        <a><i class="fa fa-minus"> </i></a>
+                    </td>
+                </tr>
+            </table>
+            <div class="row">
+                <div class="col-lg-3 float-right">
+                    <button class="btn btn-outline-primary btn-sm" ng-click="addItems()" style="margin: 2%" translate="add"></button>
+                </div>
+            </div>
+        </uib-tab>
+
+        <uib-tab index="4" heading="Text to speech" >
+                        <uib-tab-heading>
+                            <span> {{'TTS' | translate}}  </span>     <span class="badge" style="background-color: #3c8dbc;"> {{sum}} </span>
+                        </uib-tab-heading>
+                        <table class="table table-head-fixed table-hover borderless">
+                                    <tr>
+                                        <th >{{'currencyNew' | translate}} </th>
+                                        <th >{{'languages' | translate}} </th>
+                                        <th >{{'sum' | translate}} </th>
+                                        <th >{{'text' | translate}} </th>
+                                    </tr>
+                                    <tr>
+                                        <td width="20%">
+                                            <ui-select ng-model="client.curID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                                <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                                                <ui-select-choices repeat="a.tvID as a in Enums.group[1018] | filter: $select.search" >
+                                                    {{a.Name}}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </td>
+                                        <td width="20%">
+                                            <ui-select ng-model="client.langID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                                <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                                                <ui-select-choices repeat="a.tvID as a in Enums.group[1023] | filter: $select.search">
+                                                    {{a.Name}}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </td>
+                                        <td width="20%"><input class="form-control" numeric-only ng-model="client.sum"/> </td>
+                                        <td width="40%">
+                                            <textarea maxlength="200" ng-model="client.ttsText" msd-elastic style="min-height:96px; background-color: lightgoldenrodyellow;color: dimgrey" class="form-control" rows="3" id="comment" placeholder="{{'descriptionType' | translate}} "></textarea>
+                                            <!-- <textarea maxlength="200" only-clear ng-model="client.ttsText" msd-elastic class="form-control" msd-elastic rows="3" id="comment"></textarea> -->
+                                        </td>
+                                    </tr>
+                        </table>
+        </uib-tab>
+    </uib-tabset>
+</div>

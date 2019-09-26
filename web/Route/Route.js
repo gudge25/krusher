@@ -1,0 +1,250 @@
+crmUA.config( ($stateProvider,$translateProvider) => {
+    $stateProvider
+    .state('callingcard',callingcard)
+    .state('login',login)
+    .state('Register',Register)
+    .state('report',report)
+    .state('StatusStats',StatusStats)
+    .state('DBreport',DBreport)
+    .state('Qreport',Qreport)
+    .state('CallsReport',CallsReport)
+//FS
+    .state('migration',migration)
+    .state('fsTemplate',fsTemplate)
+    .state('fs',fs)
+    .state('fsEdit',fsEdit)
+    .state('fsNew',fsNew)
+//Comments
+    .state('commentlist',commentlist)
+    .state('CommentEdit',CommentEdit)
+//Deals
+    .state('Deals',Deals)
+    .state('DealNew',DealNew)
+    .state('DealEdit',DealEdit)
+    .state('DealAdd',DealAdd)
+//Role
+    .state('Role',Role)
+    .state('RoleNew',RoleNew)
+    .state('RoleEdit',RoleEdit)
+//Client
+    .state('client',client)
+    .state('preView',preView)
+    .state('clientEdit',clientEdit)
+//Actualization
+    .state('Actualization',Actualization)
+//EM
+    .state('employee',employee)
+    .state('emEmployeeNew',emEmployeeNew)
+    .state('emEmployeeEdit',emEmployeeEdit)
+    .state('Settings',Settings)
+//REGIONS
+    .state('Region',Region)
+    .state('RegionEdit',RegionEdit)
+    .state('RegionNew',RegionNew)
+//Location
+    .state('Location',Location)
+    .state('LocationEdit',LocationEdit)
+    .state('LocationNew',LocationNew)
+//Validation
+    .state('Validation',Validation)
+    .state('ValidationEdit',ValidationEdit)
+    .state('ValidationNew',ValidationNew)
+//COUNTRY
+    .state('country',country)
+    .state('CountryNew',CountryNew)
+    .state('CountryEdit',CountryEdit)
+//OPERATOR
+    .state('operator',operator)
+    .state('OperatorNew',OperatorNew)
+    .state('OperatorEdit',OperatorEdit)
+//Area
+    .state('Area',Area)
+    .state('AreaNew',AreaNew)
+    .state('AreaEdit',AreaEdit)
+//Brands
+    .state('Brands',Brands)
+    .state('BrandsNew',BrandsNew)
+    .state('BrandsEdit',BrandsEdit)
+//Categories
+    .state('Categories',Categories)
+    .state('CategoriesNew',CategoriesNew)
+    .state('CategoriesEdit',CategoriesEdit)
+//PRODUCT
+    .state('Product',Product)
+    .state('ProductNew',ProductNew)
+    .state('ProductEdit',ProductEdit)
+//CAR
+    .state('Car',Car)
+    .state('CarNew',CarNew)
+    .state('CarEdit',CarEdit)
+//DRIVER
+     .state('Driver',Driver)
+     .state('DriverNew',DriverNew)
+     .state('DriverEdit',DriverEdit)
+//Point
+     .state('Point',Point)
+     .state('PointNew',PointNew)
+     .state('PointEdit',PointEdit)
+//TRAVELS
+     .state('Travel',Travel)
+     .state('TravelNew',TravelNew)
+     .state('TravelEdit',TravelEdit)
+//TRAVELLISTS
+     .state('TravelList',TravelList)
+     .state('TravelListNew',TravelListNew)
+     .state('TravelListEdit',TravelListEdit)
+     .state('TravelListAdd',TravelListAdd)
+//Questions
+    .state('questions',questions)
+    .state('questions2',questions2)
+    .state('questionsAll',questionsAll)
+    .state('questionsEdit',questionsEdit)
+    .state('questionsItemsAll',questionsItemsAll)
+//Forms
+    .state('form',form)
+    .state('formsAll',formsAll)
+    .state('formEdit',formEdit)
+//TagList
+    .state('TagList',TagList)
+    .state('TagListNew',TagListNew)
+    .state('TagListEdit',TagListEdit)
+//Comments
+    .state('Comments',Comments)
+    .state('CommentsNew',CommentsNew)
+    .state('CommentsEdit',CommentsEdit)
+//Stream
+    .state('Stream',Stream)
+    .state('StreamDetail',StreamDetail)
+//Tape
+    .state('TapeViewRoute',TapeViewRoute)
+//Search
+    .state('SearchDocumentsViewRoute',SearchDocumentsViewRoute)
+    .state('SearchClientsViewRoute',SearchClientsViewRoute)
+//DocsHistory
+    .state('DocsHistoryRoute',DocsHistoryViewRoute)
+//Invoice
+    .state('InvoiceAdd',InvoiceAdd)
+    .state('InvoiceEdit',InvoiceEdit)
+//Payment
+    .state('Payment',Payment)
+    .state('PaymentEdit',PaymentEdit)
+    .state('PaymentCreate',PaymentCreate)
+//Completion
+    .state('CompletionAdd',CompletionAdd)
+    .state('CompletionEdit',CompletionEdit)
+//Agreement
+    .state('Contract',Contract)
+    .state('ContractEdit',ContractEdit)
+//Favorites
+    .state('FavoritesRoute',FavoritesRoute)
+//Asterisk
+    .state('Queue',Queue)
+    .state('QueueNew',QueueNew)
+    .state('QueueEdit',QueueEdit)
+//Trunk
+    .state('Trunk',Trunk)
+    .state('TrunkNew',TrunkNew)
+    .state('TrunkEdit',TrunkEdit)
+//SIP
+    .state('SIP',Sippeers)
+    .state('SIPNew',SippeersNew)
+    .state('SIPEdit',SippeersEdit)
+//Measures
+    .state('Measures',Measures)
+    .state('MeasuresNew',MeasuresNew)
+    .state('MeasuresEdit',MeasuresEdit)
+//Templates
+    .state('Templates',Templates)
+    .state('TemplatesNew',TemplatesNew)
+    .state('TemplatesEdit',TemplatesEdit)
+//Bases
+    .state('Bases',Bases)
+    .state('BasesNew',BasesNew)
+    .state('BasesEdit',BasesEdit)
+//Dashboard
+    .state('Dashboard',Dashboard)
+//RouteInc
+    .state('RouteInc',RouteInc)
+    .state('RouteIncNew',RouteIncNew)
+    .state('RouteIncEdit',RouteIncEdit)
+//Scenario
+    .state('Scenario',Scenario)
+    .state('ScenarioNew',ScenarioNew)
+    .state('ScenarioEdit',ScenarioEdit)
+//Recall
+    .state('Recall',Recall)
+    .state('RecallNew',RecallNew)
+    .state('RecallEdit',RecallEdit)
+//AutoProcess
+    .state('AutoProcess',AutoProcess)
+    .state('AutoProcessNew',AutoProcessNew)
+    .state('AutoProcessEdit',AutoProcessEdit)
+//IVR
+    .state('IVR',IVR)
+    .state('IVRNew',IVRNew)
+    .state('IVREdit',IVREdit)
+//Record
+    .state('Record',Record)
+    .state('RecordNew',RecordNew)
+    .state('RecordEdit',RecordEdit)
+//Enums
+    .state('Enums',usEnums)
+    .state('EnumsNew',usEnumsNew)
+    .state('EnumsNewID',usEnumsNewID)
+    .state('EnumsEdit',usEnumsEdit)
+//Calendar
+    .state('Calendar',Calendar)
+//RouteOut
+    .state('RouteOut',RouteOut)
+    .state('RouteOutNew',RouteOutNew)
+    .state('RouteOutEdit',RouteOutEdit)
+//Text to Speeach
+    .state('TTS',TTS)
+    .state('TTSNew',TTSNew)
+    .state('TTSEdit',TTSEdit)
+//CallBack
+    .state('CallBack2',CallBack2)
+//CustomDestination
+    .state('CustomDestination',CustomDestination)
+    .state('CustomDestinationNew',CustomDestinationNew)
+    .state('CustomDestinationEdit',CustomDestinationEdit)
+//TrunkPool
+    .state('TrunkPool',TrunkPool)
+    .state('TrunkPoolNew',TrunkPoolNew)
+    .state('TrunkPoolEdit',TrunkPoolEdit)
+//TimeGroup
+    .state('TimeGroup',TimeGroup)
+    .state('TimeGroupNew',TimeGroupNew)
+    .state('TimeGroupEdit',TimeGroupEdit)
+//CallBack
+    .state('CallBack',CallBack)
+    .state('CallBackNew',CallBackNew)
+    .state('CallBackEdit',CallBackEdit)
+//RecordsExport
+    .state('RecordsExport',RecordsExport)
+    .state('RecordsExportNew',RecordsExportNew)
+    .state('RecordsExportEdit',RecordsExportEdit)
+//Company
+    .state('Company',Company)
+    .state('CompanyNew',CompanyNew)
+    .state('CompanyEdit',CompanyEdit)
+//Rank
+    .state('Rank',Rank)
+    .state('RankNew',RankNew)
+    .state('RankEdit',RankEdit)
+//Conference
+    .state('Conference',Conference)
+    .state('ConferenceNew',ConferenceNew)
+    .state('ConferenceEdit',ConferenceEdit)
+//mpMarketplace
+    .state('mpMarketplace',mpMarketplace)
+    .state('mpMarketplaceNew',mpMarketplaceNew)
+    .state('mpMarketplaceEdit',mpMarketplaceEdit)
+    .state('mpMarketplaceInstallEdit',mpMarketplaceInstallEdit)
+
+    
+    
+//page404
+    .state('page404',page404);
+
+});

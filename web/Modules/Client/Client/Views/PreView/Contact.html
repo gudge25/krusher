@@ -1,0 +1,105 @@
+<ul class="list-group list-group-unbordered no-padding" style="margin-bottom: 0px">
+    <li class="list-group-item" ng-show="Responsible.length > 0" style="display: flow-root;">
+        <b>{{'responsible' | translate}}</b>
+            <span ng-repeat-start="a in Responsible" style="display: inline-block; float:right">
+               <a float-right ng-href="#!/edit/employee/{{a.emID}}"  ng-bind="a.emName"></a>
+            </span>
+            <br ng-repeat-end/>
+    </li>
+    <li class="list-group-item" ng-show="TagList.length > 0">
+        <b>{{'tags' | translate}}</b>
+        <a class="float-right" ng-repeat = "a in TagList">
+            <span ng-bind="a.tagName" style="padding-left: 5px"></span>
+        </a>
+    </li>
+    <li class="list-group-item" style="display: flow-root;">
+        <b>{{'status' | translate}}</b>
+            <span  ng-bind="(client.clStatus | ClientStatus).status" style="color:{{(client.clStatus | ClientStatus).color}}; float: right;"> </span> <br>
+            <span style="color:{{(client.ccStatus | ClientStatus).color}}; float: right;">
+                {{(client.ccStatus | ClientStatus).status}}
+            </span>
+    </li>
+    <li class="list-group-item" style="display: flow-root;" ng-show="client.ActualStatus">
+        <b>{{'actualStatus' | translate}}</b>
+            <span  class="float-right" ng-bind="client.ActualStatus | enums"> </span> <br>
+    </li>
+
+    <li class="list-group-item" ng-show="client.regName">
+        <b>{{'region' | translate}}</b>
+        <a class="float-right" ng-bind="client.regName"></a>
+    </li>
+    <li class="list-group-item" ng-show="client.CallDate">
+        <b> {{'dateOfCommunications' | translate}}</b>
+        <a class="float-right" ng-bind="client.CallDate | date:'yyyy MMM d, HH:MM'"></a>
+    </li>
+    <li class="list-group-item" ng-show="Org.OrgType && !client.IsPerson">
+        <b>{{'OrgType' | translate}}</b>
+        <span  class="float-right" ng-bind="Org.OrgType | enums"> </span>  
+    </tr>
+    </li>
+    <li class="list-group-item" ng-show="client.CompanyID" style="display: flow-root;">
+        <b> {{'companyID' | translate}}</b>
+        <a class="float-right" ng-hide="DZO" ng-bind="client.CompanyID"></a>
+        <a class="float-right" ng-show="DZO" href="//www.dzo.com.ua/companies/{{client.CompanyID}}" target="_blank" ng-bind="client.CompanyID"></a>
+    </li>
+    <li class="list-group-item" ng-show="client.Sex">
+        <b>{{'sex' | translate}}</b>
+        <a class="float-right" ng-bind="client.Sex | enums"></a>
+    </li>
+    <li class="list-group-item" ng-show="client.Position">
+        <b> {{'position' | translate}}</b>
+        <a class="float-right" ng-bind="client.Position | enums" ></a>
+    </li>
+    <li class="list-group-item" style="display: flow-root;" ng-show="Parent">
+        <b> {{'connected' | translate}}</b>
+        <b><a class="float-right" ng-href="/#!/clientPreView/{{Parent.clID}}" ng-bind="Parent.clName" ></a></b>
+    </li>
+    <li ng-show="!client.IsPerson && Org.TaxCode" class="list-group-item">
+        <b> {{'id' | translate}}</b>
+        <a class="float-right" ng-bind="Org.TaxCode" ></a>
+    </tr>
+    </li>
+    <li class="list-group-item" ng-show="client.ffID || client.ffID == 0;" style="display: flow-root;">
+        <b>{{'file' | translate}}</b>
+        <span ng-bind="client.ffID| ffFilters" class="float-right"></span>
+    </li>
+    <li class="list-group-item" ng-show="client.Comment && client.Comment != 'null'" style="display: flow-root;">
+        <b style="display: inline-block;">{{'note' | translate}}</b>
+        <a class="float-right" uib-tooltip="{{client.Comment}}" tooltip-trigger="mouseenter" tooltip-placement="top">
+            {{client.Comment.substring(0,25)}}
+            <span ng-if="client.Comment.length>25">...</span>
+         </a>
+
+    </li>
+    <li class="list-group-item" ng-show="client.CreatedBy">
+        <span class="direct-chat-timestamp" style="display: inline-block; font-size: 12px">{{'created' | translate}}</span>
+        <span style="float: right; font-size: 12px" >
+            <span class="direct-chat-timestamp" ng-bind="client.CreatedBy | emFilters" uib-tooltip="{{ client.CreatedBy | emFilters}} {{client.Created | date:'MMM d, HH:mm'}}" tooltip-trigger="mouseenter" tooltip-placement="top" ></span>
+            <span class="direct-chat-timestamp" ng-bind="client.Created | date:'MMM d, HH:mm'"> </span>
+        </span>
+    </li>
+    <li class="list-group-item" ng-show="client.Changed || client.Changed==0" style="border-bottom: none;">
+        <span class="direct-chat-timestamp" style="display: inline-block; font-size: 12px">{{'editedBy' | translate}}</span>
+        <span style="float: right; font-size: 12px" >
+            <span class="direct-chat-timestamp" ng-bind="client.ChangedBy | emFilters" uib-tooltip="{{ client.ChangedBy | emFilters}} {{client.Changed | date:'MMM d, HH:mm'}}" ></span>
+            <span class="direct-chat-timestamp" ng-bind="client.Changed | date:'MMM d, HH:mm'" > </span>
+        </span>
+    </li>
+</ul><!--
+<ul class="list-group list-group-unbordered " style="margin-bottom: 0px; bottom: 0px; width: 95%; position: absolute;">
+    <li class="list-group-item" ng-show="client.CreatedBy" style="border:0;">
+        <span class="direct-chat-timestamp" style="display: inline-block; font-size: 12px"><b>{{'created' | translate}}</b></span>
+        <span style="float: right; font-size: 12px" >
+            <span class="direct-chat-timestamp" ui-sref="emEmployeeEdit( {'emID': client.CreatedBy })" ng-bind="client.CreatedBy | emFilters" uib-tooltip="{{ client.CreatedBy | emFilters}} {{client.Created | date:'MMM d, HH:mm'}}" tooltip-trigger="mouseenter" tooltip-placement="top" ></span>
+            <span class="direct-chat-timestamp" ng-bind="client.Created | date:'MMM d, HH:mm'"> </span>
+        </span>
+    </li>
+    <li class="list-group-item" ng-show="client.Changed || client.Changed==0" style="border-bottom: none;border:0;">
+        <span class="direct-chat-timestamp" style="display: inline-block; font-size: 12px"><b>{{'editedBy' | translate}}</b></span>
+        <span style="float: right; font-size: 12px" >
+            <span class="direct-chat-timestamp" ui-sref="emEmployeeEdit( {'emID': client.ChangedBy })"  ng-bind="client.ChangedBy | emFilters" uib-tooltip="{{ client.ChangedBy | emFilters}} {{client.Changed | date:'MMM d, HH:mm'}}" ></span>
+            <span class="direct-chat-timestamp" ng-bind="client.Changed | date:'MMM d, HH:mm'" > </span>
+        </span>
+    </li>
+</ul>
+ -->

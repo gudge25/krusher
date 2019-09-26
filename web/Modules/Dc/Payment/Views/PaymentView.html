@@ -1,0 +1,88 @@
+<div class="well" style="background-color: white">
+    <div>
+        <div class="text-right col-md-12">
+            <button ng-disabled="!payment.dcNo || !payment.dcSum || !payment.dcStatus || !payment.PayType || !payment.PayMethod || !payment.clName" ng-click="manyAction.Save(payment, '');formClassInvalid = 'invalid-form-class' ; uiSelectSetClass(); PaymentForm.$valid; cancel()" class="btn btn-success">{{'save' | translate}}</button>
+            <button  class="btn btn-warning">{{'clear' | translate}}</button>
+            <button ng-click="$close();close()" class="btn btn-warning">{{'cancel' | translate}}</button>
+        </div>
+    </div>
+    <form novalidate class="css-form" ng-class="formClassInvalid" name="PaymentForm">
+    <table class="table table-head-fixed noBoard">
+        <tbody>
+          <tr>
+            <td class="col-md-3">{{'numberNum' | translate}}</td><td class="col-md-3 "><input type="text" class="form-control"  ng-model="payment.dcNo" required="true"></td>
+            <td class="col-md-3">{{'date' | translate}}</td>   <td class="col-md-3">
+              <p class="input-group custom-datepicker-buttons">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="payment.dcDate" is-open="datepicker.opened" datepicker-options="dateOptions" required="true" />
+                    <span class="input-group-append">
+                    <button type="button" class="btn btn-default" ng-click="datepickerOpen()"><i class="fa fa-calendar"></i></button>
+                    </span>
+                </p>
+            </td>
+          </tr>
+          <tr>
+             <td>{{'responsible' | translate}}</td>
+             <td>
+              <ui-select ng-model="payment.emID"  theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                <ui-select-match allow-clear="false">{{$select.selected.emName}}</ui-select-match>
+                <ui-select-choices repeat="a.emID as a in employees.data | filter: $select.search"" >
+                  {{a.emName}}
+                </ui-select-choices>
+              </ui-select>
+            </td>
+            <td>{{'foundationDocument' | translate}}</td>
+            <td>
+              <div class="input-group">
+                    <input class="form-control" type="text" ng-model="payment.dcDisplayLink" disabled>
+                    <!-- <input class="form-control" type="text" ng-model="payment.dcLink" disabled> -->
+                    <span class="input-group-append">
+                        <open-docs-link-search data="payment"/>
+                    </span>
+                </div>
+            </td>
+          </tr>
+          <tr>
+            <td>{{'Comment' | translate}}</td>   <td><input type="text" class="form-control" ng-model="payment.dcComment"></td>
+            <td>{{'amount' | translate}}</td>   <td><input type="number" class="form-control" ng-model="payment.dcSum" required="true"></td>
+          </tr>
+          <tr>
+            <td>{{'status' | translate}}</td>   <td>
+              <ui-select ng-model="payment.dcStatus" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" required="">
+                          <ui-select-match >{{$select.selected.p.Name}}</ui-select-match>
+                          <ui-select-choices repeat="a.p.tvID as a in dcStatusEnum | filter: $select.search" >
+                            {{a.p.Name}}
+                        </ui-select-choices>
+                    </ui-select>
+            </td>
+            <td>{{'clientName' | translate}}</td>   <td>
+              <div class="input-group">
+                    <input class="form-control" type="text" ng-model="payment.clName" required="true" disabled>
+                    <span class="input-group-append">
+                        <open-client-search data="payment"/>
+                    </span>
+                </div>
+            </td>
+          </tr>
+          <tr>
+            <td>{{'typePayment' | translate}}</td>   <td>
+              <ui-select ng-model="payment.PayType" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" required="true">
+                          <ui-select-match >{{$select.selected.p.Name}}</ui-select-match>
+                          <ui-select-choices repeat="a.p.tvID as a in payTypeEnum | filter: $select.search" >
+                            {{a.p.Name}}
+                        </ui-select-choices>
+                    </ui-select>
+            </td>
+            <td>{{'methodPayment' | translate}}</td>   <td>
+               <ui-select ng-model="payment.PayMethod" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" required="true">
+                          <ui-select-match >{{$select.selected.p.Name}}</ui-select-match>
+                          <ui-select-choices repeat="a.p.tvID as a in payMethodEnum | filter: $select.search" >
+                            {{a.p.Name}}
+                        </ui-select-choices>
+                    </ui-select>
+            </td>
+          </tr>
+
+        </tbody>
+    </table>
+</form>
+</div>

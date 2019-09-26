@@ -1,0 +1,334 @@
+<uib-tabset >
+          <uib-tab index="0">
+                <uib-tab-heading>
+                    <span> {{'AllCall' | translate}} </span>     <span class="badge" style="background-color: #3c8dbc;"> {{Parents.length}} </span>
+                </uib-tab-heading>
+                <div>
+                  <br/>
+                  <!-- Small boxes (Stat box) -->
+                  <div class="row">
+                    <!-- <div class="col-lg-12"> <h3 class="card-title">{{'AllCall' | translate}}</h3> </div> -->
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                      <div class="info-box bg-info">
+                        <span class="info-box-icon"><i class="fa fa-bookmark"></i></span>
+                        <div class="info-box-content">
+                          <span class="info-box-text">{{'callsPerDay' | translate}}</span>
+                          <span class="info-box-number">{{AllQty.TotalCallsAll[0].QtyCalls}}</span>
+                          <div class="progress">
+                            <div class="progress-bar" style="width: {{AllQty.TotalCallsAll[0].Percent}}%"></div>
+                          </div>
+                          <span class="progress-description">
+                                {{AllQty.TotalCallsAll[0].Percent}}% {{'calledBases' | translate}}
+                          </span>
+                        </div>
+                       </div>
+                     </div>
+
+                     <div class="col-md-3 col-sm-6 col-xs-12">
+                      <div class="info-box bg-success">
+                        <span class="info-box-icon"><i class="fa fa-thumbs-up"></i></span>
+                        <div class="info-box-content">
+                          <span class="info-box-text">{{'successfulCalls' | translate}}</span>
+                          <span class="info-box-number">{{AllQty.AnsweredAll[0].QtyCalls}}</span>
+
+                          <div class="progress">
+                            <div class="progress-bar" style="width: {{AllQty.AnsweredAll[0].Percent}}%"></div>
+                          </div>
+                          <span class="progress-description">
+                                {{AllQty.AnsweredAll[0].Percent}}% {{'fromAllCalls' | translate}}
+                          </span>
+                        </div>
+                       </div>
+                     </div>
+                     <div class="col-md-3 col-sm-6 col-xs-12">
+                      <div class="info-box bg-warning">
+                        <span class="info-box-icon"><i class="fa fa-thumbs-down"></i></span>
+
+                        <div class="info-box-content">
+                          <span class="info-box-text">{{'unsuccessfulСcalls' | translate}}</span>
+                          <span class="info-box-number">{{AllQty.NoAnsweredAll[0].QtyCalls}}</span>
+
+                          <div class="progress">
+                            <div class="progress-bar" style="width: {{AllQty.NoAnsweredAll[0].Percent}}%"></div>
+                          </div>
+                          <span class="progress-description">
+                                {{AllQty.NoAnsweredAll[0].Percent}}% {{'fromAllCalls' | translate}}
+                              </span>
+                        </div>
+                       </div>
+                     </div>
+
+                     <div class="col-md-3 col-sm-6 col-xs-12">
+                      <div class="info-box bg-danger">
+                        <span class="info-box-icon"><i class="fa fa-paper-plane"></i></span>
+
+                        <div class="info-box-content">
+                          <span class="info-box-text">{{'missedCalls' | translate}}</span>
+                          <span class="info-box-number">{{AllQty.MissedAll[0].QtyCalls}}</span>
+
+                          <div class="progress">
+                            <div class="progress-bar" style="width: {{AllQty.MissedAll[0].Percent}}%"></div>
+                          </div>
+                          <span class="progress-description">
+                                {{AllQty.MissedAll[0].Percent}}% {{'fromAllCalls' | translate}}
+                              </span>
+                        </div>
+                       </div>
+                     </div>
+                   </div>
+                </div>
+
+            </uib-tab>
+
+
+            <uib-tab index="1" >
+                <uib-tab-heading>
+                    <span> {{'AutoCall' | translate}} </span>  <span class="badge" style="background-color: #3c8dbc;"> {{contactsL[36].length + contactsL[37].length + contactsL[44].length}} </span>
+                </uib-tab-heading>
+                <div>
+                  <br/>
+                  <!-- Small boxes (Stat box) -->
+                  <div class="row">
+                    <!-- <div class="col-lg-12"> <h3 class="card-title">{{'AutoCall' | translate}}</h3> </div> -->
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                      <div class="info-box bg-info">
+                        <span class="info-box-icon"><i class="fa fa-bookmark"></i></span>
+                        <div class="info-box-content">
+                          <span class="info-box-text">{{'callsPerDay' | translate}}</span>
+                          <span class="info-box-number">{{AutoQty.TotalCallsAutocall[0].QtyCalls}}</span>
+
+                          <div class="progress">
+                            <div class="progress-bar" style="width: {{AutoQty.TotalCallsAutocall[0].Percent}}%"></div>
+                          </div>
+                          <span class="progress-description">
+                                {{AutoQty.TotalCallsAutocall[0].Percent}}% {{'calledBases' | translate}}
+                          </span>
+                        </div>
+                       </div>
+                     </div>
+
+                     <div class="col-md-3 col-sm-6 col-xs-12">
+                      <div class="info-box bg-success">
+                        <span class="info-box-icon"><i class="fa fa-thumbs-up"></i></span>
+                        <div class="info-box-content">
+                          <span class="info-box-text">{{'successfulCalls' | translate}}</span>
+                          <span class="info-box-number">{{AutoQty.AnsweredAutocall[0].QtyCalls}}</span>
+
+                          <div class="progress">
+                            <div class="progress-bar" style="width: {{AutoQty.AnsweredAutocall[0].Percent}}%"></div>
+                          </div>
+                          <span class="progress-description">
+                                {{AutoQty.AnsweredAutocall[0].Percent}}% {{'fromAllCalls' | translate}}
+                          </span>
+                        </div>
+                       </div>
+                     </div>
+                     <div class="col-md-3 col-sm-6 col-xs-12">
+                      <div class="info-box bg-warning">
+                        <span class="info-box-icon"><i class="fa fa-thumbs-down"></i></span>
+
+                        <div class="info-box-content">
+                          <span class="info-box-text">{{'unsuccessfulСcalls' | translate}}</span>
+                          <span class="info-box-number">{{AutoQty.NoAnsweredAutocall[0].QtyCalls}}</span>
+
+                          <div class="progress">
+                            <div class="progress-bar" style="width: {{AutoQty.NoAnsweredAutocall[0].Percent}}%"></div>
+                          </div>
+                          <span class="progress-description">
+                                {{AutoQty.NoAnsweredAutocall[0].Percent}}% {{'fromAllCalls' | translate}}
+                              </span>
+                        </div>
+                       </div>
+                     </div>
+
+                     <div class="col-md-3 col-sm-6 col-xs-12">
+                      <div class="info-box bg-danger">
+                        <span class="info-box-icon"><i class="fa fa-paper-plane"></i></span>
+
+                        <div class="info-box-content">
+                          <span class="info-box-text">{{'missedCalls' | translate}}</span>
+                          <span class="info-box-number">{{AutoQty.MissedAutocall[0].QtyCalls}}</span>
+                          <div class="progress">
+                            <div class="progress-bar" style="width: {{AutoQty.MissedAutocall[0].Percent}}%"></div>
+                          </div>
+                          <span class="progress-description">
+                                {{AutoQty.MissedAutocall[0].Percent}}% {{'fromAllCalls' | translate}}
+                          </span>
+                        </div>
+                       </div>
+                     </div>
+                   </div>
+
+                </div>
+            </uib-tab>
+</uib-tabset>
+
+
+                   <div class="row">
+                    <div class="col-md-12">
+                      <!-- AREA CHART -->
+                      <div class="card card-info card-outline">
+                        <div class="card-header with-border">
+                          <h3 class="card-title">{{'callsHour' | translate}}</h3>
+                        </div>
+                        <div class="card-body">
+                          <div class="chart">
+                              <highchart  config="chartConfig5" style="height:250px  !important;"></highchart>
+                          </div>
+                        </div>
+                       </div>
+                     </div>
+                   </div>
+
+
+
+
+         <div class="row" >
+          <div class="col-md-4" ng-show="BasePersent.length > 0">
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <div class="row">
+                <div class="col-md-6">
+                    <br>
+                    <h3 class="card-title">% {{'callfinish' | translate}}</h3>
+                    <br>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-12">
+                          <div class="input-group float-right">
+                            <ui-select ng-model='search.b' ng-change="searchB()" theme="bootstrap4-1" class="normal" size="100%" style="width:auto !important">
+                                <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.dbName}}</ui-select-match>
+                                <ui-select-choices repeat="c.dbID as c in Bases.data | filter: $select.search">
+                                    {{c.dbName}}
+                                </ui-select-choices>
+                            </ui-select>
+                            <span class="input-group-append" ng-if="search.b">
+                                <button  ng-click="search.b=''"  name="search" id="search-btn" class="btn btn-flat" ><i class="fa fa-times" ></i> </button>
+                            </span>
+                          </div>
+                      </div>
+                      
+                      <div class="col-md-12" style="padding-top:1.5%">
+                          <div class="input-group float-right" style="width: 100%">
+                            <input type="text" class="form-control" only-clear placeholder="{{'search' | translate}}..." ng-model="search.a" >
+                            <span class="input-group-append" ng-if="search.a">
+                                  <button type="submit" ng-click="search.a=''"  name="search" id="search-btn" class="btn btn-flat" ><i class="fa fa-times" ></i> </button>
+                            </span>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+                
+              </div>
+
+            </div>
+            <div class="card-body text-center" style="overflow-y: auto; height: 650px;" can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="10">
+            <div style="margin-bottom: 2%" ng-repeat="a in BasePersent | filter: search.a | filter: { 'data2' : search.b } | limitTo:limit track by $index" ng-hide="a.ffID == -1 || a.ffID == 0">
+                    <div style="cursor: pointer;"  ng-click="showStatistic[$index].show = !showStatistic[$index].show;GetStatus(a,key,$index,showStatistic[$index].show);">
+                      <div class="text-left"><b>{{a.Name}}</b></div>
+                      <uib-progressbar animate="true" value="a.Percent" max="100" type="{{manyAction.TypeProgress(a.Percent)}}" >
+                        <span ng-show="a.Percent" style="color:white; white-space:nowrap;">{{a.Percent}}%</span>
+                        <span ng-hide="a.Percent" style="color:grey; white-space:nowrap;">{{a.Percent}}%</span>
+                      </uib-progressbar>
+                    </div>
+
+                    <div ng-show="showStatistic[$index].show && a.cl_status.length > 0" style="width: 100%;">
+                                          <ul ng-show='showStatistic[$index].showInfo' style="list-style: none;">
+                                              <!--INFO-->
+                                                <li class="d-flex flex-column">
+                                                      <a style="background-color: white !important;color:black;display: -webkit-box;"><i class="fa fa-info"></i> {{'info' | translate}}</a>
+                                                      <ul style="display: block;list-style: none;">
+                                                        <!--Status-->
+                                                        <li class="d-flex flex-column">
+                                                                 <a style="background-color: white !important;color:black;" ng-repeat="value in a.cl_status" ng-show="(value.FilterID==1001 || value.FilterID==1002)" class="disabled" >
+                                                                      <div style="height: 20px">
+                                                                        <div style="color:{{(value.Name | ClientStatus).color}};" class="float-left" >
+                                                                            {{(value.Name | ClientStatus).status}}
+                                                                        </div>
+                                                                        <div ng-bind="value.Qty" class="badge badge-primary float-right"></div>
+                                                                      </div>
+                                                                </a>
+                                                        </li>
+                                                      </ul>
+                                                </li>
+                                          </ul>
+                                          <ul ng-show="showStatistic[$index].showStatus" style="list-style: none;">
+                                              <!--Status-->
+                                              <li class="d-flex flex-column">
+                                                      <a style="background-color: white !important;color:black;display: -webkit-box;"> <i class="fa fa-bar-chart-o"></i> {{'status' | translate}}</a>
+                                                      <ul style="display: block;list-style: none;">
+                                                        <!--Status-->
+                                                        <li class="d-flex flex-column">
+                                                                 <a style="color:black;" ng-show="(value.FilterID==1003 || value.FilterID==1004)" ng-repeat="value in a.cl_status">
+                                                                      <div style="height: 20px">
+                                                                        <div class="float-left" style="color:{{(value.Name | ClientStatus).color}};display: inline-block;" >
+                                                                            {{(value.Name | ClientStatus).status}}
+                                                                        </div>
+                                                                        <div ng-bind="value.Qty" class="badge float-right" ng-class="{'badge-danger' : (value.Name == 103 || value.Name == 203), 'badge-success' : (value.Name == 201 || value.Name == 202), 'badge-warning' : (value.Name == 206 || value.Name == 205 || value.Name == 102),'badge-primary' : value.Name == 101,'badge-info' : value.Name == 204}"></div>
+                                                                      </div>
+                                                                </a>
+                                                        </li>
+                                                      </ul>
+                                                </li>
+                                          </ul>
+                                          <ul ng-show="showStatistic[$index].showDocs" style="list-style: none;">
+                                              <!--Deal-->
+                                              <li class="d-flex flex-column">
+                                                      <a style="background-color: white !important;color:black;display: -webkit-box;"><i class="fa fa-files-o"></i> {{'documentation' | translate}}</a>
+                                                      <ul style="display: block;list-style: none;">
+                                                        <!--Status-->
+                                                        <li class="d-flex flex-column">
+                                                                 <a style="background-color: white !important;color:black;"
+                                                                    ng-show      = "a.cl_status && value.FilterID < 100 && value.FilterID > 0 " ng-repeat= "value in a.cl_status" class= "disabled">
+                                                                      <div style="height: 20px">
+                                                                        <div class=" float-left" style="color:{{(value.Name | ClientStatus).color}};display: inline-block;">
+                                                                            {{(value.Name | ClientStatus).status}}
+                                                                        </div>
+                                                                        <div ng-bind="value.Qty" class="badge badge-primary float-right"></div>
+                                                                      </div>
+                                                                </a>
+                                                        </li>
+                                                      </ul>
+                                                </li>
+                                          </ul>
+                      </div>
+                    </div>
+
+         </div>
+      </div>
+</div>
+
+      <div class="col-md-4" id="Dashboard" ng-show="CoreShowChannels.length>0">
+         <div class="card card-info card-outline">
+              <div class="card-header with-border">
+                 <h3 class="card-title">{{'ActiveChannels' | translate}}</h3>
+              </div>
+              <div class="card-body" ng-show="CoreShowChannels.length>0" style="overflow-y: auto; height: auto;" can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="100">
+                  <div class="col-lg-12">
+                    <uib-progressbar animate="true" value="CoreShowChannels.length" max="auth.FFF.count_of_calls" type="{{manyAction.TypeProgress2(CoreShowChannels.length,auth.FFF.count_of_calls)}}">
+                        <span style="margin-left:5px; color:black; white-space:nowrap; text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white; "> {{'calls' | translate}}  {{CoreShowChannels.length}} {{'from' | translate}} {{auth.FFF.count_of_calls}}  </span>
+                    </uib-progressbar>
+                  </div>
+            </div>
+          </div>
+      </div>
+<!--
+      <div class="col-md-4">
+         <div class="card card-info card-outline">
+              <div class="card-header with-border">
+                 <h3 class="card-title">{{'ActiveChannels' | translate}}</h3>
+              </div>
+              <div class="card-body" ng-show="CoreShowChannels.length>0" style="overflow-y: auto; height: auto;" can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="100">
+                  <div class="col-lg-12 " >
+                          {"event":"QueueSummary","data":[{"event":"QueueMember","queue":"3","name":"SIP/209_10","location":"SIP/209_10","stateinterface":"SIP/209_10","membership":"static","penalty":"0","callstaken":"0","lastcall":"0","incall":"0","status":"5","paused":false,"pausedreason":"","actionid":"81f0cdf0-ef04-11e8-a625-677cec5be575"},{"event":"QueueMember","queue":"3","name":"SIP/108_10","location":"SIP/108_10","stateinterface":"SIP/108_10","membership":"static","penalty":"0","callstaken":"0","lastcall":"0","incall":"0","status":"5","paused":false,"pausedreason":"","actionid":"81f0cdf0-ef04-11e8-a625-677cec5be575"},{"event":"QueueMember","queue":"3","name":"SIP/107_10","location":"SIP/107_10","stateinterface":"SIP/107_10","membership":"static","penalty":"0","callstaken":"0","lastcall":"0","incall":"0","status":"5","paused":false,"pausedreason":"","actionid":"81f0cdf0-ef04-11e8-a625-677cec5be575"},{"event":"QueueMember","queue":"3","name":"SIP/105_10","location":"SIP/105_10","stateinterface":"SIP/105_10","membership":"static","penalty":"0","callstaken":"0","lastcall":"0","incall":"0","status":"5","paused":false,"pausedreason":"","actionid":"81f0cdf0-ef04-11e8-a625-677cec5be575"},{"event":"QueueMember","queue":"3","name":"SIP/500_10","location":"SIP/500_10","stateinterface":"SIP/500_10","membership":"static","penalty":"0","callstaken":"0","lastcall":"0","incall":"0","status":"1","paused":true,"pausedreason":"","actionid":"81f0cdf0-ef04-11e8-a625-677cec5be575"}]} 1467
+
+
+                  </div>
+            </div>
+          </div>
+      </div> -->
+      
+</div>
+
+</div>

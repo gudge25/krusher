@@ -1,0 +1,100 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+              <div class="card-tools">
+              </div>
+            </div>
+
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tr>
+                        <td width="40%">{{'named' | translate}}</td>
+                        <td width="60%"><input class="form-control" ng-model="upd.coName" placeholder="{{'enterTitle' | translate}}"/></td>
+                    </tr>
+                     <tr>
+                        <td>{{'description' | translate}}</td>
+                        <td>
+                          <textarea maxlength="200" ng-model="upd.coDescription" msd-elastic style="background-color: lightgoldenrodyellow;color: dimgrey" class="form-control" rows="3" id="comment" placeholder="{{'descriptionType' | translate}} "></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'Outgoing' | translate}} {{'greeting' | translate | lowercase}}</td>
+                        <td>
+                          <textarea maxlength="500" ng-model="upd.outMessage" msd-elastic style="background-color: lightgoldenrodyellow;color: dimgrey" class="form-control" rows="3" id="comment"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'Incoming' | translate}} {{'greeting' | translate | lowercase}}</td>
+                        <td>
+                          <textarea maxlength="200" ng-model="upd.inMessage" msd-elastic style="background-color: lightgoldenrodyellow;color: dimgrey" class="form-control" rows="3" id="comment" ></textarea>
+                        </td>
+                    </tr> 
+                    <tr>
+                        <td>{{'active' | translate}}</td>
+                        <td><label class="float-right"><input type="checkbox" cb-switch ng-model="upd.isActive"  placeholder="{{'active' | translate}}"></label></td>
+                    </tr>
+                    <tr ng-include="'/Views/tableEdit.html'" ng-show="upd.Created"></tr>
+                    <tr ng-include="'/Views/tableEdit2.html'" ng-show="upd.Changed || upd.Changed==0"></tr>
+                </table>
+            </div>
+          </div>
+
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'POPup' | translate}}  </h3>
+              <div class="card-tools">
+              </div>
+            </div>
+
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tr >
+                        <td width="40%">{{'pauseAnswered' | translate}}</td>
+                        <td width="60%">
+                          <div class="input-group">
+                              <input numeric-only class="form-control" ng-model="upd.pauseDelay">
+                              <div class="input-group-append">
+                                      <button type="button" class="btn btn-default" ng-click="upd.pauseDelay=upd.pauseDelay+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                      <button type="button" class="btn btn-default" ng-disabled="upd.pauseDelay <= 0" ng-click="upd.pauseDelay=upd.pauseDelay-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                              </div>
+                          </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'isRingingPOPup' | translate}}</td>
+                        <td><label class="float-right"><input type="checkbox" cb-switch ng-model="upd.isRingingPOPup"  placeholder="{{'isRingingPOPup' | translate}}"></label></td>
+                    </tr>
+                    <tr>
+                        <td>{{'isUpPOPup' | translate}}</td>
+                        <td><label class="float-right"><input type="checkbox" cb-switch ng-model="upd.isUpPOPup"  placeholder="{{'isUpPOPup' | translate}}"></label></td>
+                    </tr>
+                    <tr>
+                        <td>{{'isCCPOPup' | translate}}</td>
+                        <td><label class="float-right"><input type="checkbox" cb-switch ng-model="upd.isCCPOPup"  placeholder="{{'isCCPOPup' | translate}}"></label></td>
+                    </tr>
+                    <tr>
+                        <td>{{'isClosePOPup' | translate}}</td>
+                        <td><label class="float-right"><input type="checkbox" cb-switch ng-model="upd.isClosePOPup"  placeholder="{{'isClosePOPup' | translate}}"></label></td>
+                    </tr>
+                    <tr>
+                        <td>{{'active' | translate}}</td>
+                        <td><label class="float-right"><input type="checkbox" cb-switch ng-model="upd.isActivePOPup"  placeholder="{{'active' | translate}}"></label></td>
+                    </tr>
+                </table>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-8">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-click="manyAction.Update(upd,'Company')" ng-hide="manyAction.Check_upd_old()">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="Company">{{'cancel' | translate}}</button>
+                    </div>
+        </div>
+    </div>
+</section>

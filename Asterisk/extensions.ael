@@ -1,0 +1,63 @@
+//---------------------Global configs---------------------------
+globals {
+        FILE                    =/var/spool/asterisk/monitor/;
+        //Record                  =/var/www/html/hapi/uploads/records/;
+        Record                  =/mnt/rd/records/;
+        RecordRD                =/mnt/rd/;
+        DYNAMIC_FEATURES        =1#2#3#4#5#6#7#8#9#0;
+        tech                    =SIP;
+        options                 =;
+        dialtime                =60;
+        language                =ru;
+        CALLINFO                =Call-Info: answer-after=0;
+        SIPURI                  =intercom=true;
+        options_2               =U(gtalk)tTr;
+        optionsIn               =t;
+}
+
+#include "extensions/global.ael"
+//---------------------Public configs---------------------------
+context public {
+        _!      => { NoCdr; System(iptables -A INPUT -s ${CHANNEL(recvip)} -j DROP); Hangup;}
+        h       => Hangup;
+}
+
+context auto-answer {
+        _XX. => {
+                NoCDR;
+                if("${CALLINFO}" != ""){ SipAddHeader(${CALLINFO});        }
+                if("${SIPURI}" != "")  { Set(__SIP_URI_OPTIONS=${SIPURI}); }
+                Dial(${tech}/${EXTEN},${dialtime},${options});
+                Hangup;
+        }
+};
+
+context hints {
+        //includes { db_hint; }
+        hint(SCCP/500) 500 => { DIAL(SCCP/${EXTEN},,tTr); Hangup; }
+        regexten hint(SIP/${EXTEN}) _[A-EG-Za-eg-z0-9]. => { DIAL(SIP/${EXTEN},,tTr); Hangup; }
+}
+
+//---------------------Addtitionals configs---------------------
+#include "extensions/macros.ael"
+#include "extensions/macros_krusher.ael"
+#include "extensions/custom.ael"
+#include "extensions/db_sip.ael"
+#include "extensions/db_sip_hint.ael"
+#include "extensions/db_office.ael"
+#include "extensions/db_route_out.ael"
+#include "extensions/db_base_in.ael"
+#include "extensions/db_base.ael"
+#include "extensions/db_incoming.ael"
+#include "extensions/db_route_in.ael"
+#include "extensions/db_queue.ael"
+#include "extensions/db_record.ael"
+#include "extensions/db_hangup.ael"
+#include "extensions/db_ivr.ael"
+#include "extensions/db_trunk.ael"
+#include "extensions/db_time.ael"
+#include "extensions/db_callback.ael"
+#include "extensions/db_company.ael"
+#include "extensions/db_conference.ael"
+#include "extensions/db_scenario.ael"
+#include "extensions/db_transfer.ael"

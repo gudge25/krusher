@@ -1,0 +1,105 @@
+<section class="content" ui-view="viewA" style="width: 100%; height: 100h; ">
+
+<div class="btn-group float-right" >
+    <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+            <img ng-src="/LTE/dist/img/{{lang}}.svg" class="btn-lang">
+    </button>
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href  ng-class="{ 'active' : lang == 'en'}" ng-click="manyAction.changeLanguage('en')" style="cursor: pointer;"> <img src="/LTE/dist/img/en.svg" style="width: 20px"> English    </a> 
+            <a class="dropdown-item" href  ng-class="{ 'active' : lang == 'ru'}" ng-click="manyAction.changeLanguage('ru')" style="cursor: pointer;"> <img src="/LTE/dist/img/ru.svg" style="width: 20px"> Russian    </a>  
+            <a class="dropdown-item" href  ng-class="{ 'active' : lang == 'ua'}" ng-click="manyAction.changeLanguage('ua')" style="cursor: pointer;"> <img src="/LTE/dist/img/ua.svg" style="width: 20px"> Ukrainian  </a>  
+    </div>
+</div>
+
+<div class="container " style="padding-top:7%; max-width: 800px;">
+    <div class="row" >
+        <div class="col-md-6" style="color: gainsboro;">
+            <div><img src="/images/krus_logo.png" alt="User Image" style="width: 70%;"></div>
+            <br/>
+            <span ng-bind="'autodial' | translate"></span>
+            <br/><br/>
+            <span ng-bind="'importantForUs' | translate"></span>
+            <br/><br/>
+            <span ng-bind="'importantForUs2' | translate"></span>
+        </div>
+
+       <div class="col-md-6 panel panel-default">
+            <div class="middle-box text-center loginscreen animated fadeInDown login-card-body">
+                <h3>{{ 'Register to' | translate}}</h3>
+                <p>{{ 'Create account to see it in action' | translate}}</p>
+                <hr/>
+                <div class="form-group has-feedback" ng-class="{ 'has-error' : (!model.LoginName && edit) || model.LoginName.length > 30 , 'has-success' : model.LoginName }">
+                    <input pattern="^[a-zA-Z0-9._-]+$" required ng-maxlength="30" ng-model="model.LoginName" class="form-control" placeholder="{{'login' | translate}}" ng-change="edit=true;" ng-enter="model.Domain = model.LoginName + model.Domain" >
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    <span class="help-block" ng-show="model.LoginName == null && edit">{{'typeLogin'| translate}} <br/> {{'typeLoginLeng'| translate}} </span>
+                 </div>
+
+                <div class="form-group has-feedback" ng-class="{ 'has-error' : !model.Email && edit3, 'has-success' : model.Email }">
+                    <input type="email" required ng-model="model.Email" class="form-control" placeholder="{{'Email' | translate}}" ng-change="edit3=true;">
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    <span class="help-block" ng-show="!model.Email && edit3">{{'typeEmail'| translate}}</span>
+                </div>
+
+                <div class="form-group has-feedback" ng-class="{ 'has-error' : !model.Phone && edit2, 'has-success' : model.Phone }">
+                    <input only-clear ng-model="model.Phone" class="form-control" placeholder="{{'phone' | translate}}" ng-change="edit2=true;ClearPhone();">
+                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                    <span class="help-block" ng-show="!model.Phone && edit2">{{'typePhone'| translate}}</span>
+                </div> 
+
+                <div class="form-group " ng-class="{ 'has-error' : model.Domain.length == 0, 'has-success' : model.Domain }">
+                    <div class="row">
+                        <div class="col-lg-7"  style="margin-right: 0px;padding-right: 0px;">
+                            <input ng-model="model.Domain" class="form-control" placeholder="{{'domain' | translate}}">
+                            <!-- <span class="glyphicon glyphicon-globe form-control-feedback"></span> -->
+                            <span class="help-block" ng-show="model.Domain.length == 0">{{'typeDomain'| translate}}</span>
+                        </div>
+                        <div class="col-lg-5 text-left" style="margin: 0px;padding: 0px;">
+                            <a ng-show="model.Domain" target="_blank" ng-href="//{{model.Domain}}.krusher.biz" class="btn btn-link" style="margin-right: : 0px;padding-right: 0px;margin-left: 5px;padding-left: 0px;" >.krusher.biz</a>
+                            <a  ng-hide="model.Domain" ng-disabled="true" class="btn btn-link" style="margin-right: : 0px;padding-right: 0px;margin-left: 5px;padding-left: 0px;" >.krusher.biz</a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group has-feedback" ng-class="{'has-error' : model.Pass.length < 12,'has-success' : model.Pass.length >= 12 }">
+                    <input ng-model="model.Pass" type="password" class="form-control" placeholder="{{'password' | translate}}">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    <span class="help-block" ng-show="model.Pass.length < 12">{{'passwLeng'| translate}}</span>
+                </div>
+
+                    <div class="form-group" ng-show="model.Pass.length >= 12 && model.Phone && model.Email && model.Domain && model.LoginName">
+                            <div class="checkbox i-checks"><label>  <checkbox class="btn" ng-class="{'btn-success' : terms }"ng-model="terms"></checkbox></i> &#160  {{ 'Agree the terms and policy' | translate}}</label></div>
+                    </div>
+
+                    <button ng-show="terms"  ng-disabled="!model.LoginName || !model.Pass || !model.Domain || model.Pass.length < 12" class="btn btn-primary block full-width m-b" ng-click="manyAction.Save(model,'login')"> {{'registration' | translate}} </button>
+                    <hr/>
+                    <!-- <p class="text-muted text-center"><small>{{ 'Already have an account' | translate}}?</small></p> -->
+                    <a target="_blank" style="cursor: pointer;" ng-click="manyAction.goTo('login')" class="text-muted text-center"><small>{{ 'Already have an account' | translate}}?</small></a> 
+
+
+                    <!-- <div class="row form-group" >
+                        <div class="col-lg-12">
+                            <button type="button"
+                                class="btn btn-block btn-primary btn-lg btn-flat"
+                                style="line-height: 1.5; font-family: sans-serif; font-weight: bold; font-size: 14px; height: 40px; border-radius: 3px; box-shadow: 0 -3px 0 0 hsla(0, 0%, 0%, 0.2) inset;"
+                                ng-click="manyAction.goTo('login')">
+                                {{'login' | translate}}
+                            </button>
+                        </div>
+                    </div> -->
+        </div>
+
+      </div>
+
+                <div class="col-md-6">
+                    <br>
+                    <a target="_blank" href="https://asterisk.biz.ua" style="font-size: 85%;">{{'aster' | translate}}</a> <span style="color: gainsboro;">|</span> <a target="_blank" href="https://krusher.biz" style="font-size: 85%;"> Krusher</a>
+                </div>
+                <div class="col-md-6" >
+                    <br>
+                    <span style="float: right;color: gainsboro;" >© <span  ng-bind="NowDate"/> </span>
+                </div>
+            </div>
+</div>
+</div>
+</section>

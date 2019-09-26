@@ -1,0 +1,140 @@
+<ul class="timeline">
+        <li class="time-label" ng-repeat-start="e in documents | orderBy:'-Changed' | limitTo:limit track by $index">
+            <span class="bg-green" ng-show="SetDate(documents,e.Changed,$index)">
+                {{e.Changed | date:'dd.MM.yyyy'}}
+            </span>
+        </li>
+
+        <li ng-switch="e.dup_action" ng-repeat-end>
+            <i class="fa fa-envelope bg-aqua"  ng-switch-when='I'></i>
+            <i class="fa fa-envelope bg-blue" ng-switch-when='U'></i>
+            <i class="fa fa-envelope bg-maroon" ng-switch-when='D'></i>
+            <div class="timeline-item">
+                <span class="time">{{e.ChangedBy | emFilters}} <i class="fa fa-clock"></i> {{e.Changed | date:' HH.mm'}}</span>
+                <h3 class="timeline-header ">
+                    <a ng-href="/#!/clientPreView/{{e.clID}}"> {{e.clName}}  </a>
+                    <small> {{e.dup_action | Action}}</small>
+                </h3>
+                <div class="timeline-body">
+                        <div ng-switch-when='I'>
+                            <b>
+                                <span ng-if="e.dctName=='Сделка'"> {{'deal' | translate}}:</span>
+                                <span ng-if="e.dctName=='Анкета'"> {{'form' | translate}}:</span>
+                                <span ng-if="e.dctName=='Платеж'"> {{'payment' | translate}}:</span>
+                                <span ng-if="e.dctName=='Счет'"  > {{'account' | translate}}:</span>
+                                <a ng-if="e.dctName=='Сделка'"  ng-href="/#!/DealEdit/{{e.dcID}}"><i> {{e.dcNo}}</i></a>
+                                <a ng-if="e.dctName=='Анкета'"  ng-href="/#!/form/{{e.dcID}}"> <i>    {{e.dcNo}} </i></a>
+                                <a ng-if="e.dctName=='Платеж'"  ng-href="/#!/Payment/{{e.dcID}}"> <i> {{e.dcNo}} </i></a>
+                                <a ng-if="e.dctName=='Счет'"    ng-href="/#!/Invoice/{{e.dcID}}"> <i> {{e.dcNo}} </i></a>
+                            </b>
+                            <ul>
+                                <li ng-if="e.dcStatusName">
+                                    {{'status' | translate}}:
+                                    <a href=""> {{e.dcStatusName}} </a>
+                                </li>
+                                <li ng-if="e.dcSum">
+                                    {{'amount' | translate}}:
+                                    <a href=""> {{e.dcSum}} </a>
+                                </li>
+                                <li ng-if="e.emID">
+                                    {{'responsible' | translate}}:
+                                    <a ng-href="/#!/edit/employee/{{e.emID}}"> {{e.emName}} </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div ng-switch-when='U'>
+                            <b> <span ng-if="e.dctName=='Сделка'"> {{'deal' | translate}}:</span>
+                                <span ng-if="e.dctName=='Анкета'"> {{'form' | translate}}:</span>
+                                <span ng-if="e.dctName=='Платеж'"> {{'payment' | translate}}:</span>
+                                <span ng-if="e.dctName=='Счет'"  > {{'account' | translate}}:</span>
+                                <a ng-if="e.dctName=='Сделка'"  ng-href="/#!/DealEdit/{{e.dcID}}"><i> {{e.dcNo}}</i></a>
+                                <a ng-if="e.dctName=='Анкета'"  ng-href="/#!/form/{{e.dcID}}"> <i>    {{e.dcNo}} </i></a>
+                                <a ng-if="e.dctName=='Платеж'"  ng-href="/#!/Payment/{{e.dcID}}"> <i> {{e.dcNo}} </i></a>
+                                <a ng-if="e.dctName=='Счет'"    ng-href="/#!/Invoice/{{e.dcID}}"> <i> {{e.dcNo}} </i></a>
+                            </b>
+
+                            <ul>
+                                <!-- <li ng-if="e.dup_action">
+                                    {{'change' | translate}}:
+                                    <a href=""> {{e.dup_action | Action}} </a>
+                                </li> -->
+                                <li ng-if="e.isPerson != e.OLD_isPerson && e.OLD_isPerson!=null">
+                                    {{'clientId' | translate}}:
+                                    <a href=""> {{e.OLD_clID}} <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>{{e.clID}}</a>
+                                </li>
+                                <li ng-if="e.dcDate != e.OLD_dcDate && e.OLD_dcDate!=null">
+                                    {{'documentDate' | translate}}:
+                                    <a>{{e.e.OLD_dcDate}} <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>{{e.dcDate}} </a>
+                                </li>
+                                <li ng-if="e.dcNo != e.OLD_dcNo && e.OLD_dcNo!=null">
+                                    {{'documentNumber' | translate}}:
+                                    <a> {{e.OLD_dcNo}} <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> {{e.dcNo}} </a>
+                                </li>
+                                <li ng-if="e.dcStatus != e.OLD_dcStatus && e.OLD_dcStatus!=null">
+                                    {{'docStatus' | translate}}:
+                                    <a> {{e.OLD_dcStatus}}    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>{{e.dcStatus}}</a>
+                                </li>
+                                <li ng-if="e.dcSum != e.OLD_dcSum && e.OLD_dcSum!=null">
+                                    {{'docAmount' | translate}}:
+                                    <a> {{e.OLD_dcSum}} <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>{{e.dcSum}}</a>
+                                </li>
+                                <li ng-if="e.emID != e.OLD_emID && e.OLD_emID!=null">
+                                    {{'responsible' | translate}}:
+                                    <a>{{e.OLD_emID}} <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> <a ng-href="/#!/edit/employee/{{e.emID}}"> {{e.emID}} </a> </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div ng-switch-when='D'>
+                            <b> <span ng-if="e.dctName=='Сделка'"> {{'deal' | translate}}</span>
+                                <span ng-if="e.dctName=='Анкета'"> {{'form' | translate}} </span>
+                                <span ng-if="e.dctName=='Платеж'"> {{'payment' | translate}} ></span>
+                                <span ng-if="e.dctName=='Счет'"  > {{'account' | translate}} </span>
+                                :
+                                <a ng-if="e.dctName=='Сделка'"> <i> {{e.dcNo}}</i></a>
+                                <a ng-if="e.dctName=='Анкета'"> <i> {{e.dcNo}} </i></a>
+                                <a ng-if="e.dctName=='Платеж'"> <i> {{e.dcNo}} </i></a>
+                                <a ng-if="e.dctName=='Счет'">   <i> {{e.dcNo}} </i></a>
+                            </b>
+                            : {{'removed' | translate}}
+                        </div>
+                </div>
+
+                 <div class="timeline-footer">
+                <!-- COMENNTS BLOCK -->
+                 <div class="row">
+                      <div class="col-lg-3 pull-left">
+                        <a class="btn bg-link" ng-click="getComment(e.uID);status = true" ng-show="!status">{{'seeComent' | translate}}</a>
+                        <a class="btn bg-link" ng-click="status = false" ng-show="status">{{'hideComent' | translate}}</a>
+
+                        <div ng-repeat="c in comments[e.uID]" ng-show="status">
+                                <a ng-href="/#!/edit/employee/{{e.CreatedBy}}">{{e.CreatedBy | emFilters}}</a> </br>
+                                {{c.uComment}} </br>
+                                <span style="color:silver;">{{c.Created | date:'dd.MM.yyyy HH:mm:ss'}}</span> </br>
+
+                        </div>
+                      </div>
+
+                      <div class="col-lg-4 float-right">
+                        <form >
+                          <div class="input-group">
+                            <input ng-model="e.new.uComment" class="form-control" rows="2" msd-elastic="\n" id="comment" ng-enter="new.uID = e.uID; new.uComment = e.new.uComment; manyActionComments.Save(new,''); e.new.uComment = null;getComment(e.uID);" placeholder="{{'sendPlacehol' | translate}}">
+                            <span class="input-group-append">
+                              <button type="submit"
+                                 ng-click="new.uID = e.uID; new.uComment = e.new.uComment; manyActionComments.Save(new,''); e.new.uComment = null;getComment(e.uID);"
+                                 ng-disabled="!e.new.uComment" class="btn btn-primary btn-flat"  >{{'send' | translate}}</button>
+                            </span>
+                          </div>
+                        </form>
+                      </div>
+                  </div>
+
+                  </div>
+        </div>
+        </li >
+        <li>
+            <i class="fa fa-clock bg-gray"></i>
+        </li>
+</ul>
+

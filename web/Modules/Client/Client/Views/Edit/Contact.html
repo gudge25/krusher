@@ -1,0 +1,154 @@
+<table class="table table-head-fixed table-hover borderless">
+     <tr>
+        <th class="col-xs-5">{{'active' | translate}}</th>
+        <td  class="col-xs-6">
+            <label style="margin-bottom: 0px;"><input type="checkbox" cb-switch ng-model="client.isActive"></label>
+        </td>
+    </tr>
+    <tr>
+        <th> {{'physFace' | translate}}</th>
+        <td>
+            <label style="margin-bottom: 0px;"><input type="checkbox" cb-switch ng-model="client.IsPerson" ng-change="changeTabs(client.IsPerson)"></label>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <span ng-bind="'сounterparty' | translate" ng-hide="client.IsPerson"></span>
+            <span ng-bind="'client' | translate" ng-show="client.IsPerson"></span>
+        </th>
+        <td>
+            <input class="form-control" ng-model="client.clName" placeholder="{{client.clName}}" only-clear>
+        </td>
+    </tr>
+    <tr>
+        <th> {{'actualStatus' | translate}}</th>
+        <td>
+            <div class="input-group" style="width: 100%">
+                <ui-select ng-model="client.ActualStatus" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                            <ui-select-choices repeat="c.tvID as c in crmClientStatus | filter: $select.search">
+                            {{c.Name | translate}}
+                            </ui-select-choices>
+                </ui-select>
+                <span class="input-group-append">
+                            <button ng-show="client.ActualStatus" type="button" class="btn btn-default" ng-click="client.ActualStatus = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                </span>
+            </div> 
+        </td>
+    </tr>
+    <tr ng-show="client.IsPerson">
+        <th> {{'id' | translate}}</th>
+        <td>
+            <input class="form-control" ng-model="Org.TaxCode" placeholder="{{Org.TaxCode}}" only-clear>
+        </td>
+    </tr>
+
+    <tr>
+        <th>{{'tags' | translate}}</th>
+        <td>
+            <ui-select  multiple tagging tagging-label="(custom 'new' label)" ng-model="tags.data" theme="bootstrap4-1" sortable="true" style='height: auto;'>
+                <ui-select-match placeholder="{{'SelectTags' | translate}}">{{$item.tagName}}</ui-select-match>
+                <ui-select-choices repeat="a in Tags.data  | filter:$viewValue">{{a.tagName}}</ui-select-choices>
+            </ui-select>
+        </td>
+    </tr>
+    <tr>
+        <th>{{'responsible' | translate}}</th>
+        <td>
+            <select class="form-control" ng-model="client.responsibleID" ng-options="a.emID as a.emName for a in employees.data"></select>
+        </td>
+    </tr>
+    <tr>
+        <th >{{'status' | translate}}</th>
+        <td>
+            <div class="col-xs-4">
+                    <label><input type="checkbox" cb-switch ng-model="client.isFixed"></label>
+                    <span>{{'setStatically ' | translate}}</span>
+            </div>
+            <div class="col-xs-8">
+                <select class="form-control" ng-model="client.clStatus"
+                    ng-options="a.ID as a.Name for a in status" data-ng-disabled="!client.isFixed">
+                </select>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th>{{'dateOfCommunications' | translate}}</th>
+        <td>        <div class="input-group" style="width: 100%">
+                            <input ng-model="client.CallDate" class="form-control" ng-model-options="{ updateOn: 'blur' }" placeholder="{{'select a date' | translate}}">
+                            <span class="input-group-append">
+                              <button moment-picker="client.CallDate" min-date="client.CallDate" class="btn btn-default">
+                                    <i aria-hidden="true" class="fa fa-calendar"></i>
+                              </button>
+                              <button ng-show="client.CallDate" type="button" class="btn btn-default" ng-click="client.CallDate = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                            </span>
+                    </div>
+        </td>
+    </tr>
+
+    <tr>
+        <th>{{'file' | translate}}</th>
+        <td>
+            <select class="form-control" ng-model="client.ffID" ng-options="a.ffID as a.ffName for a in File.data" >
+                <option value="">{{'selectFile' | translate}}</option>
+            </select>
+        </td>
+    </tr>
+
+    <tr>
+        <th>{{'companyID' | translate}}</th>
+        <td>
+            <input class="form-control" ng-model="client.CompanyID" numeric-only/>
+        </td>
+    </tr>
+
+    <tr ng-show="client.IsPerson">
+        <th>{{'sex' | translate}}</th>
+        <td>
+            <select class="form-control"
+                ng-model    ="client.Sex"
+                ng-options  ="e.tvID as e.Name for e in Enums.group[1010]">
+            </select>
+        </td>
+    </tr>
+
+<!--     <tr>
+        <th>{{'OrgType' | translate}}</th>
+        <td>
+            <select class="form-control"
+                ng-model    ="Org.OrgType"
+                ng-options  ="e.tvID as e.Name for e in Enums.group[3]">
+            </select>
+        </td>
+    </tr> -->
+
+    <tr>
+        <th>{{'position' | translate}}</th>
+        <td>
+            <select class="form-control" ng-model="client.Position" ng-options="a.tvID as a.Name for a in Enums.group[1012]"> </select>
+        </td>
+    </tr>
+
+    <tr>
+        <th>{{'connected' | translate}}</th>
+        <td>
+            <input
+                   type="text"
+                   ng-model="searchclient"
+                   uib-typeahead="a as a.clName for a in manyAction.SearchClient($viewValue)"
+                   class="form-control"
+                   placeholder="{{'selectCustomer' | translate}}"
+                   typeahead-wait-ms="250"
+                   typeahead-on-select= "client.ParentID=searchclient.clID"
+                   ng-change="client.ParentID=''"
+                   only-clear
+                    />
+        </td>
+    </tr>
+    <tr>
+        <th>{{'note' | translate}}:</th>
+        <td>
+            <textarea maxlength="200" placeholder="{{'descriptionType' | translate}}" style="background-color: lightgoldenrodyellow;color: dimgrey;min-height: 96px;" only-clear ng-model="client.Comment" msd-elastic class="form-control" msd-elastic rows="3" id="comment"></textarea>
+        </td>
+    </tr>
+ </table>

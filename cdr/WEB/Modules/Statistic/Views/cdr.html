@@ -1,0 +1,270 @@
+ 
+ 
+ <nav class="navbar-fixed-top    " role="navigation">
+ <div class="collapse navbar-collapse navbar-ex1-collapse"> 
+		<ul class=" nav navbar-nav side-nav" style="left:0px;background-color: #f7f7f7;" ng-show="loading"  >
+			<li><a>
+				<span  >
+					<b>Загрузка</b> <i class="fa fa-spinner fa-spin fa-2x"></i>
+				</span>	
+			</a></li>
+		</ul>
+ 
+		 <ul class=" nav navbar-nav side-nav" style="left:0px;background-color: #f7f7f7;" ng-show="!loading" >
+			<li><a>
+ 
+			</a></li>
+ 
+            <li class="dropdown">
+              <a ng-click="cdr = incoming;limit();Group_for_graph(cdr);" class="dropdown-toggle" data-toggle="dropdown" style="color:grey;"> <i class="fa fa-arrow-down fa-lg"></i> </i> <b>Входящие</b>  <span class="badge pull-right">{{incoming.length}}</span> <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a stop-event="click" ng-click="cdr = incoming_ans;limit();Group_for_graph(cdr);" >	Отвечено	<span class="badge pull-right">{{incoming_ans.length}}		</span></a></li>
+                <li><a stop-event="click" ng-click="cdr = incoming_noans;limit();Group_for_graph(cdr);">Пропущено	<span class="badge pull-right">{{incoming_noans.length}}	</span></a></li>
+                <li><a stop-event="click" ng-click="cdr = incoming_busy;limit();Group_for_graph(cdr);">	Занято		<span class="badge pull-right">{{incoming_busy.length}}	</span></a></li>
+                <li><a stop-event="click" ng-click="cdr = incoming_fail;limit();Group_for_graph(cdr);">	Ошибка		<span class="badge pull-right">{{incoming_fail.length}}	</span></a></li>
+              </ul>
+            </li>
+			<li class="dropdown">
+              <a ng-click="cdr = outgoing;limit();Group_for_graph(cdr);" class="dropdown-toggle" data-toggle="dropdown" style="color:grey;"> <i class="fa fa-arrow-up fa-lg"></i> </i> <b>Исходящие</b>  <span class="badge pull-right">{{outgoing.length}}</span> <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a stop-event="click" ng-click="cdr = outgoing_ans;limit();Group_for_graph(cdr);" >	Отвечено	<span class="badge pull-right">{{outgoing_ans.length}}		</span></a></li>
+                <li><a stop-event="click" ng-click="cdr = outgoing_noans;limit();Group_for_graph(cdr);">Пропущено	<span class="badge pull-right">{{outgoing_noans.length}}	</span></a></li>
+                <li><a stop-event="click" ng-click="cdr = outgoing_busy;limit();Group_for_graph(cdr);">	Занято		<span class="badge pull-right">{{outgoing_busy.length}}	</span></a></li>
+                <li><a stop-event="click" ng-click="cdr = outgoing_fail;limit();Group_for_graph(cdr);">	Ошибка		<span class="badge pull-right">{{outgoing_fail.length}}	</span></a></li>
+              </ul>
+            </li>
+			<li class="dropdown">
+              <a ng-click="cdr = local;limit();Group_for_graph(cdr);" class="dropdown-toggle" data-toggle="dropdown" style="color:grey;"> <i class="fa fa-arrows fa-lg"></i> </i> <b>Внутренние</b> <span class="badge pull-right">{{local.length}}</span><b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a stop-event="click" ng-click="cdr = local_ans;limit();Group_for_graph(cdr);" >	Отвечено	<span class="badge pull-right" >{{local_ans.length}}	</span></a></li>
+                <li><a stop-event="click" ng-click="cdr = local_noans;limit();Group_for_graph(cdr);">	Пропущено	<span class="badge pull-right">{{local_noans.length}}	</span></a></li>
+                <li><a stop-event="click" ng-click="cdr = local_busy;limit();Group_for_graph(cdr);">	Занято		<span class="badge pull-right">{{local_busy.length}}	</span></a></li>
+                <li><a stop-event="click" ng-click="cdr = local_fail;limit();Group_for_graph(cdr);">	Ошибка		<span class="badge pull-right">{{local_fail.length}}	</span></a></li>
+              </ul>
+            </li>
+			<li class="dropdown">
+              <a  ng-click="cdr = all;limit();Group_for_graph(cdr);" class="dropdown-toggle" data-toggle="dropdown" style="color:grey;"> <i class="fa fa-globe fa-lg"></i> </i> <b>Все</b> <span class="badge pull-right">{{all.length}}</span><b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a stop-event="click" ng-click="cdr = all_ans;limit();Group_for_graph(cdr);" >		Отвечено	<span class="badge pull-right">{{all_ans.length}}	</span></a></li>
+                <li><a stop-event="click" ng-click="cdr = all_noans;limit();Group_for_graph(cdr);">		Пропущено	<span class="badge pull-right">{{all_noans.length}}	</span></a></li>
+                <li><a stop-event="click" ng-click="cdr = all_busy;limit();Group_for_graph(cdr);">		Занято		<span class="badge pull-right">{{all_busy.length}}	</span></a></li>
+                <li><a stop-event="click" ng-click="cdr = all_fail;limit();Group_for_graph(cdr);">		Ошибка		<span class="badge pull-right">{{all_fail.length}}	</span></a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a  ng-click="cdr = cdr_active;limit();Group_for_graph(cdr);" class="dropdown-toggle" data-toggle="dropdown" style="color:grey;"> <i class="fa fa-info fa-lg"></i> </i> <b>на обзвон</b> <span class="badge pull-right">{{cdr_active.length}}</span></a>              
+            </li>
+			
+            <!--
+           <li class="dropdown">
+              <a  ng-click="operarot_cdr = false;limit();Group_for_graph(cdr);" class="dropdown-toggle" data-toggle="dropdown" style="color:grey;"> <i class="fa fa-users fa-lg"></i> </i> <b>Операторы</b> <span class="badge pull-right">{{sippeers_g.length}}</span><b class="caret"></b></a>
+              <ul class="dropdown-menu">
+			<li><a stop-event="click"  ng-click="$parent.operarot_cdr = item.name;limit();Group_for_graph(cdr);" ng-repeat="item in sippeers_g" >	{{item.name}}	{{item.callerid}}  <span class="badge pull-right"> </li>
+				</a> 		
+			</li>
+                
+              </ul>
+            </li>-->
+		 	
+			
+			 
+		  <br/> <br/>
+			</a></li>
+			
+			<li> <a><input type="text" 		class="form-control" ng-model="cdr_q" 		style="background-color: lightyellow" placeholder="Поиск.. найденых {{cdr.length}} записях"></a></li>
+			<li> <a><input type="number" 	class="form-control" ng-model="cdr_limit" 	style="background-color: lightyellow;width:33%;" placeholder="Лимит"></a></li>
+ 			<li> <a><input type="text" 		class="form-control" ng-model="sip" 		ng-enter="limit();load();" style="background-color: lightyellow" placeholder="Оператор"> </a></li>
+			<li> <a><input type="text" 		class="form-control" ng-model="sip_out_value"  ng-enter="AddtoLocalStorage(sip_out_value);sip_out_value='';GetPhone();load_d();" style="background-color: lightyellow" placeholder="Добавить исключение"></a></li> 
+			<li class="dropdown" ng-show="a.length > 0">
+			      <a  class="dropdown-toggle" data-toggle="dropdown">  <b>Удалить исключения</b>  <b class="caret"></b></a>
+			      <ul class="dropdown-menu">
+				<li role="presentation" ng-repeat="item in a" ng-click="DellPhone($index); "><a role="menuitem" tabindex="-1" ><i class="fa fa-trash-o"></i> {{item.Phone}} </a> </li>		
+			      </ul>
+			</li>
+			<li ><span style="position: relative;display: block;padding: 10px 15px;color: #999;">Коментарий: <input   type="checkbox" ng-model="comment_on_off"></span></li> 
+			<li ><span style="position: relative;display: block;padding: 10px 15px;color: #999;">Запись: <input   type="checkbox" ng-model="audio_on_off"></span></li>
+
+          </ul>
+		 
+		  
+</div>		  
+</nav> 
+		 
+
+ <div id="wrapper" ng-show="!loading" >
+ 	 <div class="row">
+		<div class="col-md-12"  style="margin-top:55px;">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" id="myTab">
+			  <li >	c  <input type="text" class="form-control" ng-model="fromDate"  data-max-date="{{untilDate}}"  placeholder="From"  bs-datepicker style="width:30%; display: inline;background-color: lightyellow" ng-change="load();"> 
+					по <input type="text" class="form-control" ng-model="untilDate" data-max-date="{{untilDate}}"  placeholder="Until" bs-datepicker style="width:30%; display: inline;background-color: lightyellow" ng-change="load();">
+			   
+			  </li>
+			  <li class="active"><a href="/#hour" data-toggle="tab">		По часам</a></li>
+			  <li ><a href="/#messages" data-toggle="tab">					По дням</a></li>
+			  <li><a href="/#profile"  data-toggle="tab">					По месяцам </a></li>
+			  <li ><a href="/#home" data-toggle="tab">						По годам </a></li>
+			
+			<li class="pull-right">  <button class="btn btn-warning" ng-csv="cdr_export()| filter:cdr_q" csv-header="['Дата', 'Кто', 'Куда', 'Направление', 'Статус(секунд)', 'Ожидание']"  filename="Report.csv"><i class="fa fa-cloud-download fa-lg"></i> Экспорт CSV</button>  </li>
+			<li class="pull-right">   <select ng-model="chart_type" ng-change="TypeGraph(chart_type);" class="form-control"  style="width:150px;background-color: lightyellow" ng-options="c for c in typegraph "> </select></li>  
+			<li class="pull-right"><button disabled class="btn btn-link">тип графика </button></li>
+			<li class="pull-right"><button ng-click="Wav_all()" class="btn btn-link"> Play All <i class="fa fa-play-circle fa-lg"  style="cursor: pointer;"></button></i></li>
+			
+	 
+			</ul>
+
+			<!-- Tab panes -->
+			<div class="tab-content">
+			  <div class="tab-pane fade in active"	id="hour" > 	<highchart  config="chartConfig5" style="width:{{width}}px  !important;"></highchart> </div>
+			  <div class="tab-pane fade " 			id="messages">  <highchart  config="chartConfig3" style="width:{{width}}px  !important;"></highchart></div>
+			  <div class="tab-pane fade "			id="profile" > 	<highchart  config="chartConfig2" style="width:{{width}}px  !important;"></highchart> </div>
+			  <div class="tab-pane fade " 			id="home"> 		<highchart  config="chartConfig"  style="width:{{width}}px  !important;"></highchart> </div>
+			</div>
+
+		</div>
+      
+		<div class="col-md-4">
+			<div class="col-md-12">
+					<highchart  config="chartConfig4" ></highchart>
+			</div>
+			<div class="col-md-4">
+				<table class=" table-hover table-condensed" >
+					<thead>
+						<tr>
+							<th>Среднее длит</th>
+							<td>{{total_avr_billsec}}</td>
+						</tr><tr>	
+							<th>Среднее ожид</th>
+							<td>{{total_avr_servicelevel}}</td>
+						</tr><tr>	
+							<th>Среднее всего</th>
+							<td>{{total_avr_duration}}</td>
+						</tr><tr>
+							<th>Итог длит</th>
+							<td>{{total_sum_billsec}}</td>
+						</tr><tr>	
+							<th>Итог ожид</th>
+							<td>{{total_sum_servicelevel}}</td>
+						</tr><tr>	
+							<th>Итог всего</th>	
+							<td>{{total_sum_duration}}</td>
+						</tr>	
+					</thead>
+					 
+				</table>
+				
+			</div>
+
+ 
+		</div>	
+
+        <div class="col-md-8" style="overflow-y: scroll; height: 850px;" can-load="canLoad" infinite-scroll="loadMore()"  threshold="100">
+	 
+				 
+				 
+				  
+					
+		  
+		  <table class="table table-hover " >
+			<thead>
+			    <tr>
+				<th ng-click="changeSorting('calldate')">			Дата 		<i class="fa fa-sort-asc" ng-show="sort.column=='calldate' && sort.descending"></i> <i class="fa fa-sort-desc" ng-show="sort.column=='calldate' && !sort.descending"></i></th>
+				<th ng-click="changeSorting('src')">				Кто			<i class="fa fa-sort-asc" ng-show="sort.column=='src' && sort.descending"></i> <i class="fa fa-sort-desc" ng-show="sort.column=='src' && !sort.descending"></i></th>
+				<th ng-click="changeSorting('dst')">				Куда		<i class="fa fa-sort-asc" ng-show="sort.column=='dst' && sort.descending"></i> <i class="fa fa-sort-desc" ng-show="sort.column=='dst' && !sort.descending"></i></th>
+				<th ng-click="changeSorting('dstchannel')">			Направление	<i class="fa fa-sort-asc" ng-show="sort.column=='dstchannel' && sort.descending"></i> <i class="fa fa-sort-desc" ng-show="sort.column=='dstchannel' && !sort.descending"></i></th>
+				<th ng-click="changeSorting('disposition')">		Статус		<i class="fa fa-sort-asc" ng-show="sort.column=='disposition' && sort.descending"></i> <i class="fa fa-sort-desc" ng-show="sort.column=='disposition' && !sort.descending"></i></th>
+				<th ng-click="changeSorting('billsec')">			Длит		<i class="fa fa-sort-asc" ng-show="sort.column=='billsec' && sort.descending"></i> <i class="fa fa-sort-desc" ng-show="sort.column=='billsec' && !sort.descending"></i></th>
+				<th ng-click="changeSorting('')">					Ожид		<i class="fa fa-sort-asc" ng-show="sort.column=='' && sort.descending"></i> <i class="fa fa-sort-desc" ng-show="sort.column=='' && !sort.descending"></i></th>
+				<th ng-click="changeSorting('duration')">			Всего		<i class="fa fa-sort-asc" ng-show="sort.column=='duration' && sort.descending"></i> <i class="fa fa-sort-desc" ng-show="sort.column=='duration' && !sort.descending"></i></th>
+				<th ng-click="changeSorting('recordingfile');" ng-show="audio_on_off">		Запись		<i class="fa fa-sort-asc" ng-show="sort.column=='recordingfile' && sort.descending"></i> <i class="fa fa-sort-desc" ng-show="sort.column=='recordingfile' && !sort.descending"></i></th> 
+				<th ng-click="changeSorting('comment')" ng-show="comment_on_off">Коментарий 	<i class="fa fa-sort-asc" ng-show="sort.column=='comment' && sort.descending"></i> <i class="fa fa-sort-desc" ng-show="sort.column=='comment' && !sort.descending"></i></th>  
+			    
+			<!--	<th ng-click="Wav_all()">Play All</th> -->
+				</tr>
+			</thead>
+			<tbody>
+				<tr
+					ng-repeat="item in cdr | filter:cdr_q | filter_operator:operarot_cdr | orderBy:sort.column:sort.descending | limitTo:cdr_limit track by $index"
+					ng-class="{'success': item.disposition == 'ANSWERED' &&  item.billsec != 0, 'warning': item.disposition == 'BUSY'}"
+                    > <!-- ng-hide="item.disposition == 'ANSWERED' &&  item.billsec == 0" -->
+                <td>{{ item.nicedate | date:'medium'}}</td>
+                <td>
+					<span class="glyphicon glyphicon-user"  ng-show="item.src.length > 1 && item.src.length <= 4"></span>
+					<span class="glyphicon glyphicon-phone" ng-hide="item.src.length > 1 && item.src.length <= 4"></span>
+					<!-- <span ng-show="item.src != ''">{{ item.src }}</span> -->
+                    <span ng-show="item.src != ''">
+						<a ng-show="item.accountcode != '' && item.src.length > 3 " href="http://sip.asterisk.if.ua/V/index.php?module=Accounts&view=Detail&record={{item.accountcode}}" title="{{item.clid}}">{{ item.src }}</a>
+						<span  ng-hide="item.accountcode != '' && item.src.length > 3 ">{{ item.src }}</span>
+					</span>
+                        <span ng-hide="item.src != ''">{{ item.channel | fix_chan:'@':0 | fix_chan:'/':1 }}</span>
+                </td>
+                <td>
+					<span ng-hide="item.dst == '~~s~~'">
+							<span class="glyphicon glyphicon-user"  ng-show="item.dst.length > 1 && item.dst.length <= 4"></span>
+							<span ng-hide="item.accountcode != '' && item.dst.length > 3"> <span class="glyphicon glyphicon-phone" ng-hide="item.dst.length > 1 && item.dst.length <= 4"></span>{{ item.dst }} </span>
+					<span ng-show="item.accountcode != '' && item.dst.length > 3"> <span class="glyphicon glyphicon-phone" ng-hide="item.dst.length > 1 && item.dst.length <= 4"></span> <a href="http://sip.asterisk.if.ua/V/index.php?module=Accounts&view=Detail&record={{item.accountcode}}" title="{{item.clid}}"> {{ item.dst }} </a> </span>
+					</span>
+							<span ng-show="item.dst == '~~s~~' && !item.lastdata">
+							<span class="glyphicon glyphicon-phone" ></span> {{item.lastdata | fix_chan:'/':2}}
+					</span>
+				</td>
+				<td> <span  ng-show="item.dstchannel" >{{ item.dstchannel | fix_chan:'-':0 | fix_chan:'SIP/':1 }} </span> </td>
+				<td> {{ item.disposition | status}}</td>
+				<td> <span ng-show="item.billsec > 0"> 		{{ item.billsec }}  	 </span></td>
+				<td> <span ng-show="item.servicelevel > 0">  	{{ item.servicelevel }}  </span></td>
+				<td> <span ng-show="item.duration > 0">  	{{ item.duration }}   	 </span></td> 
+				
+				<!--<td ng-show="item.dcontext=='incoming'">Исходящий</td> 
+				<td ng-hide="item.dcontext=='incoming'">Входящий</td> -->
+			 	 <td  ng-show="audio_on_off"> 
+				 <!--
+			 	 	<a ng-show="item.recordingfile && item.disposition == 'ANSWERED' && play != item.uniqueid && item.src != '102'" ng-click="Wav(item.uniqueid)"><i class="fa fa-play-circle fa-lg"  style="cursor: pointer;"></i>   </a> 
+			 	 	<span ng-show="item.recordingfile && item.disposition == 'ANSWERED' && play == item.uniqueid && item.src != '102'" ng-click="Wav('stop')"><i class="fa fa-stop fa-lg" style="cursor: pointer;"></i>  <i class="fa fa-spinner fa-spin"></i></span> 
+					 -->
+					<audio ng-show="item.recordingfile && item.disposition == 'ANSWERED' && item.src != 102" preload="none" src="{{src(item.uniqueid)}}"  controls></audio>
+				<!--	
+					<a ng-show="item.recordingfile && item.disposition == 'ANSWERED'"
+					data-placement="left" 
+					title="Прослушать" 
+					data-content="{{item.recordingfile}}"
+					data-template="views/statistica/popover.tpl.html" 
+					data-animation="am-flip-x" 
+					bs-popover>
+						<i class="fa fa-play-circle fa-lg"  style="cursor: pointer;"></i>
+					</a>
+				-->
+				</td> 
+	 			<td ng-show="comment_on_off">
+	 				<!-- <i class="fa fa-pencil-square-o"  ng-show="!comment_on"></i> -->
+	 				<span ng-click="comment_on = true" ng-show="item.comment && !comment_on" >{{item.comment}}</span>	 				
+	 				<!--<i class="fa fa-comment-o fa-lg" ng-click="comment_on = true" ng-show="item.comment && !comment_on" style="cursor:pointer"data-toggle="tooltip" data-placement="left" title="{{item.comment}}"></i>-->
+	 				<i class="fa fa-plus"  		 ng-click="comment_on = true" ng-show="!item.comment && !comment_on"></i>
+	 				
+	 				<div class="col-md-10" ng-show="comment_on">
+	 				<textarea rows="4" ng-model="item.comment" ng-change="AddComment(item)" class="form-control" placeholder="Коментарий.." style="background-color: lightyellow" />  
+	 				</div>	
+	 				
+	 				<div class="col-md-2" ng-show="comment_on">
+	 				
+	 				<i class="fa fa-check" 		 ng-click="AddComment(item);comment_on = false" ></i> 
+	 				<i class="fa fa-times"		 ng-click="comment_on = false"  ></i> 
+	 				<i class="fa fa-trash-o" 	 ng-click="item.comment = ''" 	></i>  
+	 				</div>
+	
+	 			</td> 
+				
+			    </tr>
+			</tbody>
+		    </table>
+
+	 </div>
+</div>
+</div>
+ 
+
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("active");
+    });
+    </script>

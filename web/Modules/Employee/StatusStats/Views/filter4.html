@@ -1,0 +1,109 @@
+<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+        <b>{{'dateFrom'| translate}}</b>
+        <br><div class="form-group">
+                <p class="icon-group input-group">
+                  <input ng-model="model4.DateFrom" class="form-control" ng-model-options="{ updateOn: 'blur' }" style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;">
+                    <span class="input-group-append">
+                      <button moment-picker="model4.DateFrom" max-date="model4.DateTo" class="btn btn-default">
+                          <i aria-hidden="true" class="fa fa-calendar"></i>
+                      </button>
+                    </span>
+                </p>
+              </div>
+    </div>
+    <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+        <b>{{'dateTo'| translate}}</b>
+        <br>
+          <div class="form-group">
+              <p class="icon-group input-group">
+                <input ng-model="model4.DateTo" class="form-control" ng-model-options="{ updateOn: 'blur' }" style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;">
+                  <span class="input-group-append">
+                    <button moment-picker="model4.DateTo" min-date="model4.DateFrom" class="btn btn-default">
+                        <i aria-hidden="true" class="fa fa-calendar"></i>
+                    </button>
+                  </span>
+              </p>
+          </div>
+    </div>
+    
+<div class="col-xl-2 col-lg-2 col-md-3 col-sm-6 col-xs-12">
+    <b>{{'client'| translate}}</b>
+      <ui-select  multiple tagging tagging-label=""  theme="bootstrap4-1" ng-model="model4.clIDs" sortable="true"  class="normal " size="100%" style="min-height: 34px !important; padding-left: 6px !important; border-radius: 3px;">
+          <ui-select-match placeholder="{{'selectCustomer' | translate}}">{{$item.clName}}</ui-select-match>
+          <ui-select-choices repeat="a in ClientData | filter:$select.search"
+          refresh="SearchClient($select.search)" refresh-delay="0"
+          >{{a.clName}} </ui-select-choices>
+      </ui-select>
+</div>
+
+<div class="col-xl-1 col-lg-2 col-md-3 col-sm-6 col-xs-12" >
+  <b>{{'status'| translate}}</b>
+  <ng-dropdown-multiselect  options="Enums.group[1036]" selected-model="model4.ContactStatuses"
+          extra-settings="{ scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'Name', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'tvID', displayProp: 'Name', externalIdProp: 'tvID'}"
+          translation-texts = "texts"  >
+  </ng-dropdown-multiselect>
+</div>
+
+<div class="col-md-2">
+    <b>{{'responsible'| translate}} </b>
+    <ng-dropdown-multiselect  options="employees.data" selected-model="model4.emIDs" theme="bootstrap4-1" class="normal" disabled="!can('EM','edit')"
+        extra-settings="{ scrollableHeight: '500px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'emName', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'emID', displayProp: 'emName', externalIdProp: 'emID'}"
+        translation-texts="texts">
+    </ng-dropdown-multiselect>
+</div>
+
+<div class="col-xl-1 col-lg-3 col-md-3 col-sm-6 col-xs-12"  ng-show="!can('chief','edit')">
+  <b>{{'chief'| translate}}</b>
+  <ng-dropdown-multiselect  options="employees.group['supervizor']" selected-model="model4.ManagerIDs"
+      extra-settings="{ scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'emName', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'emID', displayProp: 'emName', externalIdProp: 'emID'}"
+      translation-texts = "texts"  >
+  </ng-dropdown-multiselect>
+</div>
+
+<div class="col-xl-3 col-lg-5 col-md-4 col-sm-8 col-xs-12">
+  <b>{{'callType'| translate}}</b><br/>
+  <div class="btn-group">
+          <button type="button" class="btn btn-white" ng-class="{'active' :  model4.IsOut===null}" ng-click="model4.IsOut=null">{{'All'| translate}}</button>
+          <button type="button" class="btn btn-white" ng-class="{'active' :  model4.IsOut===true}" ng-click="model4.IsOut=true" ><i class="fa fa-arrow-circle-up fa-lg" style="color:grey;" ></i>{{'Outgoing'| translate}}</button>
+          <button type="button" class="btn btn-white" ng-class="{'active' :  model4.IsOut===false}" ng-click="model4.IsOut=false"><i class="fa fa-arrow-circle-down fa-lg" style="color:black;" ></i>{{'Incoming'| translate}}</button>
+  </div>
+</div>
+
+
+<div class="col-xl-1 col-lg-2 col-md-3 col-sm-6 col-xs-12" ng-show="File.data.length>0"> 
+    <b>{{'file'| translate}}</b>
+        <ng-dropdown-multiselect  options="File.data" selected-model="model4.ffIDs"
+                extra-settings="{ scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'ffName', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'ffID', displayProp: 'ffName', externalIdProp: 'ffID'}"
+                translation-texts = "texts"  >
+        </ng-dropdown-multiselect>
+  </div>
+  
+  <div class="col-xl-1 col-lg-2 col-md-3 col-sm-6 col-xs-12" ng-show="Trunk.data.length>0">
+        <b>{{'trunk' | translate}}</b>
+        <ng-dropdown-multiselect  options="Trunk.data" selected-model="model4.channels"
+            extra-settings="{ scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'trName', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'trID', displayProp: 'trName', externalIdProp: 'trID'}"
+            translation-texts = "texts"  >
+        </ng-dropdown-multiselect>
+  </div>
+  
+  <div class="col-xl-1 col-lg-4 col-md-3 col-sm-6 col-xs-12" ng-show="Company.data.length>0">
+    <b>{{'company'| translate}}</b>
+    <ng-dropdown-multiselect  options="Company.data" selected-model="model4.coIDs" disabled="Auth.coIDs.length > 0"
+        extra-settings="{ scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'coName', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'coID', displayProp: 'coName', externalIdProp: 'coID'}"
+        translation-texts = "texts"  >
+    </ng-dropdown-multiselect>
+  </div>
+  
+  <div class="col-xl-1 col-lg-4 col-md-3 col-sm-6 col-xs-12">
+    <b> {{'type'| translate}}</b>
+    <ng-dropdown-multiselect  options="Enums.group[1013]" selected-model="model4.CallTypes"
+        extra-settings="{ buttonClasses : 'btn btn-white', searchField: 'Name', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'tvID', displayProp: 'Name', externalIdProp: 'tvID'}"
+        translation-texts = "texts"  >
+    </ng-dropdown-multiselect>
+  </div>
+
+  <div class="col-xl-1 col-lg-3 col-md-3 col-sm-6 col-xs-12">
+    <b>{{'target'| translate}}</b>
+    <br/>
+    <checkbox class="btn-white" ng-model="model4.targets"></checkbox>
+  </div>

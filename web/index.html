@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible"  content="IE=edge"/>
+    <meta name="viewport"               content="width=device-width, initial-scale=1"/>
+    <meta name="author"                 content="Zhdanov Dmitriy"/>
+    <link rel="shortcut icon" href="images/fa.png" type="image/x-icon"/>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+    <title></title>
+ 
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css" integrrty="sha384S3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <!-- Google Font: Source Sans Pro -->
+      <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- GULP BILD -->
+      <!-- <script src="js/Custom/popper.min.js"></script> -->
+      <link href="build/bundle.css" rel="stylesheet"> 
+</head>
+<body class="hold-transition sidebar-mini layout-navbar-fixed" style="background-image: url(/images/BbQC2B5.jpg); background-size: cover; font-size: 0.95rem !important;">
+  <div class="loaderArea"> <div class="loader"></div> </div>
+<div class="wrapper" ng-app="crmUA" ng-controller="NavBarCtrl"  >
+
+  <!-- Navbar -->
+  <nav ng-if="auth.FFF" class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav ">
+      <li class="nav-item" uib-tooltip="{{'hideMenu' | translate}}" tooltip-placement="right"  ng-click="Logo();">
+        <a class="nav-link" data-widget="pushmenu" href ><i class="fa fa-bars"></i></a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto" ng-if="auth.FFF"> 
+        <div class="navbar-form navbar-left" role="search" stop-event="click" ng-if="devicestatechange!='UNAVAILABLE' && WS">
+            <div class="input-group md-3">
+                          <input ng-disabled="HotDial.FFF.isDial" placeholder="{{'CallInNumber' | translate}}"  only-clear ng-model="HotDial.FFF.ccName" class="form-control" ng-change="ClearPhone()" ng-enter="manyAction.Call(HotDial.FFF,null)" ng-disabled="(call != HotDial.FFF.ccName && call)">
+                          <div class="input-group-append" ng-class="{ 'open' : (HotDial.FFF.ccName || dell) && auth.FFF.roleID } ">
+                           
+                              <button style="background-color: #fff;" ng-show="HotDial.FFF.ccName && !HotDial.FFF.isDial" ng-click="manyAction.Call(HotDial.FFF,null)" class="btn btn-default"><i style="color:green;" class="fa fa-phone"></i></button>
+                              <button style="background-color: #fff;" ng-show="HotDial.FFF.ccName && HotDial.FFF.isDial" ng-click="manyAction.Hangup(HotDial.FFF.ccName,null)" tooltip-placement="bottom" uib-tooltip ="{{'Hangup' | translate}}" class="btn btn-default"><i style="color:red;" class="fa fa-tty"></i></button>
+                              <button style="background-color: #fff;" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"></button>
+                         
+                            <ul class="dropdown-menu dropdown-menu-right "   ng-click="$event.stopPropagation()" >
+                              <li class="dropdown-header" ng-show="Company.data2.length>0"  translate="company"></li>
+
+                              <li ng-click="$event.stopPropagation()">
+                                <div class="menu-item">
+                                  <div class='form-group-sm'>
+                                    <div class="row" style="margin: 3px;">
+                                      <div class="col-lg-12" ng-show="Company.data2.length>0">
+                                        <ui-select ng-model="HotDial.FFF.coID" theme="bootstrap4-1" class="normal" size="100%" style="width:100% !important" ng-disabled="HotDial.FFF.ccName && HotDial.FFF.isDial">
+                                            <ui-select-match  placeholder="{{'select' | translate}}" style="width:100% !important">{{$select.selected.coName}}</ui-select-match>
+                                            <ui-select-choices size="100%" style="width:100% !important" repeat="a.coID as a in Company.data2 | filter: $select.search track by $index">
+                                                {{a.coName}}
+                                            </ui-select-choices>
+                                        </ui-select>
+                                      </div>
+                                    </div>
+                                     
+                                    <div class="row">
+                                    <div class="col-lg-12">
+                                      <div id="phone">
+                                        <div id="wrapper" ng-click="$event.stopPropagation();">
+                                            <div class="key hover" ng-click="DialPad(1)">1</div>
+                                            <div class="key hover" ng-click="DialPad(2)">2</div>
+                                            <div class="key hover" ng-click="DialPad(3)">3</div>
+                                            <div class="clear"></div>
+                                            <div class="key hover" ng-click="DialPad(4)">4</div>
+                                            <div class="key hover" ng-click="DialPad(5)">5</div>
+                                            <div class="key hover" ng-click="DialPad(6)">6</div>
+                                            <div class="clear"></div>
+                                            <div class="key hover" ng-click="DialPad(7)">7</div>
+                                            <div class="key hover" ng-click="DialPad(8)">8</div>
+                                            <div class="key hover" ng-click="DialPad(9)">9</div>
+                                            <div class="clear"></div>
+                                            <div class="key nb" style="cursor: default;" ng-click="DialPad('*')"></div>
+                                            <div class="key hover" ng-click="DialPad(0)">0</div>
+                                            <div class="key nb" style="cursor: default;" ng-click="DialPad('#')"></div>
+                                            <div class="clear"></div>
+                                            <div class="key phone2 hover"  ng-click="$event.stopPropagation();dell=true;HotDial.FFF.ccName=null;" ng-show="HotDial.FFF.ccName && !HotDial.FFF.isDial"><i class="fa fa-times" aria-hidden="true"></i></div>
+                                            <div class="key nb" style="cursor: default;" ng-click="$event.stopPropagation();dell=true;HotDial.FFF.ccName=null;" ng-show="HotDial.FFF.ccName && HotDial.FFF.isDial"></div>
+
+                                            <div class="key phone hover" ng-click="manyAction.Call(HotDial.FFF,null)" ng-show="HotDial.FFF.ccName && !HotDial.FFF.isDial"><i class="fa fa-phone"></i></div>
+                                            <div class="key phone2 hover" ng-click="manyAction.Hangup(HotDial.FFF.ccName,null)" ng-show="HotDial.FFF.ccName && HotDial.FFF.isDial"  uib-tooltip ="{{'Hangup' | translate}}"><i class="fa fa-tty"></i></div>
+                                            <div class="key phone3 hover"   ng-click="dell=true;DialPadDelLast()" ng-show="HotDial.FFF.ccName && !HotDial.FFF.isDial"><i class="fa fa-arrow-left" aria-hidden="true"></i></div>
+                                            <div class="clear"></div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                                </div>
+                              </li>
+
+                            </ul>
+                          </div>
+                      </div>
+      </div>
+
+      <li class="nav-item dropdown notifications-menu" ng-show="Queues.myQueues.length>0">
+          <a href class="nav-link dropdown-toggle" data-toggle="dropdown" uib-tooltip="{{'PauseInQueue' | translate}}" tooltip-placement="bottom"> 
+              <blink ng-if="Pause.AllBtn"><i class="fa fa-plane" ng-class="{'text-green': Pause.AllBtn, 'fa-lg': Pause.AllBtn}"></i></blink> 
+              <i ng-if="!Pause.AllBtn" class="fa fa-plane" ng-class="{'text-green': Pause.AllBtn, 'fa-lg': Pause.AllBtn}"></i> 
+
+              <span ng-if="Queues.myQueues.length > 1" class="badge badge-badge" ng-class="{'badge-success': Pause.AllBtn}" ng-bind="Queues.myQueues.length"></span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" role="menu" ng-click="$event.stopPropagation()">
+              <a class="dropdown-header" ng-click="$event.stopPropagation()" ><b translate="PauseInQueue"></b> <!-- {{global.Loading}} --></a>
+              <a class="dropdown-item" ng-repeat="a in Queues.myQueues" ng-href="/#!/QueueEdit/{{a.queID}}" >
+                      <nobr>
+                        <span ng-bind="a.queue_name"> </span>
+
+                        <i ng-show="global.Loading" class="fa fa-spinner fa-pulse fa-fw float-right"></i>
+
+                        <label ng-if="!global.Loading" class="float-right" ><input ng-disabled="global.Loading" type="checkbox" cb-switch ng-model="a.isPause" ng-change="global.Loading=true;PauseSingl(a);"/></label>
+                      </nobr>
+              </a>
+              <a class="dropdown-header" ng-click="$event.stopPropagation()"  ng-show="Queues.myQueues.length>1"><b>{{'PauseInQueueAll' | translate}}</b></a>
+              <a class="dropdown-item"  ng-click="$event.stopPropagation()" ng-show="Queues.myQueues.length>1" ng-href="/#!/Queue">
+                  <span  ng-bind="'all' | translate"> </span>
+                  <label class="float-right"><input ng-disabled="global.Loading" type="checkbox" cb-switch ng-model="Pause.AllBtn" ng-change="global.Loading=true;PauseAll();" ></label>
+               </a>
+          </div>
+      </li>
+
+      <li class="nav-item dropdown" >
+          <a href class="nav-link dropdown-toggle" data-toggle="dropdown" uib-tooltip="{{'status' | translate}}" tooltip-placement="bottom" ng-class="{'text-success':EM.onlineStatus == 103501,'text-orange':EM.onlineStatus != 103501,'text-danger':EM.onlineStatus == 103507}"> 
+            <i class="fa fa-bullhorn" aria-hidden="true"></i> 
+            <span ng-if="EM.onlineStatus"> {{EM.onlineStatus | enums | translate}} </span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" role="menu">
+              <a class="dropdown-header"> <b>{{'status' | translate}}</b></a>
+              <a href class="dropdown-item" ng-repeat="c in Enums.group[1035]" ng-class="{'active':c.tvID == EM.onlineStatus,'text-success':c.tvID == 103501,'text-orange':c.tvID != 103501,'text-danger':c.tvID == 103507}" ng-click="UpdEm(c);"> {{c.Name | translate}} </a>      
+          </div>
+      </li>
+
+      <li class="nav-item dropdown" >
+          <a href class="nav-link dropdown-toggle" data-toggle="dropdown" uib-tooltip="{{'quickCreation' | translate}}" tooltip-placement="bottom"> <i class="fa fa-plus"></i> </a>
+          <div class="dropdown-menu dropdown-menu-right" role="menu">
+              <a class="dropdown-header"> <b>{{'quickCreation' | translate}} </b></a>
+              <a class="dropdown-item"> <create-client/>    </a>  
+              <a class="dropdown-item"> <create-deal/>      </a>  
+              <a class="dropdown-item"> <create-form/>      </a>   
+              <a class="dropdown-item"> <create-product/>   </a>   
+              <a class="dropdown-item"> <create-employee/>  </a>  
+              <a class="dropdown-item"> <create-trunk/>     </a>    
+             <!-- <a class="dropdown-item"> <create-invoice/>   </a> 
+              <a class="dropdown-item"> <create-payment/>   </a> 
+              <a class="dropdown-item"> <create-completion/></a> 
+              <a class="dropdown-item"> <create-contract/>  </a> 
+            --> 
+          </div>
+      </li>
+
+      <li class="nav-item d-none d-sm-inline-block" uib-tooltip="{{'faq' | translate}}" tooltip-placement="bottom">
+          <a class="nav-link" target="_blank" href="https://krusher.biz/faq/"     ng-if="lang == 'ru'"><i class="fa fa-info"></i></a>
+          <a class="nav-link" target="_blank" href="https://krusher.biz/en/faq/"  ng-if="lang == 'en'"><i class="fa fa-info"></i></a>
+          <a class="nav-link" target="_blank" href="https://krusher.biz/uk/faq/"  ng-if="lang == 'ua'"><i class="fa fa-info"></i></a>
+      </li>
+
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" uib-tooltip="{{'languages' | translate}}" tooltip-placement="bottom">
+            <img ng-src="/LTE/dist/img/{{lang}}.svg" class="btn-lang user-image"  >
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+               <a class="dropdown-header"><b>{{'languages' | translate}}</b></a>
+               <a class="dropdown-item" href ng-click="manyAction.changeLanguage('en')"  ng-class="{ 'active' : lang == 'en'}"> <img src="/LTE/dist/img/en.svg" style="width: 20px"> English    </a>  
+               <a class="dropdown-item" href ng-click="manyAction.changeLanguage('ru')"  ng-class="{ 'active' : lang == 'ru'}"> <img src="/LTE/dist/img/ru.svg" style="width: 20px"> Russian    </a> 
+               <a class="dropdown-item" href ng-click="manyAction.changeLanguage('ua')"  ng-class="{ 'active' : lang == 'ua'}"> <img src="/LTE/dist/img/ua.svg" style="width: 20px"> Ukrainian  </a>  
+          </div>
+      </li>
+
+      <li class="nav-item dropdown">
+          <a href class="nav-link dropdown-toggle " data-toggle="dropdown" ng-click="hold=false" uib-tooltip="{{'userSetting' | translate}}" tooltip-placement="bottom">
+              <img src="/images/avatar_2x.png" class="image user-image img-circle elevation-2" alt="User Image"  >
+              <span class="hidden-xs" ng-bind="auth.FFF.emName" style="padding-left: 5px;"></span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <a href class="dropdown-item" ng-click="$event.stopPropagation()">
+              <div class="media">
+                <img src="/images/avatar_2x.png" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                <div class="media-body">
+                  <h3 class="dropdown-item-title">
+                    <span ng-bind="auth.FFF.emName"></span>
+                    <span class="float-right text-sm text-danger"><i class="fa fa-star"></i></span>
+                  </h3>
+                  <p class="text-sm" ng-bind="auth.FFF.roleName | translate"> </p>
+                  <p class="text-sm text-muted">
+                    <span ng-show="auth.FFF.sipLogin" ng-bind="'SIP/' + auth.FFF.sipLogin"></span>
+                  </p>
+                </div>
+              </div>
+            </a>
+            <div class="dropdown-divider"></div>
+
+            <div href class="dropdown-item" stop-event="click">
+                <div class="text-center" style="text-align:center" align="center">
+                    <a href="#!/AutoProcess"> <i class="fa fa-space-shuttle fa-lg"></i> <b>{{'control_autocall' | translate}} </b> </a>
+                </div>
+                <div class="media" ng-hide="true">
+                    <div class="row" ng-click="$event.stopPropagation()" style="opacity: 0.97;z-index: 99999;" >
+
+                        <br ng-show="Pages.FFF.Filter && auth.FFF.roleID != 3 && (Pages.FFF.Filter.ffID || Pages.FFF.Filter.ffID == 0) && Pages.FFF.Filter.clStatus == 101 && auth.FFF.roleID != 3 && auth.FFF.sipName"  />
+                        <div style="z-index: 99999;" class="input-group" class="navbar-form navbar-left" ng-show="Pages.FFF.Filter && auth.FFF.roleID != 3 && (Pages.FFF.Filter.ffID || Pages.FFF.Filter.ffID == 0) && Pages.FFF.Filter.clStatus == 101 && auth.FFF.roleID != 3 && auth.FFF.sipName" id="autocall">
+                          <a class="btn btn-link " ng-href="/#!/client" uib-tooltip="ID файла для обзвона : {{Progress.FFF.ffID}}"><i class="fa fa-database"></i> <span class="badge badge-warning">{{Progress.FFF.ffID|ffFilters}}</span></a>
+
+                          <div class="btn-group">
+                            <button ng-disabled="Progress.FFF.factor >= auth.FFF.count_of_calls || Play" ng-click="Progress.FFF.factor=Progress.FFF.factor+1" class="btn btn-custom  "><i class="fa fa-plus"></i></button>
+                            <button ng-disabled="Play" class="btn btn-default  " uib-tooltip="{{'factorNumber' | translate}}">{{Progress.FFF.factor}}</button>
+                            <button ng-disabled="Progress.FFF.factor <= 1 || Play" ng-click="Progress.FFF.factor=Progress.FFF.factor-1" class="btn btn-custom  "><i class="fa fa-minus"></i></button>
+                          </div>
+      
+                          <div class='form-group-sm' style="z-index: 99999;">
+                              <ui-select ng-model="Progress.FFF.id_scenario" ng-change="AutoStatus()" theme="bootstrap4-1" class="normal"  size="100%" style="z-index: 99999; width: 100%;"  uib-tooltip="{{'scenario' | translate}}">
+                                  <ui-select-match  placeholder="{{'scenario' | translate}}">{{$select.selected.name_scenario}}</ui-select-match>
+                                  <ui-select-choices  class="dropdown-menu-right" repeat="c.id_scenario as c in Scenario.data | filter: $select.search " >
+                                      {{c.name_scenario}}
+                                  </ui-select-choices>
+                              </ui-select>
+                          </div>
+                        </div>
+                        
+                        <div class="row text-center" ng-show="Pages.FFF.Filter && auth.FFF.roleID != 3 && (Pages.FFF.Filter.ffID || Pages.FFF.Filter.ffID == 0) && Pages.FFF.Filter.clStatus == 101 && auth.FFF.roleID != 3 && auth.FFF.sipName">  
+                          <div class="col-lg-12 text-center">  
+                            <button class="btn btn-link" ng-model="Start" ng-hide="Play" uib-tooltip="{{'start' | translate}}" tooltip-placement="bottom" ng-disabled=" !Progress.FFF.id_scenario || !Progress.FFF.factor" uib-btn-checkbox ng-click="manyAction.ProgressStart();">  <i class="fa fa-play" style="color:green;"></i> </button>
+                            <button class="btn btn-link" ng-model="Start" ng-show="Play" uib-tooltip="{{'stop' | translate}}" tooltip-placement="bottom" uib-btn-checkbox ng-click="manyAction.ProgressStop();">            <i class="fa fa-stop" style="color:red;"></i></button>
+                          </div>
+                        </div>
+      
+                        <table ng-hide="AutoProcess.length == 0"   class="table table-head-fixed table-hover borderless">
+                                <tr>
+                                    <th class="'text-left'">{{'process' | translate}}</th>
+                                    <th class="'text-left'">{{'user' | translate}}</th>
+                                </tr>
+                                <tr ng-repeat="e in AutoProcess | filter:searh" ng-class="{'tagBackgndo' : Progress.FFF.id_autodial == e.id_autodial}" >
+                                    <td >  <a ng-href="/#!/AutoProcessEdit/{{e.id_autodial}}" uib-tooltip="{{e.errorDescription}}"> <button class="btn {{(e.process | ProcessStatus).color}} btn-xs" > {{(e.process | ProcessStatus).disposition}} {{e.TimeUpdated | date:'HH:mm'}}</button>   </a> </td>
+                                    <td> <span ng-bind="e.emID | emFilters" uib-tooltip="{{e.id_scenario | scFilters}}"> </span> </td>
+                                 </tr>
+                        </table>
+                      </div>
+                </div>
+            </div>
+
+            <div class="dropdown-divider" ng-hide="true"></div>
+            <a href class="dropdown-item p-0" ng-hide="true" >
+                      <div class="alert alert-warning" ng-show="!Pages.FFF.Filter.ffID && Pages.FFF.Filter.ffID != 0">
+                          <h4><i class="icon fa fa-info"></i> {{'notification' | translate}}!</h5>
+                          {{'selectFileCall' | translate}} 
+                          <p translate="sequence"></p>
+                      </div>
+                      <div class="alert alert-warning" ng-show="Pages.FFF.Filter.clStatus != 101">
+                          <h4><i class="icon fa fa-info"></i> {{'notification' | translate}}!</h4>
+                          <p translate="callPosible"></p>
+                      </div>
+                      <div class="alert alert-warning" ng-show="!auth.FFF.sipName">
+                          <h4><i class="icon fa fa-info"></i> {{'notification' | translate}}!</h4>
+                          <p translate="SIPPosible"></p>
+                      </div>
+                      <div class="alert alert-warning" ng-show="Scenario.data.length <= 0">
+                          <h4><i class="icon fa fa-info"></i> {{'notification' | translate}}!</h4>
+                          <p translate="ScenarioPosible"></p>
+                      </div>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item dropdown-footer" href="#!/edit/employee/{{auth.FFF.emID}}" translate="profile"> </a>
+            <a target="_blank" class="dropdown-item dropdown-footer" ng-show="can('FOP2','view') && auth.FFF.sipLogin && auth.FFF.fop2_secret" href="fop2/?exten={{auth.FFF.sipLogin}}&pass={{auth.FFF.fop2_secret}}" class="btn btn-primary" translate="FOP2">See All Messages</a>
+            <a class="dropdown-item dropdown-footer" href stop-event="click" ng-click="LogOut()" translate="exit"> </a>
+          </div>
+        </li>
+       
+    <!-- Right navbar links -->
+      <!-- <li class="nav-item">
+        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href><i class="fa fa-th-large"></i></a>
+      </li> -->
+    </ul>
+    <span id="wsPopupCtrl" ng-controller="wsPopupCtrl"></span>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside ng-if="auth.FFF" class="main-sidebar sidebar-dark-primary elevation-4" >
+    <a href="#!/Dashboard" class="brand-link">
+        <div style="text-align: center;">
+          <img ng-if="!LogoHide" src="/images/krus_logo.png" alt="Krusher Logo" class=" rounded mx-auto " style="opacity: .9;max-height: 27px;">
+          <img ng-if="LogoHide" src="/images/fa.png" alt="Krusher Logo" class=" rounded mx-auto " style="opacity: .9;max-height: 27px;">
+        </div>   
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar"  style="overflow-x: hidden;overflow-x: hidden;">
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="pull-left image">
+          <img src="/images/avatar_2x.png" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <a class="d-block" ng-bind="auth.FFF.emName"> </a>
+          <a class="d-block" ng-if="devicestatechange">
+              <i class="fa fa-circle"
+                ng-class="{
+                            'text-success':devicestatechange      =='NOT_INUSE',
+                            'text-default':devicestatechange      =='RINGING',
+                            'text-warning':devicestatechange      =='BUSY',
+                            'text-primary':devicestatechange      =='INUSE',
+                            'text-warning':devicestatechange      =='ONHOLD',
+                            'text-danger': devicestatechange      =='UNAVAILABLE'
+                          }"
+                > </i> <small> &nbsp; SIP <span>{{devicestatechange | translate}}</span></small>
+          </a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="ml-auto">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <li class="nav-header" translate="menu"></li> 
+          <li ng-if="can('DashBoard','view')"   class="nav-item">  <a  class="nav-link " ng-class="{'active':S=='Dashboard'}" ui-sref="Dashboard"><i class="nav-icon fas fa-tachometer-alt" ></i> <p translate="controlPanel"> </p></a> </li>  
+          <li ng-show="can('CallingCard','view')" class="nav-item" ><a class="nav-link" ng-class="{'active':S=='callingcard'}"  ui-sref="callingcard"><i class="nav-icon fa fa-phone"></i>    <p> <span  translate="appeals" ng-class="{'text-danger': ccMissed.missed > 0, 'text-success': !ccMissed.missed }"></span> <span ng-if="ccMissed.missed > 0" class="right badge badge-danger"  uib-tooltip="{{'missedCalls' | translate}} {{'last7days' | translate}}" >{{ccMissed.missed}}</span> </p></a> </li>
+          
+          <li class="nav-item has-treeview" ng-hide="MOD=='AST' || !can('Auto','view')" ng-class="{'menu-open':S=='AutoProcess' || S=='Scenario' || S=='Recall'}">
+              <a style="cursor: pointer;" class="nav-link" ng-class="{'active':S=='AutoProcess' || S=='Scenario' || S=='Recall'}">
+                  <i class="nav-icon fas fa-space-shuttle"></i>
+                  <p>
+                      <span translate="autocall"></span>
+                      <i class="fas fa-angle-left right"></i>
+                  </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item"><a class="nav-link" ui-sref="AutoProcess" ng-class="{'active':S=='AutoProcess'}"> <i class="fa fa-circle-o nav-icon"></i>  <p translate="StartAutoProcess"></p></a></li>
+                <li class="nav-item"><a class="nav-link" ui-sref="Scenario" ng-class="{'active':S=='Scenario'}">    <i class="fa fa-circle-o nav-icon"></i>     <p translate="scenario"></p></a></li>
+                <li class="nav-item"><a class="nav-link" ui-sref="Recall" ng-class="{'active':S=='Recall'}">      <i class="fa fa-circle-o nav-icon"></i>       <p translate="Recalls"></p></a></li>
+              </ul>
+          </li>
+          
+          <li class="nav-item has-treeview" ng-hide="MOD=='AST' || !can('Client','view')" ng-class="{'menu-open':S=='client' || S=='Bases' || S=='fs' || S=='Company' || S=='migration' || S=='fsTemplate'}" >
+              <a style="cursor: pointer;" class="nav-link" ng-class="{'active':S=='client' || S=='Bases' || S=='fs' || S=='Company' || S=='migration' || S=='fsTemplate'}">
+                <i class="nav-icon fa fa-users"></i>
+                <p>
+                    <span translate="CRM"></span>
+                    <i class="right fa fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item"><a class="nav-link" ui-sref="client"     ng-class="{'active':S=='client'}"><i class="fa fa-circle-o nav-icon"></i>          <p translate="clients"></p></a></li>
+                <li class="nav-item"><a class="nav-link" ui-sref="Bases"      ng-class="{'active':S=='Bases'}"><i class="fa fa-circle-o nav-icon"></i>        <p translate="categories"></p></a></li>
+                <li class="nav-item"><a class="nav-link" ui-sref="fs"         ng-class="{'active':S=='fs'}"><i class="fa fa-circle-o nav-icon"></i>               <p translate="files"></p></a></li>
+                <li class="nav-item"><a class="nav-link" ui-sref="Company"    ng-class="{'active':S=='Company'}"><i class="fa fa-circle-o nav-icon"></i>     <p translate="companys"></p></a></li>
+                <li class="nav-item"><a class="nav-link" ui-sref="migration"  ng-class="{'active':S=='migration'}"><i class="fa fa-circle-o nav-icon"></i>      <p translate="import"> </p></a></li>
+                <li class="nav-item"><a class="nav-link" ui-sref="fsTemplate" ng-class="{'active':S=='fsTemplate'}"><i class="fa fa-circle-o nav-icon"></i>  <p translate="templates"></p></a></li>
+              </ul>
+          </li>
+
+          <li class="nav-item has-treeview" ng-hide="MOD=='AST' && !can('Form','view') && !can('Deal','view')" ng-class="{'menu-open':S=='formsAll' || S=='Deals' ||  S=='SearchDocumentsViewRoute'}" >
+            <a style="cursor: pointer;" class="nav-link" ng-class="{'active':S=='formsAll' || S=='Deals' || S=='SearchDocumentsViewRoute'}">
+              <i class="fa fa-file-alt nav-icon"></i> 
+              <p>
+                  <span translate="documents"></span>
+                  <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item" ng-show="can('Deal','view')"><a class="nav-link" ui-sref="Deals"     ng-class="{'active':S=='Deals'}"><!----><i class="fa fa-circle-o nav-icon"></i> <p translate="deals"></p></a></li>
+              <li class="nav-item" ng-show="can('Form','view')"><a class="nav-link" ui-sref="formsAll"  ng-class="{'active':S=='formsAll'}"><i class="fa fa-circle-o  nav-icon"></i> <p translate="forms"></p></a></li>
+              <li class="nav-item" ng-show="can('Deal','view')"><a class="nav-link" href="#!/searchDocuments" ng-class="{'active':S=='SearchDocumentsViewRoute'}" ><i class="fa fa-circle-o nav-icon"></i> {{'byDocuments' | translate}}</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item has-treeview" ng-class="{'menu-open':S=='report' || S=='StatusStats' || S=='Qreport' }">
+            <a style="cursor: pointer;" class="nav-link" ng-class="{'active':S=='report' || S=='StatusStats' || S=='Qreport'}">
+              <i class="nav-icon fas fa-chart-pie"></i> 
+              <p>
+                  <span translate="report"></span>
+                  <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item"><a class="nav-link" ui-sref="report"       ng-class="{'active':S=='report'}"><i class="fa fa-bar-chart nav-icon"></i>                  <p translate="statistics"></p></a></li>
+                <li class="nav-item"><a class="nav-link" ui-sref="StatusStats"  ng-class="{'active':S=='StatusStats'}"><i class="fa fa-bar-chart nav-icon"></i>             <p translate="byStatus"></p></a></li>
+                <li class="nav-item"ng-hide="MOD=='AST'"><a class="nav-link" ui-sref="Qreport"  ng-class="{'active':S=='Qreport'}"><i class="fa fa-bar-chart nav-icon"></i> <p translate="byForms"></p></a></li>            
+            </ul>
+          </li>
+
+          <li class="nav-item has-treeview" ng-show="can('Settings','view')" ng-class="{'menu-open':S=='employee'||S=='questionsAll'||S=='formEdit'  ||S=='mpMarketplace' ||S=='RouteOut'||S=='RouteInc'||S=='Queue'||S=='SIP'||S=='Trunk'||S=='TrunkPool'||S=='IVR'||S=='Record'||S=='TTS'|| S=='CustomDestination'||S=='TimeGroup'||S=='CallBack'||S=='RecordsExport'||S=='Conference'||S=='TagList'||S=='commentlist'||S=='Role'||S=='Enums'||S=='Measures'}" > 
+            <a style="cursor: pointer;"  class="nav-link" ng-class="{'active':S=='employee'||S=='questionsAll'||S=='formEdit'||S=='mpMarketplace' ||S=='RouteOut'||S=='RouteInc'||S=='Queue'||S=='SIP'||S=='Trunk'||S=='TrunkPool'||S=='IVR'||S=='Record'||S=='TTS'|| S=='CustomDestination'||S=='TimeGroup'||S=='CallBack'||S=='RecordsExport'||S=='Conference'||S=='TagList'||S=='commentlist'||S=='Role'||S=='Enums'||S=='Measures'}">
+              <i class="fa fa-cogs nav-icon"></i>
+              <p>
+                  <span translate="settings"></span>
+                  <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item" ng-hide="auth.FFF.roleID == 3"><a class="nav-link" ui-sref="employee" ng-class="{'active':S=='employee'}"><i class="fa fa-circle-o nav-icon"></i> <p>{{'users' | translate}}</p></a></li>
+                <li class="nav-item has-treeview" ng-class="{'menu-open':S=='RouteOut'||S=='RouteInc'||S=='Queue'||S=='SIP'||S=='Trunk'||S=='TrunkPool'||S=='IVR'||S=='Record'||S=='TTS'|| S=='CustomDestination'||S=='TimeGroup'||S=='CallBack'||S=='Conference'||S=='RecordsExport'}">
+                  <a style="cursor: pointer;" class="nav-link" ng-class="{'active':S=='RouteOut'||S=='RouteInc'||S=='Queue'||S=='SIP'||S=='Trunk'||S=='TrunkPool'||S=='IVR'||S=='Record'||S=='TTS'|| S=='CustomDestination'||S=='TimeGroup'||S=='CallBack'||S=='Conference'||S=='RecordsExport'}">
+                    <i class="fa fa-circle-o nav-icon"></i> 
+                    <p>
+                        <span translate="IP PBX"></span>
+                        <i class="right fa fa-angle-left"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="RouteOut" ng-class="{'active':S=='RouteOut'}">           <i class="fa fa-circle-o nav-icon"></i> <p>{{'RouteOut' | translate}}</p></a></li>
+                    <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="RouteInc" ng-class="{'active':S=='RouteInc'}">           <i class="fa fa-circle-o nav-icon"></i> <p>{{'RouteInc' | translate}}</p></a></li>
+                    <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="Queue" ng-class="{'active':S=='Queue'}">              <i class="fa fa-circle-o nav-icon"></i> <p>{{'queues' | translate}}</p></a></li>
+                    <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="SIP" ng-class="{'active':S=='SIP'}">                <i class="fa fa-circle-o nav-icon"></i> <p>{{'SIP' | translate}}</p></a></li>
+                    <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="Trunk" ng-class="{'active':S=='Trunk'}">              <i class="fa fa-circle-o nav-icon"></i> <p>SIP {{'trunk' | translate}}</p></a></li>
+                    <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="TrunkPool" ng-class="{'active':S=='TrunkPool'}">          <i class="fa fa-circle-o nav-icon"></i> <p>{{'TrunkPool' | translate}}</p></a></li>
+                    <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="IVR" ng-class="{'active':S=='IVR'}">                <i class="fa fa-circle-o nav-icon"></i> <p>{{'IVR' | translate}}</p></a></li>
+                    <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="Record" ng-class="{'active':S=='Record'}">             <i class="fa fa-circle-o nav-icon"></i> <p>{{'recording' | translate}}</p></a></li>
+                    <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="TTS" ng-class="{'active':S=='TTS'}">                <i class="fa fa-circle-o nav-icon"></i> <p>{{'TTS' | translate}}</p></a></li>
+                    <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="CustomDestination" ng-class="{'active':S=='CustomDestination'}">  <i class="fa fa-circle-o nav-icon"></i> <p>{{'CustomDestination' | translate}}</p></a></li>
+                    <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="TimeGroup" ng-class="{'active':S=='TimeGroup'}">          <i class="fa fa-circle-o nav-icon"></i> <p>{{'TimeGroup' | translate}}</p></a></li>
+                    <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="CallBack" ng-class="{'active':S=='CallBack'}">           <i class="fa fa-circle-o nav-icon"></i> <p>{{'isCallback' | translate}}</p></a></li>
+                    <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="Conference" ng-class="{'active':S=='Conference'}">         <i class="fa fa-circle-o nav-icon"></i> <p>{{'Conference' | translate}}</p></a></li>
+                    <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="RecordsExport" ng-class="{'active':S=='RecordsExport'}">         <i class="fa fa-circle-o nav-icon"></i> <p>{{'RecordsExport' | translate}}</p></a></li>
+                  </ul>
+                </li>
+                
+                <li class="nav-item" ng-hide="MOD=='AST'"><a class="nav-link" ui-sref="mpMarketplace" ng-class="{'active':S=='mpMarketplace'}"><i class="fa fa-circle-o nav-icon"></i> <p translate="MarketPlace"></p></a></li>
+
+
+                <li class="nav-item" ng-hide="MOD=='AST'"><a class="nav-link" href="/documentation" target="_blank"><i class="fa fa-circle-o nav-icon"></i> <p>API</p></a></li>
+                <li class="nav-item" ng-hide="MOD=='AST'"  ng-show="can('EditForm','view')"><a class="nav-link" ui-sref="formEdit"      ng-class="{'active':S=='formEdit'}"><i class="fa fa-circle-o nav-icon"></i> <p>{{'editingOfForm' | translate}}</p></a></li>
+                <li class="nav-item" ng-hide="MOD=='AST'"  ng-show="can('EditForm','view')"><a class="nav-link" ui-sref="questionsAll"  ng-class="{'active':S=='questionsAll'}"><i class="fa fa-circle-o nav-icon"></i> <p>{{'questions' | translate}}</p></a></li>
+                <li class="nav-item has-treeview" ng-hide="MOD=='AST'" ng-class="{'menu-open':S=='TagList'||S=='commentlist'||S=='Role'||S=='Enums'||S=='Measures'}">
+                  <a style="cursor: pointer;" class="nav-link" ng-class="{'active':S=='TagList'||S=='commentlist'||S=='Role'||S=='Enums'||S=='Measures'}"><i class="fa fa-circle-o nav-icon"></i> 
+                    <p>
+                        <span translate="lists"></span>
+                        <i class="right fa fa-angle-left"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="TagList" ng-class="{'active':S=='TagList'}"><i class="fa fa-circle-o nav-icon"></i> <p>{{'tags' | translate}}</p></a></li>
+                    <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="commentlist" ng-class="{'active':S=='commentlist'}"><i class="fa fa-comments-o  nav-icon"></i> <p>{{'comments' | translate}}</p></a></li>
+                    <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="Role" ng-class="{'active':S=='Role'}"><i class="fa fa-circle-o nav-icon"></i> <p>{{'roles' | translate}}</p></a></li>
+                    <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="Enums" ng-class="{'active':S=='Enums'}"><i class="fa fa-circle-o nav-icon"></i> <p>{{'Enums' | translate}}</p></a></li>
+                    <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="Measures" ng-class="{'active':S=='Measures'}"><i class="fa fa-circle-o nav-icon"></i> <p>{{'unit' | translate}}</p></a></li>
+                    
+                    <li class="nav-item" style="padding-left: .5rem;" ng-show="can('Template','view')"><a class="nav-link" href="#!/Templates"><i class="fa fa-circle-o nav-icon"></i> {{'printedForms' | translate}}</a></li>  
+                    <!-- <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" href="#!/searchClients"><i class="fa fa-circle-o text-aqua"></i> {{'byClients' | translate}}</a></li>
+                    <li class="nav-item" style="padding-left: .5rem;" ng-show="can('DcHistory','view')"><a class="nav-link" href="#!/Stream"><i class="fa fa-history text-aqua"></i> {{'historyOfDocuments' | translate}}</a></li>
+                    <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" href="#!/stream"><i class="fa fa-circle-o text-aqua"></i> {{'tape' | translate}}</a></li>
+
+                    <li class="nav-item" style="padding-left: .5rem;">
+                        <a class="nav-link" ><i class="fa fa-shopping-cart"></i> {{'goods' | translate}}
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item"><a class="nav-link" href="#!/Product"><i class="fa fa-shopping-cart"></i> {{'goods' | translate}}</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#!/Categories"><i class="fa fa-circle-o text-aqua"></i> {{'categories' | translate}}</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#!/Brands"><i class="fa fa-circle-o text-aqua"></i> {{'brand' | translate}}</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#!/Measures"><i class="fa fa-circle-o text-aqua"></i> {{'unit' | translate}}</a></li>
+                        </ul>
+                    </li>       -->
+                  
+                  </ul>
+                </li>
+            </ul>
+          </li>
+
+          <li class="nav-item has-treeview">
+            <a style="cursor: pointer;" class="nav-link">
+              <i class="fa fa-life-ring nav-icon"></i>
+              <p>
+                  <span translate="support"></span>
+                  <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item"><a class="nav-link" href="http://support.asterisk.biz.ua" target="_blank" ><i class="fa fa-ticket-alt nav-icon"></i> <p>{{'ticket' | translate}}</p></a></li>
+                <li class="nav-item" ng-show="WS"><a class="nav-link" style="cursor: pointer;" > <create-question/> </a></li>
+                <li class="nav-item"><a class="nav-link" href="//docs.google.com/document/d/1fzxeWOkhz5eKbB8gUEy4jWi6S-qS4I_31WGtoM__nH8/edit" target="_blank"><i class="fa fa-info nav-icon"></i> <p>{{'FAQ' | translate}}</p></a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div ng-class="{'content-wrapper' : auth.FFF }"> 
+                <!--<div class="content-header" ng-show="State.Name">
+                  <div class="">
+                    <div class="row mb-1">
+                      <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">
+                          <span translate='{{State.Name}}'></span>
+                          <small translate='{{State.Small}}'></small>
+                        </h1>
+                      </div> 
+                      <div class="col-sm-6"  ng-show="auth.FFF">
+                        <ol class="breadcrumb float-sm-right">
+                          <li class="breadcrumb-item"><a href="#!/Dashboard"><span translate='home'></span></a></li>
+                          <li class="breadcrumb-item active" translate='{{State.Name}}'> </li>
+                        </ol>
+                      </div> 
+                    </div> 
+                  </div> 
+                </div> -->
+                <div style="padding:0.3%;"></div>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="" ui-view="viewA"></div>
+                </section>
+  </div>
+  
+  <!-- Футер -->
+  <div ng-show="auth.FFF" ng-include="'/build/Menu/Views/footer.html'"></div>
+  <div ng-if="googleCount" ng-include="'/Views/google.html'"></div>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+ </div>
+ 
+
+
+    <script src="build/production.js"></script>
+    <script src="build/modules.js"></script>
+    <script src="node_modules/ui-bootstrap4/dist/ui-bootstrap.js"></script>
+    <script src="node_modules/ui-bootstrap4/dist/ui-bootstrap-tpls.js"></script>
+    <!-- AdminLTE App -->
+    <script src="LTE/dist/js/adminlte.min.js"></script>
+ </body>
+</html>

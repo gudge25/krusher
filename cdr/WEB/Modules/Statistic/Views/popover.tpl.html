@@ -1,0 +1,18 @@
+<div class="popover" tabindex="-1" ng-show="content">
+  <div class="arrow"></div>
+  <h3 class="popover-title" ng-bind-html="title" ng-show="title"></h3>
+  <div class="popover-content">
+    <form name="popoverForm">
+      <p ng-bind-html="content" style="min-width:400px;">hhh</p>
+     
+	  <audio ng-show="item.recordingfile && item.disposition == 'ANSWERED'" src="{{src(item.uniqueid)}}"  controls></audio>
+				 
+		 				
+      <div class="form-actions">
+        <button type="button" class="btn btn-danger" ng-click="$hide()">Close</button>
+	 
+     <!--   <button type="button" class="btn btn-success" ng-click="popover.saved=true;$hide()">Save changes</button> -->
+      </div>
+    </form>
+  </div>
+</div>

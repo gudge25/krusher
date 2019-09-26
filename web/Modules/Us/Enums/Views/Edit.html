@@ -1,0 +1,90 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tr>
+                        <td width="40%">{{'names' | translate}}</td>
+                        <td width="60%"><input class="form-control" ng-model="upd.Name" ></td>
+                    </tr>
+                    <tr>
+                        <td>{{'type' | translate}}</td>
+                        <td>
+                            <b ng-bind="upd.tyID | enumsType"></b> <span>( {{upd.tyID}} )</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'ID' | translate}}</td>
+                        <td><b ng-bind="upd.tvID"></b></td>
+                    </tr>
+                    <tr>
+                        <td>{{'active' | translate}}</td>
+                        <td><label><input type="checkbox" cb-switch ng-model="upd.isActive"></label></td>
+                    </tr>
+                </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6" >
+            <!--TAGS-->
+            <div class="card card-info card-outline" ng-show="upd.tyID">
+              <div class="card-header with-border">
+                <h3 class="card-title"><i class="fas fa-edit"></i> {{'info' | translate}}</h3>
+  
+                <div class="card-tools">
+                    <button class="btn btn-tool" data-widget="collapse" ng-click="FilteCollapse=true" ng-show="!FilteCollapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-tool" data-widget="collapse" ng-click="FilteCollapse=false" ng-show="FilteCollapse"><i class="fa fa-plus"></i></button>
+                </div>
+              </div>
+  
+              <div class="card-body p-0" >
+                  <table class="table table-head-fixed table-bordered table-hover" ng-hide="global.Loading || data.length < 1">
+                      <tr ng-click="manyAction.Find()">
+                          <th ng-include="'/Views/ng-table/checkbox.html'" ng-click="$event.stopPropagation()" width="1%"/>
+                          <th ng-init="o1='Name'" ng-click="manyAction.order(o1);">
+                              <nobr>{{'names' | translate}} <span ng-show="order==o1" ng-include="'/Views/orderSpan.html'"/></nobr>
+                          </th>
+                          <th ng-init="o2='tyID'" ng-click="manyAction.order(o2);">
+                              <nobr>{{'type' | translate}} <span ng-show="order==o2" ng-include="'/Views/orderSpan.html'"/></nobr>
+                          </th>
+                          <th ng-init="o4='tvID'" ng-click="manyAction.order(o4);">
+                                  <nobr>{{'ID' | translate}} <span ng-show="order==o4" ng-include="'/Views/orderSpan.html'"/></nobr>
+                              </th>
+                          <th ng-init="o3='isActive'" ng-click="manyAction.order(o3);">
+                              <nobr>{{'active' | translate}} <span ng-show="order==o3" ng-include="'/Views/orderSpan.html'"/></nobr>
+                          </th>
+                      </tr>
+                      <tr ng-repeat="e in Enums.group[upd.tyID] track by $index" ng-class="{'active': upd.tvID == e.tvID }">
+                          <td ng-include="'/Views/checkboxOne.html'"/>
+                          <td >  <a ng-href="/#!/EnumsEdit/{{e.tvID}}"> {{e.Name}} </a> </td>
+                          <td > <span ng-bind="e.tyID | enumsType"></span> <span>( {{e.tyID}} )</span> </td> <!--| enums -->
+                          <td ng-bind="e.tvID"> </td>
+                          <td width="1%"><label><input type="checkbox" cb-switch disabled ng-model="e.isActive"></label></td>
+                      </tr>
+                  </table>
+              </div>
+            </div>
+          </div>
+
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-2">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-primary btn-sm" ui-sref="EnumsNewID({ 'tyID' : upd.tyID })" ng-show="manyAction.Check_upd_old()">{{'new' | translate}}</button>
+                        <button class="btn btn-success btn-sm" ng-disable="!upd.Name" ng-click="manyAction.Update(upd,'Enums')" ng-hide="manyAction.Check_upd_old()">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="Enums">{{'cancel' | translate}}</button>
+                    </div>
+        </div>
+    </div>
+</section>

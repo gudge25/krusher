@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Пример HTML формы:</title>
+</head>
+<body>
+
+<input placeholder='Ваш Телефон' id='entry_phone'>
+<button onclick='callBack()'>Заказать звонок</button>
+<script src="https://code.jquery.com/jquery.js"></script>
+</body>
+</html>
+<script>
+    function callBack() {
+        // init default model data.
+        var model = {
+            "phone": null,
+            "exten": 1000,
+            "Aid": 10,
+        };
+        var url = `domain.krusher.biz`;
+
+        //Set model from form
+        model.phone = document.getElementById('entry_phone').value;
+
+        if (!model.phone || !model.exten)
+        {
+            alert('Please Fill All Fields');
+        }
+
+        // AJAX code to submit form.
+        $.ajax({
+            url:`https://${url}:3002/originate`,
+            type:"POST",
+            data:JSON.stringify(model),
+            contentType:"application/json; charset=utf-8",
+            dataType:"json",
+            success: function(){
+                console.log(`Done`);
+            }
+        })
+    }
+</script>

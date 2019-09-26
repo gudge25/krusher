@@ -1,0 +1,42 @@
+<!-- <div class="col-lg-2" style="border-right: 1px solid #e7e7e7;">
+
+</div> -->
+
+<div class="card-body">
+    <div class="card-tools float-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+            <i class="fa fa-minus"></i>
+        </button> 
+        <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <div class="col-lg-10">
+        <div class="col-lg-6">
+            <br/>
+            <b>Редактировать</b>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="text-right">
+                <div class="btn-group" style="margin: 2%">
+                    <button type="button" class="btn btn-success" ng-click="manyAction.Update(upd,'Comments')">Сохранить</button>
+                    <button type="button" class="btn btn-warning" ui-sref="Product">Отмена</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <table class="table table-head-fixed table-hover borderless" style="margin: 1% 0;">
+                <tr>
+                    <td>ИД</td>
+                    <td><input class="form-control" type="text" ng-model="upd.uID" placeholder="Введите ИД"></td>
+                </tr>
+                <tr>
+                    <td>Комментарий</td>
+                    <td><input class="form-control" type="text" ng-model="upd.psState" placeholder="Введите Комментарий"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

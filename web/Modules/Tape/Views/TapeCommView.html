@@ -1,0 +1,243 @@
+<!-- <div class="col-lg-3 col-md-6 no-padding" style="height: 500px;"> -->
+        <div >
+                                            <!-- <div class="nav-tabs-custom card card-info card-outline" style="border: none;"> -->
+                                                <div class="card card-primary card-outline direct-chat direct-chat-primary">
+                                                <!-- COMMENTS -->
+                                                <uib-tabset >
+                                                    <uib-tab index="0" >
+                                                        <uib-tab-heading>
+                                                            <span> {{'comments' | translate}} </span>
+                                                            <span  ng-show = 'CommentsUID.length>=1' uib-tooltip="{{CommentsUID.length}} {{'newMessages' | translate}} "  class="badge bg-info">{{CommentsUID.length}}</span>
+                                                        </uib-tab-heading>
+                                                        <div class="card-body" style=" height: 475px; overflow-y: auto;">
+                                                                    <div class="direct-chat-messages" style="min-height: 400px; overflow-y: auto;">
+                                                                      <div ng-repeat="(key,f) in CommentsUID " style="margin-bottom: 2%;">
+                                                                        <div class="direct-chat-msg" ng-class="{'right':auth.FFF.emID == f.CreatedBy}" ng-mouseover="Edit=true"  ng-mouseleave="Edit=false">
+                                                                          <div class="direct-chat-info clearfix">
+                                                                            <span class="float-right" ng-class="{'pull-left':auth.FFF.emID == f.CreatedBy}">
+                                                                              <a  ng-show="!check && Edit"
+                                                                              ng-click="$event.stopPropagation();check=true"
+                                                                              style="cursor: pointer;margin-left: 1%;">
+                                                                              <i class="fa fa-trash"></i>
+                                                                              <a  ng-click="$event.stopPropagation();" style="cursor: pointer;">
+                                                                                <i ng-show="check" ng-click="check=false" class="fa fa-times fa-lg"> </i>
+                                                                              </a>
+                                                                              <a  ng-click="$event.stopPropagation();" style="cursor: pointer;">
+                                                                                <i ng-show="check" class="fa fa-check fa-lg" ng-click="DelComm(f.id);check=false"> </i>
+                                                                              </a>
+                                                                            </span>
+                                                                            <span class="direct-chat-timestamp float-right" ng-class="{'pull-left':auth.FFF.emID == f.CreatedBy}" ng-hide="f.isToday"> {{f.Created | date:'MMM d, HH:mm' }} </span>
+                                                                            <span class="direct-chat-timestamp float-right" ng-class="{'pull-left':auth.FFF.emID == f.CreatedBy}" ng-show="f.isToday"> {{f.Created | date:'HH:mm' }} </span>
+                                                                            <span class="direct-chat-name" ng-class="{'float-right':auth.FFF.emID == f.CreatedBy}">{{f.CreatedBy | emFilters}}</span>
+                                                                          </div>
+                                                                          <div>
+                                                                            <img class="direct-chat-img" src="/images/avatar_2x.png" alt="Message User Image">
+                                                                          </div>
+                                                                          <div class="direct-chat-text" style="background-color: #3c8dbc"  style=" border-right-color: #3c8dbc;"}>
+                                                                            {{f.uComment}}
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
+                                                                    </div>
+                                                        </div>
+                                                        <div class="card-footer">
+                                                                    <form >
+                                                                      <div class="input-group">
+                                                                        <input ng-model="uComment" class="form-control" rows="2" msd-elastic="\n" id="comment" ng-enter="SaveCommentUID(uComment);uComment=''" placeholder="{{'sendPlacehol' | translate}}">
+                                                                        <span class="input-group-append">
+                                                                          <button type="submit" class="btn btn-primary" ng-click="SaveCommentUID(uComment);uComment=''">{{'send' | translate}}</button>
+                                                                        </span>
+                                                                      </div>
+                                                                    </form>
+                                                        </div>
+                                                     </uib-tab>
+                                                    <!-- STREAM HISTORY -->
+                                                    <uib-tab index="1" ng-show='documents.length>0' class="no-padding" >
+                                                        <uib-tab-heading>
+                                                            <span> {{'tape' | translate}} </span>
+                                                            <span  ng-show = 'documents.length>=1' class="badge bg-info">{{documents.length}}</span>
+
+                                                        </uib-tab-heading>
+                                                        <div style="height: 475px; overflow-y: auto; padding-left: 1%; padding-top: 1%" >
+                                                            <!-- if $stateParams.clID then hide content  ng-hide="clID"-->
+                                                            <!-- <pre>{{documents|json}}</pre> -->
+                                                            <ul class="timeline">
+                                                                <li class="time-label" ng-repeat-start="e in documents | limitTo:limit track by $index">
+                                                                        <span class="bg-success" ng-show="!e.Changed && SetDate(documents,e.Changed,$index)">
+                                                                            {{e.Created| date:'dd.MM.yyyy'}}
+                                                                        </span>
+                                                                        <span class="bg-success" ng-show="e.Changed && SetDate(documents,e.Changed,$index)">
+                                                                            {{e.Changed | date:'dd.MM.yyyy'}}
+                                                                        </span>
+                                                                </li>
+                                                                <li ng-switch="e.DUP_action" ng-repeat-end>
+                                                                    <i class="fa fa-envelope bg-info"  ng-switch-when='I'></i>
+                                                                    <i class="fa fa-envelope bg-primary" ng-switch-when='U'></i>
+                                                                    <i class="fa fa-envelope bg-maroon" ng-switch-when='D'></i>
+                                                                    <div class="timeline-item">
+                                                                        <span ng-show="e.Changed" class="time"><span ng-show="e.ChangedBy" ng-bind="e.ChangedBy | emFilters"></span> <i class="fa fa-clock"></i> {{e.Changed | date:' HH.mm'}}</span>
+                                                                        <span ng-hide="e.Changed" class="time"><span ng-show="e.ChangedBy" ng-bind="e.ChangedBy | emFilters"></span> <i class="fa fa-clock"></i> {{e.Created| date:' HH.mm'}}</span>
+                                                                        <h3 class="timeline-header">
+                                                                            <a ng-href="/#!/clientPreView/{{e.clID}}"> {{e.clName}}  </a>
+                                                                            <small> {{e.DUP_action | Action}}</small>
+                                                                        </h3>
+                                                                        <div class="timeline-body no-padding">
+                                                                                <div ng-switch-when='I'>
+                                                                                    <b>
+                                                                                        <span ng-if="dcID   >= 0"> {{'deal' | translate}}: {{currentDoc.dcNo}}</span>
+                                                                                        <span ng-if="formID >= 0"> {{'form' | translate}}: {{currentDoc.dcNo}}</span>
+                                                                                        <span ng-if="payID  >= 0"> {{'payment' | translate}}: {{currentDoc.dcNo}}</span>
+                                                                                        <span ng-if="invID  >= 0"  > {{'account' | translate}}: {{currentDoc.dcNo}}</span>
+                                                                                    </b>
+                                                                                    <ul>
+                                                                                        <li ng-if="e.dcStatusName">
+                                                                                            {{'status' | translate}}:
+                                                                                            <a href=""> {{e.dcStatusName}} </a>
+                                                                                        </li>
+                                                                                        <li ng-if="e.dcSum">
+                                                                                            {{'amount' | translate}}:
+                                                                                            <a href=""> {{e.dcSum}} </a>
+                                                                                        </li>
+                                                                                        <li ng-if="e.emID">
+                                                                                            {{'responsible' | translate}}:
+                                                                                            <a ng-href="/#!/edit/employee/{{e.emID}}"> {{e.emID| emFilters}} </a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+
+                                                                                <div ng-switch-when='U'>
+                                                                                    <b> <span ng-if="dcID   >= 0"> {{'deal' | translate}}: {{currentDoc.dcNo}}</span>
+                                                                                        <span ng-if="formID >= 0"> {{'form' | translate}}: {{currentDoc.dcNo}}</span>
+                                                                                        <span ng-if="payID  >= 0"> {{'payment' | translate}}: {{currentDoc.dcNo}}</span>
+                                                                                        <span ng-if="invID  >= 0"> {{'account' | translate}}: {{currentDoc.dcNo}}</span>
+                                                                                    </b>
+            <div class="card-footer no-padding">
+                <ul class="nav nav-stacked no-padding">
+                    <li ng-if="e.Position !== e.OLD_Position"><a class="Hystory"><hystory-li t="position" n="{{e.Position | enums}}" o="{{e.OLD_Position | enums}}"/></a></li>
+                    <li ng-if="e.roleID !== e.OLD_roleID"><a class="Hystory"><hystory-li t="role" n="{{e.roleID}}" o="{{e.OLD_roleID}}"/></a></li>
+                    <li ng-if="e.ManageID !== e.OLD_ManageID"><a class="Hystory"><hystory-li t="chief" n="{{e.ManageID | emFilters}}" o="{{e.OLD_ManageID | emFilters}}"/></a></li>
+                    <li ng-if="e.emID !== e.OLD_emID"><a class="Hystory"><hystory-li t="responsible" n="{{e.emName}}" o="{{e.OLD_emName}}"/></a></li>
+                    <li ng-if="e.onlineStatus !== e.OLD_onlineStatus"><a class="Hystory"><hystory-li t="status" n="{{e.onlineStatus | enums}}" o="{{e.OLD_onlineStatus | enums}}"/></a></li>
+                    <li ng-if="e.isActive != e.OLD_isActive"><a class="Hystory"><hystory-li t="active" n="{{e.isActive | isActiveFilters}}" o="{{e.OLD_isActive | isActiveFilters}}"/></a></li>
+
+                </ul>
+            </div>                        
+                                 
+                                                                                    
+                                                                                    <ul class="nav nav-stacked">
+                                                                                        <li ng-if="e.dcDate !== documents[$index-1].dcDate ">
+                                                                                            {{'documentDate' | translate}}:
+                                                                                            <a>{{documents[$index-1].dcDate}} <i class="fa fa-arrow-circle-right"></i>{{e.dcDate}} </a>
+                                                                                        </li>
+                                                                                        <li ng-if="e.dcNo !== documents[$index-1].dcNo">
+                                                                                            {{'documentNumber' | translate}}:
+                                                                                            <a> {{documents[$index-1].dcNo}} <i class="fa fa-arrow-circle-right"></i> {{e.dcNo}} </a>
+                                                                                        </li>
+                                                                                        <li ng-if="e.dcStatus !==  documents[$index-1].dcStatus">
+                                                                                            {{'docStatus' | translate}}:
+                                                                                            <a> {{documents[$index-1].dcStatus}}    <i class="fa fa-arrow-circle-right"></i>{{e.dcStatus}}</a>
+                                                                                        </li>
+                                                                                        <li ng-if="e.dcComment !== documents[$index-1].dcComment">
+                                                                                            {{'Comment' | translate}}: <a>{{e.dcComment}}</a>
+                                                                                        </li>
+                                                                                        <li ng-if="e.dcSum !== documents[$index-1].dcSum">
+                                                                                            {{'docAmount' | translate}}:
+                                                                                            <a> {{documents[$index-1].dcSum}} <i class="fa fa-arrow-circle-right"></i>{{e.dcSum}}</a>
+                                                                                        </li>
+                                                                                        <!-- <li ng-if="e.emID !==  documents[$index-1].emID">
+                                                                                            {{'responsible' | translate}}:
+                                                                                            <a>{{documents[$index-1].emID}} <i class="fa fa-arrow-circle-right"></i> <a ng-href="/#!/edit/employee/{{e.emID}}"> {{e.emID}} </a> </a>
+                                                                                        </li> -->
+
+
+                                                                                        <li ng-if="e.isPerson != e.OLD_isPerson && e.OLD_isPerson!=null">
+                                                                                            {{'clientId' | translate}}:
+                                                                                            <a href="">{{e.OLD_clID}} <i class="fa fa-arrow-circle-right"></i> {{e.clID}} </a>
+                                                                                        </li>
+                                                                                        <li ng-if="e.clName != e.OLD_clName && e.OLD_clName!=null">
+                                                                                            {{'clientName' | translate}}:
+                                                                                            <a>{{e.OLD_clName}} <i class="fa fa-arrow-circle-right"></i> <a ng-href="/#!/clientPreView/{{e.clID}}"> {{e.clName}} </a> </a>
+                                                                                        </li>
+                                                                                        <li ng-if="e.isPerson != e.OLD_isPerson && e.OLD_isPerson!=null">
+                                                                                            {{'personOrganization' | translate}}:
+                                                                                            <a><div ng-init="personOLD = e.OLD_isPerson ? 'Персона' : 'Организация'"> {{personOLD}} </div> <i class="fa fa-arrow-circle-right"> <div ng-init="person = e.isPerson ? 'Персона' : 'Организация'"> {{person}} </div>  </a>
+                                                                                        </li>
+                                                                                        <!-- <li ng-if="e.isActive != e.OLD_isActive && e.OLD_isActive!=null">
+                                                                                            {{'active' | translate}}:
+                                                                                            <nobr>
+                                                                                                <a><span ng-init="activeOLD = e.OLD_isActive ? 'Активный' : 'Не активный'"> {{activeOLD}} </span> <i class="fa fa-arrow-circle-right"></i> <span ng-init="active = e.isActive ? 'Активный' : 'Не активный'"> {{active}} </span></a>
+                                                                                            </nobr>
+                                                                                        </li> -->
+                                                                                        <li ng-if="e.Comment != e.OLD_Comment && e.OLD_Comment!=null">
+                                                                                            {{'Comment' | translate}}:
+                                                                                            <a>{{e.OLD_Comment}} <i class="fa fa-arrow-circle-right"></i> {{e.Comment}}</a>
+                                                                                        </li>
+                                                                                        <li ng-if="e.ffID != e.OLD_ffID && e.OLD_ffID!=null">
+                                                                                            {{'bases' | translate}}:
+                                                                                            <a>{{e.OLD_ffID}} <i class="fa fa-arrow-circle-right"></i> <a ng-href="/#!/edit/employee/{{e.emID}}"> {{e.ffID}}</a> </a>
+                                                                                        </li>
+                                                                                        <li ng-if="e.ParentID != e.OLD_ParentID && e.OLD_ParentID!=null">
+                                                                                            {{'connected' | translate}}:
+                                                                                            <a>{{e.OLD_ParentID}} <i class="fa fa-arrow-circle-right"></i> {{e.ParentID}}</a>
+                                                                                        </li>
+<!--                                                                                         "OLD_clName": "Nastia",
+    "OLD_IsPerson": false,
+    "OLD_Sex": null,
+    "OLD_Comment": "traalalalal asdas d",
+    "OLD_ParentID": null,
+    "OLD_ffID": 891,
+    "OLD_CompanyID": null,
+    "OLD_uID": 97940125874389040,
+    "OLD_isActual": false,
+    "OLD_ActualStatus": null,
+    "OLD_Position": null,
+    "OLD_responsibleID": null, -->
+                                                                                    </ul>
+                                                                                </div>
+
+                                                                                <div ng-switch-when='D'>
+                                                                                    <b> <span ng-if="dcID   >= 0"> {{'deal' | translate}}</span>
+                                                                                        <span ng-if="formID >= 0"> {{'form' | translate}} </span>
+                                                                                        <span ng-if="payID  >= 0"> {{'payment' | translate}} ></span>
+                                                                                        <span ng-if="invID  >= 0"> {{'account' | translate}} </span>
+                                                                                        :
+                                                                                        <a ng-if="dcID   >= 0"> <i> {{e.dcNo}}</i></a>
+                                                                                        <a ng-if="formID >= 0"> <i> {{e.dcNo}} </i></a>
+                                                                                        <a ng-if="payID  >= 0"> <i> {{e.dcNo}} </i></a>
+                                                                                        <a ng-if="invID  >= 0"> <i> {{e.dcNo}} </i></a>
+                                                                                    </b>
+                                                                                    : {{'removed' | translate}}
+                                                                                </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li >
+                                                                <li>
+                                                                    <i class="fa fa-clock bg-gray"></i>
+                                                                </li>
+                                                        </ul>
+                                                        </div>
+                                                    </uib-tab>
+
+                                                    <uib-tab index="2">
+                                                        <uib-tab-heading>
+                                                                    <span> {{'Rating' | translate}} </span> <span> <i ng-show="RankUID.uRank && RankUID.uRank != '0'" class="glyphicon glyphicon-star"></i> </span>
+                                                        </uib-tab-heading>
+                                                        <div class="card-body text-center">
+                                                            <div class="col-md-12">
+                                                                <br>
+                                                                <span uib-rating  ng-click="SaveRatingUID();" ng-model="RankUID.uRank" max="rate.max" read-only="rate.isReadonly" on-hover="rate.hoveringOver(value)" on-leave="rate.overStar = null;rate.hoveringOver(RankUID.uRank)" aria-labelledby="default-rating"></span>
+                                                                <span class="badge" ng-class="{'badge-warning': rate.percent<30, 'badge-info': rate.percent>=30 && rate.percent<70, 'badge-success': rate.percent>=70}" >{{rate.percent}}%</span>
+                                                                <br><br>
+                                                                <!-- <ui-select ng-model="upd.dcStatus" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                                                        <ui-select-choices repeat="c.tvID as c in Enums.group[1030]| filter: $select.search" >
+                                                                          <span ng-bind="c.Name | translate"></span>
+                                                                        </ui-select-choices>
+                                                                </ui-select> -->
+                                                                <!-- <pre>{{RankUID|json}}</pre> -->
+                                                            </div>
+                                                        </div>
+                                                    </uib-tab>        
+                                                </uib-tabset>
+                                        </div>
+                                        </div>

@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS `fsBase` (
+	`HIID` BIGINT(20) UNSIGNED NOT NULL DEFAULT '0',
+	`dbID` INT(11) NOT NULL,
+	`Aid` INT(11) NOT NULL DEFAULT '0',
+	`dbName` VARCHAR(50) NOT NULL,
+	`dbPrefix` VARCHAR(10) NULL DEFAULT NULL,
+	`activeTo` TIME NULL DEFAULT NULL,
+	`isActive` BIT(1) NOT NULL DEFAULT b'0',
+	`Created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Время редактирования записи',
+	`Changed` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Время редактирования записи',
+	PRIMARY KEY (`dbID`),
+	INDEX `Aid` (`Aid`),
+	INDEX `dbName` (`dbName`),
+	INDEX `isActive` (`isActive`),
+	INDEX `Created` (`Created`),
+	INDEX `HIID` (`HIID`)
+)
+COLLATE='utf8_general_ci'
+ENGINE=MyISAM
+;

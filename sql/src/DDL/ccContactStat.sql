@@ -1,0 +1,41 @@
+CREATE TABLE IF NOT EXISTS `ccContactStat` (
+	`HIID` BIGINT UNSIGNED NOT NULL DEFAULT '0',
+	`statID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`Aid` INT UNSIGNED NOT NULL DEFAULT '0',
+	`ccName` VARCHAR(50) NOT NULL,
+	`callsDate` DATETIME NOT NULL,
+	`calls` INT NOT NULL DEFAULT '0',
+	`callsAutocall` INT NOT NULL DEFAULT '0',
+	`callsOut` INT NOT NULL DEFAULT '0',
+	`callsIn` INT NOT NULL DEFAULT '0',
+	`callsRinging` INT NOT NULL DEFAULT '0',
+	`callsUp` INT NOT NULL DEFAULT '0',
+	`callsAnswered` INT NOT NULL DEFAULT '0',
+	`callsNoanswered` INT NOT NULL DEFAULT '0',
+	`callsBusy` INT NOT NULL DEFAULT '0',
+	`callsFailed` INT NOT NULL DEFAULT '0',
+	`callsCongestion` INT NOT NULL DEFAULT '0',
+	`Created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`Changed` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	INDEX `Created` (`Created`),
+	INDEX `callsCongestion` (`callsCongestion`),
+	INDEX `callsFailed` (`callsFailed`),
+	INDEX `callsBusy` (`callsBusy`),
+	INDEX `callsNoanswered` (`callsNoanswered`),
+	INDEX `callsAnswered` (`callsAnswered`),
+	INDEX `callsUp` (`callsUp`),
+	INDEX `callsRinging` (`callsRinging`),
+	INDEX `callsIn` (`callsIn`),
+	INDEX `callsOut` (`callsOut`),
+	INDEX `callsAutocall` (`callsAutocall`),
+	INDEX `calls` (`calls`),
+	INDEX `callsDate` (`callsDate`),
+	INDEX `ccName` (`ccName`),
+	INDEX `Aid` (`Aid`),
+	INDEX `statID` (`statID`),
+	INDEX `HIID` (`HIID`)
+)
+COMMENT='таблица хранящая информацию о звонках на номер'
+COLLATE='utf8_general_ci'
+ENGINE=MyISAM
+;

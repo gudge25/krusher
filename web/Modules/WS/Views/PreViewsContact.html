@@ -1,0 +1,226 @@
+<div class="col-md-12 p-0" id="ModalWsPopup">
+        <uib-tabset  type="pills">
+                 <uib-tab index="$index" ng-repeat="item in contacts track by $index"  class="bg-white" style="border-radius: .25rem;">
+                     <uib-tab-heading>
+                             <nobr>
+                                 <span  uib-tooltip ="{{'phone' | translate}}" >
+                                     <nobr><i class="fa fa-phone"></i> <b >{{item.phone}}</b></nobr>
+                                 </span>
+                                 <button ng-if="item.dcStatusName" style="cursor: default;" class="btn {{(item.dcStatusName | CallStatus).color}} btn-xs" ng-bind="(item.dcStatusName | CallStatus).disposition"></button>
+                             </nobr>
+                             <br ng-show="item.source"/>
+                             <span  ng-show="item.source" uib-tooltip ="{{'source' | translate}}" >
+                                 <nobr><i class="fa fa-road"></i> <b >{{item.source}}</b></nobr>
+                             </span>
+                             <br ng-show="item.coName"  />
+                             <span ng-show="item.coName"  uib-tooltip ="{{'company' | translate}}">
+                                 <nobr><i class="fa fa-building"></i> <b >{{item.coName}}</b></nobr>
+                             </span>
+                     </uib-tab-heading>
+                     <br/>
+                     <ul class="timeline">
+                         <li ng-show="(item.outMessage || item.inMessage)">
+                             <i class="fa fa-comments bg-yellow"></i>
+                                 <div class="timeline-item">
+                                     <h3 class="timeline-header no-border"><a href="">{{'greeting' | translate}}: </a> 
+                                         <textarea maxlength="500" ng-show="item.outMessage && item.Type != 'INC'" ng-disabled="true" ng-model="item.outMessage" msd-elastic style="background-color: lightgoldenrodyellow;color: dimgrey" class="form-control" rows="3" id="comment"></textarea>
+                                         <textarea maxlength="500" ng-show="item.inMessage && item.Type == 'INC'" ng-disabled="true" ng-model="item.inMessage" msd-elastic style="background-color: lightgoldenrodyellow;color: dimgrey" class="form-control" rows="3" id="comment"></textarea>
+                                     </h3>
+                                 </div>
+                         </li>    
+     
+                         <li ng-if="item.CALLINGCARD && item.dcStatusName != 'RINGING'" class="p-0">
+                             <!-- <pre>{{item.CALLINGCARD.dcID|json}}</pre> -->
+                             <i class="fa fa-comments bg-yellow"></i>
+                                 <div class="timeline-item">
+                                     <h3 class="timeline-header no-border"><a style="cursor: default;" href="">{{'appeal' | translate}} {{item.phone}} <span ng-show="item.CALLINGCARD.dcID">:</span> </a>  <a class="btn btn-success btn-xs" ng-show="item.CALLINGCARD.dcID"><edit-callingcard data="{{item.CALLINGCARD}}" ></edit-callingcard></a>
+                                     </h3>
+                                     <div class="timeline-body p-0">
+                                         <table class="table table-head-fixed borderless">
+                                             <tr>
+                                                     <td width="60%">
+                                                         <!-- <b>{{'note' | translate}}</b> <br> -->
+                                                         <textarea  rows="1" ng-model="item.CALLINGCARD.Comment" msd-elastic style="min-height:38px; background-color: lightgoldenrodyellow;color: dimgrey;"  class="form-control" placeholder="{{'typeComment' | translate}}"></textarea>
+                                                     </td>
+                                                     <td>
+                                                        <ui-select ng-model="item.CALLINGCARD.ContactStatus"  theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                                            <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                                            <ui-select-choices repeat= "a.tvID as a in Enums.group[1036] | filter: $select.search" >
+                                                                    {{a.Name | translate}}
+                                                            </ui-select-choices>
+                                                        </ui-select>
+                                                     </td>
+                                             </tr>
+                                         </table>
+         
+                                     </div> 
+                                     <div class="timeline-footer" ng-hide="Check_upd_old(item.CALLINGCARD,item.CALLINGCARD_old)" >
+                                         <a class="btn btn-xs" ng-disabled="global.Loading" ng-class="{'btn-warning' : global.Loading , 'btn-success' : !global.Loading}"   
+                                             
+                                             ng-click="Save(item,$index)" 
+                                         >   
+                                             <span ng-hide="global.Loading" translate="save"></span>
+     
+                                             <i ng-show="global.Loading" class="fa fa-spinner fa-pulse fa-fw"></i>
+                                             <span ng-show="global.Loading" translate="Loading"></span>
+                                         </a>
+                                     </div>   
+                                 </div>
+                         </li> 
+                         
+                         <li ng-repeat-start="e in item.clients | orderBy:'-Changed' | limitTo:limit track by $index" ng-repeat-end ng-show="item.clients.length > 0">
+                             <i class="fa fa-user bg-aqua" ng-class="{ 'bg-green' : item.clID == e.clID , ' fa-building': !e.IsPerson }" uib-tooltip="{{e.IsPerson | Person}}"></i>
+     
+                             <div class="timeline-item">
+                                 <span class="time"> <span class="direct-chat-timestamp" style="display: inline-block; font-size: 12px">{{'create' | translate}}: </span> {{ e.Created | date:'dd.MM.yyyy' }} <i class="fa fa-clock-o"></i> {{e.Created | date:' HH.mm'}}</span>
+                                 <h3 class="timeline-header ">
+                                        <div uib-dropdown >
+                                                <a  uib-tooltip="{{'action'| translate}}" id="single-button" href ng-click="$event.stopPropagation()" class="dropdown-toggle" uib-dropdown-toggle role="button" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-user" ng-show="e.IsPerson"      uib-tooltip="{{e.IsPerson | Person}}" tooltip-placement="left"></i>
+                                                    <i class="fa fa-building" ng-hide="e.IsPerson"  uib-tooltip="{{e.IsPerson | Person}}" tooltip-placement="left"></i>
+                                                    <img ng-hide="e.isActive" src="/images/ContactNotActive_Small.png" class="summaryImg">
+        
+                                                    <span ng-bind="e.clName"></span> 
+                                                    <span ng-show="e.ccQty>0" uib-tooltip="{{'qtyCall' | translate}}" tooltip-placement="right" ng-bind="e.ccQty" class="badge badge-badge" ng-class="{'badge-danger' : (e.ccStatus == 103 || e.ccStatus == 203), 'badge-success' : (e.ccStatus == 201 || e.ccStatus == 202), 'badge-warning' : (e.ccStatus == 206 || e.ccStatus == 205 || e.ccStatus == 102),'badge-primary' : e.ccStatus == 101,'badge-info' : e.ccStatus == 204}" ></span>
+        
+                                                    <span class="caret"></span>
+                                                </a>
+                                                <div class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
+                                                   <a class="dropdown-item" ng-show="e.clID" href="#!/clientPreView/{{e.clID}}" uib-tooltip="{{'open' | translate}}" >{{'open'| translate}}</a>
+                                                   <a ng-if="item.dcStatusName != 'RINGING'"  class="dropdown-item" ng-show="e.clID" href="/#!/clientEdit/{{e.clID}}" uib-tooltip="{{'edit' | translate}}" ><i style="margin-right: 0px;" class="fa fa-pencil-square-o fa-lg" ></i>{{'edit'| translate}}</a>
+                                                   <a href ng-if="item.dcStatusName != 'RINGING'" class="dropdown-item"><create-deal data="{{e}}" ></create-deal> </a>
+                                                   <a href ng-if="item.dcStatusName != 'RINGING'" class="dropdown-item"><create-form data="{{e}}" ></create-form></a>
+                                                   <a href ng-if="item.dcStatusName != 'RINGING'" class="dropdown-item"><edit-callingcard data="{{e.cc}}" ></edit-callingcard></a>
+                                                </div>
+                                        </div>
+                                 </h3>
+     
+                                 <div class="timeline-body">
+                                     <div>
+                                         <ul class="list-group list-group-unbordered" style="margin-left: 3%; margin-right: 3%; bottom: 0px; padding: 0px; ">
+                                             <li class="list-group-item" ng-show="e.ccStatus" style="border:0;padding: 1%;">
+                                                     <b> {{'status' | translate}}</b>
+                                                     <a class="float-right" style="color:{{(e.ccStatus | ClientStatus).color}};" ng-bind="(e.ccStatus | ClientStatus).status"></a>
+                                             </li>
+                                             <li class="list-group-item" ng-show="e.ActualStatus" style="border:0;padding: 1%;">
+                                                     <b> {{'actualStatus' | translate}}</b>
+                                                     <a class="float-right"   ng-bind="e.ActualStatus | enums"></a>
+                                             </li>
+                                             <!-- <li class="list-group-item" ng-show="e.CallDate" style="border:0;padding: 1%;">
+                                                     <b> {{'dateOfCommunications' | translate}}</b>
+                                                     <a class="float-right" ng-bind="e.CallDate | date:'yyyy MMM d, HH:MM'"></a>
+                                             </li> -->
+                                             <li class="list-group-item " style="border:0;padding: 1%;" >
+                                                     <div class="row ">
+                                                        <div class="col-lg-4">
+                                                             <b> {{'dateOfCommunications' | translate}}</b>
+                                                        </div>
+                                                        <!-- <a class="float-right" ng-bind="e.CallDate | date:'yyyy MMM d, HH:MM'"></a> -->
+                                                        <div class="col-lg-8" ng-if="item.dcStatusName != 'RINGING'" >
+                                                             <div class="input-group float-right"  >
+                                                                     <span class="icon-group input-group">
+                                                                         <input ng-disabled="e.Loading" ng-model="e.CallDate" ng-change="e.isChange=true;" class="form-control" ng-model-options="{ updateOn: 'blur' }" placeholder="{{'select a date' | translate}}">
+                                                                         <span class="input-group-append">
+                                                                             <button ng-click="e.isChange=true" moment-picker="e.CallDate" class="btn btn-default" ng-disabled="e.Loading">
+                                                                                     <i aria-hidden="true" class="fa fa-calendar"></i>
+                                                                             </button>
+                                                                             <button ng-disabled="e.Loading" ng-show="e.CallDate" type="button" class="btn btn-default" ng-click="e.isChange=true;e.CallDate = null;"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                                                         </span>
+                                                                     </span>
+                                                             </div>
+                                                        </div>
+                                                        <div class="col-lg-8" ng-if="item.dcStatusName == 'RINGING'" >
+                                                                     <a class="float-right" ng-bind="e.CallDate | date:'yyyy MMM d, HH:MM'"></a>
+                                                            </div>
+                                                     </div>
+                                             </li>
+     
+                                             <li class="list-group-item" ng-show="e.Comment" style="border:0;padding: 1%;">
+                                                 <b> {{'note' | translate}}</b>
+                                                 <a class="float-right" uib-tooltip = "{{e.Comment}}">
+                                                     {{e.Comment.substring(0,25)}}
+                                                     <span ng-if="e.Comment.length>25">...</span>
+                                                 </a>
+                                             </li>
+                                             <li class="list-group-item" ui-sref="preView({ 'clID': e.ParentID })" ng-click="cancel()" ng-show="e.ParentName" style="border:0;padding: 1%;">
+                                                 <b> {{'connected' | translate}}</b>
+                                                 <a class="float-right" ng-bind="e.ParentName"></a>
+                                             </li>
+                                             <li class="list-group-item" ng-show="e.ffName" style="border:0;padding: 1%;">
+                                                 <b> {{'file' | translate}}</b>
+                                                 <a class="float-right" ng-bind="e.ffName"></a>
+                                             </li>
+                                             <li class="list-group-item" ng-show="e.TaxCode" style="border:0;padding: 1%;">
+                                                 <b> {{'id' | translate}}</b>
+                                                 <a class="float-right" ng-bind="e.TaxCode"></a>
+                                             </li>
+                                             
+                                         </ul>
+                                     </div>
+                                     <div ng-show="showStas">
+                                             <deal-statistic ></deal-statistic>
+                                     </div>
+                                 </div>
+     
+                                 <div class="timeline-footer" ng-if="item.dcStatusName != 'RINGING'" >
+                                     <button ng-disabled="e.Loading" class="btn btn-outline-primary btn-xs"> <create-deal data="{{e.clID}}"> </button>
+                                     <button ng-disabled="e.Loading" class="btn btn-outline-primary btn-xs"> <create-form data="{{e}}"> </button>
+                                     <button ng-click="ExSave(e);" ng-if="e.isChange" ng-disabled="e.Loading" ng-class="{'btn-outline-warning' : e.Loading , 'btn-outline-success' : !e.Loading}" class="btn btn-xs float-right"> 
+                                             <span ng-hide="e.Loading" translate="save"></span>
+                                             <i ng-show="e.Loading" class="fa fa-spinner fa-pulse fa-fw"></i>
+                                             <span ng-show="e.Loading" translate="Loading"></span>
+                                     </button>
+                                 </div>
+                             </div>
+                         </li>
+     
+                         <li  ng-hide="item.clients.length > 0">
+                             <i class="fa fa-user bg-aqua" ></i>
+                             <div class="timeline-item">
+                                 <h3 class="timeline-header ">
+                                     <div uib-dropdown  ng-hide="newCl.clID">
+                                        <a  uib-tooltip="{{'action'| translate}}" id="single-button" href ng-click="$event.stopPropagation()" class="dropdown-toggle" uib-dropdown-toggle role="button" aria-haspopup="true" aria-expanded="false">                                      
+                                             <span translate="createClient"></span> 
+                                             <span class="caret"></span>
+                                        </a>
+                                        <div class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
+                                            <a  class="dropdown-item" ng-show="e.clID" href="#!/clientPreView/{{e.clID}}" uib-tooltip="{{'open' | translate}}" >{{'open'| translate}}</a>
+                                            <a  class="dropdown-item" ng-show="e.clID" href="/#!/clientEdit/{{e.clID}}" uib-tooltip="{{'edit' | translate}}" ><i style="margin-right: 0px;" class="fa fa-pencil-square-o fa-lg" ></i>{{'edit'| translate}}</a>
+                                            <a href class="dropdown-item" ng-click="$event.stopPropagation()"><create-client data="{{item.phone}}" ></create-client></a>
+                                            <a href class="dropdown-item" ng-show="item.CALLINGCARD.dcID" ng-click="$event.stopPropagation()"><edit-callingcard data="{{item.CALLINGCARD}}" ></edit-callingcard></a>
+                                         </div>
+                                     </div> 
+                                 </h3>
+                                 <div class="timeline-body">
+                                     <!-- <create-client data="{{item.phone}}" > </create-client> -->
+                                 </div>
+     
+                                 <div class="timeline-footer" >
+                                      <a ng-click="$event.stopPropagation();cancel();" class="btn btn-outline-primary btn-xs"> <create-client data="{{item.phone}}" > </create-client> </a>
+                                 </div>
+      
+                             </div>
+                         </li>
+     
+                         <!-- <li ng-show="item.dcStatusName != 'Finished';">
+                             <i class="fa fa-tty bg-red" uib-tooltip ="{{'Hangup' | translate}}" ng-click="manyAction.Hangup(Auth.sipName);" style="cursor: pointer;"></i>
+                             <div class="timeline-item" style="background: none;">
+                                 <div class="timeline-body" ng-if="!item.CALLINGCARD">
+                                     <a ng-click="$event.stopPropagation();cansel($index);"  class="btn btn-warning btn-xs"> {{'cancel' | translate}} </a>
+                                 </div>
+                             </div>
+                         </li> -->
+                         <li>
+                            <i class="fa fa-tty bg-red" uib-tooltip ="{{'Hangup' | translate}}" ng-click="manyAction.Hangup(Auth.sipName);" style="cursor: pointer;"></i>
+                            <div class="timeline-item" style="background: none;">
+                                <div class="timeline-body">
+                                    <button ng-click="$event.stopPropagation();cansel(item);"  class="btn btn-warning btn-xs"> {{'cancel' | translate}} </button>
+                                </div>
+                            </div>
+                         </li>
+                     </ul>
+                 </uib-tab>
+             </uib-tabset>
+     
+     
+     </div>

@@ -1,0 +1,61 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-3">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tr>
+                        <td width="50%">{{'country' | translate}}</td>
+                        <td width="50%"><input class="form-control" ng-model="upd.cName" placeholder="{{'typeCountry' | translate}}"/></td>
+                    </tr>
+                   <!--  <tr>
+                        <td>{{'countryCode' | translate}}</td>
+                        <td>
+                           <div class="input-group">
+                                  <input numeric-only class="form-control" ng-model="upd.rcCode" placeholder="{{'typeСountryCode' | translate}}">
+                                  <span class="input-group-append">
+                                        <button type="button" class="btn btn-default" ng-click="upd.rcCode=upd.rcCode+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-default" ng-click="upd.rcCode=upd.rcCode-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                  </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'lengthNumber' | translate}}</td>
+                        <td>
+                            <div class="input-group">
+                                  <input numeric-only class="form-control" ng-model="upd.LenNumber" placeholder="{{'typeLengthNumber' | translate}}">
+                                  <span class="input-group-append">
+                                        <button type="button" class="btn btn-default" ng-click="upd.LenNumber=upd.LenNumber+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-default" ng-click="upd.LenNumber=upd.LenNumber-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                  </span>
+                            </div>
+                        </td>
+                    </tr> -->
+                </table>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-9">
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"> {{'info' | translate}}</h3>
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-click="manyAction.Update(upd,'country')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="country">{{'cancel' | translate}}</button>
+                    </div>
+             </div>
+          </div>
+        </div>
+    </div>
+</section>

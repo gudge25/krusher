@@ -1,0 +1,91 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i> {{'new' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body">
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'names' | translate}}</div>
+                    <div class="col-lg-6 no-padding"> <input only-clear class="form-control" ng-model="new.cbName"> </div>
+                </div>
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'timeOut' | translate}}</div>
+                    <div class="col-lg-6 no-padding">
+                        <div class="input-group">
+                            <input numeric-only class="form-control" ng-model="new.timeout">
+                            <span class="input-group-append">
+                                <button type="button" class="btn btn-default" ng-click="new.timeout=new.timeout+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                <button type="button" class="btn btn-default" ng-click="new.timeout=new.timeout-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">
+                        <span ng-if="new.isFirstClient">
+                                {{'isFirstClient' | translate}} <b>{{new.destination | enums | translate}} ({{new.destdata | destdata:new.destination}})</b>
+                        </span>    
+                        <span ng-if="!new.isFirstClient">
+                                {{'isFirstClient2' | translate}} <b>{{new.destination | enums | translate}} ({{new.destdata | destdata:new.destination}}) </b> {{'isFirstClient3' | translate}} 
+                        </span> 
+                    </div>
+                    <div class="col-lg-6 no-padding">
+                         <label><input type="checkbox" cb-switch ng-model="new.isFirstClient"></label>
+                    </div>
+                </div>
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'active' | translate}} </div>
+                    <div class="col-lg-6 no-padding"><label><input type="checkbox" cb-switch ng-model="new.isActive"></label> </div>
+                </div>
+            </div>
+            </div>
+
+                              <!-- About Me Box -->
+        <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i>  {{'action' | translate}}, {{'ifAnswer' | translate}}</h3>
+            </div>
+            <div class="card-body ">
+                <div class="row hoverDiv">
+                        <div class="col-lg-6 no-padding">{{'destination' | translate}} </div>
+                        <div class="col-lg-6 no-padding">
+                            <div class="input-group" style="width: 100%">
+                                <ui-select ng-model="new.destination" ng-change="new.destdata=null" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                        <ui-select-choices repeat="c.tvID as c in Enums.group[1014] | filter: $select.search"  ui-disable-choice="c.tvID == 101411 || c.tvID == 101406">{{c.Name | translate}}</ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                </div>
+                <ng-include src="'/Views/destdataNew.html'"></ng-include>
+                <div class="row hoverDiv" ng-show="(new.destination == 101403 || new.destination == 101409) && new.destdata">
+                            <div class="col-lg-6 no-padding">{{'destdata2' | translate}} </div>
+                            <div class="col-lg-6 no-padding">
+                                <div class="input-group" style="width: 100%">
+                                    <input  only-clear class="form-control" ng-model="new.destdata2"/>
+                                    <span class="input-group-append">
+                                        <button ng-show="new.destdata2" type="button" class="btn btn-default" ng-click="new.destdata2 = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                    </div>
+            </div>
+        </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-8">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-disabled="!new.cbName || !new.destination"  ng-click="manyAction.Save(new,'CallBack')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="CallBack">{{'cancel' | translate}}</button>
+                    </div>
+        </div>
+    </div>
+</section>

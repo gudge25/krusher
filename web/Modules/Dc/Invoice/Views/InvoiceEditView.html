@@ -1,0 +1,198 @@
+<section class="content" style="min-height: 40px">
+  <div class="card-tools float-right ">
+    <create-favorite  class="ctate-favorite deal"></create-favorite>
+    <div class="btn-group" style="margin-left: 15px">
+              <button ng-click="PostInvoiceItems(invoice,'Invoice/'+invoice.dcID);formClassInvalid = 'invalid-form-class';uiSelectSetClass();InvoiceForm.$valid && uiSelectClassValidation.valid && InvoiceItemsForm.$valid; " class="btn btn-success">{{ 'save' | translate }}</button>
+              <button ng-click="DeleteInvoice('Invoice');" class="btn btn-warning">{{ 'del' | translate }}</button>
+          </div>
+               <div class="btn-group float-right" uib-dropdown is-open="status.isopen" >
+                      <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled">
+                        {{'actions'| translate}} <span class="caret"></span>
+                      </button>
+                      <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+                        <li role="menuitem">
+                          <!-- <a ui-sref="TemplatesEdit({'dctID': 5, 'dtID': 11 })" ng-click="setData()"><i class="fa fa-print" style="margin-right: 0px;"></i> {{'printeForm' | translate}}</a> -->
+                          <a><i class="fa fa-print" style="margin-right: 0px;"></i> {{'printeForm' | translate}}</a>
+                        </li>
+                        <li role="menuitem" ng-repeat="a in Templates"><a ng-click="$parent.dtTemplate=a.dtTemplate;open(a.dtID)" ng-bind="a.dtName" ></a></li>
+                        <li role="menuitem" ng-show="auth.FFF.Permission == 0">
+                          <a ng-click="TransferInvoice();"><i class="fa fa-plus" style="margin-right: 0px;"></i> {{ 'formAct' | translate }}</a>
+                        </li>
+                        <li role="menuitem">
+                          <a ui-sref="PaymentCreate({'dcID': invoice.dcID })"><i class="fa fa-plus" style="margin-right: 0px;"></i> {{'createPayment' | translate}}</a>
+                        </li>
+                      </ul>
+                </div>
+              <!-- <button ng-click="TransferInvoice();" class="btn btn-warning">{{ 'formAct' | translate }}</button> -->
+  </div>
+</section>
+<section class="content ">
+  <div class="col-md-9">
+
+    <div class="card card-info card-outline" style="padding: 19px">
+      <div class="card-header with-border">
+        <h3 class="card-title"><i class="fas fa-edit"></i> 
+         {{'info' | translate}}
+       </h3>
+
+
+    </div>
+
+     <form class="css-form" ng-class="formClassInvalid" name="InvoiceForm">
+      <table class="table table-head-fixed noBoard">
+        <tbody>
+          <tr>
+              <td width="25%">{{ 'numberNum' | translate }}</td><td width="25%"><input type="text" class="form-control" ng-model="invoice.dcNo" ng-required="true"></td>
+              <td width="25%">{{ 'date' | translate }}</td>   <td width="25%">
+                <p class="input-group custom-datepicker-buttons">
+                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="invoice.dcDate" ng-required="true" is-open="datepicker.opened" datepicker-options="dateOptions" />
+                      <span class="input-group-append">
+                      <button type="button" class="btn btn-default" ng-click="datepickerOpen()"><i class="fa fa-calendar"></i></button>
+                      </span>
+                  </p>
+              </td>
+            </tr>
+            <tr>
+              <td>{{ 'VAT' | translate }}</td>   <td><input type="number" class="form-control" ng-model="invoice.VATSum"  min="0"></td>
+              <td>{{ 'foundationDocument' | translate }}</td>
+              <td>
+                <div class="input-group">
+                      <input ng-required="true" class="form-control" ng-model="invoice.dcDisplayLink"
+                        disabled>
+                      <span class="input-group-append">
+                           <open-docs-link-search data="invoice"/>
+                      </span>
+                  </div>
+              </td>
+            </tr>
+            <tr>
+              <td>{{ 'Comment' | translate }}</td>   <td><input type="text" class="form-control" ng-model="invoice.dcComment"></td>
+              <td>{{ 'amount' | translate }}</td>   <td><input type="number" class="form-control" ng-model="invoice.dcSum" min="1" ng-required="true"></td>
+            </tr>
+            <tr>
+              <td>{{ 'status' | translate }}</td>   <td>
+                <ui-select ng-model="invoice.dcStatus" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                            <ui-select-match >{{$select.selected.p.Name}}</ui-select-match>
+                            <ui-select-choices repeat="a.p.tvID as a in enumsResult | filter: $select.search" >
+                              {{a.p.Name}}
+                          </ui-select-choices>
+                      </ui-select>
+              </td>
+              <td>{{ 'clientName' | translate }}</td>   <td>
+                <div class="input-group">
+                      <input class="form-control" type="text" ng-model="invoice.clName" disabled ng-required="true">
+                      <span class="input-group-append">
+                          <open-client-search data="invoice"/>
+                      </span>
+                  </div>
+              </td>
+            </tr>
+            <tr>
+              <td>{{ 'delivery' | translate }}</td>   <td>
+                <input type="textarea" class="form-control" ng-model="invoice.Delivery" ng-required="true">
+              </td>
+
+              <td>{{ 'responsible' | translate }}</td>
+              <td>
+                <ui-select ng-model="invoice.emID"  theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                  <ui-select-match allow-clear="false">{{$select.selected.emName}}</ui-select-match>
+                  <ui-select-choices repeat="a.emID as a in employees.data | filter: $select.search"" >
+                    {{a.emName}}
+                  </ui-select-choices>
+                </ui-select>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                <div style="float:right;font-size: 12px" >
+                  <span class="direct-chat-timestamp">
+                    {{ 'create' | translate }} <a ng-href="/#!/edit/employee/{{e.CreatedBy}}">{{invoice.CreatedBy | emFilters}}</a> - {{invoice.Created | date:'dd.MM.yyyy HH.mm'}}
+                  </span>
+                  <br>
+                  <span ng-hide="!invoice.ChangedBy" class="direct-chat-timestamp">
+                   {{ 'edited' | translate }} <a ng-href="/#!/edit/employee/{{e.ChangedBy}}">{{invoice.ChangedBy | emFilters}}</a> - {{invoice.Changed | date:'dd.MM.yyyy HH.mm'}}
+                 </span>
+               </div>
+              </td>
+            </tr>
+          </tbody>
+      </table>
+      </form>
+    </div>
+
+<!-- INVOICE ITEMS -->
+  <div class="card card-info card-outline" style="min-height:100px; padding: 19px">
+    <div class="card-header with-border">
+              <h3 class="card-title">
+                    <b ng-hide="dtTemplate">{{'product' | translate}}</b>
+                    <b ng-show="dtTemplate">{{'printeForm' | translate}}</b>
+              </h3>
+
+
+            <div class="text-right" style="float:right">
+                <button class="text-right btn btn-primary" ng-click="addInvoiceItem()" style="margin:2%; margin-right: 10px ;color: #fff;background-color: #0275d8;border-color: #0275d8;">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+            </div>
+             </div>
+
+  <form novalidate class="css-form" ng-class="formClassInvalid" name="InvoiceItemsForm">
+    <table class="table table-head-fixed noBoard" ng-table="tableParams" ng-show="invoiceItems.length" style="margin: 1% 0;">
+            <tr>
+              <th>№</th>
+              <th>{{ 'named' | translate }}</th>
+              <th>{{ 'number' | translate }}</th>
+              <th>{{ 'price' | translate }}</th>
+              <th>{{ 'Comment' | translate }}</th>
+            </tr>
+            <tr ng-repeat="invoiceItem in invoiceItems"  >
+
+                <td data-title="'№'" header-class="'text-left'">
+                     {{invoiceItem.iNo}}
+                </td>
+
+                <td style="width: 300px">
+                    <div class="input-group">
+                      <span class="input-group-append">
+                          <button class="form-control"> <create-product data="invoiceItems"/> </button>
+                      </span>
+                      <div ng-model="invoiceItem.iName" >
+                        <ui-select ng-model="invoiceItem.psID;" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" on-select="invoiceItem.psName = $select.selected.psName">
+                          <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.psName}}</ui-select-match>
+                          <ui-select-choices repeat="c.psID as c in Products| filter: $select.search" >
+                            {{c.psName}}
+                          </ui-select-choices>
+                        </ui-select>
+                      </div>
+                    </div>
+
+                </td>
+
+                <td>
+                    <input class="form-control" type="number" ng-required="true" ng-model="invoiceItem.iQty" min="1" ng-change="getSum(invoiceItems);"/>
+                </td>
+
+                <td >
+                     <input class="form-control" type="number" ng-required="true" ng-model="invoiceItem.iPrice" min="0" ng-change="getSum(invoiceItems);"/>
+                </td>
+
+                <td >
+                     <input class="form-control" type="text" ng-model="invoiceItem.iComments" />
+                </td>
+                <td >
+                      <button class="text-right btn btn-danger" ng-click="delInvoiceItem(invoiceItem)">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+                </td>
+            </tr>
+        </table>
+  </form>
+  </div>
+  </div>
+
+<show-comments></show-comments>
+
+</section>

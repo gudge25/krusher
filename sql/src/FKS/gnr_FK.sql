@@ -1,0 +1,7 @@
+-- ALTER TABLE gnrCurrency
+--    ADD CONSTRAINT FK_gnrCurrency_mnCentre FOREIGN KEY (pcID) REFERENCES mnCentre (pcID)
+--   ,ADD CONSTRAINT FK_gnrCurrency_usCurrency FOREIGN KEY (crID) REFERENCES usCurrency (crID);
+-- --
+-- ALTER TABLE gnrCurrencyRate
+--    ADD CONSTRAINT FK_gnrCurrencyRate_gnrCurrency FOREIGN KEY (gcrID) REFERENCES gnrCurrency (gcrID);
+--

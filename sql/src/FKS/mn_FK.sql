@@ -1,0 +1,12 @@
+-- ALTER TABLE mnDirActivity
+--    ADD CONSTRAINT FK_mnDirActivity_mnCentre FOREIGN KEY (pcID) REFERENCES mnCentre (pcID)
+--   ,ADD CONSTRAINT FK_mnDirActivity_mnDirActivity FOREIGN KEY (ParentID) REFERENCES mnDirActivity (ParentID)
+--   ,ADD CONSTRAINT FK_mnDirActivity_emEmploy_CreatedBy FOREIGN KEY (CreatedBy) REFERENCES emEmploy (emID)
+--   ,ADD CONSTRAINT FK_mnDirActivity_emEmploy_EditedBy FOREIGN KEY (EditedBy) REFERENCES emEmploy (emID);
+-- --
+-- ALTER TABLE mnGroupSale
+--    ADD CONSTRAINT FK_mnGroupSale_mnGroupSale FOREIGN KEY (ParentID) REFERENCES mnGroupSale (gsID)
+--   ,ADD CONSTRAINT FK_mnGroupSale_mnDirActivity FOREIGN KEY (draID) REFERENCES mnDirActivity (draID)
+--   ,ADD CONSTRAINT FK_mnGroupSale_emEmploy_CreatedBy FOREIGN KEY (CreatedBy) REFERENCES emEmploy (emID)
+--   ,ADD CONSTRAINT FK_mnGroupSale_emEmploy_EditedBy FOREIGN KEY (EditedBy) REFERENCES emEmploy (emID);
+-- --

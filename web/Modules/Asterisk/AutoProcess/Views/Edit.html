@@ -1,0 +1,103 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+
+              <div class="card-tools"></div>              
+            </div>
+            <div class="card-body  p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tr>
+                        <td width="50%">{{'process' | translate}}</td>
+                        <td >
+                            <ui-select ng-model="upd.process" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                        <ui-select-choices repeat="c.tvID as c in Enums.group[1016]" >
+                                         {{c.Name | translate}}
+                                        </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'file' | translate}}</td>
+                        <td>
+                            <ui-select ng-disabled="true" ng-model="upd.ffID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.ffName}}</ui-select-match>
+                                <ui-select-choices repeat="a.ffID as a in File.data"> <!--  | filter:{isActive:true}" -->
+                                    {{a.ffName}}
+                                </ui-select-choices>
+                            </ui-select>
+                    </tr>
+                    <tr>
+                        <td>{{'scenario' | translate}}</td>
+                        <td>
+                             <ui-select ng-disabled="true" ng-model="upd.id_scenario" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.name_scenario}}</ui-select-match>
+                                        <ui-select-choices repeat="c.id_scenario as c in Scenario.data" >
+                                         {{c.name_scenario}}
+                                        </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'user' | translate}}</td>
+                        <td>
+                            <ui-select ng-disabled="true" ng-model="upd.emID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.emName}}</ui-select-match>
+                                        <ui-select-choices repeat="c.emID as c in employees.data" >
+                                         {{c.emName}}
+                                        </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'factor' | translate}}</td>
+                        <td>
+                            <div class="btn-group">
+                              <button ng-disabled="true" ng-click="upd.factor=upd.factor+1" class="btn btn-default"><i class="fa fa-plus"></i></button>
+                              <button class="btn btn-default"" uib-tooltip="{{'factorNumber' | translate}}">{{upd.factor}}</button>
+                              <button ng-disabled="true" ng-click="upd.factor=upd.factor-1" class="btn btn-default""><i class="fa fa-minus"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-show="upd.called">
+                        <td>{{'called' | translate}}</td>
+                        <td>
+                            <small class="badge badge-success" ng-show="upd.called" uib-tooltip="{{'qtyCall' | translate}}"  ng-bind="upd.called"></small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'planDateBegin' | translate}}</td>
+                        <td>
+                            <div class="input-group md-3">
+                                    <input ng-model="upd.planDateBegin" class="form-control" ng-model-options="{ updateOn: 'blur' }">
+                                    <div class="input-group-append">
+                                                <button moment-picker="upd.planDateBegin" class="btn btn-default">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </button>
+                                    </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'errorDescription' | translate}}</td>
+                        <td><textarea disabled ng-model="upd.errorDescription" msd-elastic class="form-control" msd-elastic rows="3" id="comment"></textarea></td>
+                    </tr>
+                    <tr ng-include="'/Views/tableEdit.html'" ng-show="upd.Created"></tr>
+                    <tr ng-include="'/Views/tableEdit2.html'" ng-show="upd.Changed || upd.Changed==0"></tr>
+                </table>
+            </div>
+          </div>
+        </div>
+        <!--DATA RIGHT-->
+        <div class="col-lg-8">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-click="manyAction.Update(upd,'AutoProcess')" ng-hide="manyAction.Check_upd_old()">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="AutoProcess">{{'cancel' | translate}}</button>
+                    </div>
+        </div>
+    </div>
+</section>

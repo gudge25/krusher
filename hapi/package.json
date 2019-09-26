@@ -1,0 +1,86 @@
+{
+  "name": "crm_krusher",
+  "version": "2.0.0",
+  "description": "hapi-backed API service with testing and CI.",
+  "main": "index.js",
+  "scripts": {
+    "start": "gulp",
+    "test": "NODE_ENV=TEST NODE_PATH=. node_modules/lab/bin/lab -v -C -D -c -t",
+    "test-cov-html": "lab -r html -o coverage.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/asterisktech/KRUSHER.git"
+  },
+  "keywords": [
+    "hapi",
+    "tests",
+    "lab",
+    "ci",
+    "travisci"
+  ],
+  "author": "d&d",
+  "license": "ISC",
+  "dependencies": {
+    "asterisk-manager": "^0.1.16",
+    "boom": "^7.1.1",
+    "eslint": "^4.17.0",
+    "event-debug": "^2.1.0",
+    "exec-php": "0.0.4",
+    "glue": "4.2.1",
+    "good": "7.3.0",
+    "good-console": "7.0.1",
+    "good-squeeze": "5.0.2",
+    "gulp-print": "^5.0.0",
+    "hapi": "^17.2.0",
+    "hapi-auth-basic": "4.2.0",
+    "hapi-cors-headers": "^1.0.3",
+    "hapi-emitter": "^1.0.0",
+    "hapi-gate": "^2.1.0",
+    "hapi-plugin-websocket": "1.2.18",
+    "hapi-require-https": "^3.0.1",
+    "hapi-router": "3.5.0",
+    "hapi-swagger": "8.0.0",
+    "inert": "4.2.1",
+    "joi": "^13.1.2",
+    "js2xmlparser": "3.0.0",
+    "json2xlsx": "0.1.6",
+    "li": "1.3.0",
+    "lodash": "^4.17.5",
+    "mocha": "5.0.0",
+    "moment": "^2.22.1",
+    "mysql": "2.15.0",
+    "node-xlsx": "0.11.2",
+    "npm": "^6.9.0",
+    "q": "^2.0.3",
+    "request": "^2.83.0",
+    "should": "13.1.3",
+    "susie": "2.0.0",
+    "uuid": "3.2.1",
+    "vision": "4.1.1",
+    "ws": "4.0.0"
+  },
+  "devDependencies": {
+    "blanket": "^1.2.3",
+    "code": "5.1.2",
+    "eslint-config-hapi": "11.1.0",
+    "eslint-plugin-hapi": "4.1.0",
+    "gulp": "^4.0.2",
+    "gulp-env": "^0.4.0",
+    "gulp-mocha": "^5.0.0",
+    "gulp-nodemon": "^2.2.1",
+    "lab": "15.2.1",
+    "nodemon": "1.14.12"
+  },
+  "config": {
+    "blanket": {
+      "pattern": [
+        "src"
+      ],
+      "data-cover-never": "node_modules"
+    },
+    "travis-cov": {
+      "threshold": 10
+    }
+  }
+}

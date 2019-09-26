@@ -1,0 +1,36 @@
+<div class="col-lg-2" style="border-right: 1px solid #e7e7e7;">
+
+</div>
+
+
+<div class="col-lg-10">
+    <div class="col-lg-6">
+        <br/>
+        <b>Данные продукта</b>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="text-right">
+            <div class="btn-group" style="margin: 2%">
+                <button ng-disabled=" !new.psName" ng-click="manyAction.Save(new,'Comments')" class="btn btn-success">Сохранить</button>
+                <a href="#!/CommentsAdd" class="btn btn-warning">Отмена</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-4">
+        <table class="table table-head-fixed table-hover borderless">
+            <tbody>
+            <tr>
+                <td>ИД</td>
+                <td><input class="form-control" type="text" ng-model="new.uID" placeholder="Название нового товара"></td>
+            </tr>
+            <tr>
+                <td>Комментарий</td>
+                <td><input class="form-control" type="text" ng-model="new.uComment" placeholder="Статус товара" ></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

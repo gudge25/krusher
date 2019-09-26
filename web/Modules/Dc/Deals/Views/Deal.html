@@ -1,0 +1,54 @@
+<div ng-include="'/build/Dc/Deals/Views/filter.html'"></div>
+
+<div  class="card card-info card-outline" >
+    <ng-include src="'/Views/findPlaceholder.html'"></ng-include>
+
+    <div class="card-body  p-0">
+        <div class="row">
+            <div class="col-lg-12" style="overflow-y: scroll; height:68vh;" can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="10">
+                <ng-include src="'/Views/LoadingTable.html'"></ng-include>
+                <table class="table table-head-fixed table-hover borderless" ng-hide="global.Loading">
+                        <tr ng-click="manyAction.Find()">
+                            <th ng-include="'/Views/ng-table/checkbox.html'" ng-click="$event.stopPropagation()" width="1%"></th>
+                            <th ng-init="o1='dcDate'" ng-click="manyAction.order(o1);">
+                                <nobr>{{'date' | translate}} <span ng-show="order==o1" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o2='dcNo'" ng-click="manyAction.order(o2);">
+                                <nobr>{{'named' | translate}} <span ng-show="order==o2" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o3='HasDocNo'" ng-click="manyAction.order(o3);">
+                                <nobr>{{'documentNumber' | translate}} <span ng-show="order==o3" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o4='clName'" ng-click="manyAction.order(o4);">
+                                <nobr>{{'client' | translate}} <span ng-show="order==o4" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o5='dcStatus'" ng-click="manyAction.order(o5);">
+                                <nobr>{{'status' | translate}} <span ng-show="order==o5" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o6='dcSum'" ng-click="manyAction.order(o6);">
+                                <nobr>{{'amount' | translate}} <span ng-show="order==o6" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o7='emName'" ng-click="manyAction.order(o7);">
+                                <nobr>{{'responsible' | translate}} <span ng-show="order==o7" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o8='dcComment'" ng-click="manyAction.order(o8);">
+                                <nobr>{{'Comment' | translate}} <span ng-show="order==o8" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                        </tr>
+                        <tr ng-repeat="e in data | limitTo:limit track by $index" >
+                            <td ng-include="'/Views/checkboxOne.html'"></td>
+                            <td> <nobr> <span class="text-muted" ng-bind="e.dcDate | date:'MMM d'"> </span> </nobr> </td>
+                            <td> <a ng-href="/#!/DealEdit/{{e.dcID}}"> {{e.dcNo}} </a> </td>
+                            <td> {{e.HasDocNo}} </td>
+                            <td> <a ng-href="/#!/clientPreView/{{e.clID}}"> {{e.clName}} </a> </td>
+                            <td> <span ng-class="{'badge badge-pill badge-success' : e.dcStatus === 6002, 'badge badge-pill badge-warning' : e.dcStatus === 6003 || e.dcStatus === 6006 || e.dcStatus === 6008, 'badge badge-pill badge-danger' : e.dcStatus === 6010, 'badge badge-pill badge-info': e.dcStatus === 6001 || e.dcStatus === 6004 || e.dcStatus === 6005 || e.dcStatus === 6007 || e.dcStatus === 6009}"> {{ e.dcStatus | enums | translate }} </span> </td>
+                            <td> {{e.dcSum}} </td>
+                            <td> {{e.emName}} </td>
+                            <td> {{e.dcComment}} </td>
+                        </tr>
+                </table>
+            </div>
+        </div>
+        <div ng-include="'/Views/pagination.html'"></div>
+    </div>
+</div>

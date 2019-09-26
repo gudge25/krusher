@@ -1,0 +1,56 @@
+<div class="card card-info card-outline">
+    <div class="card-body">
+        <div class="col-lg-12" style="overflow-y: auto; height: 78vh;" can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="100">
+            <table ng-table="tableParams" show-filter="false" class="table table-head-fixed table-hover borderless">
+                <tbody>
+                    <tr>
+                        <th>{{'date' | translate}}</th>
+                        <th>{{'change' | translate}}</th>
+                        <th>{{'docType' | translate}}</th>
+                        <th>{{'named' | translate}}</th>
+                        <th>{{'status' | translate}}</th>
+                        <th>{{'amount' | translate}}</th>
+                        <th>{{'client' | translate}}</th>
+                        <th>{{'responsible' | translate}}</th>
+                        <th>{{'created' | translate}}</th>
+                    </tr>
+                    <tr ng-repeat="e in data | limitTo:limit track by $index"  >
+                        <td>
+                            <nobr>
+                                    <span class="text-muted" ng-show="e.isToday" ng-bind="e.dcDate | date:'HH:mm'"> </span>
+                                    <span class="text-muted" ng-hide="e.isToday" ng-bind="e.dcDate | date:'MMM d'"> </span>
+                            </nobr>
+                        </td>
+                        <td>
+                            {{e.dup_action | Action}}
+                        </td>
+                        <td>
+                            {{e.dctName}}
+                        </td>
+                        <td>
+                            <a ng-show="e.dctName=='Сделка'" ng-href="/#!/DealEdit/{{e.dcID}}"> {{e.dcNo}} </a>
+                            <a ng-show="e.dctName=='Анкета'" ng-href="/#!/form/{{e.dcID}}"> {{e.dcNo}} </a>
+                        </td>
+                        <td >
+                            <span ng-class="{'label label-success' : e.dcStatus === 6002, 'label label-warning' : e.dcStatus === 6003 || e.dcStatus === 6006 || e.dcStatus === 6008, 'label label-danger' : e.dcStatus === 6010, 'label label-info': e.dcStatus === 6001 || e.dcStatus === 6004 || e.dcStatus === 6005 || e.dcStatus === 6007 || e.dcStatus === 6009}">
+                                {{e.dcStatusName}}
+                            </span>
+                        </td>
+                        <td >
+                            {{e.dcSum}}
+                        </td>
+                        <td>
+                             <b><a style="color:{{(c.clStatus | ClientStatus).color}};" ng-href="/#!/clientPreView/{{e.clID}}" ng-bind="e.clName"></a></b>
+                        </td>
+                        <td>
+                            <a ng-href="/#!/StreamDetail/{{e.emID}}"> {{e.emName}} </a>
+                        </td>
+                        <td>
+                            <a ng-show="e.CreatedBy != e.emID" ng-href="/#!/StreamDetail/{{e.CreatedBy}}"> {{e.CreatedName}} </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

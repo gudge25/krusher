@@ -1,0 +1,436 @@
+#!/usr/bin/perl
+########################################################################
+#
+# $Id: d2ms.agi,v 1.6 2008/06/28 20:43:48 gosha Exp $
+#
+# Copyright (c) 2006-2008 Okunev Igor <gosha@prv.mts-nn.ru>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+# See LICENSE for details
+#
+########################################################################
+#
+# usage
+#	in command line:
+#		d2ms.agi 123.54 rur 0 1
+#		d2ms.agi -123_456_789.04 usd 0 1
+#
+# 	in extensions file:
+#		exten => s, x, agi(d2ms.agi|123456789.98|rur)
+#		exten => s, x, agi(d2ms.agi|-987_654_321.11|usd|1)
+#
+########################################################################
+use strict;
+
+$^W = $| = 1;
+
+#
+# Директория со звуками, относительно астериска
+#
+my $home = 'moneystr';
+
+#
+# Максимальное число. ( порядок чисел )
+# 0 .. 11 ( 0 - рубли/доллары, 1 - тысячи, 2 - милионы, ..., 11 - децилионы )
+# звуки есть только до милионов
+#
+# Чтоб работало по максимуму надо записать в поддерживаемом астериском формате
+# и положить в вышеозвученную директорию файлы:
+#
+#	Billion, Billions, Billions234,
+#	Trillion, Trillions, Trillions234,
+#	Kvadrillion, Kvadrillions, Kvadrillions234,
+#	Kvintillian, Kvintillians, Kvintillians234,
+#	Sekstillion, Sekstillions, Sekstillions234,
+#	Septillion, Septillions, Septillions234,
+#	Oktilion, Oktilions, Oktilions234,
+#	Nonillion, Nonillions, Nonillions234,
+#	Decillion, Decillions, Decillions234
+#
+my $max_digits_class = 2; 
+
+#
+# Число которое надо проговорить ( первый параметр командной строки )
+#
+my $num = shift || 0;
+
+#
+# Вылюта. Поддерживается usd/rur. ( второй параметр командной строки )
+#
+my $currency = shift || 'eur';
+
+#
+# Отладочные сообщения. ( третий параметр командной строки 1 - вкл \ 0 - выкл )
+#
+my $debug = shift || 0;
+
+#
+# Тестирование из командной строки,
+# просто генерируем команду для астериска
+# и пишем в STDOUT.
+#
+my $test_mode = shift || 0;
+##########################################################################
+							main();
+##########################################################################
+
+
+#
+# От сюда все стартуем
+#
+sub main {
+	#
+	# Читаем AGI окружение
+	#
+	my %AGI;
+
+	unless ( $test_mode ) {
+		while( <STDIN> ) {
+			chomp;
+			last unless length($_);
+			$AGI{$1} = $2 if /^agi_(\w+)\:\s+(.*)$/;
+			print STDERR "ENV -- $1 ==> $2\n" if $debug;
+		}
+	}
+
+	digit_to_money_string( $num );
+}
+
+#
+# Собственно тут и генерим имена файлов...
+#
+sub digit_to_money_string {
+	my $digit = shift;
+	local $_;
+
+	my @digit_array;
+
+	#
+	# Проверка на отрицательность числа
+	#
+	if ( $digit =~ s/^-+// ) {
+		push @digit_array, 'minus';
+	}
+
+	#
+	# Удаляем нули из начала числа
+	#
+	$digit =~ s#^0+##;
+
+	my ( $b_dig, $s_dig ) = ( split( m/[,.]/, $digit, 2 ) );
+	
+	#
+	# Очищаем числа от `лишних' символов ( 100_000,43 )
+	#
+	if ( defined $b_dig and length $b_dig ) {
+		$b_dig =~ s#[^\d]##sg;
+	} else {
+		$b_dig = 0;
+	}
+	if ( defined $s_dig and length $s_dig ) {
+		$s_dig =~ s#[^\d]##sg;
+	} else {
+		$s_dig = 0;
+	}
+	
+	#
+	# Округляем копейки в большую сторону, если в результате округления
+	# получаем рубль, то приплюсовываем его к b_dig ( рублям )
+	#
+	if ( sprintf('%0.2f', "0.$s_dig" ) == 1 ) {
+		$b_dig ++;
+		$s_dig = '00';
+	} else {
+		$s_dig = substr( sprintf('%0.2f', "0.$s_dig" ), 2 );
+	}
+
+	my @array = split( //, ( $b_dig || 0 ) );
+
+	#
+	# Определяем разрядность числа.
+	#
+	my $class_id = int( scalar ( @array ) / 3);
+	$class_id++ if ( scalar ( @array ) % 3 );
+	
+	#
+	# Неподдерживаемая разрядность.,
+	#
+	return $digit if $class_id > $max_digits_class + 1;
+
+	my $digits_name = {
+			0	=> ['0',			'',		''	],
+			1	=> [['1_m','1_f'],	10,		100	],
+			2	=> [['2','2_f'],	20,		200	],
+			3	=> [3,				30,		300	],
+			4	=> [4,				40,		400	],
+			5	=> [5,				50,		500	],
+			6	=> [6,				60,		600	],
+			7	=> [7,				70,		700	],
+			8	=> [8,				80,		800	],
+			9	=> [9,				90,		900	],
+		};
+
+	my $dec_digits = {
+			11	=> 11,
+			12	=> 12,
+			13	=> 13,
+			14	=> 14,
+			15	=> 15,
+			16	=> 16,
+			17	=> 17,
+			18	=> 18,
+			19	=> 19
+		};
+
+	my $digits_class = {
+			1	=>	[ 1,	'Thousand',		'Thousands',	'Thousands234'	],
+			2	=>	[ 0,	'Million',		'Millions',		'Millions234'	],
+
+			3	=>	[ 0,	'Billion',		'Billions',		'Billions234'	],
+
+			4	=>	[ 0,	'Trillion',		'Trillions',	'Trillions234',		],
+			5	=>	[ 0,	'Kvadrillion',	'Kvadrillions',	'Kvadrillions234',	],
+			6	=>	[ 0,	'Kvintillian',	'Kvintillians',	'Kvintillians234',	],
+			7	=>	[ 0,	'Sekstillion',	'Sekstillions',	'Sekstillions234',	],
+			8	=>	[ 0,	'Septillion',	'Septillions',	'Septillions234',	],
+			9	=>	[ 0,	'Oktilion',		'Oktilions',	'Oktilions234',		],
+			10	=>	[ 0,	'Nonillion',	'Nonillions',	'Nonillions234',	],
+			11	=>	[ 0,	'Decillion',	'Decillions',	'Decillions234',	]
+		};
+	
+	#
+	# Поддерживаем только рубли и долары.
+	#
+        
+
+         
+
+	if ( $currency eq 'usd' ) {
+		$digits_class->{ '-1' } = [ 0,	'Cent',			'Cents',		'Cents234'		];
+		$digits_class->{ '0' }  = [ 0,	'Dollar',		'Dollars',		'Dollars234'	];
+	}
+        elsif ( $currency eq 'eur' )
+{
+                $digits_class->{ '-1' } = [ 0,  'Cent',                 'Cents',                'Cents234'              ];
+                $digits_class->{ '0' }  = [ 0,  'Euro',               'Euro',              'Euro'    ];
+}
+
+
+
+ 
+        else {
+		$digits_class->{ '-1' } = [ 1,	'Kopeck',		'Kopecks',		'Kopecks234'	];
+		$digits_class->{ '0' }  = [ 0,	'Ruble',		'Rubles',		'Rubles234'		];
+	}
+	
+	#
+	# Определяем длину левой `тройки'...
+	#
+	my $id = 0;
+	unless ( ( scalar @array ) % 3 ) {
+		$id = 2;
+	} else {
+		$id = ( ( scalar @array ) % 3 ) - 1;
+	}
+
+	my $sub_str	= 0;
+	my $tvar	= 0;
+
+	if ( $array[0] == 0 ) {
+		#
+		# Если рублей таки ноль, то так и пишем 'ноль рублей',
+		# если не надо то просто закомнтировать следующую строку...
+		#
+		push @digit_array, $digits_name->{'0'}->[0], $digits_class->{'0'}->[2];
+	} else {
+		#
+		# Рубли/Доллары
+		#
+		while ( defined ( $_ = shift @array ) ) {
+			if ( $_ > 0 ) {
+				if ( $_ == 1 and $id == 1 ) {
+					#
+					# Считаем сумму для использования в sub num()
+					#
+					$sub_str += $_ * 10;
+					if ( defined ( $tvar = shift @array ) and $tvar > 0 ) {
+						push @digit_array, $dec_digits->{ $_ . $tvar };
+						$sub_str += $tvar;
+						$id--;
+					} else {
+						unshift @array, $tvar;
+						if ( ref $digits_name->{$_}->[$id] eq 'ARRAY' ) {
+							push @digit_array, $digits_name->{$_}->[$id]->[$digits_class->{$class_id-1}->[0]];
+						} else {
+							push @digit_array, $digits_name->{$_}->[$id];
+						}
+					}
+				} else {
+					#
+					# Считаем сумму для использования в sub num()
+					#
+					$sub_str += ( $_ * ( 10 ** $id ) );
+					if ( ref $digits_name->{$_}->[$id]  eq 'ARRAY' ) {
+						push @digit_array, $digits_name->{$_}->[$id]->[$digits_class->{$class_id-1}->[0]];
+					} else {
+						push @digit_array, $digits_name->{$_}->[$id];
+					}
+				}
+			}
+			if ( --$id == -1 ) {
+				$id = 2;
+				$class_id--;
+				if ( $sub_str > 0 ) {
+					push @digit_array, num( $sub_str, ( @{ $digits_class->{$class_id} } )[ 1 .. 3 ] );
+				} elsif ( $class_id == 0 ) {
+					push @digit_array, $digits_class->{$class_id}->[2];
+				}
+				$sub_str = 0;
+			}
+		}
+	}
+
+	#
+	# Копейки/Центы
+	#
+	unless ( $s_dig == 0 ) {
+		if ( exists $dec_digits->{$s_dig} ) {
+			push @digit_array, $dec_digits->{$s_dig};
+			push @digit_array, num( $s_dig, ( @{ $digits_class->{'-1'} } )[ 1 .. 3 ] );
+		} else {
+			if ( $s_dig < 10  ) {
+				if ( ref $digits_name->{int $s_dig}->[0]  eq 'ARRAY' ) {
+					push @digit_array, $digits_name->{int $s_dig}->[0]->[1];
+				} else {
+					push @digit_array, $digits_name->{int $s_dig}->[0];
+				}
+			} else {
+				push @digit_array, $digits_name->{substr($s_dig,0,1)}->[1];
+				if ( $s_dig  % 10 ) {
+					if ( ref $digits_name->{substr($s_dig,1,1)}->[0]  eq 'ARRAY' ) {
+						push @digit_array, $digits_name->{substr($s_dig,1,1)}->[0]->[1];
+					} else {
+						push @digit_array, $digits_name->{substr($s_dig,1,1)}->[0];
+					}
+				}
+			}
+			push @digit_array, num( $s_dig, ( @{ $digits_class->{'-1'} } )[ 1 .. 3 ] );
+		}
+	}
+	
+	foreach my $file_to_stream ( @digit_array ) {
+		print "STREAM FILE $home/$file_to_stream \"\"\n";
+		print STDERR "STREAM FILE $home/$file_to_stream \"\"\n" if $debug;
+		last unless checkresult();
+	}
+}
+
+#
+# Используется при переводе денежного числа в строку прописью..
+#
+sub num {
+	my $d1 = $_[0] % 10;
+	my $d2 = int( ( $_[0] % 100 ) / 10 );
+	return $_[2] if ( ( $d2 == 1 ) or ( $d1 =~ /[05-9]/ ) );
+	return $_[1] if ( $d1==1 );
+	return $_[3];
+}
+
+#
+# Проверяем результат выполнения AGI команды
+#	возвращаем:
+#			0 - ошибка
+#			1 - успешно
+#
+sub checkresult {
+
+	return 1 if $test_mode;
+
+	my $result = <STDIN>;
+
+	return 0 unless defined $result;
+
+	chomp $result;
+	
+	print STDERR "Result: $result\n" if $debug;
+	
+	if ($result =~ /^200/) {
+		$result =~ /result=(-?\d+)/;
+		if (!length($1)) {
+			print STDERR "FAIL ($result)\n" if $debug;
+			return 0;
+		} else {
+			print STDERR "PASS ($1)\n" if $debug;
+			return 1;
+		}
+	} else {
+		print STDERR "FAIL (unexpected result '$result')\n" if $debug;
+		return 0;
+	}
+}
+
+=pod
+
+=head1 NAME
+
+d2ms.agi
+
+=head1 DESCRIPTION
+
+Asterisk AGI script, for say numbers into the money format. In russian.
+
+=head1 INSTALL
+
+Copy `d2ms.agi' to asterisk agi-bin directory.
+
+Copy `moneystr' to asterisk sounds directory.
+
+=head1 SYNOPSIS
+
+d2ms.agi [number] <currency> <debug 0|1> <test_mode 0|1>
+
+Where:
+
+=over 5
+
+=item number
+
+number
+
+=item currency 
+
+rur / usd. Default: `rur'
+
+=item debug 
+
+1 - enable, 0 - disable. Default: 0
+
+=item test_mode
+
+1 - enable, 0 - disable. Use this for debug into command line. Default: 0
+
+=back		
+
+examples:
+
+ d2ms.agi -123,34 rur
+
+ d2ms.agi 938_987,49 usd
+
+read extensions.conf for more info.
+
+=head1 AUTHOR
+
+ Okunev Igor V.  mailto:igor@prv.mts-nn.ru
+                 http://www.mts-nn.ru/~gosha
+                 106183300
+
+=cut
+

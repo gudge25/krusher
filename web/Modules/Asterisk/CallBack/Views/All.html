@@ -1,0 +1,38 @@
+<div ng-include="'/build/Asterisk/CallBack/Views/filter.html'"></div>
+
+<div  class="card card-info card-outline" >
+    <ng-include src="'/Views/findPlaceholder.html'"></ng-include> 
+
+    <div class="card-body  p-0">
+        <div class="row">
+            <div class="col-lg-12 " style="overflow-y: auto; height: 70vh;" can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="100">
+                <ng-include src="'/Views/LoadingTable.html'"></ng-include>
+                    <table class="table table-head-fixed table-hover" ng-hide="global.Loading">
+                        <tr ng-click="manyAction.Find()">
+                            <th ng-include="'/Views/ng-table/checkbox.html'" ng-click="$event.stopPropagation()"/>
+                            <th ng-init="o2='cbName'" ng-click="manyAction.order(o2);">
+                                <nobr>{{'names' | translate}} <span ng-show="order==o2" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o7='destination'" ng-click="manyAction.order(o7);">
+                                <nobr>{{'destination' | translate}} <span ng-show="order==o7" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o8='destdata'" ng-click="manyAction.order(o8);">
+                                <nobr>{{'destdata' | translate}} <span ng-show="order==o8" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o9='isActive'" ng-click="manyAction.order(o9);">
+                                <nobr>{{'active' | translate}} <span ng-show="order==o9" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                        </tr>
+                        <tr ng-repeat="e in data | limitTo:limit track by $index" >
+                                <td ng-include="'/Views/checkboxOne.html'" width="1%" />
+                                <td style="width: 25%" > <a ui-sref="CallBackEdit({'cbID': e.cbID })" ng-bind="e.cbName"> </a> </td>
+                                <td style="width: 25%" ng-bind="e.destination | enums | translate"></td>
+                                <td style="width: 25%" ng-bind="e.destdata | destdata:e.destination"></td>
+                                <td width="1%"><input type="checkbox" cb-switch disabled ng-model="e.isActive"></td>
+                        </tr>
+                    </table>
+            </div>
+        </div>
+        <div ng-include="'/Views/pagination.html'"></div>
+    </div>
+</div>

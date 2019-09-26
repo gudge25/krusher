@@ -1,0 +1,48 @@
+<div ng-include="'/build/Asterisk/TTS/Views/filter.html'"></div>
+
+<div  class="card card-info card-outline" >
+    <ng-include src="'/Views/findPlaceholder.html'"></ng-include>
+
+    <div class="card-body  p-0">
+        <div class="col-lg-12" >
+        <ng-include src="'/Views/LoadingTable.html'"></ng-include>
+            <div ng-show="cc_Contact.length != []" style="height:72vh;overflow-y: auto;" can-load="canLoad" infinite-scroll="manyAction.loadMore(data.length)"  threshold="10" >
+                <table class="table table-head-fixed table-hover" ng-hide="global.Loading">
+                        <tr ng-click="manyAction.Find()"> <!-- ng-click="FindClient(Filter.Filter);" -->
+                            <th ng-include="'/Views/ng-table/checkbox.html'" ng-click="$event.stopPropagation()" width="1%" />
+                            <th ng-init="o1='ttsName'" ng-click="manyAction.order(o1);">
+                                <nobr>{{'TTS' | translate}} <span ng-show="order==o1" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o2='engID'" ng-click="manyAction.order(o2);">
+                                <nobr>{{'engine' | translate}} <span ng-show="order==o2" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o3='recIDBefore'" ng-click="manyAction.order(o3);">
+                                <nobr>{{'recording' | translate}} {{'before' | translate}} <span ng-show="order==o3" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o4='recIDAfter'" ng-click="manyAction.order(o4);">
+                                <nobr>{{'recording' | translate}} {{'after' | translate}}  <span ng-show="order==o4" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                        </tr>
+                        <tr ng-repeat="e in data  | limitTo:limit track by $index" > <!-- | filter:{IsActive: Filter} | filter:FilterRoled |  -->
+                            <td ng-include="'/Views/checkboxOne.html'"/>
+                            <td > <a ng-href="/#!/TTSEdit/{{e.ttsID}}" ng-bind="e.ttsName"></a> </td>
+                            <td ng-bind="e.engID | enums"> </td>
+                            <td >
+                                <ui-select  multiple tagging tagging-label="(custom 'new' label)" ng-model="e.recIDBefore" theme="bootstrap4-1" ng-disabled="true" style='height: 30.33px;border:none;background: none;'>
+                                    <ui-select-match  placeholder="{{'select' | translate}}">{{$item.record_name}}</ui-select-match>
+                                    <ui-select-choices repeat="a.record_id as a in Record.data  | filter:$viewValue">{{a.record_name}}</ui-select-choices>
+                                </ui-select>
+                            </td>
+                            <td>
+                                <ui-select  multiple tagging tagging-label="(custom 'new' label)" ng-model="e.recIDAfter" theme="bootstrap4-1" ng-disabled="true" style='height: 30.33px;border:none;background: none;'>
+                                    <ui-select-match  placeholder="{{'select' | translate}}">{{$item.record_name}}</ui-select-match>
+                                    <ui-select-choices repeat="a.record_id as a in Record.data  | filter:$viewValue">{{a.record_name}}</ui-select-choices>
+                                </ui-select>
+                            </td>
+                        </tr>
+                </table>
+            </div>
+        </div>
+        <div ng-include="'/Views/pagination.html'"></div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+#Docker compose latest
+## docker-compose Asterisk and Hapi Web and MySQL Database
+version: '2'
+services:
+  
+  krusher-hapi:
+    image: asterisktech/hapi:latest
+    build:
+     context: ./hapi
+     dockerfile: Dockerfile
+    environment:
+      - DB_PRD_USER=root
+      - DB_PRD_PASS=fweht35hgh5g89u2h8hu
+      - DB_PRD_HOST=krusher-db
+      - DB_PRD_NAME=krusher
+      - DB_DEV_USER=root
+      - DB_DEV_PASS=fweht35hgh5g89u2h8hu
+      - DB_DEV_HOST=krusher-db
+      - DB_DEV_NAME=krusher
+    ports:
+      - 3000:3000
+    depends_on:
+      - krusher-web   
+    mem_limit: 300mb
+    volumes:
+      - web-data:/usr/src/app/
+  krusher-web:
+    image: asterisktech/web:latest
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    volumes:
+      - web-data:/usr/src/app/  
+volumes:
+ web-data:         

@@ -1,0 +1,15 @@
+{
+  "GetMoel": {
+    "HIID": {
+      "type": "bigint",
+      "isRowVersion": true
+    },
+    "gcrID": {
+      "type": "int",
+      "isPrimary": true
+    },
+    "crID": {
+      "type": "int"
+    }
+  }
+}

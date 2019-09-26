@@ -1,0 +1,59 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-5">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}} {{'question' | translate | lowercase}}:</h3> <br>
+              <small class="text-muted"><b>{{form.qName}}</b></small>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body p-0">
+               
+                <table class="table table-head-fixed table-hover borderless">
+                        <tr>
+                            <th>{{'answs' | translate}}</th>
+                            <th>{{'status' | translate}}</th>
+                            <th>{{'del' | translate}}</th>
+                        </tr>
+                        <tr ng-repeat="e in upd track by $index">
+                            <td>
+                                <textarea maxlength="200" ng-model="e.qiAnswer" msd-elastic style="background-color: lightgoldenrodyellow;color: dimgrey" class="form-control" rows="3" id="comment" placeholder="{{'descriptionType' | translate}} "></textarea>
+                            </td>
+                            <td width="1%">
+                                <label><input type="checkbox" cb-switch ng-model="e.isActive"></label>
+                            </td>
+                            <td width="1%">
+                                <checkbox ng-hide="!e.HIID" ng-model="e.isDeleted"></checkbox>
+                                <button ng-show="!e.HIID" class="btn btn-warning btn-sm" ng-click="slice($index);">{{'cancel' | translate}}</button>
+                            </td>
+                        </tr>
+                </table>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-7">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-default btn-sm" ng-click="new()"><i class="fa fa-plus"></i> {{'new' | translate}}</button>
+                        <button class="btn btn-success btn-sm" ng-click="save(upd)" ng-hide="Check_upd_old()">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="formEdit">{{'cancel' | translate}}</button> &#160
+                        <!-- <div class="btn-group float-right" uib-dropdown is-open="status.isopen">
+                            <button id="single-button" class="btn btn-default btn-sm" uib-dropdown-toggle ng-disabled="disabled">
+                                {{'actions' | translate}} <span class="caret"></span>
+                            </button>
+                            <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+                                <li role="menuitem"><a ng-click="new()"><i class="fa fa-plus"></i> {{'new' | translate}}</a></li>
+                                <li role="menuitem"><a ng-click="save(upd)" ng-hide="Check_upd_old()" style="cursor: pointer;"><i class="fas fa-edit"></i> {{'save' | translate}}</a></li> 
+                                <li role="menuitem"><a  ng-href="/#!/formEdit" style="cursor: pointer;"><i class="fa fa-undo"></i> {{'cancel' | translate}}</a></li>
+                            </ul>
+                        </div> -->
+                    </div>
+ 
+        </div>
+    </div>
+</section>

@@ -1,0 +1,129 @@
+
+<div class="card card-info card-outline">
+        <div class="card-header">
+            <!-- <h3 ng-if="b == 1 || b == 2" class="card-title" translate="filters"></h3> 
+            <h3 ng-if="b == 3 || b == 4 || b == 5 || b == 6"class="card-title">{{'filters'|translate}} &#160<checkbox ng-model="additional"></checkbox>&#160 <small class="text-muted">{{'additional options' | translate}}</small></h3> -->
+            <h3 class="card-title" translate="filters"></h3>
+            <div class="card-tools">
+                    <div class="btn-group">
+                            <button class="btn btn-tool" ng-disabled="global.Loading" ng-click="global.Loading=true;tabset(b);">
+                              <i ng-hide="global.Loading" class="fa fa-search"></i>
+                              <span ng-hide="global.Loading" ng-bind="'find'| translate"></span>
+                              
+                              <i ng-show="global.Loading" class="fa fa-spinner fa-pulse fa-fw"></i>
+                              <span ng-show="global.Loading" ng-bind="'Loading'| translate"></span>
+                            </button>
+                    
+                            <button class="btn btn-tool"  ng-show="ExportShow(b)" ng-click="Export(b)" uib-tooltip="{{'export'| translate}} " ><i class="fa fa-download"></i></button>
+                            
+                            <button class="dropdown-item" ng-if="dirUrl == 'fsNew' && data.length > 0" ui-sref="migration" uib-tooltip="{{'export'| translate}} "><span><i class="fa fa-upload"></i> </button> 
+                    
+                    
+                            <button class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
+                              <i class="fa fa-wrench"></i>      
+                              &nbsp;  <span  ng-show="!global.Loading && dataIsChecked>0" class="badge badge-secondary navbar-badge" ng-bind="dataIsChecked"></span>
+                    
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                  <!-- <a class="dropdown-item" ng-show="data.length > 0" style="cursor: pointer;" ng-click="Export(b)" ><span> <i class="fa fa-file-excel"></i> {{'export'| translate}} </span></a></li> -->
+                                  <a href class="dropdown-item" ng-if="!global.Loading" ng-click="Clear(b)"><span><i class="fa fa-undo"></i> {{'Clear_filter'| translate}} </span></a> 
+                             </div>
+                             
+                             <ng-include src="'/Views/FilteCollapse.html'"></ng-include>
+                        </div>
+            </div>
+        </div>
+    
+        <div class="card-body p-0">
+            <div class="card-footer">
+                <!-- <div class="row">      -->
+                        <div class="row" ng-show="b == 1" ng-include="'/build/Employee/StatusStats/Views/filter1.html'"></div>
+                        <div class="row" ng-show="b == 2" ng-include="'/build/Employee/StatusStats/Views/filter2.html'"></div>
+                        <div class="row" ng-show="b == 3" ng-include="'/build/Employee/StatusStats/Views/filter3.html'"></div>
+                        <div class="row" ng-show="b == 4" ng-include="'/build/Employee/StatusStats/Views/filter4.html'"></div>
+                        <div class="row" ng-show="b == 5" ng-include="'/build/Employee/StatusStats/Views/filter5.html'"></div>
+                        <div class="row" ng-show="b == 6" ng-include="'/build/Employee/StatusStats/Views/filter6.html'"></div>
+               <!-- </div> -->
+            </div>
+        </div>
+</div>
+
+<div  class="card card-info card-outline" >
+        <div class="card-header">
+                <h3 class="card-title">{{'data'| translate}}</h3>
+                <div class="card-tools">
+                    <nobr>
+                        <span ng-if="b==1" class="direct-chat-timestamp float-right " ng-show="data.length > 0">{{'findPlaceholder'| translate}} {{data.length}} {{'from'| translate}} {{total_count}}</span>
+                        <span ng-if="b==2" class="direct-chat-timestamp float-right " ng-show="data2.length > 0">{{'findPlaceholder'| translate}} {{data2.length}} {{'from'| translate}} {{total2.count}}</span>
+                        <span ng-if="b==3" class="direct-chat-timestamp float-right " ng-show="data3.length > 0">{{'findPlaceholder'| translate}} {{data3.length}} {{'from'| translate}} {{total3.count}}</span>
+                        <span ng-if="b==4" class="direct-chat-timestamp float-right " ng-show="data4.length > 0">{{'findPlaceholder'| translate}} {{data4.length}} {{'from'| translate}} {{total4.count}}</span>
+                        <span ng-if="b==5" class="direct-chat-timestamp float-right " ng-show="data5.length > 0">{{'findPlaceholder'| translate}} {{data5.length}} {{'from'| translate}} {{total5.count}}</span>
+                        <span ng-if="b==6" class="direct-chat-timestamp float-right " ng-show="data6.length > 0">{{'findPlaceholder'| translate}} {{data6.length}} {{'from'| translate}} {{total6.count}}</span>
+
+                    </nobr>
+                </div>
+        </div>
+
+    <div class="card-body  p-0">
+        <!-- <div class="row"> -->
+
+<!-- <div class="box box-info">
+        <br/>
+        <div class="box-tools">
+            <div class="noneBoard">
+                  <div class="row" ng-show="b == 1" ng-include="'/build/Employee/StatusStats/Views/filter1.html'"></div>
+                  <div class="row" ng-show="b == 2" ng-include="'/build/Employee/StatusStats/Views/filter2.html'"></div>
+                  <div class="row" ng-show="b == 3" ng-include="'/build/Employee/StatusStats/Views/filter3.html'"></div>
+                  <div class="row" ng-show="b == 4" ng-include="'/build/Employee/StatusStats/Views/filter4.html'"></div>
+                  <div class="row" ng-show="b == 5" ng-include="'/build/Employee/StatusStats/Views/filter5.html'"></div>
+                  <div class="row" ng-show="b == 6" ng-include="'/build/Employee/StatusStats/Views/filter6.html'"></div>
+            </div>
+        </div>
+        
+        <div class="box-body"> -->
+                 <uib-tabset >
+                        <uib-tab index="1" ng-click="tabset(1);">
+                            <uib-tab-heading>
+                                <span> {{'status' | translate}} </span> <span ng-show = 'data.length>=1' uib-tooltip="{{data.length}}"  class="badge bg-light-blue">{{data.length}}</span>
+                            </uib-tab-heading>
+                            <div ng-include="'/build/Employee/StatusStats/Views/tab1.html'"></div>
+                            
+                        </uib-tab>
+
+                        <uib-tab index="2" ng-click="tabset(2);">
+                            <uib-tab-heading>
+                                    <span> {{'calls' | translate}} </span> <span ng-show = 'data2.length>=1' uib-tooltip="{{data2.length}}"  class="badge bg-light-blue">{{data2.length}}</span>
+                            </uib-tab-heading>                                    
+                            <div ng-include="'/build/Employee/StatusStats/Views/tab2.html'"></div>
+                        </uib-tab>
+
+                        <uib-tab index="3" ng-click="tabset(3);">
+                            <uib-tab-heading>
+                                    <span> {{'reportDailyHours' | translate}} KPI</span> <span ng-show = 'data3.length>=1' uib-tooltip="{{data3.length}}"  class="badge bg-light-blue">{{data3.length}}</span>
+                            </uib-tab-heading>                                    
+                            <div ng-include="'/build/Employee/StatusStats/Views/tab3.html'"></div>
+                        </uib-tab>
+
+                        <uib-tab index="4" ng-click="tabset(4);">
+                            <uib-tab-heading>
+                                    <span> {{'Скриптовый отчет' | translate}} </span> <span ng-show = 'data4.length>=1' uib-tooltip="{{data4.length}}"  class="badge bg-light-blue">{{data4.length}}</span>
+                            </uib-tab-heading>                                    
+                            <div ng-include="'/build/Employee/StatusStats/Views/tab4.html'"></div>
+                        </uib-tab>
+
+                        <uib-tab index="5" ng-click="tabset(5);">
+                            <uib-tab-heading>
+                                    <span> {{'reportDailyHours' | translate}} </span> <span ng-show = 'data5.length>=1' uib-tooltip="{{data5.length}}"  class="badge bg-light-blue">{{data5.length}}</span>
+                            </uib-tab-heading>                                    
+                            <div ng-include="'/build/Employee/StatusStats/Views/tab5.html'"></div>
+                        </uib-tab>
+
+                        <uib-tab index="6" ng-click="tabset(6);">
+                            <uib-tab-heading>
+                                    <span> {{'report' | translate}} #6</span> <span ng-show = 'data6.length>=1' uib-tooltip="{{data6.length}}"  class="badge bg-light-blue">{{data6.length}}</span>
+                            </uib-tab-heading>                                    
+                            <div ng-include="'/build/Employee/StatusStats/Views/tab6.html'"></div>
+                        </uib-tab>
+                </uib-tabset>              
+        </div>
+</div>

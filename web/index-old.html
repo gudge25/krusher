@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible"  content="IE=edge">
+      <meta name="viewport"               content="width=device-width, initial-scale=1">
+      <meta name="author"                 content="Zhdanov Dmitriy">
+      <link rel="shortcut icon" href="images/fa.png" type="image/x-icon">
+      <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+      <!-- GULP BILD -->
+      <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+      <!-- <script lang="javascript" src="node_modules/xlsx/dist/xlsx.core.min.js"></script> -->
+<!--       <script lang="javascript" src="bower_components/js-xlsx/dist/cpexcel.js"></script>
+      <script lang="javascript" src="bower_components/js-xlsx/shim.js"></script>
+      <script lang="javascript" src="bower_components/js-xlsx/jszip.js"></script>
+      <script lang="javascript" src="bower_components/js-xlsx/dist/xlsx.core.min.js"></script>
+      <script lang="javascript" src="bower_components/js-xlsx/dist/ods.js"></script>
+ -->
+      <script src="build/production.js"></script>
+      <script src="build/modules.js"></script>
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--       <script defer src="//use.fontawesome.com/releases/5.1.0/css/css/all.css"></script>
+      <script defer src="//use.fontawesome.com/releases/5.1.0/css/css/v4-shims.css"></script>
+      <script defer src="https://use.fontawesome.com/releases/5.1.0/js/all.js"></script>
+      <script defer src="https://use.fontawesome.com/releases/5.1.0/js/v4-shims.js"></script> -->
+
+      <link href="build/bundle.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="LTE/dist/css/AdminLTE.min.css">
+      <link rel="stylesheet" href="LTE/dist/css/skins/_all-skins.min.css">
+      <!-- <link rel="stylesheet" href="LTE/plugins/datatables/dataTables.bootstrap.css"> -->
+      <link rel="stylesheet" href="LTE/dist/css/custom/preloader.css">
+
+<!-- window manager -->
+      <!-- <link href='LTE/normalize.css' rel='stylesheet' type='text/css' />
+      <link href='LTE/ventus.css' rel='stylesheet' type='text/css' />
+      <script type="text/javascript" src="LTE/ventus.min.js"></script>
+      <script type="text/javascript" src="LTE/modernizr.js"></script>
+ -->
+
+  </head>
+  <!-- VIEW -->
+  <body class="">
+  <div class="loaderArea">
+      <div class="loader"></div>
+  </div>
+
+  <div class="hold-transition skin-purple sidebar-mini fixed" ng-app="crmUA">
+
+  <div class="wrapper" ng-controller="NavBarCtrl">
+           <!-- Меню -->
+          <div ng-include="'/build/Menu/Views/nav.html'" ng-show="auth.FFF"></div>
+          <!-- Левый слайд бар -->
+          <div ng-show="auth.FFF" ng-include="'/build/Menu/Views/left-sidebar.html'" ></div>
+          <!-- Страница -->
+          <div ng-class="{'content-wrapper' : auth.FFF }">  <!-- style="background-color: #ecf0f5;" -->
+              <section class="content-header" ng-show="State.Name">
+                <h1>
+                  <span translate='{{State.Name}}'></span>
+                  <small translate='{{State.Small}}'></small>
+                 </h1>
+
+                <ol class="breadcrumb"  ng-show="auth.FFF">
+                  <li><a href="#/Dashboard"><i class="fa fa-dashboard"></i> <span translate='home'></span></a></li>
+                  <li class="active" translate='{{State.Name}}'></li>
+                </ol>
+              </section>
+              <!-- Main content -->
+              <section class="content" ui-view="viewA"></section>
+          </div>
+          <!-- Футер -->
+          <div ng-show="auth.FFF" ng-include="'/build/Menu/Views/footer.html'"></div>
+    </div>
+
+<!-- <input placeholder='Ваш Телефон' id='entry_phone'> </input><button onclick='callBack()'>Заказать звонок</button>
+<script type="text/javascript">
+function callBack() {
+ // init default model data.
+ var model = {  "Aid": 21, "phone": 380978442044, "exten": "17", "isFirstClient": true, "context": "db_queue_21" };
+
+ var url = `http://akovalskiy.krusher.biz`;
+
+  //Set model from form
+  model.phone = document.getElementById('entry_phone').value;
+  if (!model.phone || !model.exten)
+  {
+    alert('Please Fill All Fields');
+  }
+
+  // AJAX code to submit form.
+  $.ajax({
+   url:`${url}:81/originate`,
+   type:"POST",
+   data:JSON.stringify(model),
+   contentType:"application/json; charset=utf-8",
+   dataType:"json",
+      success: function(){
+      console.log(`Done`);
+   }
+  });
+
+}
+
+</script>
+
+<script type="text/javascript">
+callBack = () => {
+  // init default model data.
+  const model = {  "Aid": 36, "phone": 380978442044, "exten": "74", "isFirstClient": true, "context": "db_queue_36" };
+  const url = `http://openshop.krusher.biz`;
+  // AJAX code to submit form.
+  $.ajax({
+   url:`${url}:81/originate`,
+   type:"POST",
+   data:JSON.stringify(model),
+   contentType:"application/json; charset=utf-8",
+   dataType:"json"
+  });
+};
+callBack();
+</script>
+
+
+<script type="text/javascript">
+  callBack = () => {
+    // init default model data.
+    const model = {  "Aid": 10, "phone": 380978442044, "exten": "716", "isFirstClient": true, "context": "db_queue_10" };
+    const url = `//dev.krusher.biz`;
+    // AJAX code to submit form.
+    $.ajax({
+     url:`${url}:3011/originate`,
+     type:"POST",
+     data:JSON.stringify(model),
+     contentType:"application/json; charset=utf-8",
+     dataType:"json"
+    });
+  };
+  callBack();
+  </script>
+
+  
+ -->
+
+
+  </div>
+</html>
+<!--<script src="https://cdn.ravenjs.com/3.24.0/raven.min.js" crossorigin="anonymous"></script>
+ <script type="text/javascript">
+  Raven.config('https://697f093709bc4fe6aaeef665fa915257@sentry.io/669955').install();
+</script> -->
+
+<!-- Jira feedback -->
+<!-- <script type="text/javascript" src="//jira.krusher.biz/s/fea82d8b894fab92a5df48d85ffe41f3-T/en_US-mx1fg6/6329/16/1.4.13/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=12ae4d12"></script> -->

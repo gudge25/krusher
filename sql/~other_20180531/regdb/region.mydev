@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Devart (www.devart.com), the Project File -->
+<!-- Modifying this generated file will probably render it invalid -->
+<DatabaseProject Version="1.0.1" Guid="d58defc1-0602-443f-8196-918478e67565">
+  <Provider Guid="59f90733-4d68-4fdf-82a7-f0fcbf5460aa" />
+  <Include>
+    <File RelPath="" Link=".\reg_area.sql" />
+    <File RelPath="" Link=".\reg_country.sql" />
+    <File RelPath="" Link=".\reg_district.sql" />
+    <File RelPath="" Link=".\reg_gmt.sql" />
+    <File RelPath="" Link=".\reg_kladr.sql" />
+    <File RelPath="" Link=".\reg_operator.sql" />
+    <File RelPath="" Link=".\reg_plan.sql" />
+    <File RelPath="" Link=".\reg_region.sql" />
+    <File RelPath="" Link=".\reg_socr.sql" />
+  </Include>
+  <Configurations Active="dev">
+    <Configuration Name="dev" CheckReferences="True" IgnoreErrors="False" OutputPath=".\dev" Target="region" OutputType="SingleFile" KeepOriginalObjects="True" RecreateObjects="False" RecreateDatabase="True" ServerVersion="5.7.4" Database="region" UseRegions="False" FullPaths="False" Definer="CURRENT_USER" ScriptDelimiter="$$" StorageEngine="INNODB" Collation="utf8_general_ci" ConvertToLowercase="False" DefinerEffect="Keep">
+      <Connection Name="crmua.77.91.132.6" Category="97d28b16-2c45-4ff7-8a1c-5e257e1fcf84" ConnectionString="User Id=lgdmitry;Host=77.91.132.6;Database=crmua;Character Set=utf8" />
+      <Build>
+        <File RelPath="" Name="reg_socr.sql" BuildAction="Build" />
+        <File RelPath="" Name="reg_kladr.sql" BuildAction="Build" />
+        <File RelPath="" Name="reg_plan.sql" BuildAction="Build" />
+        <File RelPath="" Name="reg_gmt.sql" BuildAction="Build" />
+        <File RelPath="" Name="reg_country.sql" BuildAction="Build" />
+        <File RelPath="" Name="reg_operator.sql" BuildAction="Build" />
+        <File RelPath="" Name="reg_district.sql" BuildAction="Build" />
+        <File RelPath="" Name="reg_area.sql" BuildAction="Build" />
+        <File RelPath="" Name="reg_region.sql" BuildAction="Build" />
+      </Build>
+    </Configuration>
+  </Configurations>
+</DatabaseProject>

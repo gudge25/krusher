@@ -1,0 +1,16 @@
+{
+		"find" : "Знайти",
+		"edited" : "Ким редагувався",
+		"clientId" : "Ід клієнта",
+		"personOrganization" : "Персона / Організація",
+		"organization" : "Організація",
+		"clients" : "Клієнти",
+		"documentDate" : "Дата документа",
+		"docStatus" : "Статус документа",
+		"document" : "Документ",
+		"seeComent" : "Дивитися коментарі",
+		"hideComent" : "Сховати коментарі",
+		"removed" : "Видалений",
+		"createdBy" : "Створений",
+		"updated" : "Оновлений"
+	}

@@ -1,0 +1,100 @@
+<table class="table table-head-fixed table-hover borderless">
+        <tr>
+            <th width="40%">{{'shortName' | translate}}</th>
+            <td width="60%">
+                <input only-clear class="form-control" ng-model="Org.ShortName" placeholder="{{Org.ShortName}}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <th>{{'OrgType' | translate}}</th>
+            <td>
+                <select class       ="form-control"
+                        ng-model    ="Org.OrgType"
+                        ng-options  ="e.tvID as e.Name for e in Enums.group[3]"
+                        placeholder ="Тип"
+                        >
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <th >{{'bank' | translate}}</th>
+            <td>
+                <input only-clear class="form-control" ng-model="Org.Bank" placeholder="{{Org.Bank}}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <th >Р/Р</th>
+            <td>
+                <div class="input-group">
+                    <input numeric-only class="form-control" ng-model="Org.Account" placeholder="{{Org.Account}}">
+                    <span class="input-group-append">
+                            <button type="button" class="btn btn-default" ng-click="Org.Account=Org.Account+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                            <button type="button" class="btn btn-default" ng-disabled="Org.Account <= 0" ng-click="Org.Account=Org.Account-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <th>ИИН</th>
+            <td>
+                <input only-clear class="form-control" ng-model="Org.TaxCode" placeholder="{{Org.TaxCode}}" />
+            </td>
+        </tr>
+
+        <tr>
+            <th>МФО</th>
+            <td>
+                <div class="input-group">
+                    <input numeric-only class="form-control" ng-model="Org.SortCode">
+                    <span class="input-group-append">
+                            <button type="button" class="btn btn-default" ng-click="Org.SortCode=Org.SortCode+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                            <button type="button" class="btn btn-default" ng-disabled="Org.SortCode <= 0" ng-click="Org.SortCode=Org.SortCode-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <th>ЕДРПУ</th>
+            <td>
+                <div class="input-group">
+                    <input numeric-only class="form-control" ng-model="Org.RegCode" placeholder="{{Org.RegCode}}">
+                    <span class="input-group-append">
+                            <button type="button" class="btn btn-default" ng-click="Org.RegCode=Org.RegCode+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                            <button type="button" class="btn btn-default" ng-disabled="Org.RegCode <= 0" ng-click="Org.RegCode=Org.RegCode-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <th>№ {{'certificate' | translate}}</th>
+            <td>
+                <div class="input-group">
+                    <input numeric-only class="form-control" ng-model="Org.CertNumber" placeholder="{{Org.CertNumber}}">
+                    <span class="input-group-append">
+                            <button type="button" class="btn btn-default" ng-click="Org.CertNumber=Org.CertNumber+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                            <button type="button" class="btn btn-default" ng-disabled="Org.CertNumber <= 0" ng-click="Org.CertNumber=Org.CertNumber-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <th>КВЕД</th>
+            <td>
+                <input only-clear class="form-control" ng-model="Org.KVED" placeholder="{{Org.KVED}}" />
+            </td>
+        </tr>
+
+        <tr>
+            <th>{{'names' | translate}} ВЕД</th>
+            <td>
+                <input only-clear class="form-control" ng-model="Org.KVEDName" placeholder="{{Org.KVEDName}}" />
+            </td>
+        </tr>
+</table>

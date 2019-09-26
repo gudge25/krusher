@@ -1,0 +1,182 @@
+<div class="modal-content2">
+    <div class="modal-header text-center">
+        <h3 class="modal-title">
+            <span ng-show="newCl.clID">{{'updateClient' | translate}}</span>
+            <span ng-hide="newCl.clID">{{'createClient' | translate}}</span>
+        </h3>
+    </div>
+    <div class="modal-body p-0">
+    
+        <table class="table table-head-fixed table-hover borderless">
+             
+                <tr ng-class="{ 'bordernewcl' : newCl.ffID }">
+                    <td width="40%">{{'file' | translate}}</td>
+                    <td width="60%">
+                        <ui-select ng-model="newCl.ffID" theme="bootstrap4-1" class="normal" on-select="newComp.ffID = newCl.ffID">
+                            <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.ffName}}</ui-select-match>
+                            <ui-select-choices repeat="a.ffID as a in File.data | filter: $select.search" >
+                               {{a.ffName}}
+                            </ui-select-choices>
+                       </ui-select>
+                    </td>
+                </tr>
+
+                <tr ng-show="!Parent.clName && newCl.ffID && newCl.IsPerson" ng-class="{ 'bordernewcl' : newCl.ffID }">
+                    <td>
+                        <i class="fa fa-building fa-lg" uib-tooltip="{{newCl.IsPerson | Person}}" tooltip-trigger="mouseenter" tooltip-placement="top"></i>{{'company' | translate}}
+                    </td>
+                    <td>
+                       <input
+                           type="text"
+                           ng-model="newComp.clName"
+                           uib-typeahead="a as a.clName for a in manyAction.SearchClient($viewValue)"
+                           class="form-control"
+                           placeholder="{{'typeName' | translate}}"
+                           typeahead-wait-ms="250"
+                           typeahead-on-select= "newCl.ParentID=newComp.clID;newComp.clID=newComp.clName.clID;newComp.clName=newComp.clName.clName;"
+                           ng-change="newCl.ParentID=''; newCl.IsPerson=true"
+                           only-clear
+                       />
+                   </td>
+                </tr>
+
+                <tr ng-show='newCl.ffID'>
+                    <td>
+                        <i class="fa fa-user fa-lg"     ng-show="newCl.IsPerson || company.clID" uib-tooltip="{{newCl.IsPerson | Person}}"></i>
+                        <i class="fa fa-building fa-lg" ng-hide="newCl.IsPerson || company.clID" uib-tooltip="{{newCl.IsPerson | Person}}"></i>
+                        {{'name' | translate}}
+                    </td>
+                    <td>
+                        <div class="has-feedback" ng-class="{ 'has-error' : !newCl.clName.length, 'has-success' : newCl.clName }">
+                                <input ng-model="searchclient2" uib-typeahead="a as a.clName for a in manyAction.SearchClient($viewValue)"class="form-control"
+                                    placeholder="{{'enterClientName' | translate}}" typeahead-wait-ms="250"
+                                    typeahead-on-select="GetClient();" ng-change="Reset();newCl.clName=searchclient2;edit2=true;" only-clear ng-maxlength="200" required
+                                />
+                                <span class="glyphicon glyphicon-road form-control-feedback"></span>
+                                <span class="help-block" ng-show="!newCl.clName.length && edit2">{{'typeSIPLeng'| translate}}</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-show="Parent.clName && newCl.ffID">
+                    <td></td>
+                    <td>
+                       <b> {{'clientAlreadyConnect' | translate}} {{Parent.clName}}</b>
+                   </td>
+               </tr>
+               <tr ng-show="newCl.ffID">
+                    <td>{{'position' | translate}}</td>
+                    <td>
+                        <ui-select ng-model="newCl.Position" theme="bootstrap4-1" class="normal" size="100%">
+                            <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                            <ui-select-choices repeat="a.tvID as a in Enums.group[1012] | filter: $select.search" >
+                               {{a.Name}}
+                            </ui-select-choices>
+                       </ui-select>
+                    </td>
+                </tr>
+                <tr ng-show="newCl.ffID">
+                    <td>{{'physFace' | translate}}</td>
+                    <td ng-show="!company">
+                        <checkbox class="btn-info" ng-model="newCl.IsPerson"></checkbox>
+                    </td>
+                </tr>
+                <tr ng-show="newCl.IsPerson && newCl.ffID">
+                    <td>{{'tag' | translate}}</td>
+                    <td>
+                        <ui-select  multiple tagging tagging-label="(custom 'new' label)" ng-model="tags.tagID" theme="bootstrap4-1" sortable="true" ng-disabled="disabled" style='height: auto;'>
+                            <ui-select-match placeholder="{{'select' | translate}}">{{$item.tagName}}</ui-select-match>
+                            <ui-select-choices repeat="a.tagID as a in Tags.data  | filter:$viewValue">{{a.tagName}}</ui-select-choices>
+                        </ui-select>
+                    </td>
+                </tr>
+                <tr ng-show="newCl.IsPerson && newCl.ffID">
+                    <td class>{{'dateOfCommunications' | translate}}</td>
+                    <td>
+                                <div class="form-group">
+                                      <p class="icon-group input-group">
+                                        <input ng-model="CallDate.date" class="form-control" ng-model-options="{ updateOn: 'blur' }" placeholder="{{'select a date' | translate}}">
+                                          <span class="input-group-append">
+                                            <button moment-picker="CallDate.date"
+                                                    format="YYYY-MM-DD"
+                                                    today="true"
+                                                    locale="ru"
+                                                    start-view="month"
+                                                    type="button" class="btn btn-default">
+                                              <i aria-hidden="true" class="fa fa-calendar"></i>
+                                            </button>
+                                          </span>
+                                      </p>
+                                  </div>
+                    </td>
+                </tr>
+                <tr ng-show="newCl.IsPerson && newCl.ffID">
+                    <td class="col-xs-4" scope="row">{{'OrgType' | translate}}</td>
+                    <td>
+                        <ui-select ng-model="Org.tvID" theme="bootstrap4-1" class="normal" size="100%">
+                                <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="a.tvID as a in Enums.group[3] | filter: $select.search" >
+                                   {{a.Name}}
+                                </ui-select-choices>
+                        </ui-select>
+                </td>
+        </tr>
+            <tr ng-hide="newComp.clName || !newCl.ffID">
+                <td>{{'connected' | translate}}</td>
+                <td ng-hide="newComp.clID">
+                    <input
+                        type="text"
+                        ng-model="searchclient"
+                        uib-typeahead="a as a.clName for a in manyAction.SearchClient($viewValue)"
+                        class="form-control"
+                        placeholder="{{'typeClientConnect' | translate}}"
+                        typeahead-wait-ms="250"
+                        typeahead-on-select= "newCl.ParentID=searchclient.clID;"
+                        ng-change="newCl.ParentID=''"
+                        only-clear
+                    />
+                </td>
+                <td ng-show="newComp.clID ">
+                    <input type="text" value="{{newComp.clName}}" class="form-control" ng-disabled="true">
+                </td>
+            </tr>
+            <tr ng-show="newCl.ffID" >
+                <td>{{'Comment' | translate}}</td>
+                <td><textarea only-clear maxlength="200" ng-model="newCl.Comment"  msd-elastic style="background-color: lightgoldenrodyellow;color: dimgrey"  class="form-control" rows="2" placeholder="{{'typeComment' | translate}}"></textarea></td>
+            </tr>
+        
+    </table>
+
+    <table ng-show="contacts.length > 0 && newCl.ffID" ng-table="table" class="table table-head-fixed table-hover borderless" style="margin: 1% 0;" >
+        <tr>
+            <th>{{'type' | translate}}</th>
+            <th>{{'contact' | translate}}</th>
+            <th>{{'action' | translate}}</th>
+        </tr>
+        <tr class="active" ng-repeat="c in contacts">
+            <td width="40%">
+                <select class="form-control ng-pristine ng-valid ng-touched"
+                        ng-model="c.ccType"
+                        ng-selected ="selected"
+                        ng-options="contactName.tvID as contactName.Name for contactName in Enums.group[4]">
+                    <option value="">{{'selectContactType' | translate}}</option>
+                </select>
+            </td>
+            <td width="40%">
+                <div  ng-show="c.ccType">
+                        <input ng-if="c.ccType == 43 || c.ccType == 39 || c.ccType == 37" class="form-control" ng-model="c.ccName"/>
+                        <input ng-if="c.ccType == 36 || c.ccType == 44 || c.ccType == 38" numeric-only class="form-control" ng-model="c.ccName"/>
+                </div>
+            </td>
+            <td width="1%">
+                    <a class="btn btn-link" uib-tooltip="{{'del' | translate}}"><i class="fa fa-trash" ng-click="Cancel($index)"></i></a>
+            </td>
+        </tr>
+    </table>
+    <button ng-show="newCl.ffID" class="btn btn-link" ng-click="addContact()"><i class="fa fa-plus"> </i> {{'Контакт' | translate}} </button>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success btn-sm" ng-click="Save(newCl, contacts);$close()" ng-disabled="!newCl.clName || newCl.ffID < 0 " >{{'save' | translate}}</button>
+    <button class="btn btn-warning btn-sm" ng-click="$close()">{{'cancel' | translate}}</button>
+</div>
+</div>
+

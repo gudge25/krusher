@@ -1,0 +1,31 @@
+<div class="card card-info card-outline">
+	<div class="card-header with-border">
+		<h3 class="card-title">{{'filters'| translate}}</h3>
+
+		<div class="card-tools float-right">
+			<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+			<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+		</div>
+	</div>
+	<div class="card-body">
+		<div class="col-lg-11">
+			<div id="grid" style="height: 75vh" ui-grid-pagination ui-grid-edit ui-grid="gridOptions"></div>
+		</div>
+		<div class="ol-lg-1">
+			<div >
+				<div class="btn-group float-right " uib-dropdown is-open="status.isopen">
+					<button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled" >
+						{{'actions' | translate}} <span class="caret"></span>
+					</button>
+					<ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+						<li role="menuitem" ng-show="dataIsChecked"><a ng-show="data.length !=0" ng-click="delete()" style="cursor: pointer;"><i class="fa fa-trash"></i> {{'del' | translate}}</a></li>
+						<!-- <li><a ng-click="manyAction.ClearFilter()" >
+                           <i class="fa fa-undo"></i>{{'Clear_filter'| translate}}
+                        </a>
+                    </li> -->
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

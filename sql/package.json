@@ -1,0 +1,15 @@
+{
+  "name": "sql",
+  "version": "2.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "\u0016https://gitlab.com/asterisktech/KRUSHER"
+  },
+  "author": "Pesotsky Dmitry",
+  "license": "ISC"
+}

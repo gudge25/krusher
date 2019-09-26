@@ -1,0 +1,111 @@
+ <ul class="timeline">
+        <li class="time-label" ng-repeat-start="e in clients | orderBy:'-Changed' | limitTo:limit track by $index">
+            <span class="bg-green" ng-show="SetDate(clients,e.Changed,$index)">
+                {{e.Changed | date:'dd.MM.yyyy'}}
+            </span>
+        </li>
+
+        <li ng-switch="e.DUP_action" ng-repeat-end>
+            <i class="fa fa-envelope bg-aqua"  ng-switch-when='I'></i>
+            <i class="fa fa-envelope bg-blue" ng-switch-when='U'></i>
+            <i class="fa fa-envelope bg-maroon" ng-switch-when='D'></i>
+            <div class="timeline-item">
+                <span class="time">{{e.ChangedBy | emFilters}} <i class="fa fa-clock"></i> {{e.Changed | date:' HH.mm'}}</span>
+                <h3 class="timeline-header ">
+                    <a ng-href="/#!/clientPreView/{{e.clID}}"> {{e.clName}}  </a>
+                    <small ng-if="e.DUP_action =='D'" > {{'removed' | translate}}</small>
+                    <small ng-if="e.DUP_action =='I'" > {{'createdBy' | translate}}</small>
+                    <small ng-if="e.DUP_action =='U'" > {{'updated' | translate}}</small>
+                </h3>
+                    <div class="timeline-body">
+
+                        <div ng-switch-when="I">
+                            <ul>
+                                <li ng-if="e.Comment">  {{'Comment' | translate}}: <a href="">  {{e.Comment}}  </a></li>
+                                <li ng-if="e.ParentID"> {{'connected' | translate}}:    <a href="">  {{e.ParentID}} </a></li>
+                                <li ng-if="e.ffID">     {{'bases' | translate}}:     <a href="">  {{e.ffID}}     </a></li>
+                                <li ng-if="e.isPerson"> {{'type' | translate}}:
+                                    <a href="">
+                                        <i class="fa fa-user fa-lg" ng-show="e.isPerson"      uib-tooltip="{{newCl.IsPerson | Person}}"></i>
+                                        <i class="fa fa-building fa-lg" ng-hide="e.isPerson"  uib-tooltip="{{newCl.IsPerson | Person}}"></i>
+                                    </a>
+                                </li>
+                                <li ng-if="e.isActive"> {{'active' | translate}}:   <a href="">  <input type="checkbox" ng-model="e.isActive" disabled> </a></li>
+                            </ul>
+                        </div>
+
+                        <div ng-switch-when='U'>
+                            <ul>
+                                <li ng-if="e.isPerson != e.OLD_isPerson && e.OLD_isPerson!=null">
+                                    {{'clientId' | translate}}:
+                                    <a href="">{{e.OLD_clID}} <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> {{e.clID}} </a>
+                                </li>
+                                <li ng-if="e.clName != e.OLD_clName && e.OLD_clName!=null">
+                                    {{'clientName' | translate}}:
+                                    <a>{{e.OLD_clName}} <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> <a ng-href="/#!/clientPreView/{{e.clID}}"> {{e.clName}} </a> </a>
+                                </li>
+                                <li ng-if="e.isPerson != e.OLD_isPerson && e.OLD_isPerson!=null">
+                                    {{'personOrganization' | translate}}:
+                                    <a><div ng-init="personOLD = e.OLD_isPerson ? 'Персона' : 'Организация'"> {{personOLD}} </div> <i class="fa fa-arrow-circle-right" aria-hidden="true"> <div ng-init="person = e.isPerson ? 'Персона' : 'Организация'"> {{person}} </div>  </a>
+                                </li>
+                                <li ng-if="e.isActive != e.OLD_isActive && e.OLD_isActive!=null">
+                                    {{'active' | translate}}:
+                                    <a><div ng-init="activeOLD = e.OLD_isActive ? 'Активный' : 'Не активный'"> {{activeOLD}} </div> <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> <div ng-init="active = e.isActive ? 'Активный' : 'Не активный'"> {{active}} </div></a>
+                                </li>
+                                <li ng-if="e.Comment != e.OLD_Comment && e.OLD_Comment!=null">
+                                    {{'Comment' | translate}}:
+                                    <a>{{e.OLD_Comment}} <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> {{e.Comment}}</a>
+                                </li>
+                                <li ng-if="e.ffID != e.OLD_ffID && e.OLD_ffID!=null">
+                                    {{'bases' | translate}}:
+                                    <a>{{e.OLD_ffID}} <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> <a ng-href="/#!/edit/employee/{{e.emID}}"> {{e.ffID}}</a> </a>
+                                </li>
+                                <li ng-if="e.ParentID != e.OLD_ParentID && e.OLD_ParentID!=null">
+                                    {{'connected' | translate}}:
+                                    <a>{{e.OLD_ParentID}} <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> {{e.ParentID}}</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div ng-switch-when='D'>
+                            <b> {{'client' | translate}}: <b>{{e.clName}}</b>
+                            : {{'removed' | translate}}
+                        </div>
+                </div>
+
+                 <div class="timeline-footer">
+                <!-- COMENNTS BLOCK -->
+                 <div class="row">
+                      <div class="col-lg-3 pull-left">
+                        <a class="btn bg-link" ng-click="getComment(e.uID);status = true" ng-show="!status">{{'seeComent' | translate}}</a>
+                        <a class="btn bg-link" ng-click="status = false" ng-show="status">{{'hideComent' | translate}}</a>
+
+                        <div ng-repeat="c in comments[e.uID]" ng-show="status">
+                                <a ng-href="/#!/edit/employee/{{e.CreatedBy}}">{{e.CreatedBy | emFilters}}</a> </br>
+                                {{c.uComment}} </br>
+                                <span style="color:silver;">{{c.Created | date:'dd.MM.yyyy HH:mm:ss'}}</span> </br>
+
+                        </div>
+                      </div>
+
+                      <div class="col-lg-3 float-right">
+                        <form >
+                          <div class="input-group">
+                            <input ng-model="e.new.uComment" class="form-control" rows="2" msd-elastic="\n" id="comment" ng-enter="new.uID = e.uID; new.uComment = e.new.uComment; manyActionComments.Save(new,''); e.new.uComment = null;getComment(e.uID);" placeholder="{{'sendPlacehol' | translate}}">
+                            <span class="input-group-append">
+                              <button type="submit"
+                                 ng-click="new.uID = e.uID; new.uComment = e.new.uComment; manyActionComments.Save(new,''); e.new.uComment = null;getComment(e.uID);"
+                                 ng-disabled="!e.new.uComment" class="btn btn-primary btn-flat"  >{{'send' | translate}}</button>
+                            </span>
+                          </div>
+                        </form>
+                      </div>
+                  </div>
+
+                  </div>
+        </div>
+        </li>
+        <li>
+            <i class="fa fa-clock bg-gray"></i>
+        </li>
+</ul>

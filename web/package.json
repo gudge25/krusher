@@ -1,0 +1,28 @@
+{
+  "description": "Web interface of CRM Krusher",
+  "main": "index.html",
+  "scripts": {
+    "dual": "gulp & && cd ../hapi && gulp",
+    "start": "gulp",
+    "preinstall": "npm i -g npm gulp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "KrusherCRM team",
+  "license": "ISC",
+  "devDependencies": {
+    "angular-translate": "latest",
+    "gulp-clean-css": "latest",
+    "gulp-concat": "^2.6.1",
+    "gulp-concat-css": "^3.1.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-minify-html": "^1.0.6",
+    "gulp-sourcemaps": "^2.6.4"
+  },
+  "dependencies": {
+    "gulp": "^4.0.0",
+    "gulp-cli": "^2.0.1",
+    "gulp-util": "latest",
+    "ui-bootstrap4": "^3.0.6",
+    "xlsx": "latest"
+  }
+}

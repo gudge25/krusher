@@ -1,0 +1,1 @@
+crmUA.factory("HotDial", function() { return {}; });

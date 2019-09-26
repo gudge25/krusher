@@ -1,0 +1,245 @@
+ <section class="content">
+      <div class="row">
+        <div class="col-md-3">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i> {{'form' | translate}}</h3>
+ 
+            </div>
+            <div class="card-body p-2">
+                <ui-select ng-model="model.tpID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                    <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.tpName}}</ui-select-match>
+                    <ui-select-choices repeat="a.tpID as a in formTypes | filter: $select.search ">
+                        {{a.tpName}}
+                    </ui-select-choices>
+                </ui-select>
+                <br/>
+                <div ng-if="formTypesD.length > 0 && model.tpID">
+                        <span ng-show="formTypesD.ffName"><b>{{'bases' | translate}}</b>: <span>  {{formTypesD.ffName}}</span> <br/></span>
+                        <b>{{'averageMark' | translate}}</b>: <span>  {{formTypesD.QtyAvg}}</span> <br/>
+                        <b>{{'greeting' | translate}}</b>: <span> {{'greetings' | translate}} {{auth.FFF.emName}}</span>
+                </div>
+
+               
+                <div ng-if="model.tpID">
+                        <b>{{'dateFrom'| translate}}</b><br>
+                        <div class="input-group md-3">
+                            <input ng-model="model.DateFrom" class="form-control" ng-model-options="{ updateOn: 'blur' }" style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;">
+                            <div class="input-group-append">
+                                        <button moment-picker="model.DateFrom" max-date="model.DateTo" class="btn btn-default">
+                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                        </button>
+                            </div>
+                        </div>
+                        <br>            
+                </div>
+                
+                <div ng-if="model.tpID">
+                        <b>{{'dateTo'| translate}}</b><br>
+                        <div class="input-group md-3">
+                            <input ng-model="model.DateTo" class="form-control" ng-model-options="{ updateOn: 'blur' }" style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;">
+                            <div class="input-group-append">
+                                        <button moment-picker="model.DateTo" min-date="model.DateFrom"  class="btn btn-default"> <!--format="YYYY-MM-DD"-->
+                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                        </button>
+                            </div>
+                        </div>
+                        <br> 
+                </div>
+                
+                <div ng-if="model.tpID">
+                        <label for="inputPassword">{{'step' | translate}}</label>
+                        <ui-select ng-model="model.Step" ng-model="model.Step" theme="bootstrap4-1" class="normal ng-pristine ng-valid ng-touched" size="100%">
+                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                            <ui-select-choices repeat="d.ID as d in shag | filter: $select.search ">
+                                {{d.Name}}
+                            </ui-select-choices>
+                        </ui-select>
+                        <br/>
+                </div>
+
+                <div class="btn-group" ng-if="model.tpID">
+                        <label ng-disabled="!model.Step || !model.DateFrom || !model.DateTo || !model.tpID" ng-change="getForms(model)" class="btn btn-warning btn-sm" ng-model="model.isStepPercent"  uib-btn-checkbox>% {{'byPeriod' | translate}}</label>
+                </div>
+                <hr ng-if="model.tpID" />
+
+                <div  ng-show="stats.length > 0 && model.tpID">
+                            <b>{{'expQuest' | translate}}, {{'file' | translate | lowercase}}</b>
+                            <ui-select ng-model="model.ffID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.ffName}}</ui-select-match>
+                                <ui-select-choices repeat="a.ffID as a in File.data | filter: $select.search | filter:{isActive:isActive}" >
+                                    {{a.ffName}}
+                                </ui-select-choices>
+                            </ui-select>
+                            <br/>
+                </div>
+                    
+                <div class="btn-group float-right" ng-if="model.tpID">
+                            <button ng-disabled="!model.Step || !model.DateFrom || !model.DateTo || !model.tpID || global.Loading" class="btn btn-sm"  ng-class="{'btn-outline-warning' : global.Loading , 'btn-outline-success' : !global.Loading}" style="width: 150px" ng-click="getForms(model)">
+                                    <i ng-show="global.Loading" class="fa fa-spinner fa-pulse fa-fw"></i> 
+                                    <span ng-show="global.Loading" translate="Loading"></span>
+                                    <span ng-hide="global.Loading" translate="toForm"></span>
+                            </button>
+                
+                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-wrench"></i>
+                            </button>
+    
+                            <div class="dropdown-menu dropdown-menu-right" role="menu"> 
+                                    <a class="dropdown-item" style="cursor: pointer;" href ng-show="stats.length > 0 && model.tpID" ng-click="ExportForms();" ><span><i class="fas fa-file-excel"></i> {{'export' | translate}} <span ng-if="model.ffID"> {{'file' | translate}}: {{ model.ffID | ffFilters}} </span></span></a> 
+                                    <a class="dropdown-item" style="cursor: pointer;" href ng-hide="global.Loading" ng-click="ClearFilter()" >
+                                           <span><i class="fa fa-undo"></i> {{'Clear_filter'| translate}}</span>
+                                    </a>
+                                    
+                            </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+         <!--DATA RIGHT-->
+        <div class="col-md-9">
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"> {{'questAndAnsw' | translate}}</h3>
+             </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+
+                <div>
+                        
+                        <!-- <pre>{{formTypes| json}}</pre>
+                    <pre>{{model| json}}</pre>
+                    <pre>{{fm| json}}</pre> -->
+                    <div ng-repeat="(key,value) in group">
+                        <hr ng-if="$index != 0">
+                        <div class="col-2" ng-if="model.Step === 4"><b>{{'period' | translate}} :</b> {{categories[key-1]}}</div>
+                        <div class="col-2" ng-if="model.Step !== 4"><b>{{'period' | translate}} :</b> {{key}}</div>
+                        <div class="col-12">
+                            <table class="table table-hover borderless">
+                                <thead>
+                                    <tr>
+                                        <th class="col-md-8">{{'quest' | translate}}</th>
+                                        <th class="col-md-1">{{'numberReplies' | translate}}</th>
+                                        <th class="col-md-1">{{'averageMark' | translate}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>    
+                                    <tr ng-repeat="e in value" >
+                                        <td>
+                                            <h4> <b>{{e.qName}}</b> </h4>
+                                            <div ng-repeat="a in e.Question" ng-show="a.Period==key" class="row" style="padding-top: 15px;">
+                                                <div class="col-lg-6">
+                                                    <span style="padding-left:5%;">{{a.qiAnswer}}</span>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <uib-progressbar animate="false" value="a.Percent" max="100" type="{{manyAction.TypeProgress(a.Percent)}}" ><span style="color:white; white-space:nowrap;">{{a.Percent}}%</span></uib-progressbar>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <span  class="badge badge-secondary"> {{e.QtyAnswer}} </span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span  class="badge badge-secondary"> {{e.QtyAvg}} </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">
+            <div class="card card-info card-outline">
+                <div class="card-header with-border">
+                  <h3 class="card-title"><i class="fas fa-download"></i>  {{'export' | translate}} for develop</h3>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table table-head-fixed-responsive mailbox-messages" style="padding: 15px;overflow-x: inherit;">
+                            <!-- <div class="row">
+                                <pre>{{fm|json}}</pre>
+                                <div class="col-lg-12">
+                                    <div>
+                                        <b>{{'form' | translate}}</b>
+                                        <ui-select ng-model="fm.tpID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                            <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.tpName}}</ui-select-match>
+                                            <ui-select-choices repeat="a.tpID as a in formTypes | filter: $select.search | filter:{isActive:isActive}" >
+                                                {{a.tpName}}
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <b>{{'dateFrom'| translate}}</b><br>
+                                        <div class="input-group md-3">
+                                            <input ng-model="fm.DateFrom" class="form-control" ng-model-options="{ updateOn: 'blur' }" style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;">
+                                            <div class="input-group-append">
+                                                        <button moment-picker="fm.DateFrom" max-date="fm.DateTo" format="YYYY-MM-DD" class="btn btn-default">
+                                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                        </button>
+                                            </div>
+                                        </div>            
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <b>{{'dateTo'| translate}}</b><br>
+                                        <div class="input-group md-3">
+                                            <input ng-model="fm.DateTo" class="form-control" ng-model-options="{ updateOn: 'blur' }" style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;">
+                                            <div class="input-group-append">
+                                                        <button moment-picker="fm.DateTo" min-date="fm.DateFrom" format="YYYY-MM-DD" class="btn btn-default">
+                                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                        </button>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <b>{{'bases' | translate}}</b>
+                                        <ui-select ng-model="fm.ffID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                            <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.ffName}}</ui-select-match>
+                                            <ui-select-choices repeat="a.ffID as a in File.data | filter: $select.search | filter:{isActive:isActive}" >
+                                                {{a.ffName}}
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div ng-show="fm.tpID" >
+                                        <hr />
+                                        <b >{{'export' | translate}}</b>
+                                        <button  class="btn btn-success btn-sm" style="cursor: pointer;"  title="{{'exportFile' | translate}}:{{fm.ffID}}" ng-click="ExportForms()" ng-show="fm.tpID"><i class="fa fa-download" aria-hidden="true"></i></button>
+                                    </div>
+    
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <hr/> -->
+                            <div>
+                                <b>{{'exportReport' | translate}} Billing </b><br/><br/>
+                                <div>
+                                        <b>{{'date'| translate}}:</b><br>
+                                        <div class="input-group md-3">
+                                            <input ng-model="billing.date" class="form-control" ng-model-options="{ updateOn: 'blur' }" style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;">
+                                            <div class="input-group-append">
+                                                        <button  class="btn btn-success" style="cursor: pointer;" ng-show="billing.date" ng-click="ExportBilling(billing.date)"><i class="fa fa-download" aria-hidden="true"></i></button>
+    
+                                                        <button moment-picker="billing.date" format="YYYY-MM-DD" class="btn btn-default">
+                                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                        </button>
+                                            </div>
+                                        </div>            
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+</section>

@@ -1,0 +1,129 @@
+<div class="modal-body">
+    <div class="row">
+    <div class="col-lg-12 table-responsive">
+      <table class="table table-head-fixed table-bordered" style="background-color: #f2f2f2;">
+        <thead>
+          <tr>
+            <th>Тип документа</th>
+            <th>№ Документа</th>
+            <th>Дата от</th>
+            <th>Дата до</th>
+            <th>Ответственный</th>
+            <th>Имя клиента</th>
+            <th>Комментарий</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr >
+            <td>
+              <ui-select ng-model="newDocument.dctID" ng-change="searchDocument(newDocument);" theme="bootstrap4-1" class="normal bg-custom-white" style="width: 300px;">
+                <ui-select-match >{{$select.selected.dctName}}</ui-select-match>
+                <ui-select-choices repeat="a.dctID as a in docsTypes | filter: $select.search">
+                  {{a.dctName}}
+                </ui-select-choices>
+              </ui-select>
+            </td>
+            <td>
+              <input type="text" class="selectpicker form-control" ng-model="newDocument.dcNo" ng-change="searchDocument(newDocument)"/>
+            </td>
+            <td>
+              <p class="input-group custom-datepicker-buttons">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="newDocument.dateFrom" ng-change="searchDocument(newDocument)" is-open="datepickerFrom.opened" datepicker-options="dateOptions" />
+                  <span class="input-group-append">
+                    <button type="button" class="btn btn-default" ng-click="datepickerOpenFrom()"><i class="fa fa-calendar"></i></button>
+                  </span>
+              </p>
+           </td>
+
+           <td>
+            <p class="input-group custom-datepicker-buttons">
+                <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="newDocument.dateTo" ng-change="searchDocument(newDocument)" is-open="datepickerTo.opened" datepicker-options="dateOptions" />
+                <span class="input-group-append">
+                  <button type="button" class="btn btn-default" ng-click="datepickerOpenTo()"><i class="fa fa-calendar"></i></button>
+                </span>
+            </p>
+          </td>
+          <td>
+            <ui-select ng-model="newDocument.emID" ng-change="searchDocument(newDocument);" theme="bootstrap4-1" class="normal bg-custom-white" style="width: 300px;">
+              <ui-select-match allow-clear="true">{{$select.selected.emName}}</ui-select-match>
+              <ui-select-choices repeat="a.emID as a in employees.data | filter: $select.search"" >
+                {{a.emName}}
+              </ui-select-choices>
+            </ui-select>
+          </td>
+        <td>
+         <input type="text" class="form-control" ng-model="newDocument.clName" ng-change="searchDocument(newDocument)"/>
+        </td>
+        <td>
+         <input type="text" class="form-control" ng-model="newDocument.dcComment" ng-change="searchDocument(newDocument)"/>
+        </td>
+      </tr>
+      </tbody>
+      </table>
+    </div>
+    <div class="col-lg-12 table-responsive" >
+
+        <table ng-table="tableParams" show-filter="true" class="table table-head-fixed table-hover table-bordered">
+          <tbody ng-repeat="e in $data | limitTo:limit track by $index"  >
+          <tr ng-click="setSelected(e); $close(idSelected);">
+             <td data-title="'Ид документа'" sortable="'dcID'" filter="{dcID: 'number'}" header-class="'text-left'">
+              <span>{{e.dcID}}</span>
+            </td>
+
+            <td data-title="'№ Документа'" sortable="'dcNo'" filter="{dcNo: 'text'}" header-class="'text-left'">
+              <span>{{e.dcNo}}</span>
+            </td>
+
+            <td data-title="'Дата документа'" sortable="'dcDate'" header-class="'text-left'">
+              <span>{{e.dcDate | date:'dd.MM.yyyy'}}</span>
+            </td>
+
+            <td data-title="'Статус документа'" sortable="'dcStatusName'" filter="{dcStatusName: 'text'}"  header-class="'text-left'">
+              <span>{{e.dcStatusName}}</span>
+            </td>
+
+            <td data-title="'Имя клиента'" sortable="'clName'" filter="{clName: 'text'}"  header-class="'text-left'">
+              <span><a ng-href="/#!/clientPreView/{{e.clID}}">{{e.clName}}</a></span>
+            </td>
+
+            <td data-title="'Сума документа'" sortable="'dcSum'" filter="{dcSum: 'text'}"  header-class="'text-left'">
+              <span>{{e.dcSum}}</span>
+            </td>
+
+            <td data-title="'Ответственный'" sortable="'emName'" filter="{emName: 'text'}" header-class="'text-left'">
+              <span><a ng-href="/#!/edit/employee/{{e.emID}}">{{e.emName}}</a></span>
+            </td>
+
+            <td data-title="'Дата создания'" sortable="'Created'" header-class="'text-left'">
+              <span>{{e.Created | date:'dd.MM.yyyy HH:mm:ss'}}</span>
+            </td>
+
+            <td data-title="'Дата редактирования'" sortable="'Changed'" header-class="'text-left'">
+              <span>{{e.Changed | date:'dd.MM.yyyy HH:mm:ss'}}</span>
+            </td>
+
+            <td data-title="'Кем создан'" sortable="'CreatedName'" filter="{CreatedName: 'text'}" header-class="'text-left'">
+              <span>
+                <a ng-href="/#!/edit/employee/{{e.CreatedBy}}">{{e.CreatedName}}</a>
+              </span>
+            </td>
+
+            <td data-title="'Кем редактировался'" sortable="'EditedName'" header-class="'text-left'">
+              <span>
+                <a ng-href="/#!/edit/employee/{{e.ChangedBy}}">{{e.EditedName}}</a>
+              </span>
+            </td>
+
+            <td data-title="'Коментарий'" sortable="'dcComment'" filter="{dcComment: 'text'}" header-class="'text-left'">
+              <span>{{e.dcComment}}</span>
+            </td>
+
+            <td data-title="'Документ основания'" sortable="'dcLink'" filter="{dcLink: 'text'}" header-class="'text-left'">
+              <span>{{e.dcLink}}</span>
+            </td>
+            </tr>
+          </tbody>
+        </table>
+     </div>
+  </div>
+</div>

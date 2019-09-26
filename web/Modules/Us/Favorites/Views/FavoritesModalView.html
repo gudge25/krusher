@@ -1,0 +1,14 @@
+<div class="modal-content2">
+	<div class="modal-header text-center">
+		<h3 class="modal-title">
+			{{'add' | translate}} <b>{{type}} {{favName}} </b> {{'toFavorites' | translate}}
+		</h3>
+	</div>
+	<div class="modal-body">
+		 <textarea maxlength="200" ng-model="favorite.faComment" msd-elastic class="form-control" msd-elastic rows="3" id="comment" placeholder="{{'Comment' | translate}}"  ></textarea>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-success btn-sm" ng-click="$close(favorite);" ng-disabled='!favorite.faComment'>{{'save' | translate}}</button>
+		<button class="btn btn-warning btn-sm" ng-click="$close()">{{'cancel' | translate}}</button>
+	</div>
+</div>

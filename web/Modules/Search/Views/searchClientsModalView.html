@@ -1,0 +1,90 @@
+<div class="modal-body">
+    <div class="row">
+    <div class="col-lg-12 table-responsive">
+      <table class="table table-head-fixed table-bordered" style="background-color: #f2f2f2;">
+          <thead>
+            <tr>
+              <th>Имя клиента</th>
+              <th>Ответственный</th>
+              <th>Номер телефона, скайп, емейл</th>
+              <th>Вид связи</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="text" class="form-control" ng-model="newClient.clName" ng-change="searchClient(newClient);"/>
+              </td>
+              <td>
+                <ui-select ng-model="newClient.emID" ng-change="searchClient(newClient);" theme="bootstrap4-1" class="normal bg-custom-white" style="width: 300px;">
+                  <ui-select-match allow-clear="true">{{$select.selected.emName}}</ui-select-match>
+                  <ui-select-choices repeat="a.emID as a in employees.data | filter: $select.search"" >
+                    {{a.emName}}
+                  </ui-select-choices>
+                </ui-select>
+              </td>
+              <td>
+                <input type="text" class="form-control" ng-model="newClient.ccName" ng-change="searchClient(newClient);"/>
+              </td>
+              <td>
+                <ui-select ng-model="newClient.ccType" ng-change="searchClient(newClient);" theme="bootstrap4-1" class="normal bg-custom-white" style="width: 300px;">
+                  <ui-select-match allow-clear="true">{{$select.selected.p.Name}}</ui-select-match>
+                  <ui-select-choices repeat="a.p.tvID as a in enumsResult | filter: $select.search"" >
+                    {{a.p.Name}}
+                  </ui-select-choices>
+                </ui-select>
+              </td>
+            </tr>
+          </tbody>
+      </table>
+    </div>
+    <div class="col-lg-12 table-responsive">
+      <table ng-table="tableParams" show-filter="true" class="table table-head-fixed table-hover table-bordered">
+        <tbody ng-repeat="e in $data | limitTo:limit track by $index" >
+          <tr ng-click="setSelected(e); $close(idSelected);">
+            <td data-title="'ID'" sortable="'clID'" filter="{clID: 'number'}" header-class="'text-left'">
+              <span>{{e.clID}}</span>
+            </td>
+            <td data-title="'Название'" sortable="'clName'" filter="{clName: 'text'}" header-class="'text-left'">
+              <span>{{e.clName}}</span>
+            </td>
+            <td data-title="'Коментарий'" sortable="'Comment'" filter="{Comment: 'text'}" header-class="'text-left'">
+              <span>{{e.Comment}}</span>
+            </td>
+            <td data-title="'Контакты'" sortable="'Contacts'" filter="{Contacts: 'text'}" header-class="'text-left'">
+              <div ng-repeat="c in e.Contacts">
+                <span>{{c}},</span>
+              </div>
+            </td>
+            <td data-title="'Активный'" header-class="'text-left'">
+               <label><input type="checkbox" cb-switch ng-checked="e.IsActive" disabled /></label>
+            </td>
+            <td data-title="'Персона'" header-class="'text-left'">
+              <label><input type="checkbox" cb-switch ng-checked="e.IsPerson" disabled /></label>
+            </td>
+            <td data-title="'Ответственные'" header-class="'text-left'">
+              <div ng-repeat="r in e.Responsibles">
+                <span>{{r | Emp}}</span>
+              </div>
+            </td>
+            <td data-title="'Cоздан'" sortable="'CreatedBy | Emp'" header-class="'text-left'">
+              <span>{{e.CreatedBy | Emp}}</span>
+            </td>
+            <td data-title="'Дата создания'" sortable="'Created'" header-class="'text-left'">
+              <span>{{e.Created | date:'dd.MM.yyyy HH.mm'}}</span>
+            </td>
+            <td data-title="'Изменен'" sortable="'ChangedBy | Emp'" header-class="'text-left'">
+              <span>{{e.ChangedBy | Emp}}</span>
+            </td>
+            <td data-title="'Дата изменения'" sortable="'Changed'" header-class="'text-left'">
+              <span>{{e.Changed}}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+</div>
+
+
+

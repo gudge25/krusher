@@ -1,0 +1,78 @@
+﻿<div class="row" style="margin-top:55px;">
+		<div class="col-md-6" style="overflow: hidden; height: 850px; ">
+			 <button type="button" class="btn btn-success" ng-click="add_first();add_show='true';" ng-hide="add_show">Добавить пользователя</button> 
+ 
+						<table class="table-responsive table-condensed " ng-show="add_show" >
+						<tr>
+							<td><input type="{{type(key2)}}" 	class="form-control" ng-model="add_client.ClientName" 	placeholder="ClientName"></td>
+							<td><input type="{{type('Secret')}}" 	class="form-control" ng-model="add_client.Secret" 	placeholder="Secret"></td>
+							<td><input type="{{type(key2)}}" 	class="form-control" ng-model="add_client.NickName" 	placeholder="NickName"></td>
+						</tr>
+						<tr>
+							<td> <button type="button" class="btn btn-success" ng-click="add();add_show=false;" >Сохранить</button> </td>
+						</tr>			
+						</table>			
+<br/>
+			<input  type="text"   class="form-control" ng-model="q" style="width:30%; display: inline;" placeholder="Поиск..."  ng-click="show=false; $parent.save_client = false;  ">
+
+			<div class="list-group" style="width:30%">
+			  <a href="#" class="list-group-item active">
+			    Клиентов найдено:{{clients.length}}
+			  </a>
+			  <a 	ng-repeat="val in clients | filter:q track by $index" 
+					class="list-group-item" 
+					ng-click="$parent.show=val.ClientName;$parent.test=$index" 
+					ng-hide="$parent.save_client" 
+					title="{{popover.title}}" 
+					data-content="{{popover.content}}"
+					data-template="views/clients/popover.tpl.html" 
+					data-animation="am-flip-x" 
+					bs-popover
+				> 
+				<i class="fa fa-male" ></i>   {{val.ClientName}}  <!-- --> <span class="badge" style="color:black;background-color:white;"><i class="fa fa-trash-o" ng-click="delete($index)"></i> </span>
+			  </a>
+
+			</div>
+		</div>
+		
+<!--
+		<div class="col-md-9" style="overflow: auto; height: 880px;"> 
+			 
+			<div  data-ng-repeat="(key,val) in clients track by $index " >		 
+ 
+				<div ng-show="show == val.ClientName ||  q == val.ClientName || save_client" class="col-md-3" > 
+
+					 
+						<table class="table-responsive table-condensed table-hover "  >
+						<tr 	ng-repeat="(key2,val2) in clients[key]  track by $index" 
+							ng-hide="key2=='ClientID' || key2=='CreateDate' || key2=='ClientID' || key2=='CreateEmID'"
+
+						>						
+						
+						<td><input type="{{type(key2)}}" class="form-control" ng-model="val[key2]" ng-change="$parent.save_client='true'"></td>
+						<td><font color="gray">{{key2}}</font></td>
+						 
+						</tr>
+						<tr>
+							<td>
+								 								
+								<button ng-show="save_client" type="button" class="btn btn-success" ng-click="save( key ); save_client = false">Сохранить</button>	 
+							</td>
+
+						</tr>
+						</table>
+						 
+	
+				
+				</div> 
+				
+			</div>
+
+
+		</div> -->
+
+</div>
+ 
+ 
+ 
+ 

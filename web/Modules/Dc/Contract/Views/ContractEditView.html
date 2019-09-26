@@ -1,0 +1,68 @@
+<div class="well">
+    <div>
+        <div class="btn-group inline" style="float:right">
+            <button ng-click="formClassInvalid = 'invalid-form-class' ; uiSelectSetClass(); ContractForm.$valid &&manyAction.Update(Contract,'Contract/'+Contract.dcID);" class="btn btn-success">Сохранить</button>
+            <button ng-click="DeleteContract('Contract');" class="btn btn-warning">Удалить</button>
+        </div>
+    </div>
+   <div style="float:left">
+        Создан <a ng-href="/#!/edit/employee/{{e.Created}}">{{e.Created | emFilters}}</a> - {{invoice.Created | date:'dd.MM.yyyy HH.mm'}}
+        <span ng-hide="!invoice.ChangedBy">
+          Отредактирован <a ng-href="/#!/edit/employee/{{e.ChangedBy}}">{{e.ChangedBy | emFilters}}</a> - {{invoice.Changed | date:'dd.MM.yyyy HH.mm'}}
+        </span>
+        <div  ng-include = "'build/Us/Favorites/Views/FavoritesInnerView.html'"></div>
+      </div>
+   <form novalidate class="css-form" ng-class="formClassInvalid" name="ContractForm">
+    <table class="table table-head-fixed table-bordered">
+         <tbody>
+          <tr>
+            <td class="col-md-3">Номер</td><td class="col-md-3 "><input type="text" class="form-control"  ng-model="Contract.dcNo" required="true"></td>
+            <td class="col-md-3">Дата</td>   <td class="col-md-3">
+              <!-- <p class="input-group custom-datepicker-buttons">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="Contract.dcDate" is-open="datepicker.opened" datepicker-options="dateOptions" required="true" />
+                    <span class="input-group-append">
+                    <button type="button" class="btn btn-default" ng-click="datepickerOpen()">
+                      <i class="fa fa-calendar"></i></button>
+                    </span>
+                </p> -->
+
+                 <div class="form-group">
+                                  <p class="icon-group input-group">
+                                    <input ng-model="Contract.dcDate" class="form-control" ng-model-options="{ updateOn: 'blur' }" placeholder="{{'select a date' | translate}}">>
+                                      <span class="input-group-append">
+                                        <button moment-picker="Contract.dcDate"
+                                                format="YYYY-MM-DD"
+                                                today="true"
+                                                locale="ru"
+                                                start-view="month"
+                                                type="button" class="btn btn-default">
+                                          <i aria-hidden="true" class="fa fa-calendar"></i>
+                                        </button>
+                                      </span>
+                                  </p>
+                              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Тип контракта</td>   <td>
+              <!-- <ui-select ng-model="Contract.dcStatus" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" required="">
+                          <ui-select-match >{{$select.selected.p.Name}}</ui-select-match>
+                          <ui-select-choices repeat="a.p.tvID as a in dcStatusEnum | filter: $select.search" >
+                            {{a.p.Name}}
+                        </ui-select-choices>
+                    </ui-select> -->
+                    <input type="text" ng-model="Contract.type" required>
+            </td>
+            <td>Имя клиента</td>   <td>
+              <div class="input-group">
+                    <input class="form-control" type="text" ng-model="Contract.clName" required="true" disabled>
+                    <span class="input-group-append">
+                        <open-client-search data="Contract"/>
+                    </span>
+                </div>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+</form>
+</div>

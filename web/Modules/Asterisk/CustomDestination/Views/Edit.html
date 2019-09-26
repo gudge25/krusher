@@ -1,0 +1,72 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'name' | translate}}</div>
+                    <div class="col-lg-6 no-padding">
+                            <input only-clear class="form-control" ng-model="upd.cdName">
+                    </div>
+                </div>
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'context' | translate}} </div>
+                    <div class="col-lg-6 no-padding">
+                            <input only-clear class="form-control" ng-model="upd.context">
+                    </div>
+                </div>
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'exten' | translate}} </div>
+                    <div class="col-lg-6 no-padding">
+                            <input class="form-control" ng-model="upd.exten">
+                    </div>
+                </div>
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'priority' | translate}} </div>
+                    <div class="col-lg-6 no-padding">
+                            <input numeric-only class="form-control" ng-model="upd.priority">
+                    </div>
+                </div>
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'description' | translate}} </div>
+                    <div class="col-lg-6 no-padding">
+                            <textarea only-clear  maxlength="200" ng-model="upd.description" msd-elastic style="background-color: lightgoldenrodyellow;color: dimgrey" class="form-control" rows="3" id="comment" placeholder="{{'descriptionType' | translate}} "></textarea>
+                    </div>
+                </div>
+                <ng-include src="'/Views/destdataUpd.html'"></ng-include>
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'return' | translate}} </div>
+                    <div class="col-lg-6 no-padding"><label><input type="checkbox" cb-switch ng-model="upd.return"></label> </div>
+                </div>
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'active' | translate}} </div>
+                    <div class="col-lg-6 no-padding"><label><input type="checkbox" cb-switch ng-model="upd.isActive"></label> </div>
+                </div>
+                <ng-include src="'/Views/divEdit.html'"></ng-include> 
+            </div>
+        </div>
+    </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-8">
+            <!-- <div class="card card-info card-outline">
+                <div class="card-header with-border">
+                    <h3 class="card-title"> {{'info' | translate}}</h3> -->
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-click="manyAction.Update(upd,'CustomDestination')" ng-hide="manyAction.Check_upd_old()">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="CustomDestination">{{'cancel' | translate}}</button>
+                    </div>
+             <!--    </div>
+            </div> -->
+        </div>
+    </div>
+</section>
+

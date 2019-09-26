@@ -1,0 +1,74 @@
+<div class="card card-info card-outline">
+<div class="card-body">
+    <div class="col-lg-12">
+        <div class=" col-lg-offset-6 col-lg-6 ">
+            <div class="text-right" >
+                <create-favorite  class="ctate-favorite text-right"></create-favorite>
+                <div class="btn-group" style="margin-left: 15px;display: inline-block;">
+                    <button type="button" class="btn btn-success" ng-click="manyAction.Update(upd,'Product');$close()">{{'save' | translate}}</button>
+                    <button type="button" class="btn btn-warning" ui-sref="Product" ng-click="$close()">{{'cancel' | translate}}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-7">
+            <table class="table table-head-fixed table-hover borderless" style="margin: 1% 0;">
+                <tr>
+                    <td>{{'named' | translate}}</td>
+                    <td><input class="form-control" type="text" ng-model="upd.psName" placeholder="{{'enterTitle' | translate}}"></td>
+                </tr>
+                <tr>
+                    <td>{{'status' | translate}}</td>
+                    <td>
+                        <ui-select ng-model="upd.psState" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                            <ui-select-choices repeat="c.tvID as c in enums | filter: $select.search">
+                                {{c.Name}}
+                            </ui-select-choices>
+                        </ui-select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{'productCode' | translate}}</td>
+                    <td><input class="form-control" type="text" ng-model="upd.psCode" placeholder="Введите код"></td>
+                </tr>
+                <tr>
+                    <td>{{'category' | translate}}</td>
+                    <td>
+                        <ui-select ng-model="upd.pctID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.pctName}}</ui-select-match>
+                            <ui-select-choices repeat="c.pctID as c in Categories | filter: $select.search">
+                                {{c.pctName}}
+                            </ui-select-choices>
+                        </ui-select>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>{{'brand' | translate}}</td>
+                    <td>
+                        <ui-select ng-model="upd.bID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.bName}}</ui-select-match>
+                            <ui-select-choices repeat="c.bID as c in Brands | filter: $select.search">
+                                {{c.bName}}
+                            </ui-select-choices>
+                        </ui-select>
+                    </td>
+                </tr>
+
+                <tr>
+                     <td>{{'unitsMeasure' | translate}}</td>
+                    <td>
+                        <ui-select ng-model="upd.msID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.msName}}</ui-select-match>
+                            <ui-select-choices repeat="c.msID as c in Measures | filter: $select.search">
+                                {{c.msName}}
+                            </ui-select-choices>
+                        </ui-select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</div>

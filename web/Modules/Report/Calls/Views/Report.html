@@ -1,0 +1,118 @@
+<div class="col-lg-2" style="border-right: 1px solid #e7e7e7;">
+
+        <label >{{'dateFrom' | translate}}</label>
+        <form name="myform3">
+            <p class="input-group custom-datepicker-buttons">
+            <input      type            ="text"
+                        name            ="data"
+                        class           ="editor form-control"
+                        ng-class        =" {'alert-danger':myform3.data.$error.pattern} "
+                        ng-pattern      ='/^(\d{4})\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/'
+                        ng-model        ="model.dateFrom"
+                        ng-maxlength    ="10"
+                        ng-minxlength   ="10"
+                        ng-required     ="true"
+                        uib-tooltip     ="{{'dateexampleFrom' | translate}}: 1987-01-01 , {{'dateFormat' | translate}}: гггг.мм.дд"
+                        tooltip-trigger ="focus"
+                        tooltip-placement="top"
+                        placeholder     ="{{'dateexampleFrom' | translate}}: 1987-01-01"
+                        uib-datepicker-popup="{{format}}" is-open="datepicker.opened" datepicker-options="dateOptions" my-date
+                    />
+            <span class="input-group-append">
+                <button type="button" class="btn btn-default" ng-click="datepicker.opened=true;">
+                    <i class="fa fa-calendar"></i>
+                </button>
+            </span>
+            </p>
+        </form>
+        <span  ng-show="myform3.data.$error.pattern">{{'wrongFormat' | translate}}!</span>
+
+        <br/>
+        <label >{{'dateTo' | translate}}</label>
+        <form name="myform2" ng-init="datepicker2.opened=false;">
+            <p class="input-group custom-datepicker-buttons">
+            <input      type            ="text"
+                        name            ="data"
+                        class           ="editor form-control"
+                        ng-class        ="{'alert-danger':myform2.data.$error.pattern} "
+                        ng-pattern      ='/^(\d{4})\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/'
+                        ng-model        ="model.dateTo"
+                        ng-maxlength    ="10"
+                        ng-minxlength   ="10"
+                        ng-required     ="true"
+                        uib-tooltip     ="{{'dateexampleFrom' | translate}}: 1987-01-01 , {{'dateFormat' | translate}}: гггг.мм.дд"
+                        tooltip-trigger ="focus"
+                        tooltip-placement="top"
+                        placeholder     ="{{'dateexampleFrom' | translate}}: 1987-01-01"
+                        ng-model-options="{timezone: 'UTC'}"
+                        uib-datepicker-popup="{{format}}" is-open="datepicker2.opened" datepicker-options="dateOptions" my-date
+                    />
+            <span class="input-group-append">
+                <button type="button" class="btn btn-default" ng-click="datepicker2.opened=true;">
+                    <i class="fa fa-calendar"></i>
+                </button>
+            </span>
+            </p>
+        </form>
+        <span  ng-show="myform2.data.$error.pattern">{{'wrongFormat' | translate}}!</span>
+        <br/>
+
+        <br/>
+        {{'responsible' | translate}}:
+        <select class="form-control"  ng-model="emID">
+            <option value=""></option>
+            <option ng-repeat="a in employees | filter:{IsActive:true} " value="{{a.emID}}">
+                {{::a.emName}}
+            </option>
+        </select>
+        <hr/>
+
+
+
+    <button ng-show="model.dateFrom && model.dateTo" class="form-control btn btn-success" style="width: 150px" ng-click="getForms(model)">{{'toForm' | translate}}</button>
+</div>
+
+<div class="col-lg-10">
+
+    <table ng-show="Auth.roleID != 3 "show-filter="false" class="table table-head-fixed table-striped table-hover table-bordered borderless">
+        <tbody>
+        <tr>
+            <th>{{'operator' | translate}}</th>
+            <th>{{'date' | translate}}</th>
+        </tr>
+            <tr ng-repeat="e in stats  | filter:{emID:emID}"  >
+                <td >
+                    <a>
+                        {{e.emName}}
+                    </a>
+                </td>
+
+                <tdng-repeat="a in e.items" >
+                    {{a.data}} <span ng-show="a.qty">: {{a.qty}}  </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+<br><br><br><br>
+
+    <table ng-table="tableParams"  ng-show="Auth.roleID == 3" show-filter="false" class="table table-head-fixed table-hover borderless">
+        <tbody>
+        <tr>
+            <th>{{'operator' | translate}}</th>
+            <th>{{'qtyDialer' | translate}}</th>
+        </tr>
+        <tr ng-repeat="e in stats2 | filter:{emID:emID}"  >
+            <td >
+                <a>
+                    {{e.emName}}
+                </a>
+            </td>
+            <td >
+                {{e.qtyClient}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>

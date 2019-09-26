@@ -1,0 +1,401 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i> {{'timecall' | translate}}</h3>
+
+              <div class="card-tools">
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tr >
+                        <td width="50%">{{'ScenarioName' | translate}}</td>
+                        <td width="50%"><input only-clear class="form-control" ng-model="new.name_scenario" ></td>
+                    </tr>
+                    <tr>
+                        <td>{{'TimeBegin' | translate}}</td>
+                        <td>
+                            <!-- <div class="form-group" style="margin-bottom: 0px;">
+                                    <div class="has-feedback" ng-class="{ 'has-error' : !new.TimeBegin.length && edit3, 'has-success' : new.TimeBegin }">
+                                        <span class="icon-group input-group">
+                                            <input ng-change="edit3=true;" ng-model="new.TimeBegin"  class="form-control" ng-maxlength="8" pattern="^[0-9:]+$" required>
+                                            <span class="input-group-append">
+                                              <button moment-picker="new.TimeBegin"
+                                                      format="HH:mm:ss"
+                                                      locale="ru"
+                                                      change="ctrl.setFormattedDate(newValue)"
+                                                      type="button" class="btn btn-default">
+                                                      <i class="fa fa-clock" aria-hidden="true"></i>
+                                              </button>
+                                            </span>
+                                            <span class="glyphicon glyphicon-file form-control-feedback"></span>
+                                        </span>
+                                        <span class="help-block" ng-show="!new.TimeBegin.length && edit3">{{'typeDateLeng'| translate}}</span>
+                                    </div>
+                            </div> -->
+                            <div class="input-group md-3">
+                                <input ng-change="edit3=true;" ng-class="{ 'border border-danger' : !new.TimeBegin.length && edit3 }" ng-model="new.TimeBegin"  class="form-control" ng-maxlength="8" pattern="^[0-9:]+$" required>
+                                <div class="input-group-append">
+                                            <button moment-picker="new.TimeBegin"  class="btn btn-default rounded-right" format="HH:mm:ss" locale="ru">
+                                                <i class="fa fa-clock" aria-hidden="true"></i>
+                                            </button>
+                                </div>
+                                <div class="help-block text-danger" ng-show="!new.TimeBegin.length && edit3">{{'typeDateLeng'| translate}}</div>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'TimeEnd' | translate}}</td>
+                        <td>
+                            <!-- <div class="form-group" style="margin-bottom: 0px;">
+                                    <div class="has-feedback" ng-class="{ 'has-error' : !new.TimeEnd.length && edit4, 'has-success' : new.TimeEnd }">
+                                        <span class="icon-group input-group">
+                                            <input ng-change="edit4=true;" ng-model="new.TimeEnd"  class="form-control" ng-maxlength="8" pattern="^[0-9:]+$" required>
+                                            <span class="input-group-append">
+                                              <button moment-picker="new.TimeEnd"
+                                                      format="HH:mm:ss"
+                                                      locale="ru"
+                                                      change="ctrl.setFormattedDate(newValue)"
+                                                      type="button" class="btn btn-default">
+                                                      <i class="fa fa-clock" aria-hidden="true"></i>
+                                              </button>
+                                            </span>
+                                            <span class="glyphicon glyphicon-file form-control-feedback"></span>
+                                        </span>
+                                        <span class="help-block" ng-show="!new.TimeEnd.length && edit4">{{'typeDateLeng'| translate}}</span>
+                                    </div>
+                            </div> -->
+                            <div class="input-group md-3">
+                                <input ng-change="edit4=true;"  ng-class="{ 'border border-danger' : !new.TimeEnd.length && edit4 }" ng-model="new.TimeEnd"  class="form-control" ng-maxlength="8" pattern="^[0-9:]+$" required>
+                                <div class="input-group-append">
+                                    <button moment-picker="new.TimeEnd"  class="btn btn-default rounded-right" format="HH:mm:ss" locale="ru">
+                                        <i class="fa fa-clock" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <span class="help-block text-danger" ng-show="!new.TimeEnd.length && edit4">{{'typeDateLeng'| translate}}</span>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'DaysCall' | translate}}</td>
+                        <td>
+                            <ui-select  multiple tagging tagging-label="(custom 'new' label)" ng-model="new.DaysCall" theme="bootstrap4-1" sortable="true" ng-disabled="disabled" style='height: auto;'>
+                                <ui-select-match  placeholder="{{'select' | translate}}">{{$item.Name | translate}}</ui-select-match>
+                                <ui-select-choices repeat="a.ID as a in dayList  | filter:$viewValue">{{a.Name | translate}}</ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+          </div>
+
+          <!-- About Me Box -->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i>  {{'action' | translate}}, {{'ifAnswer' | translate}}</h3>
+            </div>
+            <div class="card-body p-0">
+                    <table class="table table-head-fixed table-hover borderless">
+                        <tr>
+                            <td width="30%">{{'destination' | translate}}</td>
+                            <td width="70%">
+                                <ui-select ng-model="new.destination" ng-change="new.destdata=null" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                            <ui-select-choices repeat="c.tvID as c in DestType | filter: $select.search"  ui-disable-choice="c.tvID == 101411 || c.tvID == 101406">
+                                             {{c.Name | translate}}
+                                            </ui-select-choices>
+                                </ui-select>
+                            </td>
+                        </tr>
+                        <tr ng-show="new.destination"  ng-switch="new.destination" >
+                            <td>{{'destdata' | translate}}</td>
+                            <td>
+                                <div ng-switch-when="101401">
+                                    <ui-select  ng-model="new.destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-choices repeat="a.queID as a in Queues.data | filter: $select.search ">
+                                                {{a.name}}
+                                            </ui-select-choices>
+                                    </ui-select>
+                                </div>
+
+                                <div ng-switch-when="101402">
+                                    <ui-select ng-model="new.destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.emName}}</ui-select-match>
+                                            <ui-select-choices repeat="a.emID as a in employees.data | filter: $select.search" ui-disable-choice="a.SipNum === null ? true : false;">
+                                                <b> {{a.emName}} </b> <small ng-show="a.sipName"> SIP/{{a.sipName}} </small>
+                                            </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div ng-switch-when="101403">
+                                    <ui-select ng-model="new.destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.trName}}</ui-select-match>
+                                            <ui-select-choices repeat="a.trID as a in Trunk.data | filter: $select.search ">
+                                                {{a.trName}}
+                                            </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div ng-switch-when="101405">
+                                    <ui-select ng-model="new.destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.ivr_name}}</ui-select-match>
+                                            <ui-select-choices repeat="a.id_ivr_config as a in IVR.data | filter: $select.search ">
+                                                {{a.ivr_name}}
+                                            </ui-select-choices>
+                                    </ui-select>
+                                </div>
+
+                                <div ng-switch-when="101407">
+                                    <ui-select ng-model="new.destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.record_name}}</ui-select-match>
+                                            <ui-select-choices repeat="a.record_id as a in Record.data | filter: $select.search ">
+                                                {{a.record_name}}
+                                            </ui-select-choices>
+                                    </ui-select>
+                                </div>
+
+                                <div ng-switch-when="101408" class="input-group">
+                                    <ui-select ng-model="new.destdata" theme="bootstrap4-1" class="normal bg-custom-white" style="width: 100%">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.cdName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.cdID as a in CustomDestenation.data | filter: $select.search ">{{a.cdName}}</ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                        <button ng-show="new.destdata" type="button" class="btn btn-default custom-right-position" ng-click="new.destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>
+                                <div ng-switch-when="101409" class="input-group">
+                                    <ui-select ng-model="new.destdata" theme="bootstrap4-1" class="normal bg-custom-white"  style="width: 100%">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.poolName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.poolID as a in TrunkPool.data | filter: $select.search ">{{a.poolName}}</ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                        <button ng-show="new.destdata" type="button" class="btn btn-default custom-right-position" ng-click="new.destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>
+                                <div ng-switch-when="101410" class="input-group">
+                                    <ui-select ng-model="new.destdata" theme="bootstrap4-1" class="normal bg-custom-white" style="width: 100%">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.tgName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.tgID as a in TimeGroup.data | filter: $select.search ">{{a.tgName}}</ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                        <button ng-show="new.destdata" type="button" class="btn btn-default custom-right-position" ng-click="new.destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span> 
+                                </div>
+                                <div ng-switch-when="101412" class="input-group">
+                                    <ui-select ng-model="new.destdata" theme="bootstrap4-1" class="normal bg-custom-white" style="width: 100%">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.cfName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.cfID as a in Conference.data | filter: $select.search ">{{a.cfName}}</ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                        <button ng-show="new.destdata" type="button" class="btn btn-default custom-right-position" ng-click="new.destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-show="(new.destination == 101403 || new.destination == 101409)&& new.destdata">
+                                <td>{{'destdata2' | translate}}</td>
+                                <td>
+                                    <div class="input-group" style="width: 100%">
+                                            <input  class="form-control" ng-model="new.destdata2"/>
+                                            <span class="input-group-append">
+                                                <button ng-show="new.destdata2" type="button" class="btn btn-default" ng-click="new.destdata2 = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                            </span>
+                                    </div>
+                                </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <checkbox class="btn-info" ng-model="addoption"></checkbox> &#160 {{'additional options' | translate}}
+                            </td>
+                        </tr>
+                    </table>
+            </div>
+          </div>
+
+          <!-- About Me Box -->
+          <div class="card card-info card-outline" ng-show="addoption">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i> {{'QtyPerContact' | translate}} <b ng-bind="new.RecallCount"></b> {{ 'Raz' | translate}}.</h3>
+            </div>
+            <div class="card-body p-0">
+                    <table class="table table-head-fixed table-hover borderless">
+                        <tr ng-show="addoption">
+                            <td width="50%">{{'RecallAfterMin' | translate}}</td>
+                            <td width="50%">
+                                <!-- <div class="input-group">
+                                    <input numeric-only class="form-control" ng-model="new.RecallAfterMin">
+                                    <span class="input-group-append">
+                                        <button type="button" class="btn btn-default" ng-click="new.RecallAfterMin=new.RecallAfterMin+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-default" ng-disabled="new.RecallAfterMin <= 0" ng-click="new.RecallAfterMin=new.RecallAfterMin-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </span>
+                                </div> -->
+                                <div class="input-group">
+                                    <input numeric-only class="form-control" ng-model="new.RecallAfterMin">
+                                    <div class="input-group-append">
+                                            <button type="button" class="btn btn-default" ng-click="new.RecallAfterMin=new.RecallAfterMin+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-default" ng-disabled="new.RecallAfterMin <= 0" ng-click="new.RecallAfterMin=new.RecallAfterMin-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </div>
+                                </div> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'RecallCountPerDay' | translate}}</td>
+                            <td>
+                                <!-- <div class="input-group">
+                                    <input numeric-only class="form-control" ng-model="new.RecallCountPerDay" ng-change="new.RecallCount = new.RecallCountPerDay * new.RecallDaysCount">
+                                    <span class="input-group-append">
+                                        <button type="button" class="btn btn-default" ng-click="new.RecallCountPerDay=new.RecallCountPerDay+1;new.RecallCount = new.RecallCountPerDay * new.RecallDaysCount"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-default" ng-disabled="new.RecallCountPerDay <= 0" ng-click="new.RecallCountPerDay=new.RecallCountPerDay-1;new.RecallCount = new.RecallCountPerDay * new.RecallDaysCount"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </span>
+                                </div> -->
+                                <div class="input-group">
+                                        <input numeric-only class="form-control" ng-model="new.RecallCountPerDay" ng-change="new.RecallCount = new.RecallCountPerDay * new.RecallDaysCount">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-default" ng-click="new.RecallCountPerDay=new.RecallCountPerDay+1;new.RecallCount = new.RecallCountPerDay * new.RecallDaysCount"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-default" ng-disabled="new.RecallCountPerDay <= 0" ng-click="new.RecallCountPerDay=new.RecallCountPerDay-1;new.RecallCount = new.RecallCountPerDay * new.RecallDaysCount"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'RecallDaysCount' | translate}}</td>
+                            <td>
+                                <!-- <div class="input-group">
+                                    <input numeric-only class="form-control" ng-model="new.RecallDaysCount" ng-change="new.RecallCount = new.RecallCountPerDay * new.RecallDaysCount">
+                                    <span class="input-group-append">
+                                        <button type="button" class="btn btn-default" ng-click="new.RecallDaysCount=new.RecallDaysCount+1;new.RecallCount = new.RecallCountPerDay * new.RecallDaysCount"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-default" ng-disabled="new.RecallDaysCount <= 0" ng-click="new.RecallDaysCount=new.RecallDaysCount-1;new.RecallCount = new.RecallCountPerDay * new.RecallDaysCount"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </span>
+                                </div> -->
+                                <div class="input-group">
+                                    <input numeric-only class="form-control" ng-model="new.RecallDaysCount" ng-change="new.RecallCount = new.RecallCountPerDay * new.RecallDaysCount;Check('new');">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-default" ng-click="new.RecallDaysCount=new.RecallDaysCount+1;new.RecallCount = new.RecallCountPerDay * new.RecallDaysCount"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-default" ng-disabled="new.RecallDaysCount <= 0" ng-click="new.RecallDaysCount=new.RecallDaysCount-1;new.RecallCount = new.RecallCountPerDay * new.RecallDaysCount"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-hide="new.RecallDaysCount == 1">
+                            <td>{{'RecallAfterPeriod' | translate}}</td>
+                            <td>
+                                <!-- <div class="input-group">
+                                    <input numeric-only class="form-control" ng-model="new.RecallAfterPeriod">
+                                    <span class="input-group-append">
+                                        <button type="button" class="btn btn-default" ng-click="new.RecallAfterPeriod=new.RecallAfterPeriod+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-default" ng-disabled="new.RecallAfterPeriod <= 0" ng-click="new.RecallAfterPeriod=new.RecallAfterPeriod-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </span>
+                                </div> -->
+                                <div class="input-group">
+                                        <input numeric-only class="form-control" ng-model="new.RecallAfterPeriod" ng-disabled="new.RecallDaysCount == 1">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-default" ng-click="new.RecallAfterPeriod=new.RecallAfterPeriod+1"  ng-disabled="new.RecallDaysCount == 1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-default" ng-click="new.RecallAfterPeriod=new.RecallAfterPeriod-1"  ng-disabled="new.RecallDaysCount <= 1 || new.RecallAfterPeriod <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+            </div>
+           </div>
+
+          <!-- About Me Box -->
+          <div class="card card-info card-outline" ng-show="addoption">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i> {{'AddOptions' | translate}}</h3>
+            </div>
+            <div class="card-body p-0">
+                    <table class="table table-head-fixed table-hover borderless">
+                        <tr>
+                            <td width="80%">
+                                    <span ng-if="new.isFirstClient">
+                                            {{'isFirstClient' | translate}} <b>{{new.destination | enums | translate}} ({{new.destdata | destdata:new.destination}})</b>
+                                    </span>    
+                                    <span ng-if="!new.isFirstClient">
+                                            {{'isFirstClient2' | translate}} <b>{{new.destination | enums | translate}} ({{new.destdata | destdata:new.destination}}) </b> {{'isFirstClient3' | translate}} 
+                                    </span>
+                            </td>
+                            <td width="20%"><label><input type="checkbox" cb-switch ng-model="new.isFirstClient"></label></td>
+                        </tr>
+                        <tr>
+                            <td>{{'IsRecallForSuccess' | translate}}</td>
+                            <td><label><input type="checkbox" cb-switch ng-model="new.IsRecallForSuccess"></label></td>
+                        </tr>
+                        <tr>
+                            <td>{{'IsCallToOtherClientNumbers' | translate}}</td>
+                            <td><label><input type="checkbox" cb-switch ng-model="new.IsCallToOtherClientNumbers"></label></td>
+                        </tr>
+                        <tr>
+                            <td>{{'IsCheckCallFromOther' | translate}}</td>
+                            <td><label><input type="checkbox" cb-switch ng-model="new.IsCheckCallFromOther"></label></td>
+                        </tr>
+                        <tr>
+                            <td>{{'prefix' | translate}}</td>
+                            <td>
+                                <ui-select  multiple tagging tagging-label="" ng-model="new.AllowPrefix" theme="bootstrap4-1" sortable="true" ng-disabled="disabled" style='height: auto;'>
+                                    <ui-select-match  placeholder="{{'select' | translate}}">{{$item | translate}}</ui-select-match>
+                                    <ui-select-choices repeat="a in []  | filter:$viewValue">{{a | translate}}</ui-select-choices>
+                                </ui-select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'RouteOut' | translate}}</td>
+                            <td>
+                                <ui-select  multiple tagging tagging-label="" ng-model="new.roIDs" theme="bootstrap4-1" sortable="true" ng-disabled="disabled" style='height: auto;'>
+                                    <ui-select-match  placeholder="{{'select' | translate}}">{{$item.roName | translate}}</ui-select-match>
+                                    <ui-select-choices repeat="a.roID as a in RouteOut.data  | filter:$viewValue">{{a.roName | translate}}</ui-select-choices>
+                                </ui-select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>{{'status' | translate}} {{'appeals' | translate | lowercase}}</td>
+                            <td>
+                                <ui-select  multiple tagging tagging-label="" ng-model="new.limitStatuses" theme="bootstrap4-1" sortable="true"  style='height: auto;'>
+                                    <ui-select-match  placeholder="{{'select' | translate}}"> {{ ($item.Name | CallStatus).disposition }} </ui-select-match>
+                                    <ui-select-choices repeat="c.tvID as c in Enums.group[7] | filter:$viewValue">
+                                        <span ng-bind="(c.Name | CallStatus).disposition">{{c.Name | translate}}</span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </td>
+                        </tr>
+ 
+                        <tr>
+                            <td>{{'limit' | translate}}  {{'appeals' | translate | lowercase}}</td>
+                            <td>
+                                <div class="input-group">
+                                        <input numeric-only class="form-control" ng-model="new.limitChecker"  >
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-default" ng-click="new.limitChecker=new.limitChecker+1;"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-default" ng-disabled="new.limitChecker <= 0" ng-click="new.limitChecker=new.limitChecker-1;"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'active' | translate}}</td>
+                            <td><label><input type="checkbox" cb-switch ng-model="new.isActive"></label></td>
+                        </tr>
+                    </table>
+            </div>
+          </div>
+
+
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-8 col-md-6 col-sm-6 col-xs-12">
+         <!--  <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"> {{'info' | translate}}</h3> -->
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-disabled="!new.TimeBegin || !new.TimeEnd || !new.name_scenario || !new.destination || ( !new.destdata && new.destination != 101404) " ng-click="manyAction.Save(new,'Scenario')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="Scenario">{{'cancel' | translate}}</button>
+                    </div>
+            <!--  </div>
+          </div> -->
+        </div>
+    </div>
+</section>

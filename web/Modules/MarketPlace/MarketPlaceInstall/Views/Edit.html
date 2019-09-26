@@ -1,0 +1,69 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+              <div class="card-tools">
+              </div>
+            </div>
+
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tr>
+                        <td>{{'extension' | translate}}</td>
+                        <td> 
+                          <b  ng-bind="upd.mpID | mpFilters" ></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'Token' | translate}}</td>
+                        <td><input class="form-control" ng-model="upd.tokenAccess"/></td>
+                    </tr>
+                    <tr>
+                        <td>{{'url' | translate}}</td>
+                        <td><input class="form-control" ng-model="upd.link"/></td>
+                    </tr>
+                    <tr>
+                        <td width="40%">{{'login' | translate}}</td>
+                        <td width="60%"><input class="form-control" ng-model="upd.login"/></td>
+                    </tr>
+
+                    <tr>
+                        <td>{{'data' | translate}} 1</td>
+                        <td><input class="form-control" ng-model="upd.data1"/></td>
+                    </tr>
+                    <tr>
+                        <td>{{'data' | translate}} 2</td>
+                        <td><input class="form-control" ng-model="upd.data2"/></td>
+                    </tr>
+                    <tr>
+                        <td>{{'data' | translate}} 3</td>
+                        <td><input class="form-control" ng-model="upd.data3"/></td>
+                    </tr>
+
+                    <tr>
+                        <td>{{'password' | translate}}</td>
+                        <td><input class="form-control" type="password" ng-model="upd.pass"/></td>
+                    </tr>
+                    <tr>
+                        <td>{{'active' | translate}}</td>
+                        <td><label class="float-right"><input type="checkbox" cb-switch ng-model="upd.isActive"  placeholder="{{'activeShe' | translate}}"></label></td>
+                    </tr>
+                    <tr ng-include="'/Views/tableEdit.html'" ng-show="upd.Created"></tr>
+                    <tr ng-include="'/Views/tableEdit2.html'" ng-show="upd.Changed || upd.Changed==0"></tr>
+                </table>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-8">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-click="manyAction.Update(upd,'mpMarketplace')" ng-hide="manyAction.Check_upd_old()">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="mpMarketplace">{{'cancel' | translate}}</button>
+                    </div>
+        </div>
+    </div>
+</section>

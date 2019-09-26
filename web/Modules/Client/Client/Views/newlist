@@ -1,0 +1,138 @@
+  <aside>
+                  <div class="sidebar">
+                            <!-- Sidebar Menu -->
+                      <nav class="ml-auto">
+                          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                            <li class="nav-header" translate="menu"></li>
+
+                            <li class="nav-item has-treeview" ng-disabled="LoadStatus"  ng-repeat="(key, values) in BasesSaBDGroup track by $index" ng-init="x[$index].length = values.length;x[$index].status = manyAction.xCheck(x[$index])" ng-show="!hot" ng-class="{'active' : key==country}">
+                                <!--Base-->
+                                <a style="cursor: pointer;" class="nav-link" ng-show="Filter.BaseName == key || !Filter.BaseName">
+                                    <i class="fa fa-list-alt"> </i>
+                                    <p>
+                                        &#160; <b ng-bind="key"></b>
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                  <!--FILE-->
+                                  <li class="nav-item" ng-show="( a.ffID == Filter.ffID || (!Filter.ffID && Filter.ffID !=0 ))"
+                                    ng-repeat="a in values track by $index"
+                                    title="{{a.Created | date:'dd.MM HH:mm'}}"
+                                    ng-class="{'disabled' :  a.ffID == Filter.ffID}"
+                                  >
+                                    <a class="nav-link" ng-show="!LoadStatus && !cl_status" style="background-color: white !important; cursor: pointer;" ng-click="GetStatus(a.ffID);Filter.ChildIndex = false;Filter.BaseName=key;$event.stopPropagation()">
+                                      <i class="fa fa-database fa-lg text-blue"></i> <span class="text-black" ng-bind="a.ffName"></span>
+                                    </a>
+
+                                    <a class="nav-link" ng-show="LoadStatus || cl_status" style="background-color: white !important;">
+                                      <i class="fa fa-database fa-lg text-blue"></i> <span class="text-black" ng-bind="a.ffName"></span>
+                                      <span class="float-right-container">
+                                        <span ng-show="LoadStatus"  class="text-yellow">
+                                            <i  class="fa fa-spinner fa-pulse fa-fw"></i>
+                                            <span ng-bind="'Loading'| translate"></span>
+                                        </span>
+                                      </span>
+                                    </a>
+                                    <!--INFO-->
+                                    <ul ng-show="Filter.BaseName == key && showInfo==true" ng-click="$event.stopPropagation()" style="list-style: none;">
+                                        <li >
+                                                <div style="background-color: white !important;color:black;">
+                                                    <i class="fa fa-info "></i> {{'info' | translate}}
+                                                </div>
+                                                <ul class="treeview-menu"  style="display: block;">
+                                                  <!--Status-->
+                                                  <li class="d-flex flex-column">
+                                                      <a style="background-color: white !important;color:black; margin: 2px 0;"
+                                                        ng-repeat    = "value in cl_status track by $index"
+                                                        ng-show   = "cl_status  && (value.FilterID==1001 || value.FilterID==1002)"
+                                                        class     = "disabled"
+                                                        >
+                                                          <div class="d-flex justify-content-between" style="height: 20px">
+                                                            <div style="color:{{(value.Name | ClientStatus).color}};display: inline-block;float: left;" >
+                                                                {{(value.Name | ClientStatus).status}}
+                                                            </div>
+                                                            <div ng-bind="value.Qty" class="badge badge-primary"></div>
+                                                          </div>
+                                                      </a>
+                                                  </li>
+                                                </ul>
+                                          </li>
+                                    </ul>
+                                    <ul ng-show="Filter.BaseName == key && showStatus==true" ng-click="$event.stopPropagation()" style="list-style: none;">
+                                        <!--Status-->
+                                        <li >
+                                                 <div style="background-color: white !important;color:black;"
+                                                    >
+                                                    <div style="display: block;">
+                                                      <i class="fas fa-chart-pie"></i> {{'status' | translate}} <!-- <pre>{{value|json}}-{{Filter|json}}</pre> -->
+                                                    </div>
+                                                </div>
+                                                <ul class="treeview-menu d-flex flex-column"  style="display: block; list-style:none;">
+                                                  <!--Status-->
+                                                  <li ng-repeat="value in cl_status track by $index" ng-show="cl_status && (value.FilterID==1003 || value.FilterID==1004)">
+                                                           <a style="color:black; cursor: pointer; margin: 2px 0;height: 20px"
+                                                              ng-hide       = "value.Name == statusName"
+                                                              ng-click     = "ChildIndex($index);Filter.Pages.CurrentPage=1;x='start';Filter.Filter.FilterID=value.FilterID;Filter.Filter.Name=value.Name;FindClient(Filter.Filter);"
+                                                            ><!-- FindClient(value); -->
+                                                                <div class="d-flex justify-content-between" style="height: 20px" >
+                                                                  <div style="color:{{(value.Name | ClientStatus).color}};display: inline-block;float: left;" >
+                                                                      {{(value.Name | ClientStatus).status}}
+                                                                  </div>
+                                                                  <div ng-bind="value.Qty" class="badge" ng-class="{'badge-danger' : (value.Name == 103 || value.Name == 203), 'badge-success' : (value.Name == 201 || value.Name == 202), 'badge-warning' : (value.Name == 206 || value.Name == 205 || value.Name == 102),'badge-primary' : value.Name == 101,'badge-info' : value.Name == 204}"></div>
+                                                                </div>
+                                                          </a>
+
+                                                          <a style="margin: 2px 0;"
+                                                              ng-show      = "value.Name == statusName"
+                                                            >
+                                                                <div class="d-flex justify-content-between" ng-class = "{'tagBackgnd' : value.Name == statusName}" style="height: 20px">
+                                                                  <div style="color:{{(value.Name | ClientStatus).color}};display: inline-block;float: left;" >
+                                                                      {{(value.Name | ClientStatus).status}}
+                                                                  </div>
+                                                                  <div ng-bind="value.Qty" class="badge" ng-class="{'badge-danger' : (value.Name == 103 || value.Name == 203), 'badge-success' : (value.Name == 201 || value.Name == 202), 'badge-warning' : (value.Name == 206 || value.Name == 205 || value.Name == 102),'badge-primary' : value.Name == 101,'badge-info' : value.Name == 204}"></div>
+                                                                </div>
+                                                          </a>
+                                                  </li>
+                                                </ul>
+                                          </li>
+                                    </ul>
+                                    <ul ng-show="Filter.BaseName == key && showDocs==true" ng-click="$event.stopPropagation()" style="list-style: none;">
+                                        <!--Status-->
+                                        <li >
+                                                 <div style="background-color: white !important;color:black;"
+                                                    >
+                                                    <div style="display: block;">
+                                                      <i class="fa fa-file-alt "></i> {{'documentation' | translate}}
+                                                    </div>
+                                                </div>
+                                                <ul class="treeview-menu"  style="display: block; list-style:none;">
+                                                  <!--Status-->
+                                                  <li >
+                                                           <a style="background-color: white !important;color:black; margin: 2px 0;"
+                                                              ng-show      = "cl_status && value.FilterID < 100 && value.FilterID > 0 "
+                                                              ng-repeat    = "value in cl_status track by $index"
+                                                              class        = "disabled"
+                                                              >
+                                                                <div class="d-flex justify-content-between" style="height: 20px">
+                                                                  <div style="color:{{(value.Name | ClientStatus).color}};display: inline-block;float: left;">
+                                                                      {{(value.Name | ClientStatus).status}}
+                                                                  </div>
+                                                                  <div ng-bind="value.Qty" class="badge badge-primary"></div>
+                                                                </div>
+                                                          </a>
+                                                  </li>
+                                                </ul>
+                                          </li>
+                                    </ul>
+                                  
+                                  
+                                  </li>
+                                  <!-- <li class="nav-item"><a class="nav-link" ui-sref="Scenario" ng-class="{'active':S=='Scenario'}">    <i class="fa fa-circle-o nav-icon"></i>     <p translate="scenario"></p></a></li>
+                                  <li class="nav-item"><a class="nav-link" ui-sref="Recall" ng-class="{'active':S=='Recall'}">      <i class="fa fa-circle-o nav-icon"></i>       <p translate="Recalls"></p></a></li> -->
+                                </ul>
+                            </li>
+                          </ul>
+                      </nav> 
+                  <div>
+              </aside>

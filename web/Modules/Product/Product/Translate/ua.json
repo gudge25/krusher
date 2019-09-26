@@ -1,0 +1,11 @@
+{
+		"productExists" : "товар існує",
+		"enterCode" : "Введіть код",
+		"categorys" : "Категорії",
+		"brands" : "Бренди",
+		"selectBrandCategory" : "Введіть бренд",
+		"unitsMeasure" : "Одиниці виміру",
+		"searchName" : "Пошук по назві",
+		"searchCode" : "Пошук по коду",
+		"find" : "Знайти"
+	}

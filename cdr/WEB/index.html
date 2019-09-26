@@ -1,0 +1,80 @@
+<!doctype html>
+<html ng-app='App'>
+	<head>
+		<META content="text/html; charset=windows-1251" http-equiv="Content-Type">
+			<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-sanitize.js"></script>
+
+			<script src="js/angular-strap-2.0.1/dist/angular-strap.min.js" data-semver="v2.0.0-rc.2"></script>
+			<script src="js/angular-strap-2.0.1/dist/angular-strap.tpl.min.js" data-semver="v2.0.0-rc.2"></script>
+
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular-animate.js" ></script>
+
+			<link rel="stylesheet" href="css/sb-admin.css">
+
+			<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+			<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+			<link rel="stylesheet" href="js/angular-motion-0.3.2/dist/angular-motion.min.css">
+
+			<!-- Optional theme -->
+			<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+			<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+			<script src="http://code.highcharts.com/stock/highstock.src.js"></script>
+
+		<!-- Angular Modules-->
+			<script type="text/javascript" src="GlobeMethod.js"></script>
+			<script type="text/javascript" src="Base/BaseService.js"></script>
+			<script type="text/javascript" src="Modules/Statistic/activeSrv.js"></script>
+			<script type="text/javascript" src="Modules/Statistic/cdrColumnSrv.js"></script>
+			<script type="text/javascript" src="Modules/Statistic/recordSvr.js"></script>
+			<script type="text/javascript" src="Modules/Statistic/cdrSrv.js"></script>
+			<script type="text/javascript" src="Modules/Statistic/commentSrv.js"></script>
+			<script type="text/javascript" src="App.js"></script>
+			<script type="text/javascript" src="Directive.js"></script>
+			<script type="text/javascript" src="config.js"></script>
+			<script type="text/javascript" src="filters.js"></script>
+			<script type="text/javascript" src="Route/DefaultRoute.js"></script>
+			<script type="text/javascript" src="Route/Route.js"></script>
+			<script type="text/javascript" src="js/angular-ui-router.js"></script>
+			<script type="text/javascript" src="Modules/User/userCtrl.js"></script>
+			<script type="text/javascript" src="Modules/Statistic/Controller/statisticCtrl.js"></script>
+			<script type="text/javascript" src="Modules/Menu/indexCtrl.js"></script>
+			<script type="text/javascript" src="Modules/Client/clientCtrl.js"></script>
+			<script type="text/javascript" src="Modules/Manual/manualCtrl.js"></script>
+			<script type="text/javascript" src="Modules/Cli/cliCtrl.js"></script>
+			<script type="text/javascript" src="Modules/Queue/queueCtrl.js"></script>
+
+			<script type="text/javascript" src="js/highcharts-ng.js"></script>
+			<script type="text/javascript" src="js/date.js"></script>
+			<script type="text/javascript" src="js/dataparser.js"></script>
+			<script type="text/javascript" src="js/datapicker.js"></script>
+			<script type="text/javascript" src="js/tooltip.js"></script>
+
+			<script src="js/ng-infinite-scroll.min.js"></script>
+			<script src="js/angular-media-player.min.js"></script>
+			<script src="js/underscore-min.js"></script>
+			<script src="js/localStorageModule.js"></script>
+
+			<script src="js/ng-csv.min.js"></script>
+			<script src="js/angular-md5.min.js"></script>
+			<script src="js/angular-dragdrop.min.js"></script>
+	</head>
+
+	<body   ng-controller="Index">
+		<!-- // Меню -->
+		<div ng-include="'Modules/Menu/Views/menu.html'" ></div>
+
+		<!--// Разметка -->
+		<div ng-show="chech_auth" ui-view></div>
+		{{chech_auth2}}
+
+  	</body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,14 @@
+{
+		"callsPerDay" : "Дзвінки за день",
+		"controlPanel" : "Панель управління",
+		"information" : "інформація про навантаження системи по дзвінках",
+		"successfulCalls" : "Успішні дзвінки",
+		"fromAllCalls" : "від всіх дзвінків",
+		"unsuccessfulСcalls" : "Невдалі дзвінки",
+		"missedCalls" : "Пропущені дзвінки",
+		"callsHour" : "Дзвінки по годинах",
+		"hours" : "Години",
+		"numberOfCalls" : "Кількість дзвінків",
+		"languages" : "Мови",
+		"callfinish": "Продзвону файлів"
+}

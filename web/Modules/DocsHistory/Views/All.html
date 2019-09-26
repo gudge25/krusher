@@ -1,0 +1,57 @@
+<div class="table table-head-fixed-responsive">
+<table ng-table="tableParams" show-filter="true" class="table table-head-fixed table-hover table-bordered">
+	<tr ng-repeat="d in DocsHistory"  >
+
+
+		<td data-title="'Коментарий'" filter="{Comment: 'text'}" header-class="'text-left'">
+        <span>{{e.Comment}}</span>
+      </td>
+
+		<td data-title="'Ид'" filter="{dcID: 'text'}" header-class="'text-left'">{{d.dcID}}</td>
+
+		<td data-title="'Номер'" filter="{dcNo: 'text'}" header-class="'text-left'">{{d.dcNo}}</td>
+
+		<td data-title="'Состояние'" filter="{dcState: 'text'}" header-class="'text-left'">{{d.dcState}}</td>
+
+		<td data-title="'Дата'" filter="{dcDate: 'text'}" header-class="'text-left'">{{d.dcDate}}</td>
+
+		<td data-title="'Документ основания'" filter="{dcLink: 'text'}" header-class="'text-left'">{{d.dcLink}}</td>
+
+		<td data-title="'Коментарий'" filter="{dcComment: 'text'}" header-class="'text-left'">{{d.dcComment}}</td>
+
+		<td data-title="'Сумма'" filter="{dcSum: 'text'}" header-class="'text-left'">{{d.dcSum}}</td>
+
+		<td data-title="'Статус'" filter="{dcStatus: 'text'}" header-class="'text-left'">{{d.dcStatus}}</td>
+
+		<td data-title="'валюта'" filter="{crID: 'text'}" header-class="'text-left'">{{d.crID}}</td>
+
+		<td data-title="'Рейтинг'" filter="{dcRate: 'text'}" header-class="'text-left'">{{d.dcRate}}</td>
+
+		<td data-title="'Ид клиента'" filter="{clID: 'text'}"  header-class="'text-left'"><a ng-href="/#!/clientPreView/{{data.clID}}">{{d.clID}}</a></td>
+
+		<td data-title="'Имя клиента'" filter="{clName: 'text'}" header-class="'text-left'">{{d.clName}}</td>
+
+		<td data-title="'Ид сотрудника'" filter="{emID: 'text'}" header-class="'text-left'"><a ng-href="/#!/edit/employee/{{data.emID}}">{{d.emID}}</a></td>
+
+		<!-- <td data-title="'pcID'" filter="{pcID: 'text'}" header-class="'text-left'">{{d.pcID}}</td> -->
+
+		<td data-title="'Ид в системе'" filter="{uID: 'text'}" header-class="'text-left'">{{d.uID}}</td>
+
+		<td data-title="'Создан когда'" filter="{Created: 'text'}" header-class="'text-left'">{{d.Created}}</td>
+
+		<td data-title="'Создан кем'" filter="{CreatedBy: 'text'}" header-class="'text-left'"><a ng-href="/#!/edit/employee/{{data.CreatedBy}}">{{d.CreatedBy}}</td>
+
+		<td data-title="'Отредактирован кем'" filter="{ChangedBy: 'text'}" header-class="'text-left'"><a ng-href="/#!/edit/employee/{{data.ChangedBy}}">{{d.ChangedBy}}</a></td>
+
+		<td data-title="'Дата вставки'" filter="{dup_InsTime: 'text'}" header-class="'text-left'">{{d.dup_InsTime | data:'dd.MM.yyyy'}}</td>
+
+		<td data-title="'Действие'" filter="{dup_action: 'text'}" header-class="'text-left'">{{d.dup_action | Action}}</td>
+
+		<td data-title="'Логин'" filter="{dup_UserName: 'text'}" header-class="'text-left'">{{d.dup_UserName}}</td>
+
+		<td data-title="'Хост'" filter="{dup_HostName: 'text'}" header-class="'text-left'">{{d.dup_HostName}}</td>
+
+		<!-- <td data-title="'dup_AppName'" filter="{dup_AppName: 'text'}" header-class="'text-left'">{{d.dup_AppName}}</td> -->
+	</tr>
+</table>
+</div>

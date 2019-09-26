@@ -1,0 +1,129 @@
+    <div class="row">
+      <div class="col-md-12">
+        <div class="float-right ">
+            <create-favorite  class="ctate-favorite deal" style=" position: relative; top: -13px; left: -13px;"></create-favorite>
+            <div style="margin-left: 15px;display: inline-block;">
+              <div class="btn-group inline">
+                  <button ng-click="formClassInvalid = 'invalid-form-class' ; uiSelectSetClass(); PaymentForm.$valid && manyAction.Update(payment,'Payment/'+payment.dcID);" class="btn btn-success">{{ 'save' | translate }}</button>
+                  <button ng-click="DeletePayment('Payment');" class="btn btn-warning">{{ 'del' | translate }}</button>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  <div class="row">
+   <div class="col-md-9">
+    <div class="card card-info card-outline" style="padding: 19px">
+      <div class="card-header with-border">
+        <h3 class="card-title"><i class="fas fa-edit"></i> 
+         {{'info' | translate}}
+       </h3>
+    </div>
+   <form novalidate class="css-form" ng-class="formClassInvalid" name="PaymentForm">
+    <table class="table table-head-fixed table-hover borderless">
+        <tbody>
+          <tr>
+            <td  >{{ 'numberNum' | translate }}</td><td  "><input type="text" class="form-control"  ng-model="payment.dcNo" required="true"></td>
+            <td  >{{ 'date' | translate }}</td>   <td class="col-md-3">
+              <p class="input-group custom-datepicker-buttons">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="payment.dcDate" is-open="datepicker.opened" datepicker-options="dateOptions" required="true" />
+                    <span class="input-group-append">
+                    <button type="button" class="btn btn-default" ng-click="datepickerOpen()"><i class="fa fa-calendar"></i></button>
+                    </span>
+                </p>
+            </td>
+          </tr>
+          <tr>
+            <td>{{ 'type' | translate }}</td>
+            <td>
+              <ui-select ng-model="payment.dcType" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" required="">
+                <ui-select-match allow-clear="true">{{$select.selected.dctName}}</ui-select-match>
+                <ui-select-choices repeat="a.dctID as a in docsTypes | filter: $select.search"" >
+                  {{a.dctName}}
+                </ui-select-choices>
+              </ui-select>
+            </td>
+            <td>{{ 'foundationDocument' | translate }}</td>
+            <td>
+              <div class="input-group">
+                    <input class="form-control" type="text" ng-model="payment.dcDisplayLink">
+                    <span class="input-group-append">
+                        <open-docs-link-search data="payment"/>
+                    </span>
+                </div>
+            </td>
+          </tr>
+          <tr>
+            <td>{{ 'Comment' | translate }}</td>   <td><input type="text" class="form-control" ng-model="payment.dcComment"></td>
+            <td>{{ 'amount' | translate }}</td>   <td><input type="number" class="form-control" ng-model="payment.dcSum" required="true"></td>
+          </tr>
+          <tr>
+            <td>{{ 'status' | translate }}</td>   <td>
+              <ui-select ng-model="payment.dcStatus" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" required="">
+                          <ui-select-match >{{$select.selected.p.Name}}</ui-select-match>
+                          <ui-select-choices repeat="a.p.tvID as a in dcStatusEnum | filter: $select.search" >
+                            {{a.p.Name}}
+                        </ui-select-choices>
+                    </ui-select>
+            </td>
+            <td>{{ 'clientName' | translate }}</td>   <td>
+              <div class="input-group">
+                    <input class="form-control" type="text" ng-model="payment.clName" required="true">
+                    <span class="input-group-append">
+                        <open-client-search data="payment"/>
+                    </span>
+                </div>
+            </td>
+          </tr>
+          <tr>
+            <td>{{ 'typePayment' | translate }}</td>   <td>
+              <ui-select ng-model="payment.PayType" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" required="true">
+                          <ui-select-match >{{$select.selected.p.Name}}</ui-select-match>
+                          <ui-select-choices repeat="a.p.tvID as a in payTypeEnum | filter: $select.search" >
+                            {{a.p.Name}}
+                        </ui-select-choices>
+                    </ui-select>
+            </td>
+            <td>{{ 'methodPayment' | translate }}</td>   <td>
+               <ui-select ng-model="payment.PayMethod" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" required="true">
+                          <ui-select-match >{{$select.selected.p.Name}}</ui-select-match>
+                          <ui-select-choices repeat="a.p.tvID as a in payMethodEnum | filter: $select.search" >
+                            {{a.p.Name}}
+                        </ui-select-choices>
+                    </ui-select>
+            </td>
+          </tr>
+          <tr>
+            <td>{{ 'responsible' | translate }}</td>
+            <td>
+              <ui-select ng-model="payment.emID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" required="true">
+                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.emName}}</ui-select-match>
+                <ui-select-choices repeat="a.emID as a in employees.data | filter: $select.search"" >
+                  {{a.emName}}
+                </ui-select-choices>
+              </ui-select>
+            </td>
+          </tr>
+          <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                <div style="float:right;font-size: 12px" >
+                  <span class="direct-chat-timestamp">
+                    {{ 'create' | translate }} <a ng-href="/#!/edit/employee/{{payment.CreatedBy}}">{{payment.CreatedBy | Emp}}</a> - {{payment.Created | date:'dd.MM.yyyy HH.mm'}}
+                  </span>
+                  <br>
+                  <span ng-hide="!payment.ChangedBy" class="direct-chat-timestamp">
+                   {{ 'edited' | translate }} <a ng-href="/#!/edit/employee/{{payment.ChangedBy}}">{{payment.ChangedBy | Emp}}</a> - {{payment.Changed | date:'dd.MM.yyyy HH.mm'}}
+                 </span>
+               </div>
+              </td>
+            </tr>
+        </tbody>
+    </table>
+  </form>
+    </div>
+  </div>
+  <show-comments></show-comments>
+</div>

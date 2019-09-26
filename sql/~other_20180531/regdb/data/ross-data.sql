@@ -1,0 +1,113 @@
+﻿/*
+truncate table reg_plan;
+LOAD DATA LOCAL INFILE 'C:/Users/dima/Documents/crmua/sql/data/reg_plan.csv'
+INTO TABLE reg_plan
+COLUMNS TERMINATED BY ';'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+*/
+--
+-- update reg_plan set
+--    Region = TRIM(REPLACE(Region,CHAR(13),''));
+-- --
+-- update reg_plan set
+--    rkName = TRIM(REPLACE(Region,'обл.',''))
+--   ,rkSocr = 'обл'
+-- where Region like '%обл.';
+-- --
+-- update reg_plan set
+--    rkName = TRIM(REPLACE(Region,'г.',''))
+--   ,rkSocr = 'г'
+-- where Region like 'г. %';
+-- --
+-- update reg_plan set
+--    rkName = TRIM(REPLACE(Region,'р-н ',''))
+--   ,rkSocr = 'р-н'
+-- where Region like 'р-н %';
+-- --
+-- update reg_plan set
+--    rkName = TRIM(REPLACE(Region,'город ',''))
+--   ,rkSocr = 'г'
+-- where Region like 'город %';
+-- --
+-- update reg_plan, (select distinct rsSocr,rsName from reg_socr order by rsName desc) rs set
+--    rkName = TRIM(fn_Replace(Region,CONCAT(rs.rsName,' '),''))
+--   ,rkSocr = rs.rsSocr
+-- where Region like CONCAT(rs.rsName,' %')
+--   and rs.rsName != 'город';
+-- --
+-- update reg_plan, (select distinct rsSocr,rsName from reg_socr order by rsName desc) rs set
+--    rkName = TRIM(fn_Replace(Region,rs.rsName,''))
+--   ,rkSocr = rs.rsSocr
+-- where Region like CONCAT('% ',rs.rsName);
+-- --
+-- update reg_plan, reg_kladr rs set
+--    rkName = rs.rkName
+--   ,rkSocr = rs.rkSocr
+-- where Region = rs.rkName
+--   and rkName is NULL;
+-- --
+-- update reg_plan set
+--    rkName = 'Ханты-Мансийский Автономный округ - Югра'
+--   ,rkSocr = 'АО'
+-- where Region = 'Ханты - Мансийский - Югра АО';
+-- --
+-- update reg_plan set
+--    rkName = 'Ненецкий'
+--   ,rkSocr = 'АО'
+-- where Region = 'Ненецкий АО';
+-- --
+-- update reg_plan set
+--    rkName = 'Курский'
+--   ,rkSocr = 'р-н'
+-- where Region = 'Курский район';
+-- --
+-- update reg_plan set
+--    rkName = 'Пуровский'
+--   ,rkSocr = 'р-н'
+-- where Region = 'НПС-2 НП Пурпе-Самотлор р-н Пуровский';
+-- --
+-- update reg_plan set
+--    rkName = 'Сургутский'
+--   ,rkSocr = 'р-н'
+-- where Region = 'Сургутский район и г. Сургут';
+-- --
+-- update reg_plan set
+--    rkName = 'Абзелиловский'
+--   ,rkSocr = 'р-н'
+-- where Region = 'р-ны Абзелиловский и Белорецкий';
+-- --
+-- update reg_plan set
+--    rkName = 'Москва'
+--   ,rkSocr = 'г'
+-- where Region = 'г. Москва и Московская область';
+-- --
+-- update reg_plan set
+--    rkName = 'Санкт-Петербург'
+--   ,rkSocr = 'г'
+-- where Region = 'г. Санкт-Петербург и Ленинградская область';
+-- --
+-- update reg_plan set
+--    rkName = 'Архангельская'
+--   ,rkSocr = 'обл'
+-- where Region = 'Архангельская область и Ненецкий автономный округ';
+-- --
+-- update reg_plan set
+--    rkName = 'Крым'
+--   ,rkSocr = 'Респ'
+-- where Region = 'Республика Крым и г. Севастополь';
+-- --
+-- update reg_plan r
+--   set rkCode = (select rkCode from reg_kladr where rkName = r.rkName and rkSocr = r.rkSocr  limit 1);
+-- --
+-- update reg_plan p, alogist.Region r set
+--    p.raID = r.ID
+--   ,p.GMT = r.GMT
+-- where p.rkCode = r.rkCode;
+-- --
+-- update reg_plan p, alogist.City r set
+--    p.raID = r.Region
+--   ,p.GMT = CONVERT(REPLACE(REPLACE(r.TimeZone,'+',''),':00',''), signed)
+-- where p.rkName = r.Name
+--   and p.GMT is NULL;
+-- --

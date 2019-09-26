@@ -1,0 +1,2 @@
+REPLACE INTO `emEmploy` (`HIID`, `emID`, `Aid`, `SipAccount`, `emName`, `LoginName`, `Password`, `Token`, `TokenExpiredDate`, `IsActive`, `url`, `ManageID`, `roleID`, `sipID`, `sipName`, `Queue`) VALUES
+	(fn_GetStamp(), /*us_GetNextSequence('emID') 11 04 2019*/ NEXTVAL(emID), 0, NULL, 'System', 'system', '*F5E905B3BEEA9B40AC1A0C9F4A5EC31E41932CB3', '35a919e40c67e8d2acda76158', '2018-07-07 17:15:47', b'1', 'localhost', NULL, 1, NULL, NULL, NULL);

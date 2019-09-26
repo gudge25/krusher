@@ -1,0 +1,229 @@
+<div class="modal-content2">
+<div class="modal-header">
+        <b>{{'appeal' | translate}}</b>
+</div>
+<style>
+    table tr{
+        max-height: 150px;
+        height: 40px;
+    }
+</style>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-lg-9" style="line-height: 2.5">
+
+                <table class="table table-head-fixed table-hover table-borderless " ng-show="data">
+                        <tr>
+                                <td width="25%"><b>{{'date'|translate}}</b></td>
+                                <td width="25%">
+                                    <nobr>
+                                            <span class="text-muted" ng-hide="data.isToday" ng-bind="data.Created | date:'MMM d, HH:mm'"> </span>
+                                            <span class="text-muted" ng-show="data.isToday" ng-bind="data.Created | date:'HH:mm'"> </span>
+                                    </nobr>
+                                </td>
+                                <td width="25%"><b>{{'numberNum'|translate}}</b></td>
+                                <td width="25%"> {{data.ccName}}</td>
+                        </tr>
+                        <tr>
+                                <td><b>{{'talkTime'|translate}}</b></td>
+                                <td>
+                                        <nobr>
+                                                <span class="text-muted" ng-show="data.billsec && data.billsec != '00:00'" ng-bind="data.billsec"> </span>
+                                        </nobr>
+                                </td>
+                        
+                                <td><b>{{'duration'|translate}}</b></td>
+                                <td>
+                                        <nobr>
+                                                <span class="text-muted" ng-show="data.duration && data.duration != '00:00'" ng-bind="data.duration"> </span>
+                                        </nobr>
+                                </td>
+                        </tr>
+                        <tr>
+                                <td><b ng-show="data.holdtime && data.holdtime != '00:00'">{{'expectation'|translate}}</b></td>
+                                <td>
+                                        <nobr>
+                                                <span class="text-muted" ng-show="data.holdtime && data.holdtime != '00:00'" ng-bind="data.holdtime"> </span>
+                                        </nobr>
+                                </td>
+    
+                                <td><b ng-show="data.LinkFile && data.dcStatusName == 'ANSWERED'">{{'recording'|translate}}</b></td>
+                                <td>
+                                        <div ng-show="data.LinkFile && data.dcStatusName == 'ANSWERED'">
+                                            <audio-player source="{{manyAction.MonitorUrl(data.LinkFile)}}" index="{{$index}}"></audio-player>
+                                        </div>
+                                </td>   
+                        </tr>
+                </table>
+                <hr/>
+                <table class="table table-head-fixed table-hover table-borderless " ng-show="data">
+                        <tr>
+                                <td width="25%"><b>{{'client'|translate}}</b></td>
+                                <td width="25%">
+                                    <!-- <div uib-dropdown ng-show="data.clID && data.dcStatusName == 'ANSWERED' " uib-tooltip="{{'action'| translate}}">
+                                            <a  ng-click="$event.stopPropagation()" class="dropdown-toggle" uib-dropdown-toggle role="button" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fa fa-user" ng-show="data.IsPerson"      uib-tooltip="{{data.IsPerson | Person}}" tooltip-placement="left"></i>
+                                                <i class="fa fa-building" ng-hide="data.IsPerson"  uib-tooltip="{{data.IsPerson | Person}}" tooltip-placement="left"></i>
+                                                <span ng-bind="data.clName"></span> <span class="caret"></span>
+                                            </a>
+                                            <div class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+                                                <a class="dropdown-item" ng-show="data.clID" href="#!/clientPreView/{{data.clID}}"  >{{'open'| translate}}</a>
+                                                <a class="dropdown-item" ng-click="$event.stopPropagation()"><create-deal data="{{e}}" ></create-deal></a>
+                                                <a class="dropdown-item" ng-click="$event.stopPropagation()"><create-form data="{{e}}" ></create-form></a>
+                                            </div>
+                                    </div>
+                                    <a ng-show="data.clID && data.dcStatusName != 'ANSWERED'" href="#!/clientPreView/{{data.clID}}"  uib-tooltip="{{'open'| translate}}">
+                                                <i class="fa fa-user"     ng-show="data.IsPerson"  uib-tooltip="{{data.IsPerson | Person}}" tooltip-placement="left"></i>
+                                                <i class="fa fa-building" ng-hide="data.IsPerson"  uib-tooltip="{{data.IsPerson | Person}}" tooltip-placement="left"></i>
+                                                <span ng-bind="data.clName"></span>
+                                        </a>
+                                        <a ng-show="!data.clID" >
+                                            <create-client data="{{data.ccName}}" > </create-client>
+                                    </a> -->
+
+                                    
+
+                                        <div uib-dropdown ng-show="data.clID && data.dcStatusName == 'ANSWERED' " uib-tooltip="{{'action'| translate}}">
+                                                <a id="single-button" href="#" ng-click="$event.stopPropagation()" uib-dropdown-toggle  >
+                                                    <i class="fa fa-user" ng-show="data.IsPerson"      uib-tooltip="{{data.IsPerson | Person}}" tooltip-placement="left"></i>
+                                                    <i class="fa fa-building" ng-hide="data.IsPerson"  uib-tooltip="{{data.IsPerson | Person}}" tooltip-placement="left"></i>
+                                                    <span ng-bind="data.clName"></span> <span class="caret"></span>
+                                                </a>
+                                                <div class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
+                                                    <a class="dropdown-item" ng-show="data.clID" href="#!/clientPreView/{{data.clID}}"  >{{'open'| translate}}</a>
+                                                    <a class="dropdown-item" ng-click="$event.stopPropagation()"><create-deal data="{{data}}" ></create-deal></a>
+                                                    <a class="dropdown-item" ng-click="$event.stopPropagation()"><create-form data="{{data}}" ></create-form></a>
+                                                </div>
+                                            </div>
+                                            <a ng-show="data.clID && data.dcStatusName != 'ANSWERED'" href="#!/clientPreView/{{data.clID}}"  uib-tooltip="{{'open'| translate}}">
+                                                    <i class="fa fa-user"     ng-show="data.IsPerson"  uib-tooltip="{{data.IsPerson | Person}}" tooltip-placement="left"></i>
+                                                    <i class="fa fa-building" ng-hide="data.IsPerson"  uib-tooltip="{{data.IsPerson | Person}}" tooltip-placement="left"></i>
+                                                    <span ng-bind="data.clName"></span>
+                                            </a>
+                                            <a ng-show="!data.clID" href>
+                                                <create-client data="{{data.ccName}}"> </create-client>
+                                            </a>
+
+
+                                </td>
+
+                                <td width="25%"><b ng-show="data.ffName">{{'file' | translate}}</b></td>
+                                <td width="25%">
+                                        <span ng-bind="data.ffName"></span>  
+                                </td>
+                        </tr>
+                </table>
+                <hr/>
+                <table class="table table-head-fixed table-hover table-borderless " ng-show="data">
+                        <tr>
+                                <td width="25%"><b>{{'responsible'|translate}}</b></td>
+                                <td width="25%">
+                                        <nobr ng-show="data.emID">
+                                                <i class="fa fa-user"></i>
+                                                <span ng-bind="data.emName" uib-tooltip="SIP/{{data.SIP}}"> </span>
+                                        </nobr>
+                                </td>
+
+                                <td width="25%"><b ng-show="data.SIP">{{'SIP'|translate}}</b></td>
+                                <td width="25%">
+                                        <span ng-bind="data.SIP"></span>  
+                                </td>
+                        </tr>                
+                </table>
+                <hr/>
+            <table class="table table-head-fixed table-hover table-borderless" ng-show="data">
+ 
+                    <tr>
+                            <td width="25%"><b>{{'status'|translate}}</b></td>
+                            <td width="25%">
+                                    <div class="btn-group" ng-show="data.dcStatusName">
+                                            <nobr>
+                                              <button class="btn btn-link btn-xs" style="cursor: default;">
+                                                  <i class="fa fa-arrow-circle-up fa-lg"  ng-show="data.IsOut"    aria-hidden="true" uib-tooltip="{{data.IsOut | CallTypeFilters}}" style="color:grey;"></i>
+                                                  <i class="fa fa-arrow-circle-down fa-lg"  ng-show="!data.IsOut"   aria-hidden="true" uib-tooltip="{{data.IsOut | CallTypeFilters}}" style="color:black;"></i>
+                                              </button>
+          
+                                              <span class="badge badge-primary" ng-show="data.transferFrom || data.transferTo" uib-tooltip="{{'transfer' | translate}} {{'from' | translate}} {{data.transferFrom}} {{'to' | translate}} {{data.transferTo}}">{{'t' | translate}}</span>
+          
+                                              <button ng-if="data.dcStatusName != 'BLOCKED'" style="cursor: default;" class="btn {{(data.dcStatusName | CallStatus).color}} btn-xs" ng-bind="(data.dcStatusName | CallStatus).disposition"></button>
+                                              <a ng-if="data.dcStatusName == 'BLOCKED'" title="{{'BLOCKEDdesc'| translate}}" href="//krusher.biz/price/" target="_blank" style="cursor: pointer;" class="btn {{(data.dcStatusName | CallStatus).color}} btn-xs" ng-bind="(data.dcStatusName | CallStatus).disposition"></a>
+                                            </nobr>
+                                    </div>
+                            </td>
+                     
+                            <td width="25%"><b>{{'type'|translate}}</b></td>
+                            <td width="25%"> <nobr ng-show="data.CallType"> <span ng-bind="data.CallType | enums | translate"></span></nobr> </td>
+                    </tr>
+                    <tr> 
+                            <td><b>{{'destination'|translate}}</b></td>
+                            <td><nobr ng-show="data.destination"><span ng-bind="data.destination | enums | translate"> </span></nobr></td>
+                            
+                            <td><b>{{'destdata'|translate}}</b></td>
+                            <td><nobr ng-show="data.destdata"><span ng-bind="data.destdata | destdata:data.destination"> </span></nobr></td>
+                    </tr>
+                    <tr>
+                            <td><b>{{'source'|translate}}</b></td>
+                            <td>
+                                    <nobr ng-hide="data.channel == 'trunk' || !data.channel">
+                                            <i class="fa fa-road"></i>
+                                            <span ng-bind="data.channel"></span>
+                                    </nobr>
+                            </td>
+                     
+                            <td><b ng-show="data.coName">{{'company'|translate}}</b></td>
+                            <td>
+                                    <nobr ng-show="data.coName">
+                                            <i class="fa fa-building"></i>
+                                            <span ng-bind="data.coName"></span>
+                                    </nobr>
+                            </td>
+                    </tr>
+                    <tr>
+                            <td><b ng-show="data.target">{{'target'|translate}}</b></td>
+                            <td>
+                                    <span ng-repeat="a in data.target track by $index" class="badge badge-default" ng-bind="a"></span>
+                            </td>
+                    </tr>
+
+                    <tr ng-show="data.id_scenario || data.id_autodial">
+                            <td><b ng-show="data.id_scenario">{{'scenario'|translate}}</b></td>
+                            <td>
+                                    <span ng-bind="data.id_scenario"></span>  
+                            </td>
+
+                            <td><b ng-show="data.id_autodial">{{'process' | translate}}</b></td>
+                            <td>
+                                    <span ng-bind="data.id_autodial"></span>  
+                            </td>
+                    </tr>
+ 
+                    <tr>
+                            <td><b>{{'note' | translate}}</b></td>
+                            <td>
+                                <textarea  rows="3" ng-model="data.Comment" msd-elastic style="background-color: lightgoldenrodyellow;color: dimgrey;min-height: 96px;"  class="form-control" placeholder="{{'descriptionType' | translate}}"></textarea>
+                            </td>
+
+                            <th> <b>{{'status' | translate}}</b></th>
+                            <td>
+                                <select class="form-control"
+                                            ng-model    = "data.ContactStatus"
+                                            ng-options  = "a.tvID as (a.Name | translate) for a in Enums.group[1036]">
+                                </select>
+                            </td>
+                    </tr>
+            </table>
+        </div>
+        <show-comments data="{{data}}"></show-comments> 
+    </div>  
+    <br/>
+</div>
+
+<div class="modal-footer">
+        <div class="text-right">
+            <div class="float-right">
+                <button ng-disabled="!data.Comment && name == data.ContactStatus" ng-click="manyAction.Update(data,'callingcard');$close()" class="btn btn-success btn-sm">{{'save' | translate}}</button>
+                <button ng-click="$close()" class="btn btn-warning btn-sm">{{'cancel' | translate}}</button>
+            </div>
+        </div>
+</div>
+</div>

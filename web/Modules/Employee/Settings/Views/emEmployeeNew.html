@@ -1,0 +1,55 @@
+<div class="col-lg-2" style="border-right: 1px solid #e7e7e7;">
+
+</div>
+
+
+<div class="col-lg-10">
+    <div class="col-lg-6">
+        <br/>
+        <b>Данные сотрудника</b>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="text-right">
+            <div class="btn-group" style="margin: 2%">
+                <button ng-disabled="!password || !newEm.emName || !newEm.LoginName || !newEm.roleID" ng-click="Save(newEm,password)" class="btn btn-success">Сохранить</button>
+                <a href="#!/employee" class="btn btn-warning">Отмена</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+    <table class="table table-head-fixed table-hover borderless">
+        <tbody>
+        <tr>
+            <td>Имья</td>
+            <td><input class="form-control" type="text" ng-model="newEm.emName" placeholder="Имя"></td>
+        </tr>
+        <tr>
+            <td>Логин</td>
+            <td><input class="form-control" type="text" ng-model="newEm.LoginName" placeholder="Логин"></td>
+        </tr>
+        <tr>
+            <td>Супервайзер</th>
+            <td>
+                <select class="form-control ng-pristine ng-valid ng-touched" ng-model="newEm.ManageID" ng-options="a.emID as a.emName for a in data | filter:{IsActive:true}">
+                    <option value="">Выберете супервайзера</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Роль</th>
+            <td>
+                <select class="form-control ng-pristine ng-valid ng-touched" ng-model="newEm.roleID" ng-options="a.roleID as a.roleName for a in role | filter:{isActive: true}">
+                    <option value="" disabled>Выберете роль</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Пароль</th>
+            <td><input class="form-control" type="password" ng-model="password" placeholder="пароль: *****"></td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+DELIMITER $$
+DROP PROCEDURE IF EXISTS us_ServerTime;
+CREATE PROCEDURE us_ServerTime ()
+BEGIN
+  SELECT NOW() `time`;
+END $$
+DELIMITER ;
+--

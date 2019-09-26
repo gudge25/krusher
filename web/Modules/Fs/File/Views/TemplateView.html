@@ -1,0 +1,141 @@
+ <section class="content">
+      <div class="row">
+        <div class="col-md-3">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i>  {{'templates'| translate}}</h3>
+
+              <div class="card-tools">
+                  <button class="btn btn-tool" data-widget="collapse" ng-click="FilteCollapse=true" ng-show="!FilteCollapse"><i class="fa fa-minus"></i></button>
+                  <button class="btn btn-tool" data-widget="collapse" ng-click="FilteCollapse=false" ng-show="FilteCollapse"><i class="fa fa-plus"></i></button>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <ul class="nav flex-column" ng-show="templates">
+                  <li class="nav-item" ng-repeat="a in templates track by $index" ng-show="(id == a.ftID || !id) || ( a.ftID == Template.ftID)" uib-tooltip="{{a.Created | date:'dd.MM HH:mm'}}">
+                      <a href class="nav-link" ng-click="getTemplate(a.ftID);"  ng-class="{'tagBackgnd' :  id == a.ftID}" style="cursor: pointer;">
+                              <b ng-class="{'selected-templ' :  id == a.ftID}"> {{a.ftName}} </b>
+                              <!-- <span class="float-right badge bg-default">31</span> -->
+                              <span class="badge float-right bg-info" ng-click="$event.stopPropagation();">
+                                  <span class="badge"> {{a.Encoding}} </span>
+                                  <span class="badge"> {{a.delimiter}} </span>
+                              </span> 
+                      </a>
+                  </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+
+         <!--DATA RIGHT-->
+        <div class="col-md-9">
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+                <h3 class="card-title">{{'editTempl'| translate}}</h3>
+                 <div class="card-tools float-right">
+                    <button ng-show="Template  && Template.ftName && Template.delimiter.length > 0 && !notSave && Template.Encoding" class="btn btn-success btn-sm" ng-click="TemplateEdit(Template, items)">{{'save'| translate}}</button>
+                    <button class="btn btn-danger btn-sm" ng-show="Template.ftID" ng-click="delTemplate(Template)">{{'del'| translate}}</button>
+                    <button class="btn btn-warning btn-sm" ng-click="Clear()" ng-show="Template.ftName || items.length > 1">{{'cancel'| translate}}</button>
+                </div>
+             </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+            <div class="col-lg-12">
+              <br>
+                <div >
+                    <table calss="table table-hover borderless">
+                      <tbody>
+                        <tr ng-show="items">
+                          <td style="padding-right: 10px;">{{'templateName'| translate}}</td>
+                          <td>
+                            <input ng-class="{'alert_c': !Template.ftName || Template.ftName == 'Новый шаблон' }" class="form-control" type="text" placeholder="{{'templateNamePlacehold'| translate}}" ng-model="Template.ftName">
+                          </td>
+                        </tr>
+                        <tr ng-show="(items && Template.ftName.length > 0) && addoption" >
+                          <td>{{'delimiter'| translate}}</td>
+                          <td>
+                            <input ng-class="{'alert_c': !Template.delimiter}" maxlength="1" class="form-control" type="text" placeholder="{{'delimiter'| translate}}" ng-model="Template.delimiter">
+                          </td>
+                        </tr>
+                        <tr ng-show="(items && Template.ftName.length > 0 && Template.delimiter) && addoption">
+                          <td>{{'encoding'| translate}}</td>
+                          <td>
+                            <ui-select ng-model="Template.Encoding" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                              <ui-select-match placeholder="{{'select' | translate}}" >{{$select.selected.Encoding  +'  ('+$select.selected.Description+')'}}</ui-select-match>
+                              <ui-select-choices repeat="a.Encoding as a in encodings | filter: $select.search" >
+                                {{a.Encoding  +'  ('+a.Description+')'}}
+                              </ui-select-choices>
+                            </ui-select>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                  <span ng-show="Template.ftName" >
+                      <checkbox class="btn-info" ng-model="addoption"></checkbox>  
+                      <span>&#160 {{'additional options' | translate}}</span>
+                  </span>
+                  <br><br>
+                   <!--    ITEMS  Columns  -->
+                  <table ng-show="Template && Template.delimiter.length > 0 && Template.ftName.length > 0" class="table table-head-fixed table-hover borderless">
+                    <thead>
+                      <tr>
+                        <th><span>{{'columnName'| translate}}</span></th>
+                        <th ng-bind="'posit'| translate"></th>
+                        <th ng-bind="'delimiter'| translate"></th>
+                        <th ng-bind="'del'| translate"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat-start="(key, item) in items track by $index">
+                        <td>
+                            <ui-select ng-model="item.ftType" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" ng-disabled="item.ftType == 45">
+                              <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                              <ui-select-choices repeat="a.tvID as a in Enums.group[5] | filter: $select.search" ng-selected="selected && item.ftType == a.tvID" ui-disable-choice="Check(a.tvID);">
+                                <div ng-bind-html="a.Name | highlight : $select.search"></div>
+                              </ui-select-choices>
+                            </ui-select>
+                        </td>
+
+                        <td>
+                          <div ng-show="item.ftType && template.ftID == null" >
+                            <input class="form-control" ng-class="{'position-invalid': (item.ColNumber.length==0 || !item.ColNumber)}" ng-model="item.ColNumber" ng-change="Columns(item)" maxlength="50" uib-tooltip="{{'possibleValue'| translate}}"/>
+                          </div>
+                        </td>
+                        <td>
+                          <div ng-show="(item.ftType > 46 && item.ftType < 56) && template.ftID == null">
+                            <input ng-style="{'background-color': color}" class="form-control" ng-model="item.ftDelim" maxlength="12" uib-tooltip="{{'delimiterLists'| translate}}"/>
+                          </div>
+                        </td>
+                        <td >
+                            <a ng-show="item.ftType && template.ftID == null && item.ftType != 45" class="float-right" >
+                                    <i style="cursor: pointer;" class="fa fa-trash" ng-show="!check" ng-click="$event.stopPropagation();check=true" style="cursor: pointer;"></i>
+                                    <i style="cursor: pointer;" ng-show="check" ng-click="check=false" class="fa fa-times fa-lg"> </i>
+                                    <i style="cursor: pointer;" ng-show="check" class="fa fa-check fa-lg" ng-click="delRow(key);check=false"> </i>
+                            </a>
+
+                        </td>
+                      </tr>
+                      <tr ng-repeat-end  ng-show="$last && item.ftType && (item.ColNumber && item.ColNumber.length != 0)">
+                          <td colspan="4" >
+                              <div >
+                                <span ng-click="addRow(key)">
+                                  <i style="color:#337ab7;cursor: pointer;" class="fa fa-plus"></i>
+                                  <span>{{'add'| translate}}</span>
+                                </span>
+                              </div>
+                          </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+</section>

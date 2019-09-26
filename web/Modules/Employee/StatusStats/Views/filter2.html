@@ -1,0 +1,98 @@
+<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+    <b>{{'dateFrom'| translate}}</b>
+    <br><div class="form-group">
+            <p class="icon-group input-group">
+              <input ng-model="model2.DateFrom" class="form-control" ng-model-options="{ updateOn: 'blur' }" style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;">
+                <span class="input-group-append">
+                  <button moment-picker="model2.DateFrom" max-date="model2.DateTo" class="btn btn-default">
+                      <i aria-hidden="true" class="fa fa-calendar"></i>
+                  </button>
+                </span>
+            </p>
+          </div>
+</div>
+<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+    <b>{{'dateTo'| translate}}</b>
+    <br>
+      <div class="form-group">
+          <p class="icon-group input-group">
+            <input ng-model="model2.DateTo" class="form-control" ng-model-options="{ updateOn: 'blur' }" style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;">
+              <span class="input-group-append">
+                <button moment-picker="model2.DateTo" min-date="model2.DateFrom" class="btn btn-default">
+                    <i aria-hidden="true" class="fa fa-calendar"></i>
+                </button>
+              </span>
+          </p>
+      </div>
+</div>
+
+<div class="col-md-2">
+    <b>{{'responsible'| translate}}</b>
+    <ng-dropdown-multiselect  options="employees.data" selected-model="model2.emIDs" theme="bootstrap4-1" class="normal" disabled="!can('EM','edit')"
+        extra-settings="{ scrollableHeight: '500px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'emName', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'emID', displayProp: 'emName', externalIdProp: 'emID'}"
+        translation-texts="texts">
+    </ng-dropdown-multiselect>
+</div>
+<!-- 
+<div class="col-xl-1 col-lg-2 col-md-3 col-sm-6 col-xs-12" ng-show="File.data.length>0">
+  <b>{{'file'| translate}}</b>
+      <ng-dropdown-multiselect  options="File.data" selected-model="model2.ffIDs"
+              extra-settings="{ scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'ffName', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'ffID', displayProp: 'ffName', externalIdProp: 'ffID'}"
+              translation-texts = "texts"  >
+      </ng-dropdown-multiselect>
+</div>
+
+<div class="col-xl-1 col-lg-2 col-md-3 col-sm-6 col-xs-12" ng-show="Trunk.data.length>0">
+      <b>{{'trunk' | translate}}</b>
+      <ng-dropdown-multiselect  options="Trunk.data" selected-model="model2.channels"
+          extra-settings="{ scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'trName', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'trID', displayProp: 'trName', externalIdProp: 'trID'}"
+          translation-texts = "texts"  >
+      </ng-dropdown-multiselect>
+</div> -->
+<!-- 
+<div class="col-xl-1 col-lg-4 col-md-3 col-sm-6 col-xs-12" ng-show="Company.data.length>0">
+  <b>{{'company'| translate}}</b>
+  <ng-dropdown-multiselect  options="Company.data" selected-model="model2.coIDs"
+      extra-settings="{ scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'coName', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'coID', displayProp: 'coName', externalIdProp: 'coID'}"
+      translation-texts = "texts"  >
+  </ng-dropdown-multiselect>
+</div> -->
+<!-- 
+<div class="col-xl-1 col-lg-4 col-md-3 col-sm-6 col-xs-12">
+  <b> {{'type'| translate}}</b>
+  <ng-dropdown-multiselect  options="Enums.group[1013]" selected-model="model2.CallTypes"
+      extra-settings="{ buttonClasses : 'btn btn-white', searchField: 'Name', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'tvID', displayProp: 'Name', externalIdProp: 'tvID'}"
+      translation-texts = "texts"  >
+  </ng-dropdown-multiselect>
+</div>
+
+<div class="col-xl-1 col-lg-2 col-md-3 col-sm-6 col-xs-12" >
+  <b>{{'status'| translate}}</b>
+  <ng-dropdown-multiselect  options="Enums.group[1036]" selected-model="model2.ContactStatuses"
+          extra-settings="{ scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'Name', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'tvID', displayProp: 'Name', externalIdProp: 'tvID'}"
+          translation-texts = "texts"  >
+  </ng-dropdown-multiselect>
+</div>
+
+<div class="col-xl-1 col-lg-3 col-md-3 col-sm-6 col-xs-12"  ng-show="!can('chief','edit')">
+  <b>{{'chief'| translate}}</b>
+  <ng-dropdown-multiselect  options="employees.group['supervizor']" selected-model="model2.ManagerIDs"
+      extra-settings="{ scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'emName', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'emID', displayProp: 'emName', externalIdProp: 'emID'}"
+      translation-texts = "texts"  >
+  </ng-dropdown-multiselect>
+</div>
+
+<div class="col-xl-2 col-lg-3 col-md-3 col-sm-6 col-xs-12" >
+  <b>{{'target'| translate}}</b>
+  <br/>
+  <checkbox class="btn-white" ng-model="model2.targets"></checkbox>
+</div>
+
+<div class="col-xl-3 col-lg-5 col-md-4 col-sm-8 col-xs-12">
+  <b>{{'callType'| translate}}</b><br/>
+  <div class="btn-group">
+          <button type="button" class="btn btn-white" ng-class="{'active' :  model2.IsOut===null}" ng-click="model2.IsOut=null">{{'All'| translate}}</button>
+          <button type="button" class="btn btn-white" ng-class="{'active' :  model2.IsOut===true}" ng-click="model2.IsOut=true" ><i class="fa fa-arrow-circle-up fa-lg" style="color:grey;" ></i>{{'Outgoing'| translate}}</button>
+          <button type="button" class="btn btn-white" ng-class="{'active' :  model2.IsOut===false}" ng-click="model2.IsOut=false"><i class="fa fa-arrow-circle-down fa-lg" style="color:black;" ></i>{{'Incoming'| translate}}</button>
+  </div>
+</div> -->

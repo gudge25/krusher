@@ -1,0 +1,1 @@
+crmUA.factory("Pages", function() { return {}; });

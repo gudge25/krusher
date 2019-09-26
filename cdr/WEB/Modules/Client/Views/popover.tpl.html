@@ -1,0 +1,30 @@
+<div class="popover" tabindex="-1" ng-show="content">
+  <div class="arrow"></div>
+  <h3 class="popover-title" ng-bind-html="title" ng-show="title"></h3>
+  <div class="popover-content">
+    <form name="popoverForm">
+      <p ng-bind-html="content" style="min-width:300px;"></p>
+     
+	  
+	  
+					<table class="table-responsive table-condensed table-hover "  >
+						<tr 	ng-repeat="(key2,val2) in clients[test]  track by $index" 
+							ng-hide="key2=='ClientID' || key2=='CreateDate' || key2=='ClientID' || key2=='CreateEmID'"
+
+						>						
+						
+						<td><input type="{{type(key2)}}" class="form-control" ng-model="val[key2]" ng-change="$parent.save_client='true'"></td>
+						<td><font color="gray">{{key2}}</font></td>
+						 
+						</tr>
+						
+					</table>
+		 				
+      <div class="form-actions">
+        <button type="button" class="btn btn-danger" ng-click="$hide()">Close</button>
+		<button ng-show="save_client" type="button" class="btn btn-success" ng-click="save( test ); save_client = false">Сохранить</button>	
+     <!--   <button type="button" class="btn btn-success" ng-click="popover.saved=true;$hide()">Save changes</button> -->
+      </div>
+    </form>
+  </div>
+</div>

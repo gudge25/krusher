@@ -1,0 +1,298 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i> {{'dataTrunk' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless login-card-body ">
+                    <tr>
+                        <td width="50%">{{'named' | translate}}</td>
+                        <td>
+                            <div class="has-feedback" ng-class="{ 'has-error' : !upd.trName.length && edit2, 'has-success' : em.LoginName }">
+                                    <input ng-change="edit2=true;" ng-disabled="!can('EM','edit')" ng-model="upd.trName"  class="form-control" ng-maxlength="30" placeholder="{{'name' | translate}}" pattern="^[a-zA-Z0-9._-]+$" required>
+                                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                                    <span class="help-block" ng-show="!upd.trName.length && edit2">{{'typeSIPLeng'| translate}}</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="50%">{{'login' | translate}}</td>
+                        <td>
+                            <div class="has-feedback" ng-class="{ 'has-error' : !upd.defaultuser.length && edit3, 'has-success' : em.LoginName }">
+                                    <input ng-change="edit3=true;" ng-disabled="!can('EM','edit')" ng-model="upd.defaultuser"  class="form-control" ng-maxlength="30" placeholder="{{'login' | translate}}" pattern="^[a-zA-Z0-9._-]+$" required>
+                                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                                    <span class="help-block" ng-show="!upd.defaultuser.length && edit3">{{'typeSIPLeng'| translate}}</span>
+                            </div>
+                        </td> <!-- ng-change="upd.callbackextension = upd.fromuser = upd.name" -->
+                    </tr>
+
+                    <tr>
+                        <td width="50%">{{'DID' | translate}}</td>
+                        <td>
+                            <div class="input-group" style="width: 100%">
+                                <ui-select  multiple tagging tagging-label="" ng-model="upd.DIDs" theme="bootstrap4-1" sortable="true" style="min-height: 34px !important; padding-left: 6px !important; ">
+                                    <ui-select-match  placeholder="{{'select' | translate}}">{{$item}}</ui-select-match>
+                                    <ui-select-choices repeat="a in [] | filter:$viewValue ">{{a}}</ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-append">
+                                    <button ng-show="upd.DIDs" type="button" class="btn btn-default" ng-click="upd.DIDs = null"><i class="fa fa-times" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                            </div>
+
+                        </td>
+                    </tr>
+
+                    
+
+                   <!--  <tr>
+                        <td width="50%">{{'codecs' | translate}}</td>
+                        <td>
+                           <div class="input-group" style="width: 100%">
+                                    <ui-select  multiple tagging tagging-label="(custom 'new' label)" ng-model="upd.allow" theme="bootstrap4-1" sortable="true" style="min-height: 34px !important; padding-left: 6px !important; ">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$item.Name}}</ui-select-match>
+                                        <ui-select-choices repeat="a.tvID as a in Enums.group[1033]  | filter:$viewValue">{{a.Name}}</ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                         <button ng-show="upd.allow" type="button" class="btn btn-default" ng-click="upd.allow = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                            </div>
+
+                        </td>
+                    </tr> -->
+
+
+                    <tr>
+                        <td>{{'port' | translate}}</td>
+                        <td><div class="input-group">
+                                    <input numeric-only class="form-control" ng-model="upd.port">
+                                    <span class="input-group-append">
+                                            <button type="button" class="btn btn-default" ng-click="upd.port=upd.port+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-default" ng-click="upd.port=upd.port-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'host' | translate}}</td>
+                        <td><input class="form-control" ng-model="upd.host"  placeholder="0.0.0.0" ng-change="upd.fromdomain = upd.host"/></td>
+                    </tr>
+                    <tr ng-hide="upd.fromdomainDisable">
+                        <td>{{'fromeDomaine' | translate}}</td>
+                        <td><input class="form-control" ng-model="upd.fromdomain" placeholder="0.0.0.0" /></td>
+                    </tr>
+                    <tr>
+                        <td>{{'fromUser' | translate}}</th>
+                        <td>
+                            <div class="has-feedback" ng-class="{ 'has-error' : !upd.fromuser.length && edit4, 'has-success' : em.LoginName }">
+                                    <input ng-change="edit4=true;" ng-disabled="!can('EM','edit')" ng-model="upd.fromuser"  class="form-control" ng-maxlength="30" pattern="^[a-zA-Z0-9._-]+$">
+                                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                                    <span class="help-block" ng-show="!upd.fromuser.length && edit4">{{'typeSIPLeng'| translate}}</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-hide="upd.callbackextensionDisable">
+                        <td>{{'callbackUser' | translate}}</th>
+                        <td>
+                            <div class="has-feedback" ng-class="{ 'has-error' : !upd.callbackextension.length && edit5, 'has-success' : em.LoginName }">
+                                    <input ng-change="edit5=true;" ng-disabled="!can('EM','edit')" ng-model="upd.callbackextension"  class="form-control" ng-maxlength="30" pattern="^[a-zA-Z0-9._-]+$">
+                                    <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                                    <span class="help-block" ng-show="!upd.callbackextension.length && edit5">{{'typeSIPLeng'| translate}}</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'nat' | translate}}</th>
+                        <td>
+                            <ui-select ng-model="upd.nat" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                <ui-select-match >{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="c.tvID as c in Enums.group[1025] | filter: $select.search " >
+                                    {{c.Name}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr ng-show="employees.group['supervizor'].length > 0">
+                        <td>{{'chief' | translate}}</td>
+                        <td>
+                            <ui-select ng-model="upd.ManageID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" ng-disabled="!can('EM','edit')">
+                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.emName}}</ui-select-match>
+                                <ui-select-choices repeat="a.emID as a in employees.group['supervizor'] | filter: $select.search">
+                                    {{a.emName}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr ng-show="Company.data.length > 0">
+                        <td>{{'company' | translate}}</td>
+                        <td>
+                            <ui-select ng-model="upd.coID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.coName}}</ui-select-match>
+                                <ui-select-choices repeat="a.coID as a in Company.data | filter: $select.search">
+                                    {{a.coName}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'lines' | translate}}</th>
+                        <td>
+                            <div class="input-group">
+                                    <input numeric-only class="form-control" ng-model="upd.lines">
+                                    <span class="input-group-append">
+                                            <button type="button" class="btn btn-default" ng-click="upd.lines=upd.lines+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-default" ng-click="upd.lines=upd.lines-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Trunk {{'password' | translate}}</th>
+                        <td>
+                            <div class="has-feedback" ng-class="{'has-error' : upd.secret.length < 12,'has-success' : upd.secret.length >= 12 }">
+                                    <input ng-model="upd.secret" type="password" class="form-control" placeholder="{{'password' | translate}}">
+                                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                    <span class="help-block" ng-show="upd.secret.length < 12">{{'passwLeng'| translate}}</span>
+                            </div>
+
+                            <!-- <input ng-init="passw = 'password'" type="{{passw}}" class="form-control" ng-model="upd.secret" placeholder="Trunk {{'password' | translate}}" />
+                            <span ng-show="upd.secret">{{'showPass' | translate}}: &nbsp; <checkbox class="btn-info" ng-true-value="text" ng-false-value="password" ng-model="passw"/></checkbox></span>
+                            -->
+                        </td>
+                    </tr>
+                    <tr ng-include="'/Views/tableEdit.html'" ng-show="upd.Created"></tr>
+                    <tr ng-include="'/Views/tableEdit2.html'" ng-show="upd.Changed || upd.Changed==0"></tr>
+                    <tr>
+                        <td colspan="2"><checkbox class="btn-info" ng-model="addoption"></checkbox> &#160 {{'additional options' | translate}}</td>
+                    </tr>
+
+                    <tr ng-show="addoption">
+                        <td width="50%">{{'transport' | translate}}</td>
+                        <td>
+                            <div class="input-group" style="width: 100%">
+                                    <ui-select  multiple tagging tagging-label="(custom 'new' label)" ng-model="upd.transport" theme="bootstrap4-1" sortable="true" style="min-height: 34px !important; padding-left: 6px !important; ">
+                                        <ui-select-match >{{$item.Name}}</ui-select-match>
+                                        <ui-select-choices repeat="a.tvID as a in Enums.group[1031]  | filter:$viewValue">{{a.Name}}</ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                         <button ng-show="upd.transport" type="button" class="btn btn-default" ng-click="upd.transport = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr ng-show="addoption">
+                        <td width="50%">{{'codecs' | translate}}</td>
+                        <td>
+                           <div class="input-group" style="width: 100%">
+                                    <ui-select  multiple tagging tagging-label="(custom 'new' label)" ng-model="upd.allow" theme="bootstrap4-1" sortable="true" style="min-height: 34px !important; padding-left: 6px !important; ">
+                                        <ui-select-match >{{$item.Name}}</ui-select-match>
+                                        <ui-select-choices repeat="a.tvID as a in Enums.group[1032]  | filter:$viewValue">{{a.Name}}</ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                         <button ng-show="upd.allow" type="button" class="btn btn-default" ng-click="upd.allow = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                            </div>
+
+                        </td>
+                    </tr>
+
+                    <tr ng-show="addoption">
+                        <td>{{'DTMF' | translate}}</th>
+                        <td>
+                            <ui-select ng-model="upd.dtmfmode" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                <ui-select-match >{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="c.tvID as c in Enums.group[1029] | filter: $select.search " >
+                                    {{c.Name}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr ng-show="addoption">
+                        <td>{{'type' | translate}}</th>
+                        <td>
+                            <ui-select ng-model="upd.type" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                <ui-select-match >{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="c.tvID as c in Enums.group[1021] | filter: $select.search " >
+                                    {{c.Name}}
+                                </ui-select-choices>
+                            </ui-select>
+                    </tr>
+                    <tr ng-show="addoption">
+                        <td>{{'directmedia' | translate}}</th>
+                        <td>
+                            <ui-select ng-model="upd.directmedia" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                <ui-select-match >{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="c.tvID as c in Enums.group[1020] | filter: $select.search " >
+                                    {{c.Name}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr ng-show="addoption && !upd.insecureDisable">
+                        <td>{{'insecure' | translate}}</th>
+                        <td> <ui-select ng-model="upd.insecure" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                <ui-select-match >{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="c.tvID as c in Enums.group[1019] | filter: $select.search " >
+                                    {{c.Name}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr ng-show="addoption">
+                        <td>{{'outboundproxy' | translate}}</th>
+                        <td> <input class="form-control" ng-model="upd.outboundproxy"  /></td>
+                    </tr>
+ <!--                    <tr>
+                        <td>{{'acl' | translate}}</th>
+                        <td> <input class="form-control" ng-model="upd.acl"  /></td>
+                    </tr>
+                    <tr>
+                        <td>{{'callGroup' | translate}}</th>
+                        <td> <input class="form-control" ng-model="upd.callgroup"  ng-change="upd.pickupgroup = upd.callgroup"/></td>
+                    </tr>
+                    <tr>
+                        <td>{{'pickUpGroup' | translate}}</th>
+                        <td> <input class="form-control" ng-model="upd.pickupgroup"  /></td>
+                    </tr> -->
+
+                    <tr ng-show="addoption">
+                       <td>{{'encryption' | translate}}</th>
+                       <td><label><input type="checkbox" cb-switch ng-model="upd.encryption"/></label></td>
+                    </tr>
+
+                    <tr ng-show="addoption">
+                        <td>{{'isServer' | translate}}</th>
+                        <td><label><input type="checkbox" cb-switch ng-model="upd.isServer" ng-change="GoIP(upd);"/></label></td>
+                    </tr>
+                    <tr ng-show="addoption">
+                        <td>{{'active' | translate}}</td>
+                        <td><label><input type="checkbox" cb-switch ng-model="upd.isActive"/></label></td>
+                    </tr>
+
+                </table>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-8">
+<!--           <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"> {{'info' | translate}}</h3> -->
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-click="manyAction.Update(upd,'Trunk')" ng-hide="manyAction.Check_upd_old()">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="Trunk">{{'cancel' | translate}}</button>
+                    </div>
+           <!--   </div>
+          </div> -->
+        </div>
+    </div>
+</section>

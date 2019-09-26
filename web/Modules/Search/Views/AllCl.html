@@ -1,0 +1,50 @@
+<div class="card card-info card-outline">
+<div class="card-header with-border">
+          <h3 class="card-title">{{'filters' | translate}}</h3>
+
+          <div class="card-tools float-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"><i class="fa fa-minus"></i></button>
+          </div>
+</div>
+
+<div class="card-body">
+  <table class="table table-head-fixed table-bordered" style="background-color: #f2f2f2;">
+  <thead>
+    <tr>
+      <th>{{'clientName' | translate}}</th>
+      <th>{{'responsible' | translate}}</th>
+      <th>{{'phoneNumberSkypeEmail' | translate}}</th>
+      <th>{{'connectionType' | translate}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr >
+      <td>
+        <input type="text" class="form-control" ng-model="newClient.clName" ng-change="searchClient(newClient);"/>
+      </td>
+      <td>
+        <ui-select ng-model="newClient.emID" ng-change="searchClient(newClient);" theme="bootstrap4-1" class="normal bg-custom-white" style="width: 300px;">
+          <ui-select-match allow-clear="true">{{$select.selected.emName}}</ui-select-match>
+          <ui-select-choices repeat="a.emID as a in employees.data | filter: $select.search"" >
+            {{a.emName}}
+          </ui-select-choices>
+        </ui-select>
+      </td>
+      <td>
+        <input type="text" class="form-control" ng-model="newClient.ccName" ng-change="searchClient(newClient);"/>
+      </td>
+      <td>
+        <ui-select ng-model="newClient.ccType" ng-change="searchClient(newClient);" theme="bootstrap4-1" class="normal bg-custom-white" style="width: 300px;">
+          <ui-select-match allow-clear="true">{{$select.selected.p.Name}}</ui-select-match>
+          <ui-select-choices repeat="a.p.tvID as a in enumsResult | filter: $select.search"" >
+            {{a.p.Name}}
+          </ui-select-choices>
+        </ui-select>
+      </td>
+    </tr>
+  </tbody>
+  </table>
+ 
+
+</div>
+</div>

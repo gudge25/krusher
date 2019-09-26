@@ -1,0 +1,242 @@
+     
+    <div class="row">
+    <div class="col-md-9">
+        <div class="col-md-12">
+          <!--TAGS-->
+          <div class="row">  
+          <div class="col-md-12">
+          <div class="card card-info card-outline">
+            <div class="card-header with-border"> 
+                <div class="card-title">
+                   {{'info' | translate}}
+                </div>
+                <div class="card-tools">
+                                <button class="btn btn-link btn-sm">
+                                            <create-favorite ></create-favorite>
+                                </button>
+                                <button type="button" class="btn btn-success btn-sm" ng-hide="manyAction.Check_upd_old()" ng-click="manyAction.Update(upd,'Deals');ItemsEdit(upd2);">{{'save' | translate}}</button>
+                                <button type="button" class="btn btn-warning btn-sm" ui-sref="Deals">{{'cancel' | translate}}</button>
+            
+                                <div class="btn-group" uib-dropdown is-open="status.isopen" style="margin-left: 4px;">
+                                    <button type="button" class="btn btn-info dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {{'actions' | translate}}
+                                    </button>
+            
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="single-button" >
+                                    <li class="dropdown-header"><i class="fa fa-print fa-lg"></i> <b>{{'printedForms' | translate}}</b></li>
+                                    <li class="dropdown-item" role="menuitem" ng-repeat="a in Templates" style="cursor: pointer;"><a href ng-click="open(a.dtID)" ng-bind="a.dtName" ></a></li>
+                                    <li class="dropdown-item" role="menuitem"> <a ng-click="$event.stopPropagation()"><create-invoice></create-invoice></a></li>
+                                </ul>
+                                </div>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                 <table class="table table-head-fixed table-hover borderless">
+                        <tr>
+                            <td>{{'client' | translate}}</td>
+                            <td>
+                                <input ng-hide="client" class="form-control" type="text" ng-model="upd.clID" placeholder="{{'enterClientName' | translate}}">
+                                <b> 
+                                    <a ng-show="client" ng-show="client.clID && client.dcStatusName != 'ANSWERED'" href="#!/clientPreView/{{client.clID}}"  uib-tooltip="{{'open'| translate}}">
+                                        <i class="fa fa-user"     ng-show="client.IsPerson"  uib-tooltip="{{client.IsPerson | Person}}" tooltip-placement="left"></i>
+                                        <i class="fa fa-building" ng-hide="client.IsPerson"  uib-tooltip="{{client.IsPerson | Person}}" tooltip-placement="left"></i>
+                                        <span ng-bind="client.clName"></span>
+                                    </a>
+                                </b>
+                            </td>
+                            <td>{{'named' | translate}}</td>
+                            <td><input class="form-control" type="text" ng-model="upd.dcNo" placeholder="{{'enterTitle' | translate}}"></td>
+                        </tr>
+                        <tr>
+                            <td>{{'documentNumber' | translate}}</td>
+                            <td><input class="form-control" type="text" ng-model="upd.HasDocNo" placeholder="{{'documentNumber' | translate}}"></td>
+
+                            <td>{{'date' | translate}}</td>
+                            <td>
+                                <div class="form-group" style="margin-bottom: 0px;">
+                                        <span class="icon-group input-group">
+                                            <input ng-model="upd.dcDate" class="form-control" ng-model-options="{ updateOn: 'blur' }">
+                                            <span class="input-group-append">
+                                                <button moment-picker="upd.dcDate" class="btn btn-default" format="YYYY-MM-DD"> 
+                                                    <i aria-hidden="true" class="fa fa-calendar"></i>
+                                                </button>
+                                            </span>
+                                        </span>
+                                </div>
+                            </td>
+                        <tr>
+                            <td>{{'status' | translate}}</td>
+                            <td>
+                                <ui-select ng-model="upd.dcStatus" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                    <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                    <ui-select-choices repeat="c.tvID as c in Enums.group[6]| filter: $select.search" >
+                                      <span ng-bind="c.Name | translate"></span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </td>
+
+                            <td>{{'responsible' | translate}}</td>
+                            <td>
+                                <ui-select ng-model="upd.emID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                    <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.emName}}</ui-select-match>
+                                    <ui-select-choices repeat="a.emID as a in employees.data | filter: $select.search" >
+                                     {{a.emName}}
+                                    </ui-select-choices>
+                                </ui-select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'note' | translate}}</td>
+                            <td>
+                                <textarea ng-model="upd.dcComment" msd-elastic style="background-color: lightgoldenrodyellow;color: dimgrey"  class="form-control" rows="3" id="comment" placeholder="{{'descriptionType' | translate}}"></textarea>
+                            </td>
+
+                            <td ng-show="upd.dcSum > 0">{{'amount' | translate}}</td>
+                            <td ng-show="upd.dcSum > 0"><b><span   ng-bind="upd.dcSum"></span> {{'currency' | translate}} </b></td>
+
+                        </tr>
+                        <tr>
+                            <td ng-show="upd.dcLink">{{'relatedDocument' | translate}}</td>
+                            <td ng-show="upd.dcLink" colspan="3">
+                                <table ng-table="table" class="table table-head-fixed table-hover" >
+                                    <tr>
+                                        <th>{{'phone' | translate}}</th>
+                                        <th>{{'date' | translate}}</th>
+                                        <th>{{'status' | translate}}</th>
+                                        <th>{{'responsible' | translate}}</th>
+                                        <th>{{'source' | translate}}</th>
+                                        <th>{{'recording' | translate}}</th>
+                                    </tr>
+                                    <tr ng-repeat="e in DcLink | limitTo:limit track by $index" >
+                                        <td>  <div ng-include="'/Views/DialButton.html'"></div> </td>
+                                        <td>
+                                            <nobr uib-tooltip="{{'talkTime'| translate}}:{{e.billsec}}  {{'duration'| translate}}:{{e.duration}}  {{'expectation'| translate}}:{{e.holdtime}}" >
+                                                <span class="text-muted" ng-hide="e.isToday" ng-bind="e.Created | date:'MMM d, HH:mm'"> </span>
+                                                <span class="text-muted" ng-show="e.isToday" ng-bind="e.Created | date:'HH:mm'"> </span>
+                                            </nobr>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" ng-show="e.dcStatusName">
+                                                <button class="btn btn-link btn-xs">
+                                                    <i class="fa fa-arrow-circle-up fa-lg"  ng-show="e.IsOut"    aria-hidden="true" uib-tooltip="{{e.IsOut | CallTypeFilters}}" style="color:grey;"></i>
+                                                    <i class="fa fa-arrow-circle-down fa-lg"  ng-show="!e.IsOut"   aria-hidden="true" uib-tooltip="{{e.IsOut | CallTypeFilters}}" style="color:black;"></i>
+                                                </button>
+                                                <button class="btn {{(e.dcStatusName | CallStatus).color}} btn-xs" ng-bind="(e.dcStatusName | CallStatus).disposition"  uib-tooltip="{{e.CallType | enums | translate}}"></button>
+                                            </div>
+                                        </td>
+                                        <td> <span ng-bind="e.emName" uib-tooltip="SIP/{{e.SIP}}"></span> </td>
+                                        <td> <span ng-bind="e.channel" uib-tooltip-html="'<span>{{'file'| translate}}:{{e.ffName }}</span>'"></span> </td>
+                                        <td> <audio-player index = {{$index}} source="{{manyAction.MonitorUrl(e.LinkFile)}}" ng-show="e.LinkFile && e.dcStatusName == 'ANSWERED'"> </audio-player> </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                              <div style="float:right;font-size: 12px" >
+                                <span class="direct-chat-timestamp">
+                                  {{ 'create' | translate }} <a ng-href="/#!/edit/employee/{{e.CreatedBy}}">{{upd.CreatedBy | emFilters}}</a> - {{upd.Created | date:'dd.MM.yyyy HH.mm'}}
+                                      </span>
+                                      <br>
+                                      <span ng-hide="!upd.ChangedBy" class="direct-chat-timestamp">
+                                       {{ 'edited' | translate }} <a ng-href="/#!/edit/employee/{{e.ChangedBy}}">{{upd.ChangedBy | emFilters}}</a> - {{upd.Changed | date:'dd.MM.yyyy HH.mm'}}
+                                   </span>
+                               </div>
+                            </td>
+                        </tr>
+                    </table>
+             </div>
+          </div>
+        </div>
+        </div>
+        
+        <div class="row">
+        <div class="col-md-12">
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title">
+                    <b ng-hide="dtTemplate">{{'product' | translate}}</b>
+                    <b ng-show="dtTemplate">{{'printeForm' | translate}}</b>
+              </h3>
+             </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+                <div class="row">
+                  <div class="col-lg-12" ng-hide="dtTemplate">
+                    <table class="table table-head-fixed table-hover borderless" ng-show="upd2.length > 0">
+                            <tr>
+                                <th> </th>
+                                <th>{{'named' | translate}}</th>
+                                <th>{{'number' | translate}}</th>
+                                <th>{{'amount' | translate}}</th>
+                                <th>{{'del' | translate}}</th>
+                            </tr>
+                            <tr ng-repeat="e in upd2">
+                                <td width="1%">
+                                    <i class="fa fa-shopping-cart fa-lg" style="color:brown;">
+                                </td>
+                                <td style="width: 35%">
+                                    <ui-select ng-model="e.psID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" on-select="psName(e)">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.psName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.psID as a in products | filter: $select.search" >
+                                            {{a.psName}}
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </td>
+                                <td>
+                                    <div class="input-group" ng-show="e.psID>0">
+                                            <input numeric-only class="form-control" ng-change="Sum()" ng-model="e.iQty" ng-disabled="e.iQty < 1">
+                                            <span class="input-group-append">
+                                                <button type="button" class="btn btn-default" ng-click="e.iQty=e.iQty+1;Sum();"  ><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                                <button type="button" class="btn btn-default" ng-click="e.iQty=e.iQty-1;Sum();"  ng-disabled="e.iQty <= 1 || upd.iQty <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                            </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group" ng-show="e.psID>0">
+                                            <input numeric-only class="form-control" ng-change="Sum()" ng-model="e.iPrice" ng-disabled="e.iPrice < 1">
+                                            <span class="input-group-append">
+                                                <button type="button" class="btn btn-default" ng-click="e.iPrice=e.iPrice+1;Sum();"  ><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                                <button type="button" class="btn btn-default" ng-click="e.iPrice=e.iPrice-1;Sum();"  ng-disabled="e.iPrice <= 1 || upd.iPrice <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                            </span>
+                                    </div>
+                                </td>
+                                <td width="1%" ng-click="dellItems($index);Sum();"><a class="btn"><i class="fa fa-trash"> </i></a></td>
+                            </tr>
+                        </table>
+                        
+                        <div class="col-lg-12">
+                                <br/>
+                                <a style="cursor: pointer;" ng-click="addItems()"><i class="fa fa-plus"></i> {{'addProducts' | translate}}</a>
+                                <br/><br/>
+                                <a ng-click="$event.stopPropagation()"> <create-product/> </a>
+                                <br/><br/>
+                        </div>
+                    
+                    </div>
+                  
+
+                    <div class="col-lg-12" ng-show="dtTemplate">
+                        <label class="btn btn-link btn-sm" pdf-save-button="idOne" pdf-name="krusher.pdf" ><i class="fa fa-print fa-lg"></i></label>
+                        <label class="btn btn-link btn-sm"  ng-click="dtTemplate=false"><i class="fa fa-times fa-lg"></i></label>
+                        <div  class="page">
+                            <div style="color:black;" bind-html-compile="dtTemplate" pdf-save-content="idOne"></div>
+                        </div>
+                    </div>
+                </div>
+                  </div>
+                </div>
+        </div>
+        </div>
+
+        </div>
+        </div>
+        
+        <div class="col-lg-3" >
+            <show-comments data="{{upd}}"></show-comments> 
+        </div>
+
+    </div>

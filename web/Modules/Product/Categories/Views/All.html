@@ -1,0 +1,70 @@
+<div class="card card-info card-outline">
+    <div class="card-body">
+       <div class="col-lg-12">
+        <br>
+        <div class="btn-group float-right" uib-dropdown is-open="status.isopen">
+            <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled">
+                {{'actions' | translate}} <span class="caret"></span>
+            </button>
+            <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+                <li role="menuitem"><a ui-sref="CategoriesNew" ><i class="fa fa-plus"></i> {{'new' | translate}}</a></li>
+                <li role="menuitem"><a  ng-click="manyAction.manyDelete(data)"><i class="fa fa-trash"></i> {{'del' | translate}}</a></li>
+            </ul>
+        </div>
+        <br>
+        <br>
+        <uib-tabset active="activeJustified" justified="false">
+            <uib-tab index="0" heading="{{'tree' | translate}}">
+                <div ng-repeat="a in tree" ng-init="x[$index].length = a.children.length;x[$index].status = manyAction.xCheck(x[$index])">
+                    <div class="col-md-12" >
+                        <checkbox class="btn-info" ng-model="a.isChecked"></checkbox>
+                        <a ng-href="/#!/CategoriesEdit/{{a.pctID}}"><b>{{a.pctName}}</b></a>
+
+                        <i class="fa fa-plus" ng-show="!x[$index].status && a.children.length" ng-click="x[$index].status = true"></i>
+                        <i class="fa fa-minus" ng-show="x[$index].status && a.children.length" ng-click="x[$index].status = false"></i>
+                        <br/>
+                    </div>
+
+                    <div ng-repeat="b in a.children" ng-show="x[$parent.$index].status" ng-init="x2[$index].length = b.children.length;x2[$index].status = manyAction.xCheck(x2[$index])">
+                        <div class="col-lg-1">
+                        </div>
+                        <div class="col-lg-11">
+                            <checkbox class="btn-info" ng-model="b.isChecked"></checkbox>
+                            <a ng-href="/#!/CategoriesEdit/{{b.pctID}}">{{b.pctName}}</a>
+
+                            <i class="fa fa-plus" ng-show="!x2[$index].status && b.children.length" ng-click="x2[$index].status = true"></i>
+                            <i class="fa fa-minus" ng-show="x2[$index].status && b.children.length" ng-click="x2[$index].status = false"></i>
+
+                            <div ng-repeat="d in b.children" ng-show="x2[$parent.$index].status" ng-init="x3[$index].length = d.children.length;x3[$index].status = manyAction.xCheck(x3[$index])">
+                                <div class="col-lg-1">
+                                </div>
+                                <div class="col-lg-11">
+                                    <checkbox class="btn-info" ng-model="d.isChecked"></checkbox>
+                                    <a ng-href="/#!/CategoriesEdit/{{d.pctID}}"> {{d.pctName}} </a>
+
+
+                                    <i class="fa fa-plus" ng-show="!x3[$index].status && d.children.length" ng-click="x3[$index].status = true"></i>
+                                    <i class="fa fa-minus" ng-show="x3[$index].status && d.children.length" ng-click="x3[$index].status = false"></i>
+                                    <div ng-repeat="e in d.children" ng-show="x3[$parent.$index].status">
+                                        <div class="col-lg-1">
+                                        </div>
+                                        <div class="col-lg-11">
+                                            <checkbox class="btn-info" ng-model="e.isChecked"></checkbox>
+                                            <a ng-href="/#!/CategoriesEdit/{{e.pctID}}"> {{e.pctName}} </a>
+                                        </div>
+                                        <br/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                        </div>
+                    </div>
+                    <br/>
+                </div>
+
+            </div>
+        </uib-tab>
+    </uib-tabset>
+</div>
+</div>
+</div>

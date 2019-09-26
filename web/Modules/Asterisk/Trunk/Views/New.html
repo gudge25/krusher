@@ -1,0 +1,243 @@
+<div class="modal-content2">
+<div class="modal-header">
+        <b>{{'dataTrunk' | translate}}</b>
+</div>
+
+<div class="modal-body p-0"> 
+        <table class="table table-head-fixed table-hover borderless login-card-body">
+            <tr>
+                <td width="50%">{{'named' | translate}}</td>
+                <td>
+                    <div class="has-feedback" ng-class="{ 'has-error' : !new.trName.length && edit, 'has-success' : em.LoginName }">
+                            <input ng-change="edit=true;"  ng-model="new.trName"  class="form-control" ng-maxlength="30" placeholder="{{'name' | translate}}" pattern="^[a-zA-Z0-9._-]+$">
+                            <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                            <span class="help-block" ng-show="!new.trName.length && edit">{{'typeSIPLeng'| translate}}</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="50%">{{'login' | translate}}</td>
+                <td>
+                    <div class="has-feedback" ng-class="{ 'has-error' : !new.defaultuser.length && edit2, 'has-success' : em.LoginName }">
+                            <input ng-change="edit2=true;"  ng-model="new.defaultuser"  class="form-control" ng-maxlength="30" placeholder="{{'login' | translate}}" pattern="^[a-zA-Z0-9._-]+$">
+                            <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                            <span class="help-block" ng-show="!new.defaultuser.length && edit2">{{'typeSIPLeng'| translate}}</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="50%">{{'DID' | translate}}</td>
+                <td>
+                    <div class="input-group" style="width: 100%">
+                        <ui-select  multiple tagging tagging-label="" ng-model="new.DIDs" theme="bootstrap4-1" sortable="true" style="min-height: 34px !important; padding-left: 6px !important; ">
+                            <ui-select-match  placeholder="{{'select' | translate}}">{{$item}}</ui-select-match>
+                            <ui-select-choices repeat="a in [] | filter:$viewValue ">{{a}}</ui-select-choices>
+                        </ui-select>
+                        <span class="input-group-append">
+                            <button ng-show="new.DIDs" type="button" class="btn btn-default" ng-click="new.DIDs = null"><i class="fa fa-times" aria-hidden="true"></i>     </button>
+                        </span>
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
+                <td>{{'port' | translate}}</td>
+                <td>
+                    <div class="input-group">
+                            <input numeric-only class="form-control" ng-model="new.port">
+                            <span class="input-group-append">
+                                    <button type="button" class="btn btn-default" ng-click="new.port=new.port+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="new.port=new.port-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                            </span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>{{'host' | translate}}</td>
+                <td><input class="form-control" ng-model="new.host"  placeholder="0.0.0.0" ng-change="new.fromdomain = new.host"/></td>
+            </tr>
+            <tr ng-hide="new.fromdomainDisable">
+                <td>{{'fromeDomaine' | translate}}</td>
+                <td><input class="form-control" ng-model="new.fromdomain" placeholder="0.0.0.0" /></td>
+            </tr>
+            <tr>
+                <td>{{'fromUser' | translate}}</th>
+                <td>
+                    <div class="has-feedback" ng-class="{ 'has-error' : !new.fromuser.length && edit4, 'has-success' : em.LoginName }">
+                            <input ng-change="edit4=true;" ng-model="new.fromuser"  class="form-control" ng-maxlength="30" pattern="^[a-zA-Z0-9._-]+$">
+                            <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                            <span class="help-block" ng-show="!new.fromuser.length && edit4">{{'typeSIPLeng'| translate}}</span>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-hide="new.callbackextensionDisable">
+                <td>{{'callbackUser' | translate}}</th>
+                <td>
+                    <div class="has-feedback" ng-class="{ 'has-error' : !new.callbackextension.length && edit5, 'has-success' : em.LoginName }">
+                            <input ng-disabled="new.callbackextensionDisable" ng-change="edit5=true;"  ng-model="new.callbackextension"  class="form-control" ng-maxlength="30" pattern="^[a-zA-Z0-9._-]+$">
+                            <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                            <span class="help-block" ng-show="!new.callbackextension.length && edit5">{{'typeSIPLeng'| translate}}</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>{{'nat' | translate}}</th>
+                <td>
+                    <ui-select ng-model="new.nat" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                <ui-select-match >{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="c.tvID as c in Enums.group[1025] | filter: $select.search " >
+                                    {{c.Name}}
+                                </ui-select-choices>
+                    </ui-select>
+                </td>
+            </tr>
+            <tr ng-show="employees.group['supervizor'].length > 0">
+                <td>{{'chief' | translate}}</td>
+                <td>
+                    <ui-select ng-model="new.ManageID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.emName}}</ui-select-match>
+                        <ui-select-choices repeat="a.emID as a in employees.group['supervizor'] | filter: $select.search" >
+                            {{a.emName}}
+                        </ui-select-choices>
+                    </ui-select>
+                </td>
+            </tr>
+            <tr ng-show="Company.data.length > 0">
+                <td>{{'company' | translate}}</td>
+                <td>
+                    <ui-select ng-model="new.coID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.coName}}</ui-select-match>
+                        <ui-select-choices repeat="a.coID as a in Company.data | filter: $select.search">
+                            {{a.coName}}
+                        </ui-select-choices>
+                    </ui-select>
+                </td>
+            </tr>
+            <tr>
+                <td>{{'lines' | translate}}</th>
+                <td>
+                    <div class="input-group">
+                            <input numeric-only class="form-control" ng-model="new.lines">
+                            <span class="input-group-append">
+                                    <button type="button" class="btn btn-default" ng-click="new.lines=new.lines+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="new.lines=new.lines-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                            </span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>SIP {{'password' | translate}}</th>
+                <td>
+                    <div class="has-feedback" ng-class="{'has-error' : new.secret.length < 12,'has-success' : new.secret.length >= 12 }">
+                        <input ng-model="new.secret" type="password" class="form-control" placeholder="{{'password' | translate}}">
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                        <span class="help-block" ng-show="new.secret.length < 12">{{'passwLeng'| translate}}</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <checkbox class="btn-info" ng-model="addoption"></checkbox> 
+                    &#160 {{'additional options' | translate}}
+                </td>
+            </tr>
+            <tr ng-show="addoption">
+                <td width="50%">{{'transport' | translate}}</td>
+                <td>
+                    <div class="input-group" style="width: 100%">
+                            <ui-select  multiple tagging tagging-label="(custom 'new' label)" ng-model="new.transport" theme="bootstrap4-1" sortable="true" style="min-height: 34px !important; padding-left: 6px !important; ">
+                                <ui-select-match placeholder="{{'select' | translate}}">{{$item.Name}}</ui-select-match>
+                                <ui-select-choices repeat="a.tvID as a in Enums.group[1031]  | filter:$viewValue">{{a.Name}}</ui-select-choices>
+                            </ui-select>
+                            <span class="input-group-append">
+                                 <button ng-show="new.transport" type="button" class="btn btn-default" ng-click="new.transport = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                            </span>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-show="addoption">
+                <td width="50%">{{'codecs' | translate}}</td>
+                <td>
+                   <div class="input-group" style="width: 100%">
+                            <ui-select  multiple tagging tagging-label="(custom 'new' label)" ng-model="new.allow" theme="bootstrap4-1" sortable="true" style="min-height: 34px !important; padding-left: 6px !important; ">
+                                <ui-select-match placeholder="{{'select' | translate}}">{{$item.Name}}</ui-select-match>
+                                <ui-select-choices repeat="a.tvID as a in Enums.group[1032]  | filter:$viewValue">{{a.Name}}</ui-select-choices>
+                            </ui-select>
+                            <span class="input-group-append">
+                                 <button ng-show="new.allow" type="button" class="btn btn-default" ng-click="new.allow = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                            </span>
+                    </div>
+
+                </td>
+            </tr>
+            <tr ng-show="addoption">
+                <td>{{'DTMF' | translate}}</th>
+                <td>
+                    <ui-select ng-model="new.dtmfmode" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                        <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                        <ui-select-choices repeat="c.tvID as c in Enums.group[1029] | filter: $select.search " >
+                                    {{c.Name}}
+                        </ui-select-choices>
+                    </ui-select>
+                </td>
+            </tr>
+
+            <tr ng-show="addoption">
+                    <td>{{'type' | translate}}</th>
+                        <td>
+                            <ui-select ng-model="new.type" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="c.tvID as c in Enums.group[1021] | filter: $select.search " >
+                                    {{c.Name}}
+                                </ui-select-choices>
+                            </ui-select>
+            </tr>
+            <tr ng-show="addoption">
+                <td>{{'directmedia' | translate}}</th>
+                <td>
+                    <ui-select ng-model="new.directmedia" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                        <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                            <ui-select-choices repeat="c.tvID as c in Enums.group[1020] | filter: $select.search " >
+                                {{c.Name}}
+                            </ui-select-choices>
+                    </ui-select>
+                </td>
+            </tr>
+            <tr ng-show="addoption && !new.insecureDisable">
+                        <td>{{'insecure' | translate}}</th>
+                        <td> <ui-select ng-model="new.insecure" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="c.tvID as c in Enums.group[1019] | filter: $select.search " >
+                                    {{c.Name}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+            </tr>
+            <tr ng-show="addoption">
+                    <td>{{'outboundproxy' | translate}}</th>
+                    <td> <input class="form-control" ng-model="new.outboundproxy"  /></td>
+            </tr>
+            <tr ng-show="addoption">
+                <td>{{'encryption' | translate}}</th>
+                <td><label><input type="checkbox" cb-switch ng-model="new.encryption"/></label></td>
+            </tr>
+            <tr ng-show="addoption">
+                <td>{{'isServer' | translate}}</th>
+                <td><label><input type="checkbox" cb-switch ng-model="new.isServer" ng-change="GoIP(new);"/></label></td>
+            </tr>
+            <tr ng-show="addoption">
+                <td>{{'active' | translate}}</td>
+                <td><label><input type="checkbox" cb-switch ng-model="new.isActive"/></label></td>
+            </tr>
+        </table>
+</div>
+
+<div class="modal-footer">
+        <div class="text-right">
+            <div class="float-right">
+                <button ng-disabled="!new.trName || !new.host || !new.nat" ng-click="manyAction.Save(new,'');$close()" class="btn btn-success btn-sm">{{'save' | translate}}</button>
+                <button ng-click="$close()" class="btn btn-warning btn-sm">{{'cancel' | translate}}</button>
+            </div>
+        </div>
+</div>
+</div>

@@ -1,0 +1,88 @@
+ <section class="content">
+      <div class="row">
+        <div class="col-md-3">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-tags"></i>{{'form' | translate}}</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+              </div>
+            </div>
+            <div class="card-body p-2">
+              <!-- <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link"><i class="fa fa-circle-o"></i> {{'named' | translate}}: <b> {{form.dcNo}}</b> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href ng-href="/#!/clientPreView/{{form.clID}}" ><i class="fa fa-circle-o text-aqua"></i> {{'client' | translate}}: <b> {{form.clName}}</b> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"><i class="fa fa-circle-o"></i> {{'date' | translate}}: <b> {{form.Created | date:'yyyy.MM.dd HH:mm'}}</b> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"><i class="fa fa-circle-o"></i> {{'spent' | translate}}: <b> {{form.emName}}</b> </a>
+                    </li>
+                    <li class="nav-item" ng-show="form.dcComment">
+                        <a class="nav-link"><i class="fa fa-circle-o"></i> {{'Comment' | translate}}: </a>
+                        <textarea class="form-control" style="background-color: lightgoldenrodyellow;border-radius: 5px;" msd-elastic rows="3" id="comment" ng-model="form.dcComment" disabled> </textarea>
+                    </li>
+              </ul> -->
+                  <ul  class="nav flex-column">
+                        <!-- <li class="list-group-item">
+                            <a>{{'named' | translate}}: <b> {{form.dcNo}}</b> </a>
+                        </li> -->
+                        <li class="nav-item"  style="display: flow-root;">
+                                <b> {{'client' | translate}}:</b> 
+                                <a href class="nav-link float-right " ng-href="/#!/clientPreView/{{form.clID}}" ><b> {{form.clName}}</b> </a>
+                        </li>
+                        <li class="nav-item"  style="display: flow-root;">
+                                <b> {{'date' | translate}}: </b>
+                                <a class="nav-link float-right ">  <b> {{form.Created | date:'yyyy.MM.dd HH:mm'}}</b> </a>
+                        </li>
+                        <li class="nav-item"  style="display: flow-root;">
+                                <b> {{'spent' | translate}}:</b>
+                                <a class="nav-link float-right "> <b> {{form.emName}}</b> </a>
+                        </li>
+    
+                  </ul>
+                  <div style="margin-left: 1%;margin-right: 1%;"  ng-show="form.dcComment">
+                      <b> {{'Comment' | translate}}: </b>
+                      <textarea class="form-control" style="background-color: lightgoldenrodyellow;border-radius: 5px;" msd-elastic rows="3" id="comment" ng-model="form.dcComment" disabled> </textarea>
+                  </div>
+            </div>
+          </div>
+        </div>
+
+         <!--DATA RIGHT-->
+        <div class="col-md-9">
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"> {{'questAndAnsw' | translate}}</h3>
+             </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+                <div class="table table-head-fixed-responsive mailbox-messages">
+                     <table ng-table="tableParams" class="table table-head-fixed table-hover borderless">
+                        <tbody>
+                        <tr>
+                          <th>{{'quest' | translate}}</th>
+                          <th>{{'answ' | translate}}</th>
+                          <th>{{'Comment' | translate}}</th>
+                        </tr>
+                        </tr>
+                        <tr ng-repeat="e in answer">
+                            <td>  <b ng-bind="e.qName"></b>  </td>
+                            <td> <span class="badge badge-primary"  ng-bind="e.qiAnswer"></span></td>
+                            <td ng-bind="e.qiComment" class="direct-chat-timestamp"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+          </div>
+        </div>
+        <!-- <show-comments data="{{form}}"></show-comments> -->
+      </div>
+</section>

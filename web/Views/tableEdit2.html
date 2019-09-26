@@ -1,0 +1,7 @@
+        <td><span class="direct-chat-timestamp" style="display: inline-block; font-size: 12px">{{'editedBy' | translate}}</span></td>
+        <td>
+            <span style="float: right; font-size: 12px" >
+                <span class="direct-chat-timestamp" ng-bind="upd.ChangedBy | emFilters" uib-tooltip="{{ upd.ChangedBy | emFilters}} {{upd.Changed | date:'MMM d, HH:mm'}}" ></span>
+                <span class="direct-chat-timestamp" ng-bind="upd.Changed | date:'MMM d, HH:mm'" > </span>
+            </span>
+        </td>

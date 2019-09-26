@@ -1,0 +1,47 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-3">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tr>
+                        <td>{{'role' | translate}}</td>
+                        <td><input class="form-control" ng-model="upd.roleName" ng-disabled="true"/></td>
+                    </tr>
+                    <tr>
+                        <td>{{'accessLevel' | translate}}</td>
+                        <td><input  type="number"  class="form-control" ng-model="upd.Permission"/></td>
+                    </tr>
+                    <tr>
+                        <td>{{'active' | translate}}</td>
+                        <td><label><input type="checkbox" cb-switch ng-model="upd.isActive"></label></td>
+                    </tr>
+                    <tr ng-include="'/Views/tableEdit.html'" ng-show="upd.Created"></tr>
+                    <tr ng-include="'/Views/tableEdit2.html'" ng-show="upd.Changed || upd.Changed==0"></tr>
+                </table>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-9">
+         <!--  <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"> {{'info' | translate}}</h3> -->
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-click="manyAction.Update(upd,'Role')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="Role">{{'cancel' | translate}}</button>
+                    </div>
+          <!--    </div>
+          </div> -->
+        </div>
+    </div>
+</section>

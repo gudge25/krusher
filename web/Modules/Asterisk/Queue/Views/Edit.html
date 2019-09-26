@@ -1,0 +1,477 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+
+              <div class="card-tools">
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tr>
+                        <td width="50%">{{'queue' | translate}}</td>
+                        <td width="50%">
+                            <div class="has-feedback" ng-class="{ 'has-error' : !upd.name.length, 'has-success' : upd.name }">
+                                        <input ng-model="upd.name" class="form-control" placeholder="{{'enterTitle' | translate}}" ng-change="edit2=true;" only-clear ng-maxlength="200" required/>                                    
+                                        <span class="glyphicon glyphicon-asterisk form-control-feedback"></span>
+                                        <span class="help-block" ng-show="!upd.name.length && edit2">{{'typeSIPLeng'| translate}}</span>
+                            </div>                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'strategy' | translate}} &#160  <a class="btn btn-link" ng-click="infoStrategyF();" ><i class="fa fa-question-circle"></i><i ng-show="infoStrategy" class="fa fa-caret-down"></i></a> </td>
+                        <td>
+                            <ui-select ng-model="upd.strategy" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                                        <ui-select-choices repeat="c.Name as c in Strategy| filter: $select.search" >
+                                         {{c.Name}}
+                                        </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr ng-show="infoStrategy">
+                        <td colspan="2">
+                            ringall - <small class="text-muted">{{'ringall' | translate}}</small> <br/>
+                            leastrecent - <small class="text-muted">{{'leastrecent' | translate}}</small><br/>
+                            fewestcalls - <small class="text-muted">{{'fewestcalls' | translate}}</small><br/>
+                            random - <small class="text-muted">{{'random' | translate}}</small><br/>
+                            rrmemory - <small class="text-muted">{{'rrmemory' | translate}}</small><br/>
+                            linear - <small class="text-muted">{{'linear' | translate}}</small><br/>
+                            wrandom - <small class="text-muted">{{'wrandom' | translate}}</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'max_wait_time' | translate}}</td>
+                        <td>
+                            <div class="input-group">
+                                <input numeric-only class="form-control" ng-model="upd.max_wait_time">
+                                <span class="input-group-append">
+                                    <button type="button" class="btn btn-default" ng-click="upd.max_wait_time=upd.max_wait_time+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="upd.max_wait_time=upd.max_wait_time-1" ng-disabled="upd.max_wait_time <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                            <td>{{'fail_destination' | translate}}</td>
+                            <td>
+                                <div class="input-group" style="width: 100%">
+                                    <ui-select ng-model="upd.fail_destination" ng-change="upd.fail_destdata=null" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                                <ui-select-choices repeat="c.tvID as c in DestType | filter: $select.search"  ui-disable-choice="c.tvID == 101411 || c.tvID == 101406">
+                                                {{c.Name | translate}}
+                                                </ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                            <button ng-show="upd.fail_destination" type="button" class="btn btn-default" ng-click="upd.fail_destination = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>  
+                            </td>
+                        </tr>
+                        <tr ng-show="upd.fail_destination"  ng-switch="upd.fail_destination" >
+                            <td>{{'destdata' | translate}}</td>
+                            <td>
+                                <div ng-switch-when="101401">
+                                    <ui-select  ng-model="upd.fail_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-choices repeat="a.queID as a in Queues.data | filter: $select.search ">
+                                                {{a.name}}
+                                            </ui-select-choices>
+                                    </ui-select>
+                                </div>
+
+                                <div ng-switch-when="101402">
+                                    <ui-select ng-model="upd.fail_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.emName}}</ui-select-match>
+                                            <ui-select-choices repeat="a.emID as a in employees.data | filter: $select.search" ui-disable-choice="a.SipNum === null ? true : false;">
+                                                <b> {{a.emName}} </b> <small ng-show="a.sipName"> SIP/{{a.sipName}} </small>
+                                            </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div ng-switch-when="101403">
+                                    <ui-select ng-model="upd.fail_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.trName}}</ui-select-match>
+                                            <ui-select-choices repeat="a.trID as a in Trunk.data | filter: $select.search ">
+                                                {{a.trName}}
+                                            </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div ng-switch-when="101405">
+                                    <ui-select ng-model="upd.fail_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.ivr_name}}</ui-select-match>
+                                            <ui-select-choices repeat="a.id_ivr_config as a in IVR.data | filter: $select.search ">
+                                                {{a.ivr_name}}
+                                            </ui-select-choices>
+                                    </ui-select>
+                                </div>
+
+                                <div ng-switch-when="101407">
+                                    <ui-select ng-model="upd.fail_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.record_name}}</ui-select-match>
+                                            <ui-select-choices repeat="a.record_id as a in Record.data | filter: $select.search ">
+                                                {{a.record_name}}
+                                            </ui-select-choices>
+                                    </ui-select>
+                                </div>
+
+                                <div ng-switch-when="101408" class="input-group" style="width: 100%">
+                                    <ui-select ng-model="upd.fail_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.cdName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.cdID as a in CustomDestenation.data | filter: $select.search ">{{a.cdName}}</ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                        <button ng-show="upd.fail_destdata" type="button" class="btn btn-default" ng-click="upd.fail_destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>
+                                <div ng-switch-when="101409" class="input-group" style="width: 100%">
+                                    <ui-select ng-model="upd.fail_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.poolName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.poolID as a in TrunkPool.data | filter: $select.search ">{{a.poolName}}</ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                        <button ng-show="upd.fail_destdata" type="button" class="btn btn-default" ng-click="upd.fail_destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>
+                                <div ng-switch-when="101410" class="input-group" style="width: 100%">
+                                    <ui-select ng-model="upd.fail_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.tgName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.tgID as a in TimeGroup.data | filter: $select.search ">{{a.tgName}}</ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                        <button ng-show="upd.fail_destdata" type="button" class="btn btn-default" ng-click="upd.fail_destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>
+
+                            </td>
+                            <tr ng-show="(upd.fail_destination == 101403 || upd.fail_destination == 101409)&& upd.fail_destdata">
+                                <td>{{'destdata2' | translate}}</td>
+                                <td>
+                                    <div class="input-group" style="width: 100%">
+                                            <input  class="form-control" ng-model="upd.fail_destdata2"/>
+                                            <span class="input-group-append">
+                                                <button ng-show="upd.fail_destdata2" type="button" class="btn btn-default" ng-click="upd.fail_destdata2 = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                            </span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tr>
+
+                    <tr>
+                        <td>{{'timeOut' | translate}}</td>
+                        <td>
+                            <div class="input-group">
+                                <input numeric-only class="form-control" ng-model="upd.timeout">
+                                <span class="input-group-append">
+                                    <button type="button" class="btn btn-default" ng-click="upd.timeout=upd.timeout+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="upd.timeout=upd.timeout-1" ng-disabled="upd.timeout <= 0" ><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr><td>{{'repeat' | translate}}</td>
+                        <td>
+                            <div class="input-group">
+                                <input numeric-only class="form-control" ng-model="upd.retry">
+                                <span class="input-group-append">
+                                    <button type="button" class="btn btn-default" ng-click="upd.retry=upd.retry+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="upd.retry=upd.retry-1" ng-disabled="upd.retry <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr><td>{{'timeoutRetry' | translate}}</td>
+                        <td>
+                            <div class="input-group">
+                                <input numeric-only class="form-control" ng-model="upd.timeoutrestart">
+                                <span class="input-group-append">
+                                    <button type="button" class="btn btn-default" ng-click="upd.timeoutrestart=upd.timeoutrestart+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="upd.timeoutrestart=upd.timeoutrestart-1" ng-disabled="upd.timeoutrestart <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr><td>{{'pauseAnswered' | translate}}</td>
+                        <td>
+                            <div class="input-group">
+                                <input numeric-only class="form-control" ng-model="upd.wrapuptime">
+                                <span class="input-group-append">
+                                    <button type="button" class="btn btn-default" ng-click="upd.wrapuptime=upd.wrapuptime+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="upd.wrapuptime=upd.wrapuptime-1" ng-disabled="upd.wrapuptime <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-include="'/Views/tableEdit.html'" ng-show="upd.Created"></tr>
+                    <tr ng-include="'/Views/tableEdit2.html'" ng-show="upd.Changed || upd.Changed==0"></tr>
+                    <tr>
+                        <td colspan="2"><checkbox class="btn-info" ng-model="addoption"></checkbox> &#160 {{' additional options' | translate}}</td>
+                    </tr>
+                    <tr ng-show="addoption" > 
+                            <td>{{'serviceLevel' | translate}} </td>
+                            <td>
+                                <div class="input-group">
+                                        <input numeric-only class="form-control" ng-model="upd.servicelevel">
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-default" ng-click="upd.servicelevel=upd.servicelevel+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-default" ng-click="upd.servicelevel=upd.servicelevel-1" ng-disabled="upd.servicelevel <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                        </span>
+                                </div>
+                            </td> 
+                    </tr>
+                    <tr ng-show="addoption" ><td>{{'joinempty' | translate}}  </td>             <td><input only-clear class="form-control" ng-model="upd.joinempty"></td></tr>
+                    <tr ng-show="addoption" ><td>{{'leavewhenempty' | translate}}</td>          <td><input only-clear class="form-control" ng-model="upd.leavewhenempty"></td></tr>
+                    <tr ng-show="addoption" > 
+                            <td>{{'delayUser' | translate}} </td>
+                            <td>
+                                <div class="input-group">
+                                        <input numeric-only class="form-control" ng-model="upd.memberdelay">
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-default" ng-click="upd.memberdelay=upd.memberdelay+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-default" ng-click="upd.memberdelay=upd.memberdelay-1" ng-disabled="upd.memberdelay <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                        </span>
+                                </div>
+                            </td> 
+                    </tr>
+                    <tr ng-show="addoption" ><td>{{'callBusy' | translate}}</td>                <td><label><input ng-model="upd.ringinuse" type="checkbox" cb-switch ng-true-value="1" ng-false-value="0"></label></td></tr>
+                    <tr ng-show="addoption" ><td>{{'announce' | translate}}</td>                <td><input only-clear class="form-control" ng-model="upd.announce"></td></tr>
+                    <tr ng-show="addoption" > <td>{{'musiconhold' | translate}}</td>            <td><input only-clear class="form-control" ng-model="upd.musiconhold"></td> </tr>
+
+                    <tr ng-show="addoption" > 
+                            <td>{{'announce_frequency' | translate}} </td>
+                            <td>
+                                <div class="input-group">
+                                        <input numeric-only class="form-control" ng-model="upd.announce_frequency">
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-default" ng-click="upd.announce_frequency=upd.announce_frequency+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-default" ng-click="upd.announce_frequency=upd.announce_frequency-1" ng-disabled="upd.announce_frequency <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                        </span>
+                                </div>
+                            </td> 
+                    </tr>
+                    <tr ng-show="addoption" > 
+                            <td>{{'announce_round_seconds' | translate}} </td>
+                            <td>
+                                <div class="input-group">
+                                        <input numeric-only class="form-control" ng-model="upd.announce_round_seconds">
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-default" ng-click="upd.announce_round_seconds=upd.announce_round_seconds+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-default" ng-click="upd.announce_round_seconds=upd.announce_round_seconds-1" ng-disabled="upd.announce_round_seconds <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                        </span>
+                                </div>
+                            </td> 
+                    </tr>
+                    <tr ng-show="addoption" > 
+                            <td>{{'maxlen' | translate}} </td>
+                            <td>
+                                <div class="input-group">
+                                        <input numeric-only class="form-control" ng-model="upd.maxlen">
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-default" ng-click="upd.maxlen=upd.maxlen+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-default" ng-click="upd.maxlen=upd.maxlen-1" ng-disabled="upd.maxlen <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                        </span>
+                                </div>
+                            </td> 
+                    </tr>
+                    <tr ng-show="addoption" > <td>{{'announce_holdtime' | translate}} </td>     <td><input only-clear class="form-control" ng-model="upd.announce_holdtime"></td> </tr>
+                    <tr ng-show="addoption" > 
+                            <td>{{'eventmemberstatus' | translate}} </td>
+                            <td>
+                                <div class="input-group">
+                                        <input numeric-only class="form-control" ng-model="upd.eventmemberstatus">
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-default" ng-click="upd.eventmemberstatus=upd.eventmemberstatus+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-default" ng-click="upd.eventmemberstatus=upd.eventmemberstatus-1" ng-disabled="upd.eventmemberstatus <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                        </span>
+                                </div>
+                            </td> 
+                    </tr>
+                    <tr ng-show="addoption" > 
+                            <td>{{'eventwhencalled' | translate}} </td>
+                            <td>
+                                <div class="input-group">
+                                        <input numeric-only class="form-control" ng-model="upd.eventwhencalled">
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-default" ng-click="upd.eventwhencalled=upd.eventwhencalled+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-default" ng-click="upd.eventwhencalled=upd.eventwhencalled-1" ng-disabled="upd.eventwhencalled <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                        </span>
+                                </div>
+                            </td> 
+                    </tr>
+                    <tr ng-show="addoption" > 
+                            <td>{{'reportholdtime' | translate}} </td>
+                            <td>
+                                <div class="input-group">
+                                        <input numeric-only class="form-control" ng-model="upd.reportholdtime">
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-default" ng-click="upd.reportholdtime=upd.reportholdtime+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-default" ng-click="upd.reportholdtime=upd.reportholdtime-1" ng-disabled="upd.reportholdtime <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                        </span>
+                                </div>
+                            </td> 
+                    </tr>
+                    <tr ng-show="addoption" > 
+                            <td>{{'weight' | translate}} </td>
+                            <td>
+                                <div class="input-group">
+                                        <input numeric-only class="form-control" ng-model="upd.weight">
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-default" ng-click="upd.weight=upd.weight+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-default" ng-click="upd.weight=upd.weight-1" ng-disabled="upd.weight <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                        </span>
+                                </div>
+                            </td> 
+                    </tr>
+                    <tr ng-show="addoption" > 
+                            <td>{{'periodic_announce_frequency' | translate}} </td>
+                            <td>
+                                <div class="input-group">
+                                        <input numeric-only class="form-control" ng-model="upd.periodic_announce_frequency">
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-default" ng-click="upd.periodic_announce_frequency=upd.periodic_announce_frequency+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-default" ng-click="upd.periodic_announce_frequency=upd.periodic_announce_frequency-1" ng-disabled="upd.periodic_announce_frequency <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                        </span>
+                                </div>
+                            </td> 
+                    </tr>                     
+                    <tr ng-show="addoption" ><td>{{'setinterfacevar' | translate}}</td> <td><label><input ng-model="upd.setinterfacevar" type="checkbox" cb-switch ng-true-value="1" ng-false-value="0"></label></td></tr>
+                    <tr ng-show="addoption" > <td>{{'active' | translate}} </td> <td><label><input type="checkbox" cb-switch ng-model="upd.isActive"></label> </td></tr>
+                </table>
+             </div>
+          </div>
+
+                      <!-- About Me Box -->
+          <div class="card card-info card-outline" ng-show="addoption">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i> {{'queue_file_action' | translate}} </h3>
+              <br/><small class="text-muted">{{'queue_file_action_sm' | translate}}</small>
+            </div>
+            <div class="card-body">
+                    <table class="table table-head-fixed table-hover borderless">
+                        <tr ng-show="addoption" > <td width="50%">{{'queue_youarenext' | translate}}  </td>     <td><input class="form-control" ng-model="upd.queue_youarenext"></td> </tr>
+                        <tr ng-show="addoption" > <td>{{'queue_thereare' | translate}} </td>       <td><input class="form-control" ng-model="upd.queue_thereare"></td> </tr>
+                        <tr ng-show="addoption" > <td>{{'queue_callswaiting' | translate}} </td>   <td><input class="form-control" ng-model="upd.queue_callswaiting"></td> </tr>
+                        <tr ng-show="addoption" > <td>{{'queue_holdtime' | translate}} </td>       <td><input class="form-control" ng-model="upd.queue_holdtime"></td> </tr>
+                        <tr ng-show="addoption" > <td>{{'queue_minutes' | translate}} </td>        <td><input class="form-control" ng-model="upd.queue_minutes"></td> </tr>
+                        <tr ng-show="addoption" > <td>{{'queue_seconds' | translate}} </td>        <td><input class="form-control" ng-model="upd.queue_seconds"></td> </tr>
+                        <tr ng-show="addoption" > <td>{{'queue_lessthan' | translate}} </td>       <td><input class="form-control" ng-model="upd.queue_lessthan"></td> </tr>
+                        <tr ng-show="addoption" > <td>{{'queue_thankyou' | translate}} </td>       <td><input class="form-control" ng-model="upd.queue_thankyou"></td> </tr>
+                        <tr ng-show="addoption" > <td>{{'queue_reporthold' | translate}} </td>     <td><input class="form-control" ng-model="upd.queue_reporthold"></td> </tr>
+                        <tr ng-show="addoption" > <td>{{'periodic_announce' | translate}} </td>    <td><input class="form-control" ng-model="upd.periodic_announce"></td></tr>
+
+                    </table>
+            </div>
+           </div>
+
+        </div>
+
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-6">
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+                <h3 class="card-title"> {{'user' | translate}}</h3>
+                    <div class="card-tools">
+                        <div class="btn-group">
+                            <button class="btn btn-tool" ng-disabled="global.Loading || global.NewProgerss " ng-click="global.Loading=true;manyAction.Find(ItemsSrv)">
+                                <i ng-hide="global.Loading" class="fa fa-search"></i>
+                                <span ng-hide="global.Loading" ng-bind="'find'| translate"></span>
+                                
+                                <i ng-show="global.Loading" class="fa fa-spinner fa-pulse fa-fw"></i>
+                                <span ng-show="global.Loading" ng-bind="'Loading'| translate"></span>
+                            </button>                                 
+                            
+                            <button class="btn btn-tool dropdown-toggle" data-toggle="dropdown"  ng-disabled="!can('EM','edit')">
+                                <i class="fa fa-wrench"></i>      
+                                &nbsp;  <span  ng-show="!global.Loading && dataIsChecked>0" class="badge badge-secondary navbar-badge" ng-bind="dataIsChecked"></span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                <a class="dropdown-item" href ng-click="manyAction.addItems()" ng-hide="checkLast" ><i class="fa fa-plus"></i> {{'new' | translate}}</a>
+                                <a class="dropdown-item" href ng-click="manyAction.manyDelete(Items,ItemsSrv)" ng-show="dataIsChecked"><i class="fa fa-trash"></i> {{'del' | translate}}</a></li>
+                            </div>
+                            <ng-include src="'/Views/FilteCollapse.html'"></ng-include>
+                        </div>
+                    </div>
+                    <!-- <div style="display: inline-block;float: right; border: none;">
+                        <div class="btn-group" style="float: right;">
+                            <button ng-disabled="global.Loading || global.NewProgerss" class="btn" ng-class="{'btn-warning' : global.Loading , 'btn-success' : !global.Loading}" ng-click="global.Loading=true;manyAction.Find(ItemsSrv)">
+                                                <span ng-hide="global.Loading" ng-bind="'find'| translate"></span>
+
+                                                <i ng-show="global.Loading" class="fa fa-spinner fa-pulse fa-fw"></i>
+                                                <span ng-show="global.Loading" ng-bind="'Loading'| translate"></span>
+
+                                                &nbsp; <i ng-show='dataIsChecked==1' class="fa fa-user"></i>
+                                                <i ng-show='dataIsChecked>1' class="fa fa-users"></i>
+                                                <span class="badge badge-warning" ng-show='dataIsChecked>0'>{{dataIsChecked}}</span>
+                            </button>
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                <i class="fa fa-wrench"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                                <li role="menuitem" ng-hide="checkLast" ><a ng-click="manyAction.addItems()" ><i class="fa fa-plus"></i> {{'new' | translate}}</a></li>
+                                                <li role="menuitem" ng-show="dataIsChecked"><a ng-click="manyAction.manyDelete(Items,ItemsSrv)"><i class="fa fa-trash"></i> {{'del' | translate}}</a></li>
+                            </ul>
+                        </div>
+                        <br>
+                        <label ng-show="Items.length > 0">{{'findPlaceholder'| translate}} {{Items.length}} {{'from'| translate}} {{total_count}}</label>
+                    </div> -->
+            </div>
+             <div class="card-body p-0" ng-show="Items">
+                    <div  style="overflow-y: auto; height: 70vh;" can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="100">
+                        <table class="table table-head-fixed table-hover borderless" ng-table="tableParams" style="margin: 1% 0;">
+                            <tr>
+                                    <th ng-include="'/Views/ng-table/checkbox.html'" ng-click="$event.stopPropagation()"></th>
+                                    <th ng-init="o1='membername'" ng-click="manyAction.order(o1);">
+                                        <nobr>{{'user' | translate}} <span ng-show="order==o1" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                    </th>
+                                    <th ng-init="o2='interface'" ng-click="manyAction.order(o2);">
+                                        <nobr>{{'interface' | translate}} <span ng-show="order==o2" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                    </th>
+                                <!--     <th ng-init="o7='penalty'" ng-click="manyAction.order(o7);">
+                                        <nobr>{{'penalty' | translate}} <span ng-show="order==o7" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                    </th>
+                                    <th ng-init="o8='paused'" ng-click="manyAction.order(o8);">
+                                        <nobr>{{'paused' | translate}} <span ng-show="order==o8" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                    </th> -->
+                                    <th ng-init="o9='isActive'" ng-click="manyAction.order(o9);">
+                                        <nobr>{{'active' | translate}} <span ng-show="order==o9" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                    </th>
+                            </tr>
+                            <tr ng-repeat="e in Items | limitTo:limit track by $index">
+                                <td width="1%" ng-include="'/Views/checkboxOne.html'"></td>
+                                <td data-title="'учасник'" header-class="'text-left'">
+                                    <ui-select ng-model="e.emID" on-select="Interface(e)" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match >{{$select.selected.emName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.emID as a in employees.data | filter: $select.search" ui-disable-choice="Check(a);" >
+                                          <b ng-bind-html="a.emName | highlight : $select.search"></b> <div ng-show="a.sipName" class="text-muted"><small>SIP/</small><small ng-bind-html="a.sipName"></small> </div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </td>
+                                <td><span ng-bind="e.interface"></span></td>
+                                <!-- <td width="1%"><label><input type="checkbox" cb-switch ng-model="e.paused" ng-true-value="1" ng-false-value="0" /></label></td> -->
+                                <td width="1%"><label><input type="checkbox" cb-switch ng-model="e.isActive"/></label></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div ng-include="'/Views/paginationItems.html'"></div>
+             </div>
+          </div>
+        </div>
+
+
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-2">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-disabled="!upd.name" ng-click="manyAction.Update(upd,'Queue');manyAction.ItemsEdit('Queue')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="Queue">{{'cancel' | translate}}</button>
+                    </div>
+        </div>
+
+
+    </div>
+</section>
+
+

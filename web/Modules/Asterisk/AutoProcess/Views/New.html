@@ -1,0 +1,91 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline ">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+              <div class="card-tools"></div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tr>
+                        <td width="50%">{{'process' | translate}}</td>
+                        <td  >
+                            <ui-select ng-model="new.process" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                        <ui-select-choices repeat="c.tvID as c in Enums.group[1016]| filter: $select.search" >
+                                         {{c.Name | translate}}
+                                        </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'file' | translate}}</td>
+                        <td>
+                            <ui-select ng-model="new.ffID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.ffName}}</ui-select-match>
+                                <ui-select-choices repeat="a.ffID as a in File.data | filter: $select.search">
+                                    {{a.ffName}}
+                                </ui-select-choices>
+                            </ui-select>
+                    </tr>
+                    <tr>
+                        <td>{{'scenario' | translate}}</td>
+                        <td>
+                             <ui-select ng-model="new.id_scenario" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.name_scenario}}</ui-select-match>
+                                        <ui-select-choices repeat="c.id_scenario as c in Scenario.data | filter: $select.search" >
+                                         {{c.name_scenario}}
+                                        </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'user' | translate}}</td>
+                        <td>
+                            <ui-select ng-model="new.emID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.emName}}</ui-select-match>
+                                        <ui-select-choices repeat="c.emID as c in employees.data | filter: $select.search" >
+                                         {{c.emName}}
+                                        </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'factor' | translate}}</td>
+                        <td>
+                            <div class="btn-group">
+                              <button ng-disabled="new.factor >= auth.FFF.count_of_calls || Play" ng-click="new.factor=new.factor+1" class="btn btn-default "><i class="fa fa-plus"></i></button>
+                              <button class="btn btn-default" uib-tooltip="{{'factorNumber' | translate}}">{{new.factor}}</button>
+                              <button ng-disabled="new.factor <= 0 || Play" ng-click="new.factor=new.factor-1" class="btn btn-default"><i class="fa fa-minus"></i></button>
+                            </div>
+                         </td>
+                    </tr>
+                    <tr>
+                        <td>{{'planDateBegin' | translate}}</td>
+                        <td>
+                            <div class="input-group md-3">
+                                    <input ng-model="new.planDateBegin" class="form-control" ng-model-options="{ updateOn: 'blur' }">
+                                    <div class="input-group-append">
+                                                <button moment-picker="new.planDateBegin" class="btn btn-default">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </button>
+                                    </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-8">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-disabled="!new.process" ng-click="manyAction.Save(new,'AutoProcess')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="AutoProcess">{{'cancel' | translate}}</button>
+                    </div>
+        </div>
+    </div>
+</section>

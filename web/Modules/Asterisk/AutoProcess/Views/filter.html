@@ -1,0 +1,56 @@
+
+<div class="card card-info card-outline">
+        <div class="card-header">
+            <h3 class="card-title" translate="filters"></h3>
+            <div class="card-tools">
+                <global-button2 url="AutoProcessNew"></global-button>
+            </div>
+        </div>
+        
+        <div class="card-body p-0">
+            <div class="card-footer">
+                <div class="row">
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                                <b>{{'process'| translate}}</b>
+                                <ui-select ng-model="model.process" ng-change="manyAction.Find()" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                    <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                    <ui-select-choices repeat="c.tvID as c in Enums.group[1016]  | filter: $select.search" >
+                                       {{c.Name | translate}}
+                                   </ui-select-choices>
+                               </ui-select>
+                           </div>
+            
+                           <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                                <b>{{'file'| translate}}</b>
+                                <ui-select ng-model="model.ffID" ng-change="manyAction.Find()" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                    <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.ffName}}</ui-select-match>
+                                    <ui-select-choices repeat="a.ffID as a in File.data| filter: $select.search " >
+                                       {{a.ffName}}
+                                   </ui-select-choices>
+                               </ui-select>
+                            </div>
+            
+                            <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                                        <b>{{'scenario'| translate}}</b>
+                                    <ui-select ng-model="model.id_scenario" ng-change="manyAction.Find()" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.name_scenario}}</ui-select-match>
+                                        <ui-select-choices repeat="c.id_scenario as c in Scenario.data | filter: $select.search " >
+                                            {{c.name_scenario}}
+                                        </ui-select-choices>
+                                    </ui-select>
+                            </div>
+            
+                            <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                                        <b>{{'responsible'| translate}}</b>
+                                    <ui-select ng-model="model.emID" ng-change="manyAction.Find()" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.emName}}</ui-select-match>
+                                        <ui-select-choices repeat="ab.emID as ab in employees.data | filter: $select.search" style="padding: 6px 0px">
+                                            {{ab.emName}}
+                                        </ui-select-choices>
+                                    </ui-select>
+                            </div>
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>

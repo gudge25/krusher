@@ -1,0 +1,123 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-3">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i> {{'dataRegion' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body p-0">
+
+
+
+                <table class="table table-head-fixed table-hover borderless">
+                    <tbody>
+                    <tr>
+                        <td width="50%">{{'country' | translate}}</td>
+                        <td width="50%">
+                        <ui-select ng-model="Filter.rcID" ng-change="GetOperator();GetArea();" theme="bootstrap4-1" class="normal ng-pristine ng-valid ng-touched" size="100%">
+                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.cName}}</ui-select-match>
+                                <ui-select-choices repeat="c.cID as c in Countries.data | filter: $select.search">
+                                    {{c.cName}}
+                            </ui-select-choices>
+                        </ui-select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>{{'region' | translate}}</td>
+                        <td><input class="form-control" ng-model="new.regName" ></td>
+                    </tr>
+                    <tr>
+                        <td>{{'Area' | translate}}</td>
+                        <td>
+                            <ui-select ng-model="new.raID" theme="bootstrap4-1" class="normal ng-pristine ng-valid ng-touched" size="100%">
+                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.raName}}</ui-select-match>
+                                <ui-select-choices repeat="a.raID as a in Area | filter: $select.search">
+                                    {{a.raName}}
+                            </ui-select-choices>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'telecomOperat' | translate}}</td>
+                        <td>
+                            <ui-select ng-model="new.ropID" theme="bootstrap4-1" class="normal ng-pristine ng-valid ng-touched" size="100%">
+                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.oName}}</ui-select-match>
+                                <ui-select-choices repeat="a.oID as a in Operators.data | filter: $select.search">
+                                    {{a.oName}}
+                            </ui-select-choices>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>GMT {{'time' | translate}} </td>
+                        <td>
+                            <select class="form-control ng-pristine ng-valid ng-touched" ng-model="new.GMT" ng-options="a as a for a in gmt">
+                                <option value="">{{'typeGMT' | translate}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'prefix' | translate}}</td>
+                        <td>
+                            <div class="input-group">
+                                <input numeric-only class="form-control" ng-model="new.Prefix">
+                                <span class="input-group-append">
+                                    <button type="button" class="btn btn-default" ng-click="new.Prefix=new.Prefix+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="new.Prefix=new.Prefix-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'rangeFrom' | translate}}</td>
+                        <td>
+                            <div class="input-group">
+                                <input numeric-only class="form-control" ng-model="new.RangeStart">
+                                <span class="input-group-append">
+                                    <button type="button" class="btn btn-default" ng-click="new.RangeStart=new.RangeStart+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="new.RangeStart=new.RangeStart-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>{{'rangeTo' | translate}}</td>
+                        <td>
+                            <div class="input-group">
+                                <input numeric-only class="form-control" ng-model="new.RangeEnd">
+                                <span class="input-group-append">
+                                    <button type="button" class="btn btn-default" ng-click="new.RangeEnd=new.RangeEnd+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="new.RangeEnd=new.RangeEnd-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'mobileOperator' | translate}}</td>
+                        <td><label><input type="checkbox" cb-switch ng-model="new.isGSM"></label></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-9">
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"> {{'info' | translate}}</h3>
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-click="manyAction.Save(new,'Validation')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="Validation">{{'cancel' | translate}}</button>
+                    </div>
+             </div>
+          </div>
+        </div>
+    </div>
+</section>

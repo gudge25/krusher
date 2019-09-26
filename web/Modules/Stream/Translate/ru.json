@@ -1,0 +1,17 @@
+{
+		"find" : "Найти",
+		"edited" : "Кем редактировался",
+		"clientId" : "Ид клиента",
+		"personOrganization" : "Персона / Организация",
+		"organization" : "Организация",
+		"clients" : "Клиенты",
+		"documentDate" : "Дата документа",
+		"docStatus" : "Статус документа",
+		"document" : "Документ",
+		"removed" : "removed",
+		"seeComent" : "Смотреть комментарии",
+		"hideComent" : "Спрятать комментарии",
+		"removed" : "Удален",
+		"createdBy" : "Создан",
+		"updated" : "Обновлен"
+	}

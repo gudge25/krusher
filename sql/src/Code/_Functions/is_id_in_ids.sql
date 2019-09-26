@@ -1,0 +1,44 @@
+-- CREATE FUNCTION `is_id_in_ids`(
+--         `strIDs` VARCHAR(255),
+--         `_id` BIGINT
+--     )
+--     RETURNS BIT(1)
+--     NOT DETERMINISTIC
+--     CONTAINS SQL
+--     SQL SECURITY DEFINER
+--     COMMENT ''
+-- BEGIN
+--
+--   DECLARE strLen    INT DEFAULT 0;
+--   DECLARE subStrLen INT DEFAULT 0;
+--   DECLARE subs      VARCHAR(255);
+--
+--   IF strIDs IS NULL THEN
+--     SET strIDs = '';
+--   END IF;
+--
+--   do_this:
+--     LOOP
+--       SET strLen = LENGTH(strIDs);
+--       SET subs = SUBSTRING_INDEX(strIDs, ',', 1);
+--
+--       if ( CAST(subs AS UNSIGNED) = _id ) THEN
+--         -- founded
+--         return(1);
+--       END IF;
+--
+--       SET subStrLen = LENGTH(SUBSTRING_INDEX(strIDs, ',', 1));
+--       SET strIDs = MID(strIDs, subStrLen+2, strLen);
+--
+--       IF strIDs = NULL or trim(strIds) = '' THEN
+--         LEAVE do_this;
+--       END IF;
+--
+--   END LOOP do_this;
+--
+--    -- not founded
+--   return(0);
+--
+-- END;
+--
+-- -- select * from crmClient where `is_id_in_ids`('1001,1002,1003',clID);

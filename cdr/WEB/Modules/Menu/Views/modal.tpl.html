@@ -1,0 +1,82 @@
+<div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog"  style="width: 300px;">
+    <div class="modal-content">
+      <div class="modal-header"> <!--ng-show="title"--> 
+       <!-- <button type="button" class="close" ng-click="$hide()">&times;</button> -->
+        <h4 class="modal-title" ng-bind-html="title" align="center">Авторизация</h4>
+      </div>
+      <div class="modal-body" ng-show="content">
+
+	  
+	  
+	  
+				<form class="form-horizontal" role="form">
+				  <div class="form-group">
+					<label for="inputEmail3" class="col-sm-3 control-label">Логин</label>
+					<div class="col-sm-9">
+					  <input type="text" ng-model="Login_auth" class="form-control" id="inputEmail3" placeholder="Логин">
+					</div>
+				  </div>
+				  <div class="form-group">
+					<label for="inputPassword3" class="col-sm-3 control-label">Пароль</label>
+					<div class="col-sm-9">
+					  <input type="password" ng-model="Pass" ng-enter="Auth(Login_auth,Pass)" class="form-control" id="inputPassword3" placeholder="Пароль" >
+					</div>
+				  </div>
+				  
+				  <!--
+				  <div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+					  <div class="checkbox">
+						<label>
+						  <input type="checkbox"> Запомнить меня
+						</label>
+					  </div>
+					</div>
+				  </div>
+				  
+				  <div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10" ng-controller="Clients">
+	
+						<button type="button" class="btn btn-default" ng-click="add_first();add_show='true';" ng-hide="add_show"><i class="fa fa-plus"></i> Создать  пользователя</button> 
+			 
+						<table class="table-responsive table-condensed " ng-show="add_show" >
+						<tr>
+							<td><input type="{{type(key2)}}" 	class="form-control" ng-model="add_client.ClientName" 	placeholder="ClientName" ng-change="save_client='true'"></td>
+							<td><input type="{{type('Secret')}}" 	class="form-control" ng-model="add_client.Secret" 	placeholder="Secret"	 ng-change="save_client='true'"></td>
+							<td><input type="{{type(key2)}}" 	class="form-control" ng-model="add_client.NickName" 	placeholder="NickName"	 ng-change="save_client='true'"></td>
+						</tr>
+						<tr>
+							<td> <button type="button" class="btn btn-info"	   ng-click="add_show=false;" >Отменить</button> </td>
+							<td> <button type="button" class="btn btn-success" ng-click="add();add_show=false;save_client='false';" ng-show="save_client">Сохранить</button> </td>
+						</tr>			
+						</table>
+					   
+					</div>
+				  </div>-->
+				  
+				</form>
+				 
+	  
+	  
+	  
+	  
+	  <!--angular.element($('#txtCallStatus2')).scope().open(sRemoteNumber[0],sRemoteNumber[1]);
+        <h4></h4>
+        <p ng-bind-html="content"></p>
+        <pre>2 + 3 = {{ 2 + 3 }}</pre>
+
+        <h4>Popover in a modal</h4>
+        <p>This <a href="#" role="button" class="btn btn-default popover-test" data-title="A Title" data-content="And here's some amazing content. It's very engaging. right?" bs-popover>button</a> should trigger a popover on click.</p>
+
+        <h4>Tooltips in a modal</h4>
+        <p><a href="#" class="tooltip-test" data-title="Tooltip" bs-tooltip>This link</a> and <a href="#" class="tooltip-test" data-title="Tooltip" bs-tooltip>that link</a> should have tooltips on hover.</p>
+-->
+      </div>
+      <!--  <div class="modal-footer" ng-show="Login_auth && Pass">
+        <button type="button" class="btn btn-default" ng-class="{'btn-success': Login_auth && Pass}" ng-disabled="!Login_auth || !Pass" ng-click="Auth(Login_auth,Pass)">Войти</button>
+    <button type="button" class="btn btn-primary" ng-click="$hide()">Отменить</button> 
+      </div>-->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<ul class="nav flex-column">
+    <li class="nav-item" ng-show="Org.ShortName" style="display: flow-root;">
+        <b>{{'shortName' | translate}}</b>
+        <b>
+            <a class="float-right nav-link" ng-bind="Org.ShortName"></a>
+        </b>
+    </li>
+    <li class="nav-item" ng-show="Org.OrgType" style="display: flow-root;">
+        <b>{{'OrgType' | translate}}</b>
+        <span  class="float-right nav-link" ng-bind="Org.OrgType | enums"> </span> 
+    </li>
+
+    <li class="nav-item" ng-show="Org.Bank">
+        <b>{{'bank' | translate}}</b>
+        <a class="float-right nav-link" ng-bind="Org.Bank"></a>
+    </li>
+    <li class="nav-item" ng-show="Org.Account">
+        <b>Р/Р</b>
+        <a class="float-right nav-link" ng-bind="Org.Account"></a>
+    </li>
+    <li class="nav-item" ng-show="Org.TaxCode">
+        <b>ИИН</b>
+        <a class="float-right nav-link" ng-bind="Org.TaxCode"></a>
+    </li>
+    <li class="nav-item" ng-show="Org.SortCode">
+        <b>МФО</b>
+        <a class="float-right nav-link" ng-bind="Org.SortCode"></a>
+    </li>
+    <li class="nav-item" ng-show="Org.RegCode">
+        <b>ЕДРПУ</b>
+        <a class="float-right nav-link" ng-bind="Org.RegCode"></a>
+    </li>
+    <li class="nav-item" ng-show="Org.CertNumber">
+        <b>№ Сведетельства</b>
+        <a class="float-right nav-link" ng-bind="Org.CertNumber"></a>
+    </li>
+    <li class="nav-item" ng-show="Org.KVED">
+        <b>КВЕД</b>
+        <a class="float-right nav-link" ng-bind="Org.KVED"></a>
+    </li>
+    <li class="nav-item" ng-show="Org.KVEDName" style="display: flow-root;">
+        <b>Наименование ВЕД</b>
+        <a class="float-right nav-link" ng-bind="Org.KVEDName"></a>
+    </li>
+</ul>

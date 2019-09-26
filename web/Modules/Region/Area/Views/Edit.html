@@ -1,0 +1,61 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-3">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tr>
+                        <td>{{'Area' | translate}}</td>
+                        <td><input class="form-control" ng-model="upd.raName"/></td>
+                    </tr>
+                    <tr>
+                        <td>{{'country' | translate}}</td>
+                        <td>
+                            <ui-select ng-model="upd.rcID" theme="bootstrap4-1" class="normal ng-pristine ng-valid ng-touched" size="100%">
+                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.cName}}</ui-select-match>
+                                <ui-select-choices repeat="c.cID as c in Countries.data | filter: $select.search">
+                                    {{c.cName}}
+                            </ui-select-choices>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>GMT {{'time' | translate}}</td>
+                        <td>
+                            <ui-select ng-model="upd.GMT" theme="bootstrap4-1" class="normal ng-pristine ng-valid ng-touched" size="100%">
+                                <ui-select-match >{{$select.selected}}</ui-select-match>
+                                <ui-select-choices repeat="c as c in gmt | filter: $select.search">
+                                    {{c}}
+                            </ui-select-choices>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'territory' | translate}}</td>
+                        <td><input class="form-control" ng-model="upd.rkSocr"  /></td>
+                    </tr>
+                </table>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-9">
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"> {{'info' | translate}}</h3>
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-click="manyAction.Update(upd,'Area')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="Area">{{'cancel' | translate}}</button>
+                    </div>
+             </div>
+          </div>
+        </div>
+    </div>
+</section>

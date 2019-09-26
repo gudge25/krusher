@@ -1,0 +1,104 @@
+<div class="col-lg-2" style="border-right: 1px solid #e7e7e7;">
+
+</div>
+
+
+<div class="col-lg-10">
+    <div class="col-lg-6">
+        <br/>
+        <b>Данные страны</b>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="text-right">
+            <div class="btn-group" style="margin: 2%">
+                <button ng-disabled=" !new.dcNo && !new.clID" ng-click="manyAction.Save(new,'TravelList')" class="btn btn-success">Сохранить</button>
+                <a href="#!/TravelList" class="btn btn-warning">Отмена</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+    <table class="table table-head-fixed table-hover borderless">
+        <tbody>
+        <tr>
+            <td>№ документа</td>
+            <td><input class="form-control" type="text" ng-model="new.dcNo" ></td>
+        </tr>
+        <tr>
+            <td ng-hide="Deal">ИД документа основания</td>
+            <td ng-show="Deal">Сделка</td>
+            <td>
+                <!--<input ng-hide="Deal" class="form-control" type="text" ng-model="new.dcLink" >-->
+                <select class       ="form-control"
+                        ng-hide     ="Deal"
+                        ng-model    ="new.dcLink"
+                        ng-options  ="c.dcID as c.dcNo for c in Deals"
+                        >
+                </select>
+                <b ng-show="Deal">{{Deal.dcNo}}</b>
+            </td>
+        </tr>
+        <tr>
+            <td>Дата</td>
+            <td><input class="form-control" type="text" ng-model="new.dcDate" placeholder="Введите дату" ></td>
+        </tr>
+        <tr>
+            <td>Клиент</td>
+            <td>
+                <input ng-hide="client"
+                       type="text"
+                       ng-model="searchclient"
+                       uib-typeahead="a as a.clName for a in manyAction.SearchClient($viewValue)"
+                       class="form-control"
+                       placeholder="Выберите клиента"
+                       typeahead-wait-ms="250"
+                        >
+                <b ng-show="client">{{client.clName}}</b>
+            </td>
+        </tr>
+        <tr>
+            <td>Водитель</td>
+            <td>
+                <select class       ="form-control"
+                        ng-model    ="select2;"
+                        ng-options  ="c as c.drvName for c in Driver"
+                        >
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Марка</td>
+            <td>
+                <select class       ="form-control"
+                        ng-model    ="new.carID;"
+                        ng-options  ="c.carID as c.carName for c in Car"
+                        >
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Товар</td>
+            <td>
+            <select class       ="form-control"
+                    ng-model    ="select"
+                    ng-options  ="c as c.psName for c in Product"
+                    >
+            </select>
+        </tr>
+        <tr>
+            <td>Ответственный</td>
+            <td>
+                <select class="form-control"
+                        ng-model    = "new.emID"
+                        ng-options  = "employee.emID as employee.emName for employee in employees | filter:{IsActive:true}">
+                    <option value="">Выберите Ответственного</option>
+                </select>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+    </div>
+</div>
+

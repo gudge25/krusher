@@ -1,0 +1,58 @@
+<form class="css-form" ng-class="formClassInvalid" name="InvoiceForm">
+    <table class="table table-head-fixed table-bordered">
+        <tbody>
+          <tr>
+            <td class="col-md-3">Номер</td><td class="col-md-3 "><input type="text" class="form-control" ng-model="invoice.dcNo" ng-required="true"></td>
+            <td class="col-md-3">Дата</td>   <td class="col-md-3">
+              <p class="input-group custom-datepicker-buttons">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="invoice.dcDate" ng-required="true" is-open="datepicker.opened" datepicker-options="dateOptions" />
+                    <span class="input-group-append">
+                    <button type="button" class="btn btn-default" ng-click="datepickerOpen()"><i class="fa fa-calendar"></i></button>
+                    </span>
+                </p>
+            </td>
+          </tr>
+          <tr>
+            <td>ПДВ</td>   <td><input type="number" class="form-control" ng-model="invoice.VATSum"  min="1" ng-required="true"></td>
+            <td>Документ основания</td>
+            <td>
+              <div class="input-group">
+                    <input class="form-control" type="text" ng-model="invoice.dcLink" disabled>
+                    <span class="input-group-append">
+                         <open-docs-link-search data="invoice"/>
+                    </span>
+                </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Коментарий</td>   <td><input type="text" class="form-control" ng-model="invoice.dcComment"></td>
+            <td>Сума</td>   <td><input type="number" class="form-control" ng-model="invoice.dcSum" min="1" ng-required="true"></td>
+          </tr>
+          <tr>
+            <td>Статус</td>   <td>
+              <ui-select ng-model="invoice.dcStatus" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                          <ui-select-match >{{$select.selected.p.Name}}</ui-select-match>
+                          <ui-select-choices repeat="a.p.tvID as a in enumsResult | filter: $select.search" >
+                            {{a.p.Name}}
+                        </ui-select-choices>
+                    </ui-select>
+            </td>
+            <td>Имя клиента</td>   <td>
+              <div class="input-group">
+                    <input class="form-control" type="text" ng-model="invoice.clName" disabled ng-required="true">
+                    <span class="input-group-append">
+                        <open-client-search data="invoice"/>
+                    </span>
+                </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Доставка</td>   <td colspan="3">
+              <input type="textarea" class="form-control" ng-model="invoice.Delivery" ng-required="true">
+            </td>
+          </tr>
+        </tbody>
+    </table>
+</form>
+
+

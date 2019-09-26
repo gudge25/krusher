@@ -1,0 +1,401 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'timecall' | translate}}</h3>
+
+              <div class="card-tools">
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tr >
+                        <td width="50%">{{'scenario' | translate}}</td>
+                        <td width="50%"><input class="form-control" only-clear ng-model="upd.name_scenario" ></td>
+                    </tr>
+                    <tr>
+                        <td>{{'TimeBegin' | translate}}</td>
+                        <td>
+                            <!-- <div class="form-group" style="margin-bottom: 0px;">
+                                    <div class="has-feedback" ng-class="{ 'has-error' : !upd.TimeBegin.length && edit3, 'has-success' : upd.TimeBegin }">
+                                        <span class="icon-group input-group">
+                                            <input ng-change="edit3=true;" ng-model="upd.TimeBegin"  class="form-control" ng-maxlength="8" pattern="^[0-9:]+$" required>
+                                            <span class="input-group-append">
+                                              <button moment-picker="upd.TimeBegin"
+                                                      format="HH:mm:ss"
+                                                      locale="ru"
+                                                      change="ctrl.setFormattedDate(newValue)"
+                                                      type="button" class="btn btn-default">
+                                                      <i class="fa fa-clock" aria-hidden="true"></i>
+                                              </button>
+                                            </span>
+                                         </span>
+                                        <span class="help-block" ng-show="!upd.TimeBegin.length && edit3">{{'typeDateLeng'| translate}}</span>
+                                    </div>
+                            </div> -->
+
+                            <div class="input-group md-3">
+                                <input ng-change="edit3=true;" ng-class="{ 'border border-danger' : !upd.TimeBegin.length && edit3 }" ng-model="upd.TimeBegin"  class="form-control" ng-maxlength="8" pattern="^[0-9:]+$" required>
+                                <div class="input-group-append">
+                                            <button moment-picker="upd.TimeBegin"  class="btn btn-default rounded-right" format="HH:mm:ss" locale="ru">
+                                                <i class="fa fa-clock" aria-hidden="true"></i>
+                                            </button>
+                                </div>
+                                <div class="help-block text-danger" ng-show="!upd.TimeBegin.length && edit3">{{'typeDateLeng'| translate}}</div>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'TimeEnd' | translate}}</td>
+                        <td>
+                            <!-- <div class="form-group" style="margin-bottom: 0px;">
+                                    <div class="has-feedback" ng-class="{ 'has-error' : !upd.TimeEnd.length && edit4, 'has-success' : upd.TimeEnd }">
+                                        <span class="icon-group input-group">
+                                            <input ng-change="edit4=true;" ng-model="upd.TimeEnd"  class="form-control" ng-maxlength="8" pattern="^[0-9:]+$" required>
+                                            <span class="input-group-append">
+                                              <button moment-picker="upd.TimeEnd"
+                                                      format="HH:mm:ss"
+                                                      locale="ru"
+                                                      change="ctrl.setFormattedDate(newValue)"
+                                                      type="button" class="btn btn-default">
+                                                      <i class="fa fa-clock" aria-hidden="true"></i>
+                                              </button>
+                                            </span>
+                                            <span class="glyphicon glyphicon-file form-control-feedback"></span>
+                                        </span>
+                                        <span class="help-block" ng-show="!upd.TimeEnd.length && edit4">{{'typeDateLeng'| translate}}</span>
+                                    </div>
+                            </div> -->
+                            <div class="input-group md-3">
+                                <input ng-change="edit4=true;"  ng-class="{ 'border border-danger' : !upd.TimeEnd.length && edit4 }" ng-model="upd.TimeEnd"  class="form-control" ng-maxlength="8" pattern="^[0-9:]+$" required>
+                                <div class="input-group-append">
+                                    <button moment-picker="upd.TimeEnd"  class="btn btn-default rounded-right" format="HH:mm:ss" locale="ru">
+                                        <i class="fa fa-clock" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <span class="help-block text-danger" ng-show="!upd.TimeEnd.length && edit4">{{'typeDateLeng'| translate}}</span>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'DaysCall' | translate}}</td>
+                        <td>
+                            <ui-select  multiple tagging tagging-label="(custom 'new' label)" ng-model="upd.DaysCall" theme="bootstrap4-1" sortable="true" ng-disabled="disabled" style='height: auto;'>
+                                <ui-select-match  placeholder="{{'select' | translate}}">{{$item.Name | translate}}</ui-select-match>
+                                <ui-select-choices repeat="a.ID as a in dayList  | filter:$viewValue">{{a.Name | translate}}</ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr ng-include="'/Views/tableEdit.html'" ng-show="upd.Created"></tr>
+                    <tr ng-include="'/Views/tableEdit2.html'" ng-show="upd.Changed || upd.Changed==0"></tr>
+                </table>
+            </div>
+          </div>
+
+          <!-- About Me Box -->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'action' | translate}}, {{'ifAnswer' | translate}}</h3>
+            </div>
+            <div class="card-body p-0">
+                    <table class="table table-head-fixed table-hover borderless">
+                        <tr>
+                            <td style="width: 30%">{{'destination' | translate}}</td>
+                            <td style="width: 70%">
+                                <ui-select ng-model="upd.destination" ng-change="upd.destdata=null" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                            <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                            <ui-select-choices repeat="c.tvID as c in DestType | filter: $select.search"  ui-disable-choice="c.tvID == 101411 || c.tvID == 101406" >
+                                             {{c.Name | translate}}
+                                            </ui-select-choices>
+                                </ui-select>
+                                
+                            </td>
+                        </tr>
+                        <tr ng-show="upd.destination"  ng-switch="upd.destination" >
+                            <td>{{'destdata' | translate}}</td>
+                            <td>
+                                <div ng-switch-when="101401">
+                                    <ui-select  ng-model="upd.destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-choices repeat="a.queID as a in Queues.data | filter: $select.search ">
+                                                {{a.name}}
+                                            </ui-select-choices>
+                                    </ui-select>
+                                </div>
+
+                                <div ng-switch-when="101402">
+                                    <ui-select ng-model="upd.destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.emName}}</ui-select-match>
+                                            <ui-select-choices repeat="a.emID as a in employees.data | filter: $select.search" ui-disable-choice="a.SipNum === null ? true : false;">
+                                                <b> {{a.emName}} </b> <small ng-show="a.sipName"> SIP/{{a.sipName}} </small>
+                                            </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div ng-switch-when="101403">
+                                    <ui-select ng-model="upd.destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.trName}}</ui-select-match>
+                                            <ui-select-choices repeat="a.trID as a in Trunk.data | filter: $select.search ">
+                                                {{a.trName}}
+                                            </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div ng-switch-when="101405">
+                                    <ui-select ng-model="upd.destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.ivr_name}}</ui-select-match>
+                                            <ui-select-choices repeat="a.id_ivr_config as a in IVR.data | filter: $select.search ">
+                                                {{a.ivr_name}}
+                                            </ui-select-choices>
+                                    </ui-select>
+                                </div>
+
+                                <div ng-switch-when="101407">
+                                    <ui-select ng-model="upd.destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.record_name}}</ui-select-match>
+                                            <ui-select-choices repeat="a.record_id as a in Record.data | filter: $select.search ">
+                                                {{a.record_name}}
+                                            </ui-select-choices> 
+                                    </ui-select>
+                                </div>
+
+                                <div ng-switch-when="101408" class="input-group">
+                                    <ui-select ng-model="upd.destdata" theme="bootstrap4-1" class="normal bg-custom-white" style="width: 100%">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.cdName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.cdID as a in CustomDestenation.data | filter: $select.search ">{{a.cdName}}</ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                        <button ng-show="upd.destdata" type="button" class="btn btn-default custom-right-position" ng-click="upd.destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>
+                                <div ng-switch-when="101409" class="input-group">
+                                    <ui-select ng-model="upd.destdata" theme="bootstrap4-1" class="normal bg-custom-white" style="width: 100%">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.poolName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.poolID as a in TrunkPool.data | filter: $select.search ">{{a.poolName}}</ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                        <button ng-show="upd.destdata" type="button" class="btn btn-default custom-right-position" ng-click="upd.destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>
+                                <div ng-switch-when="101410" class="input-group">
+                                    <ui-select ng-model="upd.destdata" theme="bootstrap4-1" class="normal bg-custom-white" style="width: 100%">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.tgName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.tgID as a in TimeGroup.data | filter: $select.search ">{{a.tgName}}</ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                        <button ng-show="upd.destdata" type="button" class="btn btn-default custom-right-position" ng-click="upd.destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>
+                                <div ng-switch-when="101412" class="input-group">
+                                    <ui-select ng-model="upd.destdata" theme="bootstrap4-1" class="normal bg-custom-white" style="width: 100%">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.cfName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.cfID as a in Conference.data | filter: $select.search ">{{a.cfName}}</ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                        <button ng-show="upd.destdata" type="button" class="btn btn-default custom-right-position" ng-click="upd.destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>
+
+                            </td>
+                            <tr ng-show="(upd.destination == 101403 || upd.destination == 101409) && upd.destdata">
+                                <td>{{'destdata2' | translate}}</td>
+                                <td>
+                                    <div class="input-group">
+                                        <input  class="form-control" ng-model="upd.destdata2"/>
+                                        <span class="input-group-append">
+                                            <button ng-show="upd.destdata2" type="button" class="btn btn-default" ng-click="upd.destdata2 = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <checkbox class="btn-info" ng-model="addoption"></checkbox> &#160 {{'additional options' | translate}}
+                            </td>
+                        </tr>
+                    </table>
+            </div>
+          </div>
+
+          <!-- About Me Box -->
+          <div class="card card-info card-outline" ng-show="addoption">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'QtyPerContact' | translate}} <b ng-bind="upd.RecallCount"></b> {{ 'Raz' | translate}}.</h3>
+            </div>
+            <div class="card-body p-0">
+                    <table class="table table-head-fixed table-hover borderless">
+                        <tr ng-show="addoption">
+                            <td width="50%">{{'RecallAfterMin' | translate}}</td>
+                            <td width="50%">
+                                <!-- <div class="input-group">
+                                    <input numeric-only class="form-control" ng-model="upd.RecallAfterMin">
+                                    <span class="input-group-append">
+                                        <button type="button" class="btn btn-default" ng-click="upd.RecallAfterMin=upd.RecallAfterMin+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-default" ng-disabled="upd.RecallAfterMin <= 0" ng-click="upd.RecallAfterMin=upd.RecallAfterMin-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </span>
+                                </div> -->
+                                <div class="input-group">
+                                    <input numeric-only class="form-control" ng-model="upd.RecallAfterMin">
+                                    <div class="input-group-append">
+                                            <button type="button" class="btn btn-default" ng-click="upd.RecallAfterMin=upd.RecallAfterMin+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-default" ng-disabled="upd.RecallAfterMin <= 0" ng-click="upd.RecallAfterMin=upd.RecallAfterMin-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </div>
+                                </div> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'RecallCountPerDay' | translate}}</td>
+                            <td>
+                                <!-- <div class="input-group">
+                                    <input numeric-only class="form-control" ng-model="upd.RecallCountPerDay" ng-change="upd.RecallCount = upd.RecallCountPerDay * upd.RecallDaysCount">
+                                    <span class="input-group-append">
+                                        <button type="button" class="btn btn-default" ng-click="upd.RecallCountPerDay=upd.RecallCountPerDay+1;upd.RecallCount = upd.RecallCountPerDay * upd.RecallDaysCount"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-default" ng-disabled="upd.RecallCountPerDay <= 0" ng-click="upd.RecallCountPerDay=upd.RecallCountPerDay-1;upd.RecallCount = upd.RecallCountPerDay * upd.RecallDaysCount"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </span>
+                                </div> -->
+                                <div class="input-group">
+                                        <input numeric-only class="form-control" ng-model="upd.RecallCountPerDay" ng-change="upd.RecallCount = upd.RecallCountPerDay * upd.RecallDaysCount">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-default" ng-click="upd.RecallCountPerDay=upd.RecallCountPerDay+1;upd.RecallCount = upd.RecallCountPerDay * upd.RecallDaysCount"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-default" ng-disabled="upd.RecallCountPerDay <= 0" ng-click="upd.RecallCountPerDay=upd.RecallCountPerDay-1;upd.RecallCount = upd.RecallCountPerDay * upd.RecallDaysCount"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'RecallDaysCount' | translate}}</td>
+                            <td>
+                                <!-- <div class="input-group">
+                                    <input numeric-only class="form-control" ng-model="upd.RecallDaysCount" ng-change="upd.RecallCount = upd.RecallCountPerDay * upd.RecallDaysCount;Check('upd');">
+                                    <span class="input-group-append">
+                                        <button type="button" class="btn btn-default" ng-click="upd.RecallDaysCount=upd.RecallDaysCount+1;upd.RecallCount = upd.RecallCountPerDay * upd.RecallDaysCount"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-default" ng-disabled="upd.RecallDaysCount <= 0" ng-click="upd.RecallDaysCount=upd.RecallDaysCount-1;upd.RecallCount = upd.RecallCountPerDay * upd.RecallDaysCount"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </span>
+                                </div> -->
+                                <div class="input-group">
+                                    <input numeric-only class="form-control" ng-model="upd.RecallDaysCount" ng-change="upd.RecallCount = upd.RecallCountPerDay * upd.RecallDaysCount;Check('upd');">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-default" ng-click="upd.RecallDaysCount=upd.RecallDaysCount+1;upd.RecallCount = upd.RecallCountPerDay * upd.RecallDaysCount"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-default" ng-disabled="upd.RecallDaysCount <= 0" ng-click="upd.RecallDaysCount=upd.RecallDaysCount-1;upd.RecallCount = upd.RecallCountPerDay * upd.RecallDaysCount"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-hide="upd.RecallDaysCount == 1">
+                            <td>{{'RecallAfterPeriod' | translate}}</td>
+                            <td>
+                                <!-- <div class="input-group">
+                                    <input numeric-only class="form-control" ng-model="upd.RecallAfterPeriod" ng-disabled="upd.RecallDaysCount == 1">
+                                    <span class="input-group-append">
+                                        <button type="button" class="btn btn-default" ng-click="upd.RecallAfterPeriod=upd.RecallAfterPeriod+1"  ng-disabled="upd.RecallDaysCount == 1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-default" ng-click="upd.RecallAfterPeriod=upd.RecallAfterPeriod-1"  ng-disabled="upd.RecallDaysCount <= 1 || upd.RecallAfterPeriod <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </span>
+                                </div> -->
+                                <div class="input-group">
+                                        <input numeric-only class="form-control" ng-model="upd.RecallAfterPeriod" ng-disabled="upd.RecallDaysCount == 1">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-default" ng-click="upd.RecallAfterPeriod=upd.RecallAfterPeriod+1"  ng-disabled="upd.RecallDaysCount == 1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-default" ng-click="upd.RecallAfterPeriod=upd.RecallAfterPeriod-1"  ng-disabled="upd.RecallDaysCount <= 1 || upd.RecallAfterPeriod <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+            </div>
+           </div>
+
+          <!-- About Me Box -->
+          <div class="card card-info card-outline" ng-show="addoption">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'AddOptions' | translate}}</h3>
+            </div>
+            <div class="card-body p-0">
+                    <table class="table table-head-fixed table-hover borderless">
+                        <tr>
+                            <td width="50%">
+                                    <span ng-if="upd.isFirstClient">
+                                            {{'isFirstClient' | translate}} <b>{{upd.destination | enums | translate}} ({{upd.destdata | destdata:upd.destination}})</b>
+                                    </span>    
+                                    <span ng-if="!upd.isFirstClient">
+                                            {{'isFirstClient2' | translate}} <b>{{upd.destination | enums | translate}} ({{upd.destdata | destdata:upd.destination}}) </b> {{'isFirstClient3' | translate}} 
+                                    </span>    
+                            </td>
+                            <td width="50%"><label><input type="checkbox" cb-switch ng-model="upd.isFirstClient"></label></td>
+                        </tr>
+                        <tr>
+                            <td>{{'IsRecallForSuccess' | translate}}</td>
+                            <td><label><input type="checkbox" cb-switch ng-model="upd.IsRecallForSuccess"></label></td>
+                        </tr>
+                        <tr>
+                            <td>{{'IsCallToOtherClientNumbers' | translate}}</td>
+                            <td><label><input type="checkbox" cb-switch ng-model="upd.IsCallToOtherClientNumbers"></label></td>
+                        </tr>
+                        <tr>
+                            <td>{{'IsCheckCallFromOther' | translate}}</td>
+                            <td><label><input type="checkbox" cb-switch ng-model="upd.IsCheckCallFromOther"></label></td>
+                        </tr>
+                        <tr>
+                            <td>{{'prefix' | translate}}</td>
+                            <td>
+                                <ui-select  multiple tagging tagging-label="" ng-model="upd.AllowPrefix" theme="bootstrap4-1" sortable="true" ng-disabled="disabled" style='height: auto;'>
+                                    <ui-select-match  placeholder="{{'select' | translate}}">{{$item | translate}}</ui-select-match>
+                                    <ui-select-choices repeat="a in []  | filter:$viewValue">{{a | translate}}</ui-select-choices>
+                                </ui-select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'RouteOut' | translate}}</td>
+                            <td>
+                                <ui-select  multiple tagging tagging-label="" ng-model="upd.roIDs" theme="bootstrap4-1" sortable="true" ng-disabled="disabled" style='height: auto;'>
+                                    <ui-select-match  placeholder="{{'select' | translate}}">{{$item.roName | translate}}</ui-select-match>
+                                    <ui-select-choices repeat="a.roID as a in RouteOut.data  | filter:$viewValue">{{a.roName | translate}}</ui-select-choices>
+                                </ui-select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>{{'status' | translate}} {{'appeals' | translate | lowercase}}</td>
+                            <td>
+                                <ui-select  multiple tagging tagging-label="" ng-model="upd.limitStatuses" theme="bootstrap4-1" sortable="true"  style='height: auto;'>
+                                    <ui-select-match  placeholder="{{'select' | translate}}"> {{ ($item.Name | CallStatus).disposition }} </ui-select-match>
+                                    <ui-select-choices repeat="c.tvID as c in Enums.group[7] | filter:$viewValue">
+                                        <span ng-bind="(c.Name | CallStatus).disposition">{{c.Name | translate}}</span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </td>
+                        </tr>
+ 
+                        <tr>
+                            <td>{{'limit' | translate}}  {{'appeals' | translate | lowercase}}</td>
+                            <td>
+                                <div class="input-group">
+                                        <input numeric-only class="form-control" ng-model="upd.limitChecker"  >
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-default" ng-click="upd.limitChecker=upd.limitChecker+1;"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-default" ng-disabled="upd.limitChecker <= 0" ng-click="upd.limitChecker=upd.limitChecker-1;"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+ 
+                        <tr>
+                            <td>{{'active' | translate}}</td>
+                            <td><label><input type="checkbox" cb-switch ng-model="upd.isActive"></label></td>
+                        </tr>
+                    </table>
+            </div>
+          </div>
+
+
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-8 col-md-6 col-sm-6 col-xs-12">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-hide="manyAction.Check_upd_old()" ng-disabled="!upd.TimeBegin || !upd.TimeEnd || !upd.name_scenario || !upd.destination"  ng-click="manyAction.Update(upd,'Scenario')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="Scenario">{{'cancel' | translate}}</button>
+                    </div>
+        </div>
+    </div>
+</section>

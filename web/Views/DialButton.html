@@ -1,0 +1,17 @@
+<nobr ng-show="e.ccName">
+        <span style="cursor: pointer;" ng-if="showSMSsingle">
+                <i class="fas fa-sms" popover-title="{{ 'send' | translate }} SMS {{'na' | translate}} {{e.ccName}}" popover-trigger="click" popover-popup-delay="0" uib-popover-template="'/Views/smsPopover.html'" ></i>
+        </span>
+        <span ng-hide="(HotDial.FFF.ccName != e.ccName || HotDial.FFF.isDial) && HotDial.FFF.ccName" >
+                <i class="fas fa-phone-alt" aria-hidden="true" ng-hide="WS" ></i>
+                <a style="cursor: pointer;" ng-show="e.ccName && WS && !HotDial.FFF.isDial" ng-click="manyAction.Call(e)"><i class="fas fa-phone-alt" aria-hidden="true" uib-tooltip-html="'Call to phone'" ></i></a>
+        </span>
+        <span ng-show="((HotDial.FFF.ccName != e.ccName || HotDial.FFF.isDial) && HotDial.FFF.ccName) && HotDial.FFF.ccName != e.ccName" >
+                <i class="fas fa-phone-alt"></i>
+        </span>
+
+        <span  ng-click="manyAction.Hangup(HotDial.FFF.ccName,null)" ng-show="HotDial.FFF.ccName == e.ccName && HotDial.FFF.isDial" uib-tooltip ="{{'Hangup' | translate}}">
+                <i style="color:red;" class="fa fa-tty"></i> 
+        </span>
+        <span style="color: darkgreen" ng-bind="e.ccName" uib-tooltip="{{e.regName}}"> </span>      
+</nobr>

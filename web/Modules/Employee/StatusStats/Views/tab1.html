@@ -1,0 +1,67 @@
+<div class="card-body  p-0" ng-show="data.length != []" style="height:72vh;overflow-y: auto;" can-load="canLoad" infinite-scroll="manyAction.loadMore(data.length)"  threshold="10">
+    <ng-include src="'/Views/LoadingTable.html'"></ng-include>
+      <div ng-show="data.length != []" style="height:72vh;overflow-y: auto;" can-load="canLoad" infinite-scroll="manyAction.loadMore(data.length)"  threshold="10" >
+        <table class="table table-head-fixed table-hover" ng-hide="global.Loading">
+            <thead>    
+                <tr ng-click="manyAction.Find()">
+                    <th ng-init="o1='dateSpent'" ng-click="manyAction.order(o1);">
+                        <nobr>{{'date' | translate}} <span ng-show="order==o1" ng-include="'/Views/orderSpan.html'"/></nobr>
+                    </th>
+                    <th ng-init="o4='emID'" ng-click="manyAction.order(o4);">
+                        <nobr>{{'user' | translate}} <span ng-show="order==o4" ng-include="'/Views/orderSpan.html'"/></nobr>
+                    </th>
+                    <th ng-init="o5='Available'" ng-click="manyAction.order(o5);">
+                        <nobr>{{'Available' | translate}} <span ng-show="order==o5" ng-include="'/Views/orderSpan.html'"/></nobr>
+                    </th>
+                    <th ng-init="o3='Unvailable'" ng-click="manyAction.order(o3);">
+                        <nobr>{{'Unvailable' | translate}} <span ng-show="order==o3" ng-include="'/Views/orderSpan.html'"/></nobr>
+                    </th>
+                    <th ng-init="o6='Pause'" ng-click="manyAction.order(o6);">
+                        <nobr>{{'Pause' | translate}} <span ng-show="order==o6" ng-include="'/Views/orderSpan.html'"/></nobr>
+                    </th>
+                    <th ng-init="o8='Dinner'" ng-click="manyAction.order(o8);">
+                        <nobr>{{'Dinner' | translate}} <span ng-show="order==o8" ng-include="'/Views/orderSpan.html'"/></nobr>
+                    </th>
+                    <th ng-init="o9='Meeting'" ng-click="manyAction.order(o9);">
+                        <nobr>{{'Meeting' | translate}} <span ng-show="order==o9" ng-include="'/Views/orderSpan.html'"/></nobr>
+                    </th>
+                    <th ng-init="o10='Other'" ng-click="manyAction.order(o10);">
+                        <nobr>{{'Other' | translate}} <span ng-show="order==o10" ng-include="'/Views/orderSpan.html'"/></nobr>
+                    </th>
+                    <th ng-init="o11='Post_Processing'" ng-click="manyAction.order(o11);">
+                        <nobr>{{'Post Processing' | translate}} <span ng-show="order==o11" ng-include="'/Views/orderSpan.html'"/></nobr>
+                    </th>
+                    <th ng-init="o12='Logout'" ng-click="manyAction.order(o12);">
+                        <nobr>{{'Logout' | translate}} <span ng-show="order==o12" ng-include="'/Views/orderSpan.html'"/></nobr>
+                    </th>
+                    <th ng-init="o13='All_State'" ng-click="manyAction.order(o13);">
+                        <nobr>{{'All' | translate}} <span ng-show="order==o13" ng-include="'/Views/orderSpan.html'"/></nobr>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>    
+                <tr ng-repeat="e in data  | limitTo:limit track by $index" ng-click="SelectAutoProccess(e);">
+                    <!-- <td width="1%" ng-include="'/Views/checkboxOne.html'"/> -->
+                    <td width="1%"> <nobr><span ng-bind="e.dateSpent | date:'MMM d'" ></span></nobr> </td>
+                    <td width="1%">
+                        <nobr ng-show="e.emID">
+                          <i class="fa fa-user"></i>
+                          <a ng-bind="e.emID | emFilters"></a>
+                        </nobr>
+                    </td>
+                    <td> <span class="badge badge-success" ng-bind="e.Available"></span></td>
+                    <td> <span class="badge badge-warning" ng-bind="e.Unvailable"></span></td>
+                    <td> <span class="badge badge-warning" ng-bind="e.Pause"></span></td>
+                    <td> <span class="badge badge-warning" ng-bind="e.Dinner"></span></td>
+                    <td> <span class="badge badge-warning" ng-bind="e.Meeting"></span></td>
+                    <td> <span class="badge badge-warning" ng-bind="e.Other"></span></td>
+
+                    <td> <span class="badge badge-warning" ng-bind="e.Post_Processing"></span></td>
+                    <td> <span class="badge badge-danger" ng-bind="e.Logout"></span></td>
+                    <td> <span class="badge badge-secondary" ng-bind="e.All_State"></span></td>
+                 </tr>
+            </tbody>     
+     </table>
+    </div>
+    <!-- <div ng-include="'/Views/pagination.html'"></div> -->
+</div>

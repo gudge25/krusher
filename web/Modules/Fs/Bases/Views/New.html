@@ -1,0 +1,35 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i> {{'newBase' | translate}}</h3>
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tr>
+                        <td width="50%">{{'named' | translate}}</td>
+                        <td width="50%"><input class="form-control" ng-model="new.dbName" placeholder="{{'enterTitle' | translate}}"/></td>
+                    </tr>
+                <tr>
+                    <td>{{'activeShe' | translate}}</td>
+                    <td><label></label><input type="checkbox" cb-switch ng-model="new.isActive"  placeholder="{{'activeShe' | translate}}"></label></td>
+                </tr>
+            </table>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-8">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-disabled=" !new.dbName " ng-click="manyAction.Save(new,'Bases')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="Bases">{{'cancel' | translate}}</button>
+                    </div>
+        </div>
+    </div>
+</section>

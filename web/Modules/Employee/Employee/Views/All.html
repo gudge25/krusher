@@ -1,0 +1,99 @@
+<!-- <div style="display: inline-block;float: right; margin:10px 17px 5px; border: none;">
+        <div class="btn-group" style="float: right;">
+        <button ng-disabled="global.Loading" class="btn" ng-class="{'btn-warning' : global.Loading , 'btn-success' : !global.Loading}" ng-click="global.Loading=true;manyAction.Find()">
+                    <span ng-hide="global.Loading" ng-bind="'find'| translate"></span>
+
+                    <i ng-show="global.Loading" class="fa fa-spinner fa-pulse fa-fw"></i>
+                    <span ng-show="global.Loading" ng-bind="'Loading'| translate"></span>
+
+                    &nbsp; <i ng-show='dataIsChecked==1' class="fa fa-user"></i>
+                    <i ng-show='dataIsChecked>1' class="fa fa-users"></i>
+                    <span class="label label-warning" ng-show='dataIsChecked>0'>{{dataIsChecked}}</span>
+        </button>
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" ng-disabled="!can('EM','edit')">
+            <i class="fa fa-wrench"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+            <li role="menuitem"><a style="cursor: pointer;" ng-click="$event.stopPropagation()"> <create-employee/> </a> </li>
+            <li role="menuitem" ng-show="dataIsChecked">
+                <a  href="" ng-click="DeActive()" style="cursor: pointer;">
+                    <span ng-show="model.isActive"><i class="fa fa-trash"></i> {{'switch' | translate}}</span>
+                    <span ng-hide="model.isActive"> <i class="fa fa-undo"></i> {{'reestablish' | translate}}</span>
+                </a>
+            </li>
+            <li role="menuitem" ng-hide="global.Loading">
+                <a ng-click="manyAction.ClearFilter({ isActive: true })" style="cursor: pointer;">
+                    <span><i class="fa fa-undo"></i> {{'Clear_filter'| translate}}</span>
+                </a>
+            </li>
+        </ul>
+        </div>
+        <br>
+        <label ng-show="data.length > 0">{{'findPlaceholder'| translate}} {{data.length}} {{'from'| translate}} {{total_count}}</label>
+    </div> -->
+
+<div ng-include="'/build/Employee/Employee/Views/filter.html'"></div>
+
+<div  class="card card-info card-outline" >
+        <ng-include src="'/Views/findPlaceholder.html'"></ng-include>
+    
+        <div class="card-body  p-0">
+        <div class="row">
+            <div class="col-lg-12" style="overflow-y: scroll; height: 65vh;" can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="100">
+                <ng-include src="'/Views/LoadingTable.html'"></ng-include>
+                        <table class="table table-head-fixed table-hover borderless" ng-hide="global.Loading">
+                            <thead>
+                                <tr ng-click="manyAction.Find()">
+                                    <th ng-include="'/Views/ng-table/checkbox.html'" ng-click="$event.stopPropagation()" width="1%"></th>
+                                    <th ng-init="o1='emName'" ng-click="manyAction.order(o1);">
+                                        <nobr>{{'name' | translate}} <span ng-show="order==o1" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                    </th>
+                                    <th ng-init="o2='LoginName'" ng-click="manyAction.order(o2);">
+                                        <nobr>{{'login' | translate}} <span ng-show="order==o2" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                    </th>
+                                    <th ng-init="o3='roleName'" ng-click="manyAction.order(o3);">
+                                        <nobr>{{'role' | translate}} <span ng-show="order==o3" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                    </th>
+                                    <th ng-init="o4='sipName'" ng-click="manyAction.order(o4);">
+                                        <nobr>{{'extensionNumber' | translate}} <span ng-show="order==o4" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                    </th>
+                                    <th ng-init="o5='ManageID'" ng-click="manyAction.order(o5);">
+                                        <nobr>{{'chief' | translate}} <span ng-show="order==o5" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                    </th>
+                                    <th ng-init="o6='onlineStatus'" ng-click="manyAction.order(o6);">
+                                            <nobr>{{'status' | translate}} <span ng-show="order==o6" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                    </th>
+                                    <th ng-init="o7='coIDs'" ng-click="manyAction.order(o7);">
+                                            <nobr>{{'company' | translate}} <span ng-show="order==o7" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                    </th>
+                                    <th ng-init="o11='isActive'" ng-click="manyAction.order(o11);">
+                                        <nobr>{{'active' | translate}} <span ng-show="order==o11" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="e in data | limitTo:limit track by $index" ng-class="{ 'table-secondary' : e.emID == Auth.emID }">
+                                    <td ng-include="'/Views/checkboxOne.html'"></td>
+                                    <td ><a ui-sref="emEmployeeEdit( {'emID': e.emID })" ng-bind="e.emName"></a></td>
+                                    <td width="1%"ng-bind="e.LoginName" style="width: 25%"></td>
+                                    <td width="1%"><a ui-sref="Role"  ng-bind="e.roleName | translate"></a></td>
+                                    <td width="1%"><a ui-sref="SIPEdit( {'sipID': e.sipID, 'sipName': e.sipName })" ng-bind="e.sipName"></a></td>
+                                    <td width="1%"><nobr> <a ng-show="e.ManageID" ui-sref="emEmployeeEdit( {'emID': e.ManageID })" ng-bind="e.ManageID | emFilters"></a></nobr></td>
+                                    <td width="1%"><nobr> <span ng-bind="e.onlineStatus | enums | translate" class="text-orange" ng-class="{'text-success' : e.onlineStatus == 103501 , 'text-danger' : e.onlineStatus == 103507}"></span> </nobr> </td>
+                                    
+                                    <td width="1%">
+                                        <ui-select  multiple tagging tagging-label="(custom 'new' label)" ng-model="e.coIDs" theme="bootstrap4-1" ng-disabled="true" style='height: 30.33px;border:none;background: none;'>
+                                            <ui-select-match >{{$item.coID | coFilter }}</ui-select-match>
+                                            <ui-select-choices repeat=" a in []  | filter:$viewValue">{{a | translate}}</ui-select-choices>
+                                        </ui-select>    
+                                        <!-- <nobr> <a ng-bind="e.coIDs | coFilter "></a> </nobr>  -->
+                                    </td>
+                                    <td width="1%"><input type="checkbox" cb-switch disabled ng-model="e.isActive"/></td>
+                                </tr>
+                            </tbody>    
+                        </table>
+            </div>
+        </div>
+        <div ng-include="'/Views/pagination.html'"></div>
+    </div>
+</div>

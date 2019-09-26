@@ -1,0 +1,83 @@
+ <section class="content">
+      <div class="row">
+        <div class="col-md-3">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i>  {{'docType' | translate}}</h3>
+              <div class="card-tools"></div>
+            </div>
+            <div class="card-body p-0">
+              <ul class="nav flex-column"  ng-hide="items">
+                <li class="nav-item" ng-repeat="(key, values) in docsTypes.data track by $index"  uib-tooltip="{{values.Created | date:'dd.MM HH:mm'}}">
+                    <a href class="nav-link" ng-class="{'selected-templ' : values.dctID == model.dctID}" ng-click="getTemplate(values.dctID);" style="cursor: pointer;"> <b>{{values.dctName | translate}} </b> </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+         <!--DATA RIGHT-->
+        <div class="col-md-9" >
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+                <h3 class="card-title">{{'printedForms'|translate}}</h3>
+                <div class="card-tools">
+                    <nobr>
+                          <span class="direct-chat-timestamp " ng-show="data.length > 0">{{'findPlaceholder'| translate}} {{data.length}} {{'from'| translate}} {{total_count}}</span>
+                    </nobr>
+                    <div class="btn-group">
+                        <button class="btn btn-tool" ng-hide="!model.dctID" ng-disabled="global.Loading" ng-click="global.Loading=true;manyAction.Find()" >
+                          <i ng-hide="global.Loading" class="fa fa-search"></i>
+                          <span ng-hide="global.Loading" ng-bind="'find'| translate"></span>
+                          &nbsp;  <span  ng-show="!global.Loading && dataIsChecked>0" class="badge badge-warning navbar-badge" ng-bind="dataIsChecked"></span>
+                          
+                          <i ng-show="global.Loading" class="fa fa-spinner fa-pulse fa-fw"></i>
+                          <span ng-show="global.Loading" ng-bind="'Loading'| translate"></span>
+                        </button>
+        
+                        <button class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
+                          <i class="fa fa-wrench"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" role="menu">
+                              <a class="dropdown-item" ui-sref="TemplatesNew"><i class="fa fa-plus"></i> {{'new' | translate}}</a> 
+                              <a class="dropdown-item" ng-hide="!model.dctID" ng-click="manyAction.ClearFilter()" style="cursor: pointer;" ><span><i class="fa fa-undo"></i> {{'Clear_filter'| translate}} </span></a> 
+                              <a class="dropdown-item" ng-show="dataIsChecked" ng-click="manyAction.manyDelete(data)"><span><i class="fa fa-trash"></i> {{'del' | translate}}</span></a> 
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-tool" data-widget="collapse" ng-click="FilteCollapse=true" ng-show="!FilteCollapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-tool" data-widget="collapse" ng-click="FilteCollapse=false" ng-show="FilteCollapse"><i class="fa fa-plus"></i></button>
+                </div>
+
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0" ng-show="data.length > 0">
+                <div class="table table-head-fixed-responsive mailbox-messages">
+                    <table class="table table-head-fixed table-hover borderless" ng-show="data.length > 0">
+                      <thead>
+                        <tr>
+                          <th ng-include="'/Views/ng-table/checkbox.html'" ng-click="$event.stopPropagation()"  width="1%"></th>
+                          <th>{{'named' | translate}}</th>
+                          <th>{{'docType' | translate}}</th>
+                          <th>{{'active' | translate}}</th>
+                          <th><nobr>{{'default' | translate}}</nobr></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="e in data track by $index"  >
+                            <td width="1%" ng-include="'/Views/checkboxOne.html'"></td>
+                            <td> <a ng-href="/#!/TemplatesEdit/{{e.dcTypeID}}/{{e.dtID}}"> {{e.dtName}} </a> </td>
+                            <td> {{e.dcTypeID | docsTypesFilters}}  </td>
+                            <td width="1%"><label><input disabled type="checkbox" cb-switch ng-model="e.isActive" ></label></td>
+                            <td width="1%"><label><input disabled type="checkbox" cb-switch ng-model="e.isDefault" ></label></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>
+

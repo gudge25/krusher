@@ -1,0 +1,52 @@
+<div class="card-tools float-right">
+                        <button ng-hide="load" class="btn btn-success btn-sm" ng-click="SaveWithCheck(client, crmResponsible);ItemsEdit(Products);">{{'save' | translate}}</button>
+                        <button ng-show="load" class="btn btn-default btn-sm" >{{'saved' | translate}}!</button>
+                        <button class="btn btn-warning btn-sm" ng-click="GoTo()">{{'cancel' | translate}}</button>
+                        <br/><br/>
+</div>
+
+<div class="row">
+        <div class="col-lg-4 col-md-6">
+          <!-- Profile Image -->
+          <div class="card card-info card-outline" >
+                <div class="card-header with-border">
+                    <div class="row ">
+                        <div class="col-lg-2">
+                            <span class="fa-stack fa-lg" ng-if="!client.isActive"   uib-tooltip="{{'notactive' | translate}} {{client.IsPerson | Person | lowercase}}">
+                                        <i class="fa fa-user fa-stack-1x" ng-show="client.IsPerson"></i>
+                                        <i class="fa fa-building fa-stack-1x" ng-hide="client.IsPerson"></i>
+                                        <i class="fa fa-ban fa-stack-2x" style="color:Tomato"></i>
+                            </span>
+
+                            <div ng-if="client.isActive">
+                                <i class="fa fa-user fa-3x" ng-show="client.IsPerson"      uib-tooltip="{{'physFace' | translate}}"></i>
+                                <i class="fa fa-building fa-3x" ng-hide="client.IsPerson"  uib-tooltip="{{'jurFace' | translate}}"></i>
+                            </div>
+                        </div>
+                        <div class="col-lg-10">
+                            <h4 style="margin-top: 0%;" class="text-left"> <b  ng-bind="client.clName"></b></h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body card-profile p-0">
+                    <div ng-repeat="tab in tabs" ng-show="{{tab.title == 'Инфо о контакте'}}" >
+                        <div bind-html-compile="tab.content"></div>
+                    </div>
+                </div>
+
+        </div>
+        <div class="card card-info card-outline" ng-repeat="tab in tabs" ng-show="{{tab.title == 'Инфо о контрагенте'}}">
+            <div class="card-header with-border">
+                <h3 class="card-title">{{'requisites' | translate}}</h3>
+            </div>
+            <div class="card-body p-2">
+                <div bind-html-compile="tab.content"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8 col-md-6">
+        <ng-include src="'/build/Client/Client/Views/Edit/Tabs.html'"/>
+    </div>
+</div>

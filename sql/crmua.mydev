@@ -1,0 +1,472 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Devart (www.devart.com), the Project File -->
+<!-- Modifying this generated file will probably render it invalid -->
+<DatabaseProject Version="1.0.1" Guid="8db0f102-7e87-48f6-8ea0-82d73d3665b3">
+  <Provider Guid="59f90733-4d68-4fdf-82a7-f0fcbf5460aa" />
+  <Include>
+    <File RelPath="000-database" Link=".\Create\CreateDatabase.sql" />
+    <File RelPath="000-database" Link=".\Create\DatabaseOptions.sql" />
+    <File RelPath="000-database" Link=".\Create\Use.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\astA_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\astCdr_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\astExten_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\astIAX_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\astIncoming_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\astLocation_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\astQueue_members_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\astQueuelog_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\astQueues_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\astSippeers_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\astTransfer_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\astUserGroup_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\ccComment_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\ccCommentList_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\ccContact_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\crmAddress_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\crmClient_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\crmClientEx_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\crmContact_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\crmOrg_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\crmPerson_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\crmPersonContacts_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\crmRegion_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\crmResponsible_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\crmStatus_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\crmTag_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\crmTagList_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\dcDoc_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\dcType_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\dpDepDoc_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\dpDepot_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\dpItem_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\emEmploy_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\emEmployEx_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\emEmployRole_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\emPassword_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\emRole_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\fsClient_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\fsContact_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\fsFile_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\fsTemplate_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\fsTemplateItem_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\fsTemplateItemCol_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\gnrCurrency_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\gnrCurrencyRate_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\mnCentre_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\mnCentreCurrency_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\mnDirActivity_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\mnGroupSale_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\mnPriceList_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\pmEntityAction.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\pmFolder_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\slDeal_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\slDealItem_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\stProduct_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\stProductCategory_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\stStock_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\usCurrency_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\usEnumValues_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\usMeasure_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\usMessages_TAB.sql" />
+    <File RelPath="100-ddl" Link=".\DDL\usSequnces_TAB.sql" />
+    <File RelPath="200-fks" Link=".\FKS\ast_FK.sql" />
+    <File RelPath="200-fks" Link=".\FKS\cc_FK.sql" />
+    <File RelPath="200-fks" Link=".\FKS\crm_FK.sql" />
+    <File RelPath="200-fks" Link=".\FKS\dc_FK.sql" />
+    <File RelPath="200-fks" Link=".\FKS\em_FK.sql" />
+    <File RelPath="200-fks" Link=".\FKS\fs_FK.sql" />
+    <File RelPath="200-fks" Link=".\FKS\ga_FK.sql" />
+    <File RelPath="200-fks" Link=".\FKS\gnr_FK.sql" />
+    <File RelPath="200-fks" Link=".\FKS\mn_FK.sql" />
+    <File RelPath="200-fks" Link=".\FKS\ps_FK.sql" />
+    <File RelPath="200-fks" Link=".\FKS\sl_FK.sql" />
+    <File RelPath="300-code\Functions" Link=".\Code\Functions\fn_GetEmID.sql" />
+    <File RelPath="300-code\Functions" Link=".\Code\Functions\fn_GetHostName.sql" />
+    <File RelPath="300-code\Functions" Link=".\Code\Functions\fn_GetNumberByString.sql" />
+    <File RelPath="300-code\Functions" Link=".\Code\Functions\fn_GetStamp.sql" />
+    <File RelPath="300-code\Functions" Link=".\Code\Functions\fn_GetUserName.sql" />
+    <File RelPath="300-code\Functions" Link=".\Code\Functions\fn_Replace.sql" />
+    <File RelPath="300-code\Functions" Link=".\Code\Functions\fn_SplitStr.sql" />
+    <File RelPath="300-code\Functions" Link=".\Code\Functions\is_id_in_ids.sql" />
+    <File RelPath="300-code\Triggers" Link=".\Code\Triggers\ccContact_TRG.sql" />
+    <File RelPath="300-code\Triggers" Link=".\Code\Triggers\crmClient_TRG.sql" />
+    <File RelPath="300-code\Triggers" Link=".\Code\Triggers\crmContact_TRG.sql" />
+    <File RelPath="300-code\Triggers" Link=".\Code\Triggers\crmOrg_TRG.sql" />
+    <File RelPath="300-code\Triggers" Link=".\Code\Triggers\dcDoc_TRG.sql" />
+    <File RelPath="300-code\Triggers" Link=".\Code\Triggers\emEmployee_TRG.sql" />
+    <File RelPath="300-code\Triggers" Link=".\Code\Triggers\emEmployRole_TRG.sql" />
+    <File RelPath="300-code\Triggers" Link=".\Code\Triggers\emPassword_TRG.sql" />
+    <File RelPath="300-code\Triggers" Link=".\Code\Triggers\emRole_TRG.sql" />
+    <File RelPath="300-code\Views" Link=".\Code\Views\regArea_VIEW.sql" />
+    <File RelPath="300-code\Views" Link=".\Code\Views\regCountry_VIEW.sql" />
+    <File RelPath="300-code\Views" Link=".\Code\Views\regGmt_VIEW.sql" />
+    <File RelPath="300-code\Views" Link=".\Code\Views\regOperator_VIEW.sql" />
+    <File RelPath="300-code\Views" Link=".\Code\Views\regPlan_VIEW.sql" />
+    <File RelPath="300-code\Views" Link=".\Code\Views\regRegion_VIEW.sql" />
+    <File RelPath="300-code\Views" Link=".\Code\Views\regSocr_VIEW.sql" />
+    <File RelPath="300-code" Link=".\Code\ast_incoming_prc.sql" />
+    <File RelPath="300-code" Link=".\Code\ast_queue_members_prc.sql" />
+    <File RelPath="300-code" Link=".\Code\ast_queues_prc.sql" />
+    <File RelPath="300-code" Link=".\Code\ast_sippeers_prc.sql" />
+    <File RelPath="300-code" Link=".\Code\ast_usergroup_prc.sql" />
+    <File RelPath="300-code" Link=".\Code\astCdr_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\ccComment_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\ccCommentList_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\ccContact_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\crm_ConvertClient_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\crmAddress_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\crmClient_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\crmClientEx_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\crmContact_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\crmOrg_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\crmPerson_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\crmPersonContact_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\crmRegion_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\crmResponsible_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\crmStatus_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\crmTag_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\crmTagList_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\dcDoc_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\dcSource_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\emEmploy_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\emEmplyEx_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\emPassword_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\emRole_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\emUser_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\fsClient_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\fsContact_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\fsFile_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\fsTemplate_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\fsTemplateItem_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\regArea_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\regCountry_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\regGmt_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\regOperator_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\regRegion_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\slDeal_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\slDealItem_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\stProduct_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\us_GetNextID.sql" />
+    <File RelPath="300-code" Link=".\Code\us_GetParamList.sql" />
+    <File RelPath="300-code" Link=".\Code\usCurrency_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\usEnumValue_PRC.sql" />
+    <File RelPath="300-code" Link=".\Code\usMessage_PRC.sql" />
+    <File RelPath="400-data\InitialData" Link=".\Data\InitialData\crmClient_Data.sql" />
+    <File RelPath="400-data\InitialData" Link=".\Data\InitialData\setEnumsData.sql" />
+    <File RelPath="400-data\InitialData" Link=".\Data\InitialData\usMessages_Data.sql" />
+    <File RelPath="400-data" Link=".\Data\Database_Data.sql" />
+  </Include>
+  <Configurations Active="dev">
+    <Configuration Name="По умолчанию" CheckReferences="True" IgnoreErrors="False" OutputPath=".\Load" Target="crmua" OutputType="SingleFile" KeepOriginalObjects="True" RecreateObjects="True" RecreateDatabase="True" ServerVersion="10.0.19" Database="crmua" UseRegions="False" FullPaths="False" Definer="lgdmitry@%" ScriptDelimiter="$$" StorageEngine="INNODB" Collation="utf8_general_ci" ConvertToLowercase="False" DefinerEffect="Keep">
+      <Connection Name="crmua.77.91.132.6" Category="97d28b16-2c45-4ff7-8a1c-5e257e1fcf84" ConnectionString="User Id=lgdmitry;Host=77.91.132.6;Database=crmua;Character Set=utf8" />
+      <Build>
+        <File RelPath="100-ddl" Name="astA_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astCdr_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astExten_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astIAX_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astIncoming_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astLocation_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astQueue_members_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astQueuelog_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astQueues_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astSippeers_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astTransfer_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astUserGroup_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="ccComment_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="ccCommentList_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="ccContact_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmClient_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmClientEx_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmContact_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmOrg_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmPerson_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmPersonContacts_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmRegion_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmResponsible_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmStatus_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmTag_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmTagList_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="dcDoc_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="dcType_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="dpDepDoc_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="dpDepot_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="dpItem_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="emEmploy_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="emEmployRole_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="emPassword_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="emRole_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="fsClient_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="fsContact_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="fsFile_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="fsTemplate_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="fsTemplateItem_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="fsTemplateItemCol_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="usEnumValues_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="usMessages_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="usSequnces_TAB.sql" BuildAction="Build" />
+        <File RelPath="000-database" Name="DatabaseOptions.sql" BuildAction="Build" />
+        <File RelPath="400-data\InitialData" Name="setEnumsData.sql" BuildAction="Build" />
+        <File RelPath="400-data\InitialData" Name="usMessages_Data.sql" BuildAction="Build" />
+        <File RelPath="400-data" Name="Database_Data.sql" BuildAction="Build" />
+        <File RelPath="000-database" Name="CreateDatabase.sql" BuildAction="Build" />
+        <File RelPath="000-database" Name="Use.sql" BuildAction="Build" />
+        <File RelPath="400-data\InitialData" Name="crmClient_Data.sql" BuildAction="Build" />
+        <File RelPath="300-code\Functions" Name="fn_GetEmID.sql" BuildAction="Build" />
+        <File RelPath="300-code\Functions" Name="fn_GetHostName.sql" BuildAction="Build" />
+        <File RelPath="300-code\Functions" Name="fn_GetNumberByString.sql" BuildAction="Build" />
+        <File RelPath="300-code\Functions" Name="fn_GetStamp.sql" BuildAction="Build" />
+        <File RelPath="300-code\Functions" Name="fn_GetUserName.sql" BuildAction="Build" />
+        <File RelPath="300-code\Functions" Name="fn_Replace.sql" BuildAction="Build" />
+        <File RelPath="300-code\Functions" Name="fn_SplitStr.sql" BuildAction="Build" />
+        <File RelPath="300-code\Triggers" Name="ccContact_TRG.sql" BuildAction="Build" />
+        <File RelPath="300-code\Triggers" Name="crmClient_TRG.sql" BuildAction="Build" />
+        <File RelPath="300-code\Triggers" Name="crmContact_TRG.sql" BuildAction="Build" />
+        <File RelPath="300-code\Triggers" Name="crmOrg_TRG.sql" BuildAction="Build" />
+        <File RelPath="300-code\Triggers" Name="dcDoc_TRG.sql" BuildAction="Build" />
+        <File RelPath="300-code\Triggers" Name="emEmployee_TRG.sql" BuildAction="Build" />
+        <File RelPath="300-code\Triggers" Name="emEmployRole_TRG.sql" BuildAction="Build" />
+        <File RelPath="300-code\Triggers" Name="emPassword_TRG.sql" BuildAction="Build" />
+        <File RelPath="300-code\Triggers" Name="emRole_TRG.sql" BuildAction="Build" />
+        <File RelPath="300-code\Views" Name="regArea_VIEW.sql" BuildAction="Build" />
+        <File RelPath="300-code\Views" Name="regCountry_VIEW.sql" BuildAction="Build" />
+        <File RelPath="300-code\Views" Name="regGmt_VIEW.sql" BuildAction="Build" />
+        <File RelPath="300-code\Views" Name="regOperator_VIEW.sql" BuildAction="Build" />
+        <File RelPath="300-code\Views" Name="regPlan_VIEW.sql" BuildAction="Build" />
+        <File RelPath="300-code\Views" Name="regRegion_VIEW.sql" BuildAction="Build" />
+        <File RelPath="300-code\Views" Name="regSocr_VIEW.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="ast_incoming_prc.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="ast_queue_members_prc.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="ast_queues_prc.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="ast_sippeers_prc.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="ast_usergroup_prc.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="astCdr_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="ccComment_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="ccCommentList_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="ccContact_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmClient_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmClientEx_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmContact_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmOrg_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmPerson_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmPersonContact_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmRegion_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmResponsible_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmStatus_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmTag_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmTagList_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="dcDoc_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="dcSource_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="emEmploy_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="emPassword_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="emRole_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="emUser_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="fsClient_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="fsContact_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="fsFile_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="fsTemplate_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="fsTemplateItem_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="regArea_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="regCountry_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="regGmt_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="regOperator_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="regRegion_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="slDeal_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="us_GetNextID.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="us_GetParamList.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="usEnumValue_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="usMessage_PRC.sql" BuildAction="Build" />
+        <File RelPath="200-fks" Name="ast_FK.sql" BuildAction="Build" />
+        <File RelPath="200-fks" Name="cc_FK.sql" BuildAction="Build" />
+        <File RelPath="200-fks" Name="crm_FK.sql" BuildAction="Build" />
+        <File RelPath="200-fks" Name="dc_FK.sql" BuildAction="Build" />
+        <File RelPath="200-fks" Name="em_FK.sql" BuildAction="Build" />
+        <File RelPath="200-fks" Name="fs_FK.sql" BuildAction="Build" />
+        <File RelPath="200-fks" Name="ps_FK.sql" BuildAction="Build" />
+        <File RelPath="200-fks" Name="sl_FK.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="usCurrency_TAB.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="usCurrency_PRC.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="mnDirActivity_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="mnGroupSale_TAB.sql" BuildAction="Build" />
+        <File RelPath="200-fks" Name="mn_FK.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="mnCentre_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="mnCentreCurrency_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="gnrCurrencyRate_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="gnrCurrency_TAB.sql" BuildAction="Build" />
+        <File RelPath="200-fks" Name="gnr_FK.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="mnPriceList_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="stProduct_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="stStock_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="usMeasure_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="stProductCategory_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="pmFolder_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="pmEntityAction.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="emEmplyEx_PRC.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="emEmployEx_TAB.sql" BuildAction="Build" />
+        <File RelPath="300-code\Functions" Name="is_id_in_ids.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="stProduct_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crm_ConvertClient_PRC.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmAddress_TAB.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmAddress_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="slDealItem_PRC.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="slDealItem_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="slDeal_TAB.sql" BuildAction="Build" />
+      </Build>
+    </Configuration>
+    <Configuration Name="dev" CheckReferences="False" IgnoreErrors="False" OutputPath="..\dist" Target="production" OutputType="SingleFile" KeepOriginalObjects="True" RecreateObjects="False" RecreateDatabase="True" ServerVersion="10.1.7" Database="crmua" UseRegions="True" FullPaths="False" Definer="root@localhost" ScriptDelimiter="$$" StorageEngine="INNODB" Collation="utf8_general_ci" ConvertToLowercase="False" DefinerEffect="Replace">
+      <Connection Name="crmua.77.91.132.6" Category="97d28b16-2c45-4ff7-8a1c-5e257e1fcf84" ConnectionString="User Id=lgdmitry;Host=77.91.132.6;Database=crmua;Character Set=utf8" />
+      <Build>
+        <File RelPath="000-database" Name="CreateDatabase.sql" BuildAction="Build" />
+        <File RelPath="000-database" Name="DatabaseOptions.sql" BuildAction="Build" />
+        <File RelPath="000-database" Name="Use.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astA_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astCdr_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astExten_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astIAX_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astIncoming_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astLocation_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astQueue_members_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astQueuelog_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astQueues_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astSippeers_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astTransfer_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="astUserGroup_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="ccComment_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="ccCommentList_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="ccContact_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmAddress_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmClient_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmClientEx_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmContact_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmOrg_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmPerson_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmPersonContacts_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmRegion_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmResponsible_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmStatus_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmTag_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="crmTagList_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="dcDoc_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="dcType_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="dpDepDoc_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="dpDepot_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="dpItem_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="emEmploy_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="emEmployEx_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="emEmployRole_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="emPassword_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="emRole_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="fsClient_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="fsContact_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="fsFile_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="fsTemplate_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="fsTemplateItem_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="fsTemplateItemCol_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="gnrCurrency_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="gnrCurrencyRate_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="mnCentre_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="mnCentreCurrency_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="mnDirActivity_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="mnGroupSale_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="mnPriceList_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="pmEntityAction.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="pmFolder_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="slDeal_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="slDealItem_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="stProduct_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="stProductCategory_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="stStock_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="usCurrency_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="usEnumValues_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="usMeasure_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="usMessages_TAB.sql" BuildAction="Build" />
+        <File RelPath="100-ddl" Name="usSequnces_TAB.sql" BuildAction="Build" />
+        <File RelPath="200-fks" Name="ast_FK.sql" BuildAction="Build" />
+        <File RelPath="200-fks" Name="cc_FK.sql" BuildAction="Build" />
+        <File RelPath="200-fks" Name="crm_FK.sql" BuildAction="Build" />
+        <File RelPath="200-fks" Name="dc_FK.sql" BuildAction="Build" />
+        <File RelPath="200-fks" Name="em_FK.sql" BuildAction="Build" />
+        <File RelPath="200-fks" Name="fs_FK.sql" BuildAction="Build" />
+        <File RelPath="200-fks" Name="ga_FK.sql" BuildAction="Build" />
+        <File RelPath="200-fks" Name="gnr_FK.sql" BuildAction="Build" />
+        <File RelPath="200-fks" Name="mn_FK.sql" BuildAction="Build" />
+        <File RelPath="200-fks" Name="ps_FK.sql" BuildAction="Build" />
+        <File RelPath="200-fks" Name="sl_FK.sql" BuildAction="Build" />
+        <File RelPath="300-code\Functions" Name="fn_GetEmID.sql" BuildAction="Build" />
+        <File RelPath="300-code\Functions" Name="fn_GetHostName.sql" BuildAction="Build" />
+        <File RelPath="300-code\Functions" Name="fn_GetNumberByString.sql" BuildAction="Build" />
+        <File RelPath="300-code\Functions" Name="fn_GetStamp.sql" BuildAction="Build" />
+        <File RelPath="300-code\Functions" Name="fn_GetUserName.sql" BuildAction="Build" />
+        <File RelPath="300-code\Functions" Name="fn_Replace.sql" BuildAction="Build" />
+        <File RelPath="300-code\Functions" Name="fn_SplitStr.sql" BuildAction="Build" />
+        <File RelPath="300-code\Functions" Name="is_id_in_ids.sql" BuildAction="Build" />
+        <File RelPath="300-code\Triggers" Name="ccContact_TRG.sql" BuildAction="Build" />
+        <File RelPath="300-code\Triggers" Name="crmClient_TRG.sql" BuildAction="Build" />
+        <File RelPath="300-code\Triggers" Name="crmContact_TRG.sql" BuildAction="Build" />
+        <File RelPath="300-code\Triggers" Name="crmOrg_TRG.sql" BuildAction="Build" />
+        <File RelPath="300-code\Triggers" Name="dcDoc_TRG.sql" BuildAction="Build" />
+        <File RelPath="300-code\Triggers" Name="emEmployee_TRG.sql" BuildAction="Build" />
+        <File RelPath="300-code\Triggers" Name="emEmployRole_TRG.sql" BuildAction="Build" />
+        <File RelPath="300-code\Triggers" Name="emPassword_TRG.sql" BuildAction="Build" />
+        <File RelPath="300-code\Triggers" Name="emRole_TRG.sql" BuildAction="Build" />
+        <File RelPath="300-code\Views" Name="regArea_VIEW.sql" BuildAction="Build" />
+        <File RelPath="300-code\Views" Name="regCountry_VIEW.sql" BuildAction="Build" />
+        <File RelPath="300-code\Views" Name="regGmt_VIEW.sql" BuildAction="Build" />
+        <File RelPath="300-code\Views" Name="regOperator_VIEW.sql" BuildAction="Build" />
+        <File RelPath="300-code\Views" Name="regPlan_VIEW.sql" BuildAction="Build" />
+        <File RelPath="300-code\Views" Name="regRegion_VIEW.sql" BuildAction="Build" />
+        <File RelPath="300-code\Views" Name="regSocr_VIEW.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="ast_incoming_prc.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="ast_queue_members_prc.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="ast_queues_prc.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="ast_sippeers_prc.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="ast_usergroup_prc.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="astCdr_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="ccComment_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="ccCommentList_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="ccContact_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crm_ConvertClient_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmAddress_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmClient_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmClientEx_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmContact_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmOrg_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmPerson_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmPersonContact_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmRegion_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmResponsible_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmStatus_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmTag_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="crmTagList_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="dcDoc_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="dcSource_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="emEmploy_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="emEmplyEx_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="emPassword_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="emRole_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="emUser_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="fsClient_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="fsContact_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="fsFile_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="fsTemplate_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="fsTemplateItem_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="regArea_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="regCountry_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="regGmt_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="regOperator_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="regRegion_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="slDeal_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="slDealItem_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="stProduct_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="us_GetNextID.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="us_GetParamList.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="usCurrency_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="usEnumValue_PRC.sql" BuildAction="Build" />
+        <File RelPath="300-code" Name="usMessage_PRC.sql" BuildAction="Build" />
+        <File RelPath="400-data\InitialData" Name="crmClient_Data.sql" BuildAction="Build" />
+        <File RelPath="400-data\InitialData" Name="setEnumsData.sql" BuildAction="Build" />
+        <File RelPath="400-data\InitialData" Name="usMessages_Data.sql" BuildAction="Build" />
+        <File RelPath="400-data" Name="Database_Data.sql" BuildAction="Build" />
+      </Build>
+    </Configuration>
+  </Configurations>
+</DatabaseProject>

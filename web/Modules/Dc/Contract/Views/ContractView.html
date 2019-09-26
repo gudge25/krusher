@@ -1,0 +1,66 @@
+<div class="well">
+    <div>
+        <div class="text-right col-md-12">
+            <button ng-disabled="!Contract.dcNo || !Contract.type" ng-click="formClassInvalid = 'invalid-form-class' ; uiSelectSetClass(); ContractForm.$valid && manyAction.Save(Contract,'');$close()" class="btn btn-success">{{'upload'|translate}}</button>
+            <button ng-click="cancel()" class="btn btn-warning">{{'clear'|translate}}</button>
+            <button ng-click="$close()" class="btn btn-warning">{{'cancel'|translate}}</button>
+        </div>
+    </div>
+
+    <form novalidate class="css-form" ng-class="formClassInvalid" name="ContractForm">
+    <table class="table table-head-fixed table-bordered">
+        <tbody>
+          <tr>
+            <td class="col-md-3">{{'numberNum'|translate}}</td><td class="col-md-3 "><input type="text" class="form-control"  ng-model="Contract.dcNo" required="true"></td>
+            <td class="col-md-3">{{'date'|translate}}</td>
+              <td class="col-md-3">
+                <!-- <p class="input-group custom-datepicker-buttons">
+                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="Contract.dcDate" is-open="datepicker.opened" datepicker-options="dateOptions" required="true" />
+                      <span class="input-group-append">
+                      <button type="button" class="btn btn-default" ng-click="datepickerOpen()"><i class="fa fa-calendar"></i></button>
+                      </span>
+                  </p> -->
+
+                  <div class="form-group">
+                                  <p class="icon-group input-group">
+                                    <input ng-model="Contract.dcDate" class="form-control" ng-model-options="{ updateOn: 'blur' }" placeholder="{{'select a date' | translate}}">
+                                      <span class="input-group-append">
+                                        <button moment-picker="Contract.dcDate"
+                                                format="YYYY-MM-DD"
+                                                today="true"
+                                                locale="ru"
+                                                start-view="month"
+                                                change="ctrl.setFormattedDate(newValue)"
+                                                type="button" class="btn btn-default">
+                                          <i aria-hidden="true" class="fa fa-calendar"></i>
+                                        </button>
+                                      </span>
+                                  </p>
+                              </div>
+            </td>
+
+              </td>
+          </tr>
+          <tr>
+              <td class="col-md-3">{{'typeContract'|translate}}</td><td class="col-md-3 "><input type="text" class="form-control"  ng-model="Contract.type" required="true"></td>
+              <!-- <ui-select ng-model="Contract.dcStatus" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" required="">
+                          <ui-select-match >{{$select.selected.p.Name}}</ui-select-match>
+                          <ui-select-choices repeat="a.p.tvID as a in dcStatusEnum | filter: $select.search" >
+                            {{a.p.Name}}
+                        </ui-select-choices>
+                    </ui-select> -->
+
+            </td>
+            <td>{{'clientName'|translate}}</td>   <td>
+              <div class="input-group">
+                    <input class="form-control" type="text" ng-model="Contract.clName" required="true" disabled>
+                    <span class="input-group-append">
+                        <open-client-search data="Contract"/>
+                    </span>
+                </div>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+</form>
+</div>

@@ -1,0 +1,44 @@
+{
+    "description": "Web interface of CRM Krusher",
+    "main": "App.js",
+    "scripts": {
+      "start": "gulp",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+      "angular-translate": "latest",
+      "gulp": "^4.0.0",
+      "gulp-clean-css": "^3.10.0",
+      "gulp-concat": "^2.6.1",
+      "gulp-concat-css": "^3.1.0",
+      "gulp-minify-css": "^1.2.4",
+      "gulp-minify-html": "^1.0.6",
+      "gulp-sourcemaps": "^2.6.4"
+    },
+    "dependencies": {
+      "@angular/cli": "^7.2.0",
+      "@angular/common": "^7.2.0",
+      "@angular/compiler": "^7.2.0",
+      "@angular/core": "^7.2.0",
+      "@angular/forms": "^7.2.0",
+      "@angular/http": "^7.2.0",
+      "@angular/platform-browser": "^7.2.0",
+      "@angular/platform-browser-dynamic": "^7.2.0",
+      "@angular/router": "^7.2.0",
+      "@angular/upgrade": "^7.2.0",
+      "angular-in-memory-web-api": "^0.8.0",
+      "angularjs-dropdown-multiselect": "^2.0.0-beta.10",
+      "es5": "^1.0.0",
+      "es6": "0.0.7",
+      "gulp-util": "^3.0.8",
+      "npm": "^6.5.0",
+      "reflect-metadata": "^0.1.12",
+      "rxjs": "^6.3.3",
+      "systemjs": "^2.1.1",
+      "xlsx": "^0.13.5",
+      "zone": "^0.3.4",
+      "zone.js": "^0.8.26"
+    }
+  }

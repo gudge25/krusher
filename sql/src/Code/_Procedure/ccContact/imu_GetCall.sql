@@ -1,0 +1,10 @@
+DROP PROCEDURE IF EXISTS imu_GetCall;
+DELIMITER $$
+CREATE PROCEDURE imu_GetCall() 
+DETERMINISTIC MODIFIES SQL DATA
+BEGIN
+  SELECT id, src, dst FROM meduchet.fifo
+  WHERE source='notkrusher';
+END $$
+DELIMITER ;
+--

@@ -1,0 +1,12 @@
+{
+		"productExists" : "product exists",
+		"enterCode" : "Enter a code",
+		"categorys" : "Categories",
+		"brands" : "Brands",
+		"selectBrandCategory" : "Select a category brand",
+		"unitsMeasure" : "Units of measurement",
+		"searchName" : "Search by name",
+		"searchCode" : "Search by code",
+		"find" : "Find",
+		"clear" : "Clear"
+	}

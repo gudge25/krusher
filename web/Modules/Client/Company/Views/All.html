@@ -1,0 +1,46 @@
+<div ng-include="'/build/Client/Company/Views/filter.html'"></div>
+
+<div  class="card card-info card-outline" >
+    <ng-include src="'/Views/findPlaceholder.html'"></ng-include>
+
+    <div class="card-body p-0">
+        <div class="row">
+            <div class="col-lg-12" style="overflow-y: auto; height: 70vh;" can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="100">
+                <ng-include src="'/Views/LoadingTable.html'"></ng-include>
+                    <table class="table table-head-fixed table-hover borderless" ng-hide="global.Loading || data.length < 1">
+                        <thead>
+                            <tr ng-click="manyAction.Find()">
+                                <th ng-include="'/Views/ng-table/checkbox.html'" ng-click="$event.stopPropagation()"  width="1%"/>
+                                <th ng-init="o1='coName'" ng-click="manyAction.order(o1);">
+                                    <nobr>{{'named' | translate}} <span ng-show="order==o1" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                </th>
+                                <th ng-init="o2='coDescription'" ng-click="manyAction.order(o2);">
+                                    <nobr>{{'description' | translate}} <span ng-show="order==o2" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                </th>
+                                <th ng-init="o3='inMessage'" ng-click="manyAction.order(o3);">
+                                    <nobr> {{'Outgoing' | translate}} {{'greeting' | translate | lowercase}} <span ng-show="order==o2" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                </th>
+                                <th ng-init="o4='outMessage'" ng-click="manyAction.order(o4);">
+                                    <nobr> {{'Incoming' | translate}} {{'greeting' | translate | lowercase}} <span ng-show="order==o2" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                </th>
+                                <th ng-init="o11='isActive'" ng-click="manyAction.order(o11);">
+                                        <nobr>{{'active' | translate}} <span ng-show="order==o11" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="e in data  | limitTo:limit track by $index" >
+                                <td ng-include="'/Views/checkboxOne.html'"></td>
+                                <td> <a ng-href="/#!/CompanyEdit/{{e.coID}}" ng-bind="e.coName"></a> </td>
+                                <td> <span ng-bind="e.coDescription"></span> </td>
+                                <td> <span class="text-muted" ng-bind="e.inMessage"></span> </td>
+                                <td> <span class="text-muted" ng-bind="e.outMessage"></span> </td>
+                                <td width="1%"><input type="checkbox" cb-switch disabled ng-model="e.isActive"/></td>
+                            </tr>
+                        </tbody>    
+                    </table>
+            </div>
+        </div>    
+        <div ng-include="'/Views/pagination.html'"></div>
+    </div>
+</div>

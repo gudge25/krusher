@@ -1,0 +1,110 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-5">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                        <tr>
+                                <td width="50%">{{'named' | translate}}</td>
+                                <td width="50%">
+                                    <textarea maxlength="200" ng-model="upd.qName" placeholder="{{'enterTitle' | translate}}" msd-elastic style="background-color: lightgoldenrodyellow;color: dimgrey" class="form-control" rows="3" id="comment"></textarea>
+
+                                    <!-- <input class="form-control" ng-model="upd.qName" placeholder="{{'enterTitle' | translate}}"/> -->
+                                </td>
+                        </tr>
+                        <tr>
+                                <td>{{'form' | translate}}</td>
+                                <td>
+
+                                        <div class="input-group" style="width: 100%">
+                                            <ui-select ng-model="upd.tpID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.tpName}}</ui-select-match>
+                                                <ui-select-choices repeat="a.tpID as a in FormType.data">
+                                                            {{a.tpName}}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            <span class="input-group-append">
+                                                    <button ng-show="upd.tpID" type="button" class="btn btn-default" ng-click="upd.tpID = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                            </span>
+                                        </div>  
+                                </td>
+                        </tr>
+                        <tr>
+                                <td>{{'parentID' | translate}}</td>
+                                <td>
+                                        <div class="input-group" style="width: 100%">
+                                            <ui-select ng-model="upd.ParentID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.qName}}</ui-select-match>
+                                                <ui-select-choices repeat="a.qID as a in data">
+                                                            {{a.qName}}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            <span class="input-group-append">
+                                                    <button ng-show="upd.ParentID" type="button" class="btn btn-default" ng-click="upd.ParentID = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                            </span>  
+                                        </div>
+                                </td>
+                        </tr>
+                        <tr>
+                                <td>{{'active' | translate}}</td>
+                                <td><label class="float-right"><input type="checkbox" cb-switch ng-model="upd.isActive" placeholder="{{'activeShe' | translate}}"></label></td>
+                        </tr>    
+                        <tr ng-show="upd.Created">
+                            <td><span class="direct-chat-timestamp" style="display: inline-block; font-size: 12px">{{'created' | translate}}</span></td>
+                            <td>
+                                <span style="float: right; font-size: 12px" >
+                                    <span class="direct-chat-timestamp" ng-bind="upd.CreatedBy | emFilters" uib-tooltip="{{ upd.CreatedBy | emFilters}} {{upd.Created | date:'yyyy MMM d, HH:mm'}}" tooltip-trigger="mouseenter" tooltip-placement="top" ></span>
+                                    <span class="direct-chat-timestamp" ng-bind="upd.Created | date:'yyyy MMM d, HH:mm'"> </span>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr ng-show="upd.Changed || upd.Changed==0">
+                                <td><span class="direct-chat-timestamp" style="display: inline-block; font-size: 12px">{{'editedBy' | translate}}</span></td>
+                                <td>
+                                    <span style="float: right; font-size: 12px" >
+                                        <span class="direct-chat-timestamp" ng-bind="upd.ChangedBy | emFilters" uib-tooltip="{{ upd.ChangedBy | emFilters}} {{upd.Changed | date:'yyyy MMM d, HH:mm'}}" ></span>
+                                        <span class="direct-chat-timestamp" ng-bind="upd.Changed | date:'yyyy MMM d, HH:mm'" > </span>
+                                    </span>
+                                </td>
+                        </tr>
+                    </table>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <!-- <div class="col-lg-7">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-disabled="!upd.qName" ng-click="save()" ui-sref="questionsAll">{{'save' | translate}}</button> &#160
+
+                        <button class="btn btn-warning btn-sm" ui-sref="formEdit">{{'cancel' | translate}}</button> &#160
+                        <div class="btn-group float-right" uib-dropdown is-open="status.isopen">
+                            <button id="single-button"  class="btn btn-default btn-sm" uib-dropdown-toggle ng-disabled="disabled">
+                                {{'actions' | translate}} <span class="caret"></span>
+                            </button>
+                            <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+                                <li role="menuitem"><a ng-click="save(questions, false)" ng-show="questions[0].qName.length>0"><i class="fa fa-plus"></i> {{'saveReturn' | translate}}</a></li>
+                                <li role="menuitem"><a ng-click="save(questions, true)"><i class="fa fa-plus"></i> Сохранить и новый</a></li>
+                                <li role="menuitem"><a ng-show="questions.length !=0" ng-click="manyAction.new()" style="cursor: pointer;"><i class="fa fa-trash"></i> {{'del' | translate}}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+        </div> -->
+        <!--DATA RIGHT-->
+        <div class="col-lg-7">
+                        <div class="card-tools float-right">
+                            <button class="btn btn-success btn-sm" ng-click="manyAction.Update(upd,'questionsAll')" ng-hide="manyAction.Check_upd_old()">{{'save' | translate}}</button>
+                            <button class="btn btn-warning btn-sm" ui-sref="questionsAll">{{'cancel' | translate}}</button>
+                        </div>
+    
+        </div>
+    </div>
+</section>

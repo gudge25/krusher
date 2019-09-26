@@ -1,0 +1,82 @@
+<div class="card card-info card-outline">
+    <div class="card-header">
+        <h3 class="card-title" translate="filters"></h3>
+        <div class="card-tools">
+            <global-button2 url=""></global-button>
+        </div>
+    </div>
+
+    <div class="card-body p-0">
+        <div class="card-footer">
+            <div class="row">
+                <!-- <pre>{{model|json}}</pre> -->
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <b>{{'dateFrom'| translate}}</b><br>
+                            <div class="input-group md-3">
+                                <input ng-model="model.DateFrom" class="form-control" ng-model-options="{ updateOn: 'blur' }" style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;">
+                                <div class="input-group-append">
+                                            <button moment-picker="model.DateFrom" max-date="model.DateTo" class="btn btn-default">
+                                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                            </button>
+                                </div>
+                            </div>            
+                    </div>
+
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <b>{{'dateTo'| translate}}</b><br>
+                            <div class="input-group md-3">
+                                <input ng-model="model.DateTo" class="form-control" ng-model-options="{ updateOn: 'blur' }" style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;">
+                                <div class="input-group-append">
+                                            <button moment-picker="model.DateTo" min-date="model.DateFrom" class="btn btn-default">
+                                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                            </button>
+                                </div>
+                            </div> 
+                    </div>
+
+                  
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <b>{{'named'| translate}}</b>
+                            <ui-select ng-model="model.dcNo" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.tpName}}</ui-select-match>
+                                <ui-select-choices repeat="a.tpName as a in FormType.data| filter: $select.search" >
+                                {{a.tpName}}
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <b>{{'contact'| translate}}</b>
+                            <ui-select ng-model="model.clName"  theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected}}</ui-select-match>
+                                <ui-select-choices repeat="a in contact| filter: $select.search" >
+                                {{a}}
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <b>{{'responsible'| translate}}</b>
+                        <ui-select ng-model="model.emID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                            <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.emName}}</ui-select-match>
+                            <ui-select-choices repeat="a.emID as a in employees.data | filter: $select.search ">
+                                {{a.emName}}
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <b>{{'Comment'| translate}}</b>
+                        <!-- <ui-select ng-model="comment.comment" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" on-select='commentFilter(comment.comment)'>
+                                            <ui-select-match >{{$select.selected.dcComment}}</ui-select-match>
+                                            <ui-select-choices repeat="a in COMM| filter: $select.search  " >
+                                            {{a.dcComment}}
+                                            </ui-select-choices>
+                                        </ui-select> -->
+                        <input ng-model="model.dcComment" theme="bootstrap4-1" class="form-control"  placeholder="{{'typeComment' | translate}}" />
+                    </div>     
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                            <ng-include src="'/Views/actives.html'"></ng-include>
+                    </div>
+           </div>
+        </div>
+    </div>
+</div>

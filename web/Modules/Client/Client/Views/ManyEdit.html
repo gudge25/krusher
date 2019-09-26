@@ -1,0 +1,52 @@
+<div class="modal-content2">
+    <div class="modal-header text-center">
+        <h3 class="modal-title">Редактирования <b>{{items.length}}</b> клиентов</h3>
+    </div>
+    <div class="modal-body">
+
+        <table class="table table-head-fixed table-hover borderless">
+            <tr>
+                <td>Ответственный</td>
+                <td>
+                                <ui-select ng-model="g.emID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                    <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.emName}}</ui-select-match>
+                                    <ui-select-choices repeat="a.emID as a in employees.data | filter: $select.search" >
+                                     {{a.emName}}
+                                    </ui-select-choices>
+                                </ui-select>
+                </td>
+            </tr>
+          <!--  <tr>
+                <td>Коментарий</th>
+                <td><textarea class="form-control" rows="3" ng-model="g.comment"></textarea></td>
+            </tr> -->
+          <!--  <tr>
+                <td>Дата следующего звонка</th>
+                <td>
+                    <form name="myform4">
+                    <input      type            ="text"
+                                class           ="editor form-control"
+                                ng-model        ="g.CallDate"
+                                ng-maxlength    ="10"
+                                ng-minxlength   ="10"
+                                ng-required     ="true"
+                                ng-pattern      ='/^(\d{4})\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/'
+                                ng-required     ="true"
+                                name            ="data"
+                                placeholder     ="Пример: 1987-30-01"
+                            />
+                    </form>
+                    <span  ng-show="myform4.data.$error.pattern">не верный формат!</span>
+
+                </td>
+            </tr>-->
+
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" ng-click="ok(g)" ng-disabled="!g.CallDate && !g.emID">Редактировать</button>
+        <button class="btn btn-warning" ng-click="cancel()">Отмена</button>
+    </div>
+</div>
+

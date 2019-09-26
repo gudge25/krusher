@@ -1,0 +1,49 @@
+<div class="modal-content2">
+    <div class="modal-header text-center">
+        <h3 class="modal-title">
+                   <b>{{'questonmanager' | translate}}</b>
+         </h3>
+    </div>
+
+    <div class="modal-body">
+                <div class="row hoverDiv" ng-show="auth.FFF.client_name">
+                    <div class="col-lg-4 no-padding">{{'client' | translate}}</div>
+                    <div class="col-lg-8 no-padding"><b ng-bind="auth.FFF.client_name"></b></div>
+                </div>
+
+                <div class="row hoverDiv">
+                    <div class="col-lg-4 no-padding">{{'name' | translate}}</div>
+                    <div class="col-lg-8 no-padding">
+                                    <div class="form-group has-feedback" ng-class="{ 'has-error' : !new.name && edit1, 'has-name' : new.name }">
+                                        <input ng-model="new.name" class="form-control" placeholder="{{'name' | translate}}" ng-change="edit1=true;">
+                                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                        <span class="help-block" ng-show="!new.name && edit1">{{'typeName'| translate}}</span>
+                                    </div>
+                    </div>
+                </div>
+                <div class="row hoverDiv">
+                    <div class="col-lg-4 no-padding">{{'phone' | translate}}</div>
+                    <div class="col-lg-8 no-padding">
+                                    <div class="form-group has-feedback" ng-class="{ 'has-error' : !new.Phone && edit2, 'has-success' : new.Phone }">
+                                        <input numeric-only ng-model="new.Phone" class="form-control" placeholder="{{'phone' | translate}}" ng-change="edit2=true;">
+                                        <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                                        <span class="help-block" ng-show="!new.Phone && edit2">{{'typePhone'| translate}}</span>
+                                    </div>
+                    </div>
+                </div>
+                <div class="row hoverDiv">
+                    <div class="col-lg-4 no-padding">{{'setqueston' | translate}}</div>
+                    <div class="col-lg-8 no-padding">
+                                    <textarea maxlength="500" ng-model="new.Comment" msd-elastic style="min-height: 100px; background-color: lightgoldenrodyellow;color: dimgrey" class="form-control" rows="4" id="comment" placeholder="{{'essencequestion' | translate}}..."></textarea>
+                    </div>
+                </div>
+    </div>
+    <div class="modal-footer">
+            <div class="text-right">
+                <div class="float-right">
+                    <button ng-disabled="!new.Comment || !new.name || !new.Phone" ng-click="Save();$close()" class="btn btn-success btn-sm">{{'send' | translate}}</button>
+                    <button ng-click="$close()" class="btn btn-warning btn-sm">{{'cancel' | translate}}</button>
+                </div>
+            </div>
+    </div>
+</div>    

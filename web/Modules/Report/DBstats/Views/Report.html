@@ -1,0 +1,138 @@
+<div class="row">
+    <div  class="card box-warning col-lg-8">
+     <div class="card-body" >
+
+       <div class="col-lg-2 rightArrow">
+            <br>
+            <div class="btn-group">
+                <label ng-init="isActive=true" class="btn btn-warning btn-sm" ng-model="isActive"  uib-btn-checkbox>{{'activeBase' | translate}}</label>
+            </div>
+        </div>
+
+        <div class="col-lg-10" style="overflow-y: scroll; height: 725px;" can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="100">
+            <br>
+
+            <br>
+
+            <table ng-table="tableParams" show-filter="false" class="table table-head-fixed table-hover borderless">
+
+                <tbody>
+                <tr>
+                    <th lass="'text-left'">{{'bases' | translate}}</th>
+                    <th lass="'text-left'">{{'statistics' | translate}}</th>
+                </tr>
+                <tr ng-repeat="e in data | filter:{isActive:isActive} | limitTo:limit track by $index"  >
+
+
+                    <td style="width: 60%">
+                        <a ng-href="/#!/fsEdit/{{e.ffID}}">
+                            {{e.ffName}}
+                        </a>
+                        <span ng-show="e.Priority"><br/>{{'priority' | translate}}: {{e.Priority}}</span>
+                        <span ng-show="e.ChimeDate"><br/>{{'dateCall' | translate}}: {{e.ChimeDate | date:'dd.MM HH:mm'}}</span>
+                        <span ><br/>{{'activeShe' | translate}}: <input type="checkbox" ng-model="e.isActive" disabled>    </input></span>
+                    </td>
+
+                    <td>
+                       <!--  <a  class="list-group-item btn" style="margin-left: 5%;border:0;padding:0;text-align:left;"
+                            ng-repeat    = "value in e.Stats track by $index"
+                            ng-class     = "disabled"
+                           >
+                        <span style="color:{{(value.Name | ClientStatus).color}};">
+                            {{(value.Name | ClientStatus).status}}
+                        </span>
+                        <span  class="badge badge-important float-right" style="background-color: #367fa9;"> {{value.Qty}} </span>
+                        </a> -->
+                                            <ul class="treeview" style="list-style: none;">
+                                                <!--Status-->
+                                                <li >
+                                                         <a style="background-color: white !important;color:black;"
+                                                            >
+                                                            <i class="fa fa-info"></i> {{'info' | translate}}
+                                                        </a>
+                                                        <ul class="treeview-menu "  style="display: block; list-style: none;">
+                                                          <!--Status-->
+                                                          <li>
+                                                                   <a style="background-color: white !important;color:black;"
+                                                                      ng-repeat    = "value in e.Stats track by $index"
+                                                                      ng-show   = "(value.FilterID==1001 || value.FilterID==1002)"
+                                                                      class     = "disabled"
+                                                                      >
+                                                                        <div style="display: flow-root;" >
+                                                                          <div style="color:{{(value.Name | ClientStatus).color}};display: inline-block;float: left;" >
+                                                                              {{(value.Name | ClientStatus).status}}
+                                                                          </div>
+                                                                          <div ng-bind="value.Qty" class="listItem label-primary"></div>
+                                                                        </div>
+                                                                  </a>
+                                                          </li>
+                                                        </ul>
+                                                  </li>
+                                            </ul>
+                                            <ul ng-click="$event.stopPropagation()" style="list-style: none;">
+                                                <!--Status-->
+                                                <li >
+                                                         <a style="background-color: white !important;color:black;"
+                                                            >
+                                                            <i class="fa fa-bar-chart-o"></i> {{'status' | translate}}
+                                                        </a>
+                                                        <ul class="treeview-menu"  style="display: block; list-style: none;">
+                                                          <!--Status-->
+                                                          <li  >
+                                                                   <a style="color:black; cursor: pointer;"
+                                                                      ng-repeat    = "value in e.Stats track by $index"
+                                                                      ng-show      = "(value.FilterID==1003 || value.FilterID==1004)"
+                                                                      ng-click     = "ChildIndex($index);Filter.Pages.CurrentPage=1;x='start';FindClient(value);"
+                                                                      ng-class     = "{'tagBackgnd' : value.Name == statusName}" >
+                                                                        <div style="display: flow-root;">
+                                                                           <div style="color:{{(value.Name | ClientStatus).color}};display: inline-block;float: left;" >
+                                                                              {{(value.Name | ClientStatus).status}}
+                                                                          </div>
+                                                                          <div ng-bind="value.Qty" class="listItem"
+                                                                            ng-class="{'label-danger' : (value.Name == 103 || value.Name == 203), 'label-success' : (value.Name == 201 || value.Name == 202), 'label-warning' : (value.Name == 206 || value.Name == 205 || value.Name == 102),'label-primary' : value.Name == 101,'label-info' : value.Name == 204}"></div>
+                                                                        </div>
+                                                                  </a>
+                                                          </li>
+                                                        </ul>
+                                                  </li>
+                                            </ul>
+                                            <ul style="list-style: none;">
+                                                <!--Status-->
+                                                <li >
+                                                         <a style="background-color: white !important;color:black;"
+                                                            >
+                                                             <i class="fa fa-files-o"></i> {{'documentation' | translate}}
+                                                        </a>
+                                                        <ul class="treeview-menu"  style="display: block; list-style: none;">
+                                                          <!--Status-->
+                                                          <li >
+                                                                   <a style="background-color: white !important;color:black;"
+                                                                      ng-repeat    = "value in e.Stats track by $index"
+                                                                      ng-show      = "value.FilterID < 100 && value.FilterID > 0 "
+                                                                      class        = "disabled"
+                                                                      >
+                                                                        <div style="display: flow-root;"  >
+                                                                          <div style="color:{{(value.Name | ClientStatus).color}};display: inline-block;float: left;">
+                                                                              {{(value.Name | ClientStatus).status}}
+                                                                          </div>
+                                                                          <div ng-bind="value.Qty" class="listItem label-primary"></div>
+                                                                        </div>
+                                                                  </a>
+                                                          </li>
+                                                        </ul>
+                                                  </li>
+                                            </ul>
+
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-lg-4" style="border-right: 1px solid #e7e7e7;">
+        </div>
+    </div>
+    </div>
+
+</div>

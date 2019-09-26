@@ -1,0 +1,82 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tr>
+                        <td width="40%">{{'names' | translate}}</td>
+                        <td width="60%">
+                            <div class="has-feedback" ng-class="{ 'has-error' : !new.record_name.length, 'has-success' : new.record_name }">
+                                    <input ng-model="new.record_name"  class="form-control" ng-change="edit2=true;"
+                                          only-clear ng-maxlength="200" required
+                                    />
+                                    <span class="glyphicon glyphicon-asterisk form-control-feedback"></span>
+                                    <span class="help-block" ng-show="!new.record_name.length && edit2">{{'typeSIPLeng'| translate}}</span>
+                            </div>    
+                        </td>
+                    </tr>
+
+                    <!-- <tr ng-show="fileToUpload && match"> -->
+                    <tr>
+                        <td> {{'recommendation' | translate}}!</td>
+                        <td>
+                            <div class="alert " ng-class="{'alert-warning' : !Agree, 'alert-success' : Agree}">
+                                <i class="icon fa fa-asterisk"></i> 
+                                {{'recommendationWav' | translate}} <br/><br/>
+                                {{ 'imp1' | translate }} (mp3,wav,gsm)
+                            </div>
+                            <div class="card-tools float-right" ng-hide="Agree">
+
+                                    <a target="_blank" href="http://g711.org" class="btn btn-link btn-sm">{{'fileconvert' | translate}}</a>
+                                <button class="btn btn-primary btn-sm" ng-click="Agree=true;">{{'Agree' | translate}}</button>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr ng-show="Agree">
+                        <td>{{'downloadFile' | translate}}</td>
+                        <td>
+                                    <b>{{'selectFile' | translate}}</b> <br/><br/>
+                                        <!-- <div class="uploadFile">
+                                            <button >{{'selectFile' | translate}}</button>
+                                            <span ng-hide="fileName">{{'fileNotChoose' | translate}}</span>
+                                            <span ng-show="fileName">{{fileName}}</span>
+                                        </div> -->
+                                    <form method='post' name="uploadForm" enctype="multipart/form-data"  >
+                                        <input type='file' id="fileMobile" name="file" file-model="fileToUpload" onchange="getFileData(this)">
+
+                                    </form>
+                                    <div class="alert alert-error" ng-show="!match && fileToUpload" >
+                                                {{'fileExtensionMP3' | translate}}
+                                    </div>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>{{'active' | translate}}</td>
+                        <td><label><input type="checkbox" cb-switch ng-model="new.isActive"></label></td>
+                    </tr>
+                </table>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-8">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-disabled="!new.record_name || !fileToUpload || !match || !Agree" ng-click="submit(new);" ui-sref="Record">{{'Download' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="Record">{{'cancel' | translate}}</button>
+                    </div>
+        </div>
+    </div>
+</section>

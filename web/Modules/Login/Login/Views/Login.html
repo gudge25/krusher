@@ -1,0 +1,118 @@
+<section class="content" ui-view="viewA" style="width: 100%; height: 100h; ">
+
+<div class="btn-group float-right" >
+    
+    <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+            <img ng-src="/LTE/dist/img/{{lang}}.svg" class="btn-lang">
+    </button>
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href  ng-class="{ 'active' : lang == 'en'}" ng-click="manyAction.changeLanguage('en')" style="cursor: pointer;"> <img src="/LTE/dist/img/en.svg" style="width: 20px"> English    </a> 
+            <a class="dropdown-item" href  ng-class="{ 'active' : lang == 'ru'}" ng-click="manyAction.changeLanguage('ru')" style="cursor: pointer;"> <img src="/LTE/dist/img/ru.svg" style="width: 20px"> Russian    </a>  
+            <a class="dropdown-item" href  ng-class="{ 'active' : lang == 'ua'}" ng-click="manyAction.changeLanguage('ua')" style="cursor: pointer;"> <img src="/LTE/dist/img/ua.svg" style="width: 20px"> Ukrainian  </a>  
+    </div>
+</div>
+
+<div class="container " style="padding-top:7%; max-width: 800px;">
+    <div class="row" >
+        <div class="col-md-6" style="color: gainsboro;"> <!-- style="color: #676a6c;" overflow-y: hidden;overflow-x: hidden;-->
+            <div><img src="/images/krus_logo.png" alt="User Image" style="width: 70%;"></div>
+            <br/>
+            <span ng-bind="'autodial' | translate"></span>
+            <br/><br/>
+            <span ng-bind="'importantForUs' | translate"></span>
+            <br/><br/>
+            <span ng-bind="'importantForUs2' | translate"></span>
+        </div>
+
+        <div class="col-md-6 panel panel-default">
+            <div class="middle-box text-center loginscreen animated fadeInDown login-card-body">
+                <h3>{{ 'authorization' | translate}}</h3>
+                <hr/>
+                <div class="input-group mb-3 has-feedback"  ng-class="{ 'has-error' : !auth.USERNAME.length && edit, 'has-success' : auth.USERNAME }">
+                    <input ng-model="auth.USERNAME" class="form-control" ng-maxlength="30" ng-change="edit=true;" placeholder="{{'login' | translate}}" pattern="^[a-zA-Z0-9._-]+$" required>
+                    <div class="input-group-append input-group-text">
+                        <span class="fas fa-user"></span>
+                    </div>
+                    <span class="help-block" ng-show="!auth.USERNAME.length && edit">{{'typeLogin'| translate}} <br/> {{'typeLoginLeng'| translate}}</span>
+                </div>
+
+                <div class="input-group mb-3" ng-hide="auth.USERNAME=='demo'" ng-class="{'has-error' : auth.PASSWORD.length < 12,'has-success' : auth.PASSWORD.length >= 12 }">
+                    <input type="password" ng-model="auth.PASSWORD" class="form-control" placeholder=" {{'password' | translate}}" ng-enter="Login(auth)">
+                    <div class="input-group-append input-group-text">
+                        <span class="fas fa-lock"></span>
+                    </div>
+                    <span class="help-block" ng-show="!auth.USERNAME.length && edit">{{'typeLogin'| translate}} <br/> {{'typeLoginLeng'| translate}}</span>
+                </div>
+                <div class="input-group mb-3" ng-show="auth.USERNAME=='demo'" ng-class="{'has-error' : auth.PASSWORD.length < 4,'has-success' : auth.PASSWORD.length >= 4 }">
+                    <input type="password" ng-model="auth.PASSWORD" class="form-control" placeholder=" {{'password' | translate}}" ng-enter="Login(auth)">
+                    <div class="input-group-append input-group-text">
+                        <span class="fas fa-lock"></span>
+                    </div>
+                    <span class="help-block" ng-show="!auth.USERNAME.length && edit">{{'typeLogin'| translate}} <br/> {{'typeLoginLeng'| translate}}</span>
+                </div>
+
+
+                <!-- <div class="form-group has-feedback" ng-class="{ 'has-error' : !auth.USERNAME.length && edit, 'has-success' : auth.USERNAME }">
+                    <input ng-model="auth.USERNAME" class="form-control" ng-maxlength="30" ng-change="edit=true;" placeholder="{{'login' | translate}}" pattern="^[a-zA-Z0-9._-]+$" required>
+                    <span class="fas fa-user form-control-feedback"></span>
+                </div> -->
+                <!-- <div ng-hide="auth.USERNAME=='demo'" class="form-group has-feedback"  ng-class="{'has-error' : auth.PASSWORD.length < 12,'has-success' : auth.PASSWORD.length >= 12 }">
+                    <input type="password" ng-model="auth.PASSWORD" class="form-control" placeholder=" {{'password' | translate}}" ng-enter="Login(auth)">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    <span class="help-block" ng-show="auth.PASSWORD.length < 12">{{'passwLeng'| translate}}</span>
+                </div>
+                <div ng-show="auth.USERNAME=='demo'" class="form-group has-feedback"  ng-class="{'has-error' : auth.PASSWORD.length < 4,'has-success' : auth.PASSWORD.length >= 4 }">
+                    <input type="password" ng-model="auth.PASSWORD" class="form-control" placeholder=" {{'password' | translate}}" ng-enter="Login(auth)">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    <span class="help-block" ng-show="auth.PASSWORD.length < 4">{{'passwLeng'| translate}}</span>
+                </div> -->
+
+                <div class="form-group text-left"  ng-hide="!auth.USERNAME || !auth.PASSWORD">
+                        <checkbox class="btn" ng-model="auth.Remember"></checkbox> &#160  {{'rememberMe' | translate}}
+                </div>
+                <hr/>
+                <div class="row form-group" >
+                    <div class="col-lg-12">
+                        <!-- <button type="button"
+                            class="btn btn-block btn-success btn-lg btn-flat"
+                            style="line-height: 1.5; font-family: sans-serif; font-weight: bold; font-size: 14px; height: 40px; border-radius: 3px; box-shadow: 0 -3px 0 0 hsla(0, 0%, 0%, 0.2) inset;"
+                            ng-click="Login(auth)" ng-disabled="(!auth.USERNAME || !auth.PASSWORD || auth.PASSWORD.length < 12) && auth.USERNAME != 'demo'">
+                            {{'signIn' | translate}}
+                        </button> -->
+
+                        <button class="btn btn-block bg-gradient-success" ng-hide="global.Loading"
+                             ng-click="Login(auth)" ng-disabled="(!auth.USERNAME || !auth.PASSWORD || auth.PASSWORD.length < 12) && auth.USERNAME != 'demo'">
+                            {{'signIn' | translate}}
+                        </button>
+                    </div>
+                </div>
+                <div class="row " >
+                    <div class="col-lg-12">
+                        <!-- <button type="button"
+                            class="btn btn-block bg-gradient-primary"
+                            ng-click="manyAction.goTo('Register')">
+                            {{'createacount' | translate}}
+                        </button> -->
+                        <a target="_blank" style="cursor: pointer;" ng-click="manyAction.goTo('Register')" class="text-muted text-center"><small>{{ 'createacount' | translate}}</small></a> 
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        
+            <div class="col-lg-6">
+                <br>
+                <a target="_blank" href="https://asterisk.biz.ua" style="font-size: 85%;">{{'aster' | translate}}</a> <span style="color: gainsboro;">|</span> <a target="_blank" href="https://krusher.biz" style="font-size: 85%;"> Krusher</a>
+            </div>
+            <div class="col-lg-6" >
+                <br>
+                <span class="float-right" style="color: gainsboro;" >© <span  ng-bind="NowDate"/> </span>
+            </div>
+        
+
+    </div>
+</div>
+
+</section>

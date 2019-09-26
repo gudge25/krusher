@@ -1,0 +1,137 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i> {{'new' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body">
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'named' | translate}}</div>
+                    <div class="col-lg-6 no-padding"><input only-clear class="form-control" ng-model="new.cfName"></div>
+                </div>
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'description' | translate}} </div>
+                    <div class="col-lg-6 no-padding">
+                        <textarea maxlength="200" ng-model="new.cfDesc" msd-elastic style="background-color: lightgoldenrodyellow;color: dimgrey" class="form-control" rows="4" id="comment" placeholder="{{'descriptionType' | translate}} "></textarea>
+                    </div>
+                </div>
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'adminPin' | translate}} <a class="btn btn-link" ng-click="infoStrategy = infoStrategy ?  false: true" ><i class="fa fa-question-circle"></i><i ng-show="infoStrategy" class="fa fa-caret-down"></i></a> </td></div>
+                    <div class="col-lg-6 no-padding">
+                        <div class="has-feedback" ng-class="{'has-error' : (new.adminPin == new.userPin && new.adminPin) || ( !new.adminPin && new.userPin),'has-success' : new.adminPin != new.userPin && new.adminPin }">
+                                    <input numeric-only ng-model="new.adminPin" type="password" class="form-control" placeholder="{{'PIN' | translate}}">
+                                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                    <span class="help-block" ng-show="(new.adminPin == new.userPin && new.adminPin) || ( !new.adminPin && new.userPin)">{{'Conf3'| translate}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row hoverDiv" ng-show="infoStrategy">
+                        <div class="col-lg-12 no-padding">
+                            {{'Conf0' | translate}}<br/>
+                            1 - <small class="text-muted">{{'Conf1' | translate}}</small><br/>
+                            2 - <small class="text-muted">{{'Conf2' | translate}}</small><br/>
+                            * - <small class="text-muted">{{'Conf3' | translate}}</small><br/>
+                        </div>
+                </div>
+
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'userPin' | translate}} </div>
+                    <div class="col-lg-6 no-padding">
+                        <!-- <input numeric-only class="form-control" ng-model="new.userPin"> -->
+                        <div class="has-feedback" ng-class="{'has-error' : (new.adminPin == new.userPin && new.userPin) || ( new.adminPin && !new.userPin),'has-success' : new.adminPin != new.userPin && new.userPin }">
+                                    <input numeric-only ng-model="new.userPin" type="password" class="form-control" placeholder="{{'PIN' | translate}}">
+                                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                    <span class="help-block" ng-show="(new.adminPin == new.userPin && new.userPin) || ( new.adminPin && !new.userPin)">{{'Conf3'| translate}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                     <div class="rowEdit"><checkbox class="btn-info" ng-model="addoption"></checkbox> &#160 {{'additional options' | translate}}</div>
+                </div>
+                <!-- <div class="row hoverDiv" ng-show="addoption">
+                    <div class="col-lg-6 no-padding">{{'record_id' | translate}} </div>
+                    <div class="col-lg-6 no-padding">
+                        <div class="input-group" style="width: 100%">
+                                <ui-select ng-model="new.record_id" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.record_name}}</ui-select-match>
+                                        <ui-select-choices repeat="a.record_id as a in Record.data | filter: $select.search ">
+                                                {{a.record_name}}
+                                        </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-append">
+                                    <button ng-show="new.record_id" type="button" class="btn btn-default" ng-click="new.record_id = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row hoverDiv" ng-show="addoption">
+                    <div class="col-lg-6 no-padding">{{'mohClass' | translate}} </div>
+                    <div class="col-lg-6 no-padding"><input only-clear class="form-control" ng-model="new.mohClass"></div>
+                </div>
+                <div class="row hoverDiv" ng-show="addoption">
+                    <div class="col-lg-6 no-padding">{{'maxParticipants' | translate}} </div>
+                    <div class="col-lg-6 no-padding"><input only-clear class="form-control" ng-model="new.maxParticipants"></div>
+                </div>
+                <div class="row hoverDiv" ng-show="addoption">
+                    <div class="col-lg-10 no-padding">{{'leaderWait' | translate}} </div>
+                    <div class="col-lg-2 no-padding"><label><input type="checkbox" cb-switch ng-model="new.leaderWait"></label> </div>
+                </div>
+                <div class="row hoverDiv" ng-show="addoption">
+                    <div class="col-lg-10 no-padding">{{'leaderLeave' | translate}} </div>
+                    <div class="col-lg-2 no-padding"><label><input type="checkbox" cb-switch ng-model="new.leaderLeave"></label> </div>
+                </div>
+                <div class="row hoverDiv" ng-show="addoption">
+                    <div class="col-lg-10 no-padding">{{'talkerOptimization' | translate}} </div>
+                    <div class="col-lg-2 no-padding"><label><input type="checkbox" cb-switch ng-model="new.talkerOptimization"></label> </div>
+                </div>
+                <div class="row hoverDiv" ng-show="addoption">
+                    <div class="col-lg-10 no-padding">{{'talkerDetection' | translate}} </div>
+                    <div class="col-lg-2 no-padding"><label><input type="checkbox" cb-switch ng-model="new.talkerDetection"></label> </div>
+                </div>
+                <div class="row hoverDiv" ng-show="addoption">
+                    <div class="col-lg-10 no-padding">{{'quiteMode' | translate}} </div>
+                    <div class="col-lg-2 no-padding"><label><input type="checkbox" cb-switch ng-model="new.quiteMode"></label> </div>
+                </div>
+                <div class="row hoverDiv" ng-show="addoption">
+                    <div class="col-lg-10 no-padding">{{'userCount' | translate}} </div>
+                    <div class="col-lg-2 no-padding"><label><input type="checkbox" cb-switch ng-model="new.userCount"></label> </div>
+                </div>
+                <div class="row hoverDiv" ng-show="addoption">
+                    <div class="col-lg-10 no-padding">{{'userJoinLeave' | translate}} </div>
+                    <div class="col-lg-2 no-padding"><label><input type="checkbox" cb-switch ng-model="new.userJoinLeave"></label> </div>
+                </div>
+                <div class="row hoverDiv" ng-show="addoption">
+                    <div class="col-lg-10 no-padding">{{'allowMenu' | translate}} </div>
+                    <div class="col-lg-2 no-padding"><label><input type="checkbox" cb-switch ng-model="new.allowMenu"></label> </div>
+                </div>
+                <div class="row hoverDiv" ng-show="addoption">
+                    <div class="col-lg-10 no-padding">{{'recordConference' | translate}} </div>
+                    <div class="col-lg-2 no-padding"><label><input type="checkbox" cb-switch ng-model="new.recordConference"></label> </div>
+                </div>
+                <div class="row hoverDiv" ng-show="addoption">
+                    <div class="col-lg-10 no-padding">{{'muteOnJoin' | translate}} </div>
+                    <div class="col-lg-2 no-padding"><label><input type="checkbox" cb-switch ng-model="new.muteOnJoin"></label> </div>
+                </div> -->
+                <div class="row hoverDiv" ng-show="addoption">
+                    <div class="col-lg-10 no-padding">{{'active' | translate}} </div>
+                    <div class="col-lg-2 no-padding"><label><input type="checkbox" cb-switch ng-model="new.isActive"></label> </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-8">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-disabled="!new.cfName || ( new.adminPin && !new.userPin) || ( !new.adminPin && new.userPin) || ( new.adminPin == new.userPin && (new.adminPin || new.userPin))" ng-click="manyAction.Save(new,'Conference')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="Conference">{{'cancel' | translate}}</button>
+                    </div>
+        </div>
+    </div>
+</section>

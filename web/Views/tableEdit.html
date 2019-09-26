@@ -1,0 +1,8 @@
+ 
+        <td><span class="direct-chat-timestamp" style="display: inline-block; font-size: 12px">{{'created' | translate}}</span></td>
+        <td>
+            <span style="float: right; font-size: 12px" >
+                <span class="direct-chat-timestamp" ng-bind="upd.CreatedBy | emFilters" uib-tooltip="{{ upd.CreatedBy | emFilters}} {{upd.Created | date:'MMM d, HH:mm'}}" tooltip-trigger="mouseenter" tooltip-placement="top" ></span>
+                <span class="direct-chat-timestamp" ng-bind="upd.Created | date:'MMM d, HH:mm'"> </span>
+            </span>
+        </td>

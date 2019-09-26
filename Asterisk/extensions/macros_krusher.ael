@@ -1,0 +1,163 @@
+//CRM macro
+macro comment(ID){
+        start:
+            Noop(${SHELL(curl -d '{"comID":${ARG1},"phone":"${ccName}","sipNum":"${sip}"}' ${ApiPostdeals})});
+            return;
+}
+macro mix_krusher(){
+        if( "${LinkFile}" == "null" || "${LinkFile}" == "" ){
+            NOW=${EPOCH};
+            Mset(DAY=${STRFTIME(${NOW},,%d)},MONTH=${STRFTIME(${NOW},,%m)},YEAR=${STRFTIME(${NOW},,%Y)},HOUR=${STRFTIME(${NOW},,%H)});
+            //Set(LinkFile=${Aid}/${YEAR}/${MONTH}/${DAY}/${HOUR}/${UNIQUEID});
+            Set(LinkFile=${Aid}/${YEAR}/${MONTH}/${DAY}/${HOUR}/${ccName}-${STRFTIME(${EPOCH},,%Y.%m.%d-%H:%M:%S)}-${UNIQUEID});
+            MixMonitor(${RecordRD}${LinkFile}.ogg,b,nice -n 19 mkdir -p ${FILE}${Aid}/${YEAR}/${MONTH}/${DAY}/${HOUR} && mv ${RecordRD}${LinkFile}.ogg ${FILE}${LinkFile}.ogg);
+        }
+        return;
+}
+
+macro Vars(){
+    //Set krusher vars
+            if( "${ffID}" == "")                      ffID        = null;
+            if( "${id_autodial}" == "")               id_autodial = null;
+            if( "${id_scenario}" == "")               id_scenario = null;
+            if( "${ccID}" == "" )                     ccID        = null;
+            if( "${clID}" == "" || "${clID}" == "0")  clID        = null;
+        //First CallingCard
+            if( "${dcID}" == "" || "${dcID}" == "null") { Set(dcID=${FILTER(0-9,${SHELL(${ApiSequence})})});  Set(CHANNEL(accountcode)={"dcID":${dcID}, "clID": null }); }
+            if( "${dcID}" == "" || "${dcID}" == "null") dcID = null;
+        //CompanyID
+            if( "${coID}" == "" || "${coID}" == "0" ) coID = null;
+        //Record
+            if( "${LinkFile}" == "") LinkFile = null;
+        //Is Outgoing call ?
+            if( "${IsOut}" == "" || "${IsOut}" == "null" || ( "${IsOut}" != "false" && "${IsOut}" != "0") ) IsOut=true; else IsOut=false;
+        //Channel
+            if( "${channel}" == "")                      channel     = null;
+        //Billing time && Target && Transfer
+            Mset(duration=0,billsec=0,holdtime=0,targetQ=null,transferFrom=[],transferTo=[]);
+        //AutoCall
+            if("${isAutoCall}" == "" || "${isAutoCall}" == "0" || "${isAutoCall}" == "null" || "${isAutoCall}" == "false") isAutoCall=false; else isAutoCall=true;
+        //CallBack
+            if( "${isCallback}" == "true") CallType=101319;
+        //CallType
+            if("${CallType}" == "") if( "${isAutoCall}" == "false") CallType=101311; else CallType=101316;
+        //ccName - client phone
+            if( "${ccName}" == "") &clear(${CALLERID(num)});
+        //Destdata
+            if( "${destdata}" == "")                     destdata    = null;
+            if( "${destdata2}" == "")                    destdata2   = null;
+            if( "${destination}" == "")                  destination = null;
+        //For emName
+            if( "${emID}"   = "" || "${emID}"   = "0")  emID        = null;    
+    return;
+}
+
+macro postCallincard(){
+    //CANCEL if system hangup
+        //if( ("${isAutoCall}"="1" || "${isAutoCall}"="true") && "${DIALSTATUS}" = "CANCEL") Hangup;
+
+        if( "${disposition}" == "UP" && "${CallType}" == "101316"){
+                if( "${destdata2}" != "null") Set(destdata2=${QUOTE(${destdata2})});
+                System(curl -X PUT -d '{ "isAsterisk" : true, "emID" : null, "destdata" : ${destdata}, "destdata2" : ${destdata2}, "destination" : ${destination}, "transferFrom" : [],"transferTo" : [], "coID" : ${coID}, "target" : null, "isActive" : true, "CauseCode": ${HANGUPCAUSE},"CauseDesc": null, "CauseWho": null,"CallType": ${CallType},"dcID":${dcID},"ccName":"${ccName}","ccID":${ccID},"IsOut":true,"disposition":"${disposition}","clID":${clID},"SIP":null,"LinkFile":null,"duration":"0","billsec":"0","holdtime":"0","channel":null,"isAutocall":${isAutoCall},"id_autodial":${id_autodial},"id_scenario":${id_scenario},"ffID":${ffID}}' ${ApiPostContact});
+                return;
+        }
+
+        if( "${Method}" == "") Method=POST; else Method=PUT;
+
+        if( "${Method}" == "POST") {
+                Set(AidQ="Aid" : ${Aid},);
+                if( "${disposition}" == "" ) disposition=RINGING;
+                &Vars();
+        }
+        else {
+            NooP(=======${Zhdanov1${ccName}}========);
+            NooP(=======${Zhdanov2${ccName}}========);
+
+            //SIP
+                &sipModel();
+
+            //Default disposition
+                if( "${disposition}" == "" ||  "${disposition}" == "RINGING" ||  "${disposition}" == "UP" ) Set(disposition=${CDR(disposition)});
+            //Time
+                //Mset(duration=${CDR(duration)},billsec=${CDR(billsec)},holdtime=${MATH(${CDR(duration)}-${CDR(billsec)})});
+            //Unset Aid
+                AidQ=;
+            //Queues
+                if("${GLOBAL(isQueue${ccName})}" == "true") { if("${EXISTS(${GLOBAL(sip${ccName})})}" != "0" && "${GLOBAL(sip${ccName})}" != "null") { Set(sipQ=${QUOTE(${GLOBAL(sip${ccName})})}); disposition=ANSWERED;} }
+            //Target
+                if( "${GLOBAL(target${ccName})}" != "null" && "${GLOBAL(target${ccName})}" != "" ) Set(targetQ=${QUOTE(${GLOBAL(target${ccName})})}); else targetQ=null;
+
+            //No Answer for CDR
+            if( "${sip}" == "" || "${sip}" == "null" || "${sip}" == "0" || "${sip}" == "${ccName}" && "${disposition}" == "ANSWERED"){
+                if( "${IsOut}" == "false" && "${isAutoCall}" == "false" )
+                    Set(disposition=NO ANSWER);
+                if( "${GLOBAL(isQueue${ccName})}" == "true" && "${IsOut}" == "true" && ("${isAutoCall}" == "true" || "${CallType}" == "101317") )
+                    Set(disposition=NO ANSWER);
+            }
+
+            //IF clicktocall
+            if( "${sip}" != "" && "${isFirstClient}" == "false" && "${DIALSTATUS}" != "" && "${isAutoCall}" == "false"){
+                switch ("${DIALSTATUS}") {
+                    case "ANSWER"       : disposition=ANSWERED; break;
+                    case "NOANSWER"     : Set(disposition=NO ANSWER); break;
+                    default             : Set(disposition=${DIALSTATUS}); break;
+                }
+            }
+        }
+
+    //Insert contact
+        if( "${dcID}" != ""){
+                if( "${sip}" == "null" || "${sip}" == "" ) sipQ=null; else Set(sipQ=${QUOTE(${sip})});
+                if( "${destdata2}" != "null") Set(destdata2=${QUOTE(${destdata2})});
+                //System(curl -X ${Method} -d '{${AidQ} "isAsterisk" : true, "emID" : ${emID}, "destdata" : ${destdata}, "destdata2" : ${destdata2}, "destination" : ${destination}, "transferFrom" : ${transferFrom}, "transferTo" : ${transferTo}, "coID" : ${coID}, "target" : ${targetQ}, "isActive" : true, "CauseCode": ${HANGUPCAUSE},"CauseDesc": null,"CauseWho": null,"CallType": ${CallType},"dcID":${dcID},"ccName":"${ccName}","ccID":${ccID},"IsOut":${IsOut},"disposition":"${disposition}","clID":${clID},"SIP":${sipQ},"LinkFile":"${LinkFile}","duration":"${duration}","billsec":"${billsec}","holdtime":"${holdtime}","channel":"${channel}","isAutocall":${isAutoCall},"id_autodial":${id_autodial},"id_scenario":${id_scenario},"ffID":${ffID}}' ${ApiPostContact});
+                Set(data={${AidQ} "isAsterisk" : true, "emID" : ${emID}, "destdata" : ${destdata}, "destdata2" : ${destdata2}, "destination" : ${destination}, "transferFrom" : ${transferFrom}, "transferTo" : ${transferTo}, "coID" : ${coID}, "target" : ${targetQ}, "isActive" : true, "CauseCode": ${HANGUPCAUSE},"CauseDesc": null,"CauseWho": null,"CallType": ${CallType},"dcID":${dcID},"ccName":"${ccName}","ccID":${ccID},"IsOut":${IsOut},"disposition":"${disposition}","clID":${clID},"SIP":${sipQ},"LinkFile":"${LinkFile}","duration":"${duration}","billsec":"${billsec}","holdtime":"${holdtime}","channel":"${channel}","isAutocall":${isAutoCall},"id_autodial":${id_autodial},"id_scenario":${id_scenario},"ffID":${ffID}});
+                NoOp(${SHELL(curl -X ${Method} -d '${data}' ${ApiPostContact})});
+        
+        }
+
+        if( "${Method}" == "PUT" && "${disposition}" != "UP") {
+            //Global Var erase
+                Mset(GLOBAL(isQueue${ccName})=,GLOBAL(AidQ)=,GLOBAL(target${ccName})=,GLOBAL(sip${ccName})=);
+            //BUG if QUEUE CALL, run manu updates
+                // if("${isCallback}" != "true" ) Hangup; //need to check and fix
+        }
+
+        //Bug if call hangup in ringing;
+        catch h { if("${disposition}" == "RINGING") { Set(disposition=NO ANSWER); &postCallincard();} }
+    return;
+}
+
+macro KRUSq(U){
+        DB(link/${CHANNEL(accountcode)})=${sip};
+        return;
+}
+
+macro Q(){
+        &clear(${CONNECTEDLINE(num)});
+        Mset(GLOBAL(sip${ccName})=${sip},GLOBAL(isQueue${ccName})=true);
+                    Set(_Zhdanov1${ccName}=${sip});
+                    Set(__Zhdanov2${ccName}=${sip});
+        return;
+}
+
+macro sipModel(){
+    //if SIP undefined
+    if( "${sip}" == "" || "${sip}" == "null" || "${sip}" == "s"){
+        sipModel=null;
+
+        //ifQueue
+        if("${GLOBAL(sip${ccName})}" == "" || "${GLOBAL(sip${ccName})}" != "null")
+            sipModel=${GLOBAL(sip${ccName})};
+
+        if( "${sipModel}" == "s") sipModel=null;
+        sip=${sipModel};
+    }
+    return;
+}
+
+macro target(EXT){
+    if("${target}" == "") Set(target=${EXT}); else Set(target=${target},${EXT});
+    Set(GLOBAL(target${ccName})=${target});
+    return;
+}
+//END CRM macro

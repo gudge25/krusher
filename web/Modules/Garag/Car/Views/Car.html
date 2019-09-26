@@ -1,0 +1,43 @@
+<div class="col-lg-2" style="border-right: 1px solid #e7e7e7;">
+</div>
+
+<div class="col-lg-10">
+    <br>
+    <div class="btn-group float-right" uib-dropdown is-open="status.isopen">
+        <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled">
+            Действия <span class="caret"></span>
+        </button>
+        <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+            <li role="menuitem"><a ui-sref="CarNew" ><i class="fa fa-plus"></i> Новый</a></li>
+            <li role="menuitem"><a href="" ng-click="manyAction.manyDelete(data)"><i class="fa fa-trash"></i> Удалить</a></li>
+        </ul>
+    </div>
+
+    </br>
+    <br>
+
+    <table ng-table="tableParams" show-filter="false" class="table table-head-fixed table-hover borderless">
+
+        <tbody>
+        <tr ng-repeat="e in data | filter:searh"  >
+            <td style="width: 3%" header="'Views/ng-table/checkbox.html'" class="text-center">
+                <input type="checkbox" ng-model="e.isChecked" ng-change="selectEntity();" ng-class="{selected: e.isChecked}">
+            </td>
+
+            <td data-title="'Марка'" header-class="'text-left'">
+                <a ng-href="/#!/CarEdit/{{e.carID}}">
+                    {{e.carName}}
+                </a>
+            </td>
+
+            <td data-title="'Номер машины'" header-class="'text-left'">
+                    {{e.carNo}}
+            </td>
+
+            <td data-title="'Активный'" header-class="'text-left'">
+                    {{e.isActive}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

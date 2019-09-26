@@ -1,0 +1,46 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tr>
+                        <td width="40%">{{'statusDeal' | translate}}</td>
+                        <td>
+                            <ui-select ng-model="upd.comName" theme="bootstrap4-1" class="normal">
+                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="c.Name as c in Enums.group[6] | filter: $select.search">
+                                    {{c.Name}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr ng-include="'/Views/tableEdit.html'" ng-show="upd.Created"></tr>
+                    <tr ng-include="'/Views/tableEdit2.html'" ng-show="upd.Changed || upd.Changed==0"></tr>
+                </table>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-8">
+         <!--  <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"> {{'info' | translate}}</h3> -->
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-click="manyAction.Update(upd,'commentlist')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="commentlist">{{'cancel' | translate}}</button>
+                    </div>
+           <!--   </div>
+          </div> -->
+        </div>
+    </div>
+</section>

@@ -1,0 +1,209 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i> {{'new' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body">
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'names' | translate}}</div>
+                    <div class="col-lg-6 no-padding"> <input only-clear class="form-control" ng-model="new.tgName"> </div>
+                </div>
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'active' | translate}} </div>
+                    <div class="col-lg-6 no-padding"><label><input type="checkbox" cb-switch ng-model="new.isActive"></label> </div>
+                </div>
+            </div>
+            </div>
+
+                              <!-- About Me Box -->
+        <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i>  {{'action' | translate}}, {{'ifTime' | translate}}</h3>
+            </div>
+            <div class="card-body ">
+                <div class="row hoverDiv">
+                        <div class="col-lg-6 no-padding">{{'destination' | translate}} </div>
+                        <div class="col-lg-6 no-padding">
+                            <div class="input-group" style="width: 100%">
+                                <ui-select ng-model="new.destination" ng-change="new.destdata=null" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                        <ui-select-choices repeat="c.tvID as c in Enums.group[1014] | filter: $select.search" ui-disable-choice="c.tvID == 101406">{{c.Name | translate}}</ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                </div>
+                <ng-include src="'/Views/destdataNew.html'"></ng-include>
+                <div class="row hoverDiv" ng-show="(new.destination == 101403 || new.destination == 101409) && new.destdata">
+                            <div class="col-lg-6 no-padding">{{'destdata2' | translate}} </div>
+                            <div class="col-lg-6 no-padding">
+                                <div class="input-group" style="width: 100%">
+                                    <input  class="form-control" ng-model="new.destdata2"/>
+                                    <span class="input-group-append">
+                                        <button ng-show="new.destdata2" type="button" class="btn btn-default" ng-click="new.destdata2 = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                    </div>
+            </div>
+        </div>
+
+
+        <!-- About Me Box -->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i>  {{'action' | translate}}, {{'ifTimeFalse' | translate}}</h3>
+            </div>
+            <div class="card-body ">
+
+                <div class="row hoverDiv">
+                        <div class="col-lg-6 no-padding">{{'destination' | translate}}</div>
+
+                        <div class="col-lg-6 no-padding">
+                            <div class="input-group" style="width: 100%">
+                                <ui-select ng-model="new.invalid_destination" ng-change="new.invalid_destdata=null" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                    <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                    <ui-select-choices repeat="c.tvID as c in Enums.group[1014] | filter: $select.search" ui-disable-choice="c.tvID == 101406">
+                                    {{c.Name | translate}}
+                                    </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-append">
+                                    <button ng-show="new.invalid_destination" type="button" class="btn btn-default" ng-click="new.invalid_destination = null"><i class="fa fa-times" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row hoverDiv" ng-show="new.invalid_destination">
+                        <div class="col-lg-6 no-padding">{{'destdata' | translate}}
+                        </div>
+                        <div class="col-lg-6 no-padding" ng-show="new.invalid_destination"  ng-switch="new.invalid_destination">
+                            <div ng-switch-when="101401" class="input-group" style="width: 100%">
+                                <ui-select  ng-model="new.invalid_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="a.queID as a in Queues.data | filter: $select.search ">
+                                {{a.name}}
+                                </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-append">
+                                    <button ng-show="new.invalid_destdata" type="button" class="btn btn-default" ng-click="new.invalid_destdata = null"><i class="fa fa-times" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <div ng-switch-when="101402" class="input-group" style="width: 100%">
+                                <ui-select ng-model="new.invalid_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.emName}}</ui-select-match>
+                                <ui-select-choices repeat="a.sipName as a in employees.data | filter: $select.search" ui-disable-choice="a.SipNum === null ? true : false;">
+                                {{a.emName}}
+                                </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-append">
+                                    <button ng-show="new.invalid_destdata" type="button" class="btn btn-default" ng-click="new.invalid_destdata = null"><i class="fa fa-times" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <div ng-switch-when="101403" class="input-group" style="width: 100%">
+                                <ui-select ng-model="new.invalid_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.trName}}</ui-select-match>
+                                <ui-select-choices repeat="a.trID as a in Trunk.data | filter: $select.search ">
+                                {{a.trName}}
+                                </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-append">
+                                    <button ng-show="new.invalid_destdata" type="button" class="btn btn-default" ng-click="new.invalid_destdata = null"><i class="fa fa-times" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <div ng-switch-when="101405" class="input-group" style="width: 100%">
+                                <ui-select ng-model="new.invalid_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.ivr_name}}</ui-select-match>
+                                <ui-select-choices repeat="a.id_ivr_config as a in IVR.data | filter: $select.search ">
+                                {{a.ivr_name}}
+                                </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-append">
+                                    <button ng-show="new.invalid_destdata" type="button" class="btn btn-default" ng-click="new.invalid_destdata = null"><i class="fa fa-times" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <div ng-switch-when="101407" class="input-group" style="width: 100%">
+                                <ui-select ng-model="new.invalid_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.record_name}}</ui-select-match>
+                                <ui-select-choices repeat="a.record_id as a in Record.data | filter: $select.search ">
+                                {{a.record_name}}
+                                </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-append">
+                                    <button ng-show="new.invalid_destdata" type="button" class="btn btn-default" ng-click="new.invalid_destdata = null"><i class="fa fa-times" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <div ng-switch-when="101408" class="input-group" style="width: 100%">
+                                <ui-select ng-model="new.invalid_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                    <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.cdName}}</ui-select-match>
+                                    <ui-select-choices repeat="a.cdID as a in CustomDestenation.data | filter: $select.search ">{{a.cdName}}</ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-append">
+                                    <button ng-show="new.invalid_destdata" type="button" class="btn btn-default" ng-click="new.invalid_destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                            <div ng-switch-when="101409" class="input-group" style="width: 100%">
+                                <ui-select ng-model="new.invalid_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                    <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.poolName}}</ui-select-match>
+                                    <ui-select-choices repeat="a.poolID as a in TrunkPool.data | filter: $select.search ">{{a.poolName}}</ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-append">
+                                    <button ng-show="new.invalid_destdata" type="button" class="btn btn-default" ng-click="new.invalid_destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                            <div ng-switch-when="101410" class="input-group" style="width: 100%">
+                                    <ui-select ng-model="new.invalid_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.tgName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.tgID as a in TimeGroup.data | filter: $select.search ">{{a.tgName}}</ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                        <button ng-show="new.invalid_destdata" type="button" class="btn btn-default" ng-click="new.invalid_destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                            </div>
+                            <div ng-switch-when="101411" class="input-group" style="width: 100%">
+                                    <ui-select ng-model="new.invalid_destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.cbName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.cbID as a in CallBack.data | filter: $select.search ">{{a.cbName}}</ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                        <button ng-show="new.invalid_destdata" type="button" class="btn btn-default" ng-click="new.invalid_destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row hoverDiv" ng-show="(new.invalid_destination == 101403 || new.invalid_destination == 101409) && new.invalid_destdata">
+                            <div class="col-lg-6 no-padding">{{'destdata2' | translate}} </div>
+                            <div class="col-lg-6 no-padding">
+                                <div class="input-group" style="width: 100%">
+                                    <input  class="form-control" ng-model="new.invalid_destdata2"/>
+                                    <span class="input-group-append">
+                                        <button ng-show="new.invalid_destdata2" type="button" class="btn btn-default" ng-click="new.invalid_destdata2 = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                    </div>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-8">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-click="manyAction.Save(new,'TimeGroup')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="TimeGroup">{{'cancel' | translate}}</button>
+                    </div>
+        </div>
+    </div>
+</section>

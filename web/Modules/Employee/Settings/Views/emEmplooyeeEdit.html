@@ -1,0 +1,93 @@
+<div class="col-lg-2" style="border-right: 1px solid #e7e7e7;">
+
+</div>
+
+
+<div class="col-lg-10">
+    <div class="row">
+        <div class="col-lg-6">
+            <br/>
+            <b>Инфо о менеджере</b>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="text-right">
+                <div class="btn-group" style="margin: 2%">
+                    <button type="button" class="btn btn-success" ng-click="Save(em,sip[0])">Сохранить</button>
+                    <button type="button" class="btn btn-warning" ui-sref="employee">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+
+            <table class="table table-head-fixed table-hover borderless" style="margin: 1% 0;">
+                <tr>
+                    <td style="width: 150px;">Имя</td>
+                    <td><input  type="text" class="form-control" ng-model="em.emName" placeholder="Введите Имя"/></td>
+                </tr>
+                <tr>
+                    <td style="width: 150px;">Логин</td>
+                    <td><input  type="text"  class="form-control" ng-model="em.LoginName" placeholder="Введите Логин"/></td>
+                </tr>
+                <tr>
+                    <td>Начальник</th>
+                    <td>
+                        <select class="form-control" ng-model="em.ManageID" ng-options="a.emID as a.emName for a in data | filter:{IsActive:true}">
+                            <option value="">Выберете Начальник</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Роль</th>
+                    <td>
+                        <select class="form-control" ng-model="em.roleID" ng-options="a.roleID as a.roleName for a in role | filter:{isActive: true}">
+                            <option value="" disabled>Выберете роль</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 150px;">Активный</td>
+                    <td><input type="checkbox" class="checkbox" ng-model="em.IsActive"/></td>
+                </tr>
+
+            </table>
+            <hr/>
+            <b>Пароль</b>
+            <table class="table table-head-fixed table-hover borderless" style="margin: 1% 0;">
+                <tr>
+                    <td style="width: 150px;">Пароль</td>
+                    <td><input type="password" class="form-control" ng-model="password" ng-enter="SavePass(password)" placeholder="пароль: *****"/></td>
+                </tr>
+            </table>
+
+            <hr/>
+            <b>SIP номер</b>
+            <table class="table table-head-fixed table-hover borderless" style="margin: 1% 0;">
+                <tr>
+                    <td style="width: 150px;">Номер</td>
+                    <td><input  type="text" class="form-control" ng-model="sip[0].name" placeholder="SIP номер"/></td>
+                </tr>
+                <!--<tr>
+                    <td style="width: 150px;">Шаблон</td>
+                    <td><input  type="text"  class="form-control" ng-model="sip[0].template" placeholder="Шаблон"/></td>
+                </tr>-->
+                <tr>
+                    <td style="width: 150px;">Пароль</td>
+                    <td><input type="password" class="form-control" ng-model="sip[0].secret" placeholder="SIP пароль"/></td>
+                </tr>
+                <!--<tr>
+                    <td style="width: 150px;">Контекст</td>
+                    <td><input type="text" class="form-control" ng-model="sip[0].context" placeholder="Контекст"/></td>
+                </tr>-->
+                <tr>
+                    <td style="width: 150px;">Имя звонящего</td>
+                    <td><input type="text" class="form-control" ng-model="sip[0].callerid" placeholder="Имя звонящего"/></td>
+                </tr>
+            </table>
+
+
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+<div ng-controller="FavoritesNewCtrl">
+	<!-- <button class="btn" ng-hide="isAdded" ng-click="openFavoritesModal()" style="background-color: #3c8dbc; ">
+		{{'addFavorites'| translate}}
+	</button> -->
+	<button type="button" ng-hide="isAdded" style="background: white; border: none; outline: none;" ng-click="openFavoritesModal()"><i class="glyphicon glyphicon-star-empty" style=" font-size: 20px;"></i></button>
+<!-- 	<button ng-show="isAdded" class="btn" ng-click="RemoveFavorite()"  style="background-color: #3c8dbc; width: 100%">
+		{{'removeFavorites' | translate}}
+	</button> -->
+	<button type="button" ng-show="isAdded" style="background: white; color: yellow; border: none; outline: none;" ng-click="RemoveFavorite()"><i class="glyphicon glyphicon-star" style="font-size: 20px;"></i></button>
+</div>
+               

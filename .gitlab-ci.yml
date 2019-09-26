@@ -1,0 +1,107 @@
+#stages:
+#- analysis
+
+#sonarqube:
+#  stage: analysis
+#  image: ciricihq/gitlab-sonar-scanner
+#  variables:
+#    SONAR_URL: "https://www.krusher.duckdns.org"
+#    SONAR_PROJECT_VERSION: "$CI_BUILD_ID"
+#    SONAR_ANALYSIS_MODE: "issues"
+#  script:
+#  - /usr/bin/sonar-scanner-run.sh
+
+#sonarqube-reports:
+#  stage: analysis
+#  image: ciricihq/gitlab-sonar-scanner
+#  variables:
+#    SONAR_URL: "https://www.krusher.duckdns.org"
+#    SONAR_PROJECT_VERSION: "$CI_BUILD_ID"
+#    SONAR_ANALYSIS_MODE: "publish"
+#  script:
+#  - unset CI_BUILD_REF && /usr/bin/sonar-scanner-run.sh
+
+#krusher:
+#  stage: analysis
+#  image: centos:7
+#  script:
+#  - yum install git -y
+#  - mkdir -p /var/www/html
+#  - cd /usr/src/
+#  - git clone -b master --depth=1 https://AsteriskTester:RodmanGfhjkm098@gitlab.com/asterisktech/KRUSHER.git
+#  - git clone -b KRUSSAAS --depth=1 https://AsteriskTester:RodmanGfhjkm098@gitlab.com/asterisktech/KRUSHER.git
+#  - cd KRUSHER/sh/
+#  - sh install.sh
+#  - php -v
+#  - mysql -V
+#  - npm -v
+#  - node -v
+  
+
+image: docker:git
+services:
+- docker:dind
+
+stages:
+- build
+- test
+#- release
+#- deploy
+
+variables:
+  CONTAINER_TEST_IMAGE: registry.gitlab.com/asterisktech/krusher/sql-data:$CI_BUILD_REF_NAME
+#  CONTAINER_RELEASE_IMAGE: registry.example.com/my-group/my-project:latest
+  DOCKER_DRIVER: overlay
+
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+
+build-sql:
+  stage: build
+  script:
+    - docker build -t $CONTAINER_TEST_IMAGE -f sql/Dockerfile sql
+    - docker push $CONTAINER_TEST_IMAGE
+  only:
+      changes:
+        - sql/Dockerfile
+        - sql/src/**/*.sql
+        - sql/src/Code/**/*.sql
+        - sql/src/Code/_Procedure/**/*.sql
+        - sql/src/Data/**/*.sql
+        #- dockerfiles/**/*.sql
+        #- more_scripts/*.{rb,py,sh}
+
+#Usefull https://habr.com/ru/company/flant/blog/332842/
+
+test-sql:
+  stage: test
+  script:
+    - docker run $CONTAINER_TEST_IMAGE
+  only:
+         changes:
+           - sql/Dockerfile
+           - sql/src/**/*.sql
+           - sql/src/Code/**/*.sql
+           - sql/src/Code/_Procedure/**/*.sql
+           - sql/src/Data/**/*.sql
+
+#test2:
+#  stage: test
+#  script:
+#    - docker run $CONTAINER_TEST_IMAGE /script/to/run/another/test
+
+#release-image:
+#  stage: release
+#  script:
+#    - docker pull $CONTAINER_TEST_IMAGE
+#    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
+#    - docker push $CONTAINER_RELEASE_IMAGE
+#  only:
+#    - master
+
+#deploy:
+#  stage: deploy
+#  script:
+#    - ./deploy.sh
+#  only:
+#    - master

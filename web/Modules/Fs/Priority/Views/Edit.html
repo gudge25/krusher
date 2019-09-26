@@ -1,0 +1,56 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tr>
+                        <td width="50%">{{'file' | translate}}</td>
+                        <td>
+                            <div class="has-feedback">
+                                    <input ng-change="edit3=true;" ng-class="{ 'border border-danger' : !upd.ffName.length && edit3, 'has-success' : upd.ffName }" ng-model="upd.ffName"  class="form-control" ng-maxlength="200" pattern="^[a-zA-Z0-9.\-\/\[\]]+$" required>
+                                    <span class="glyphicon glyphicon-file form-control-feedback"></span>
+                                    <span class="help-block text-danger" ng-show="!upd.ffName.length && edit3">{{'typeLeng'| translate}},- / .</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'category' | translate}}</td>
+                        <td>
+                            <ui-select ng-model="upd.dbID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.dbName}}</ui-select-match>
+                                <ui-select-choices repeat="a.dbID as a in Bases.data | filter: $select.search" >
+                                   {{a.dbName}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'activeShe' | translate}}</td>
+                        <td><label><input type="checkbox" cb-switch ng-model="upd.isActive" placeholder="{{'activeShe' | translate}}"/></label></td>
+                    </tr>
+                    <tr ng-include="'/Views/tableEdit.html'" ng-show="upd.Created"></tr>
+                    <tr ng-include="'/Views/tableEdit2.html'" ng-show="upd.Changed || upd.Changed==0"></tr>
+                </table>
+
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-8">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-disabled="!upd.dbID || !upd.ffName" ng-click="manyAction.Update(upd,'fs')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="fs">{{'cancel' | translate}}</button>
+                    </div>
+        </div>
+    </div>
+</section>

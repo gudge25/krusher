@@ -1,0 +1,393 @@
+<div class="row">
+
+    <div class="col-lg-12" >
+        <div ng-show="client.emComment" style="border-bottom: 3px solid red;color:white;background-color:red;font-size:25px;" align="center">{{client.emComment}}  </div>
+        <div class="row">
+            <br/>
+            <div class="col-lg-1">
+            </div>
+
+            <div class="col-lg-2">
+                {{INN}} <span  ng-bind="client.inn"></span>
+            </div>
+
+            <div class="col-lg-9">
+                КВЕД &nbsp; &nbsp; &nbsp; &nbsp;<span  ng-bind="client.kvedCode"></span>&nbsp; &nbsp; &nbsp; &nbsp; <span  ng-bind="client.kvedDescr"></span>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-12">
+            <table class="table table-head-fixed table-hover borderless" style="margin-bottom: 0px;">
+                <tbody>
+                    <tr>
+                        <th class="col-lg-2 text-right" style="width:14.3%" scope="row">{{'fullName' | translate}}</th>
+                        <td>
+                            <textarea uppercase msd-elastic class="form-control" ng-model="client.nameFull"  ng-change="nameFullChange=true" ng-class="{'btn-warning' :  patternLeng(client.nameFull) }" uib-tooltip ="{{nbrSimple.nameShort}}"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="text-right" scope="row">{{'mailingAddress' | translate}}</th>
+                        <td>
+                        <!-- fixAdd();-->
+								<textarea uppercase  msd-elastic class="form-control"  ng-change="ErrorCheck();" ng-model="client.adress"  ng-class="{'btn-danger' :  ErrorCrit > 0,'btn-warning' :  (ErrorCrit == 0 && client.actualStatus == 101101 ) }"
+                                          uib-tooltip           ="{{ErrorMess}}"
+                                          tooltip-trigger       ="none"
+                                          tooltip-placement     ="right-top"
+                                          tooltip-is-open       ="Error"
+                                ></textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+        <div class="row">
+        <div class="col-lg-7">
+        <table class="table table-head-fixed table-hover borderless " style="margin-bottom: 0px;">
+            <tbody>
+                <tr>
+                    <th class="col-lg-3 text-right " scope="row" > {{'fullNamed' | translate}} </th>
+                    <td>
+						<div class="input-group">
+                            <input lat-only uppercase class="form-control"  ng-model="client.fio" ng-hide="client.isNotice" ng-disabled="client.isNotice" ng-change="FioCheck();ChangeSex=false" ng-class="{'btn-warning' :  patternLeng(client.fio) || FioCheck() }"
+                                   uib-tooltip           ="Укажите пол"
+                                   tooltip-trigger       ="none"
+                                   tooltip-placement     ="left-top"
+                                   tooltip-is-open       ="FioCheck()"
+                            >
+                            <input lat-only uppercase class="form-control" ng-model="b" ng-show="client.isNotice" ng-disabled="client.isNotice">
+							<span class="input-group-append"  >
+								<select class="btn btn-link"  ng-model="client.sex" ng-disabled="!FioCheck()"  ng-change="ChangeSex=true"
+										ng-options  = "a.ID as a.Name for a in [{ID: null, Name: 'Пол'},{ID: 'Ж', Name: 'Ж'},{ID: 'М', Name: 'М'}]">
+									<option value="">{{'selectSex' | translate}}</option>
+								</select>
+							</span>
+						</div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row" class="text-right "> {{'position' | translate}} </th>
+                    <td>
+                        <div class="form-inline">
+                            <select class="form-control"  ng-hide="client.isNotice" ng-class="{'btn-danger' :  CheckPost() }"  style="width: 50%" ng-model="client.post" ng-disabled="client.isNotice"
+                                    ng-options  = "a.Name as a.Name for a in Post">
+                                <option value="">{{'selectContactType' | translate}}</option>
+                            </select>
+
+                            <select class="form-control" ng-show="client.isNotice" style="width: 50%" ng-model="a" ng-disabled="client.isNotice"></select>
+
+                            &nbsp; <input type="checkbox" ng-model="client.isNotice" /> {{'NotificationLetter' | translate}}
+                        </div>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <th  scope="row"  class="text-right ">{{'phoneDialer' | translate}} </th>
+                    <td >
+                        <form name="formPhone">
+                            <div class="input-group" style="width: 75%">
+                                <input numeric-only class="form-control" ng-model="client.phoneDialer" ng-pattern="patternPhone2" name="phone" ng-class="{'btn-danger' :  formPhone.phone.$error.pattern }">
+                                <span class="input-group-append">
+                                    <button ng-show="client.phoneDialer" ng-click="manyAction.Call(client.phoneDialer,client.clID)" class="btn btn-secondary" type="button"><i class="fa fa-phone"></i></button>
+                                    <button ng-show="client.phoneDialer" ng-click="CopyPhone();" class="btn btn-link" type="button"><i class="fa fa-files-o"></i></button>
+
+                                </span>
+
+                                <div class="input-group" ng-hide="ccComment2 == 'Свой Вариант'" style="width: 100%">
+                                    <select class="form-control" ng-model="client.phoneComment" ng-change="ccComment2=client.phoneComment;"
+                                            ng-options  = "a.Name as a.Name for a in ccContactStatus">
+                                        <option value="">{{'selectContactType' | translate}}</option>
+                                    </select>
+                                    <span class="input-group-append">
+
+                                        <button class="btn btn-link" type="button" ng-show="check" ng-click="$event.stopPropagation();check=false;"><i class="fa fa-times"></i></button>
+                                        <button class="btn btn-link" type="button" ng-show="check" ng-click="$event.stopPropagation();check=false;dellCC(c)"><i class="fa fa-check"></i></button>
+                                    </span>
+                                </div>
+
+                                <div class="input-group" ng-show="ccComment2 == 'Свой Вариант'">
+                                    <input type="text" uppercase class="form-control" ng-model="client.phoneComment" ng-focus="client.phoneComment=null"/>
+                                    <span class="input-group-append">
+                                        <button class="btn btn-link" type="button" ng-click="ccComment2 = false"><i class="fa fa-reply"></i></button>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </form>
+                    </td>
+
+                    <!--<td>
+                        <div class="input-group" ng-hide="ccComment2 == 'Свой Вариант'">
+                            <select class="form-control" ng-model="client.phoneComment" ng-change="ccComment2=client.phoneComment"
+                                    ng-options  = "a.Name as a.Name for a in ccContactStatus">
+                                <option value="">Выберите тип контакта</option>
+                            </select>
+                            <span class="input-group-append">
+                                <button class="btn btn-link" type="button" ng-show="!check" ng-click="$event.stopPropagation();check=true;"><i class="fa fa-trash"></i></button>
+                                <button class="btn btn-link" type="button" ng-show="check" ng-click="$event.stopPropagation();check=false;"><i class="fa fa-times"></i></button>
+                                <button class="btn btn-link" type="button" ng-show="check" ng-click="$event.stopPropagation();check=false;dellCC(c)"><i class="fa fa-check"></i></button>
+                            </span>
+                        </div>
+
+                        <div class="input-group" ng-show="ccComment2 == 'Свой Вариант'">
+                             <input type="text"  class="form-control" ng-model="client.phoneComment"/>
+                            <span class="input-group-append">
+                                <button class="btn btn-link" type="button" ng-click="ccComment2 = false"><i class="fa fa-reply"></i></button>
+                            </span>
+                        </div>
+
+                    </td>-->
+
+                </tr>
+
+                <tr>
+                    <th scope="row"  class="text-right ">  {{'note' | translate}}</th>
+                    <td >
+                       <div  ng-dropdown-multiselect="" options="ccCommentNBR" selected-model="client.orgNote" translation-texts="example2customTexts" extra-settings="example12settings" > </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row"  class="text-right "> Email </th>
+                    <td >
+                        <form name="formEmail">
+                            <input class="form-control" style="width: 50%" ng-model="client.email" ng-pattern="patternEmail" name="email" ng-class="{'btn-warning' :  formEmail.email.$error.pattern }">
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+         </table>
+        </div>
+
+        <div class="col-lg-5">
+            <div style="overflow-y: scroll; height: 250px;" can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="100">
+            <table  class="table table-head-fixed table-hover borderless" style="margin-bottom: 0px;">
+                <tbody>
+                <tr ng-repeat="c in client.phones" ng-hide="c.ccType == 37">
+
+                    <td ng-hide="c.ccID == 'new'" style="width: 55%">
+
+                            <div class="input-group" >
+                                <input numeric-only class="form-control"  ng-change="c.isEdit=true" ng-model="c.ccName"  ng-class="{'btn-warning' : patternPhone(c.ccName) }">
+                                <span class="input-group-append">
+                                    <button ng-show="c.ccName" ng-click="manyAction.Call(c.ccName,client.clID)" class="btn btn-secondary" type="button"><i class="fa fa-phone"></i></button>
+                                    <button ng-show="c.ccName && !patternPhone(c.ccName)" ng-click="CopyPhoneToPrymary(c);" class="btn btn-link" type="button"><i class="fa fa-files-o"></i></button>
+                              </span>
+                            </div>
+
+                    </td>
+
+                    <td>
+                        <div class="input-group" ng-hide="ccComment == 'Свой Вариант'">
+                            <select class="form-control" ng-model="c.ccComment" ng-change="c.isEdit=true;ccComment=c.ccComment;"
+                                    ng-options  = "a.Name as a.Name for a in ccContactStatus">
+                                <option value="">{{'selectContactType' | translate}}</option>
+                            </select>
+                            <span class="input-group-append">
+                                <button class="btn btn-link" type="button" ng-show="!check" ng-click="$event.stopPropagation();check=true;"><i class="fa fa-trash"></i></button>
+                                <button class="btn btn-link" type="button" ng-show="check" ng-click="$event.stopPropagation();check=false;"><i class="fa fa-times"></i></button>
+                                <button class="btn btn-link" type="button" ng-show="check" ng-click="$event.stopPropagation();check=false;dellCC(c)"><i class="fa fa-check"></i></button>
+                            </span>
+                        </div>
+
+                        <div class="input-group" ng-show="ccComment == 'Свой Вариант'">
+                            <input type="text" uppercase class="form-control" ng-model="c.ccComment" ng-focus="c.ccComment=null"/>
+                            <span class="input-group-append">
+                                <button class="btn btn-link" type="button" ng-click="ccComment = false"><i class="fa fa-reply"></i></button>
+                            </span>
+                        </div>
+
+                    </td>
+
+                    <td ng-show="c.ccID == 'new'">
+                        <div class="row">
+                            <div class="col-lg-9"  ng-show = "c.ccType">
+                                <input class="form-control" ng-model="c.ccName" />
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" ng-click="Cancel($index)" class="btn btn-warning">{{'cancel' | translate}}</button>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+            </table>
+            </div>
+           <p class="text-center"> <i class="fa fa-plus-circle fa-lg" aria-hidden="true" ng-click="addContact()"></i></p>
+        </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-2">
+                 <select class="form-control"
+                        ng-change   = "ErrorCheck()"
+                        ng-model    = "client.actualStatus"
+                        ng-options  = "a.tvID as a.Name for a in crmClientStatus">
+
+                 </select>
+
+            </div>
+
+            <div class="col-lg-3">
+                <button  type="button" ng-click="manyAction.Hangup(Auth.SipNum);Save(1)" ng-hide="ChangeAdress" class="btn btn-success form-control"
+                         ng-disabled="!client.actualStatus || CheckPost() || formPhone.phone.$error.pattern || ErrorCrit > 0 || ((!client.fio||!client.phoneDialer||!client.adress) && client.actualStatus == 101101)
+                         || !client.nameFull">
+                         {{'ACTUALIZED' | translate}}
+                </button>
+            </div>
+
+            <div class="col-lg-2">
+                <button type="button" ng-show="!close" ng-click="close=true" class="btn btn-primary form-control" ng-disabled="CheckPost() || formPhone.phone.$error.pattern">
+                    {{'Postpone' | translate}}
+                </button>
+
+                <div class="dropdown"  ng-show="close">
+                 <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#" href="#">
+                   <div class="input-group">
+                    <!-- <input type="text" class="form-control" data-ng-model="client.callDate" data-datetimepicker-config="{ modelType : 'YYYY-MM-DDTHH:MM', startView: 'day'  }">
+                    <span class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </span> -->
+                    <div class="form-group">
+                                  <p class="icon-group input-group">
+                                    <input ng-model="Contract.dcDate" class="form-control" ng-model-options="{ updateOn: 'blur' }" placeholder="{{'select a date' | translate}}">
+                                      <span class="input-group-append">
+                                        <button moment-picker="Contract.dcDate"
+                                                format="YYYY-MM-DD HH:mm"
+                                                today="true"
+                                                locale="ru"
+                                                start-view="month"
+                                                type="button" class="btn btn-default">
+                                          <i aria-hidden="true" class="fa fa-calendar"></i>
+                                        </button>
+                                      </span>
+                                  </p>
+                              </div>
+                   </div>
+                 </a>
+                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                   <datetimepicker data-ng-model="client.callDate" data-datetimepicker-config="{ dropdownSelector: '#dropdown2', modelType : 'YYYY-MM-DDTHH:MM', startView: 'day'  }"/>
+                 </ul>
+                </div>
+                    <!--  <p class="input-group custom-datepicker-buttons" ng-show="close">
+                        <input type="text"
+                               class="editor form-control"
+                               ng-model="client.callDate"
+                               uib-datepicker-popup="yyyy-MM-dd" is-open="datepicker.opened" datepicker-options="dateOptions" my-date2>
+                            <span class="input-group-append">
+                                    <button type="button" class="btn btn-default" ng-click="datepicker.opened=true;">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                            </span>
+                    </p> -->
+             </div>
+
+            <div class="col-lg-2">
+                <!--<button class="btn btn-link">   <i class="fa fa-google fa-2x" aria-hidden="true"></i>  </button>;$close() ng-maxlength="10" ng-minxlength="10" ng-pattern="/^(\d{4})\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/"-->
+                <div ng-show="close" class="input-group" >
+<!--                     <div uib-timepicker show-spinners="false" datetimepicker-neutral-timezone ng-model="client.callDate" ng-model-options="{timezone: 'utc'}" arrowkeys="false" hour-step="[1, 2, 3]" minute-step="[1, 5, 10, 15, 25, 30]" show-meridian="false"></div>
+ -->                    <span class="input-group-append">
+                                <button class="btn btn-link" type="button" ng-click="close=false" ng-show="close"><i style="color:green;" class="fa fa-times"></i></button>
+                                <button class="btn btn-link" type="button" ng-click="manyAction.Hangup(Auth.SipNum);Save(0)"><i style="color:green;" class="fa fa-check"></i></button>
+                    </span>
+                </div>
+                <div ng-show="!close" class="input-group" >
+                            <span class="input-group-append">
+                                <div ng-dropdown-multiselect="" options="example1data" selected-model="example1model" translation-texts="example5customTexts" extra-settings="example16settings"> </div>
+                            </span>
+                            <button ng-show="example1model.length > 0" class="btn btn-link" ng-click="Mylti();">   <i class="fa fa-google fa-lg" aria-hidden="true"></i>  </button>
+                </div>
+
+
+            </div>
+
+            <div class="col-lg-1">
+                <button class="btn btn-link"><i class="fa fa-reply" ng-click="GetClient();nameFullChange=false" aria-hidden="true"></i></button>
+            </div>
+
+        </div>
+</div>
+
+</div>
+    <div class="modal-footer" >
+         <div class="row" style="background-color: lightgrey;border-radius: 1%;">
+             <div class="col-lg-11">
+                 <textarea ng-show="close" msd-elastic class="form-control" ng-model="client.emComment" row="3" placeholder="{{'Comment' | translate}}"></textarea>
+
+                 <table ng-hide="close" style="width: 100%">
+                     <tbody>
+                     <tr>
+                         <th class="col-lg-2 text-right" scope="row">{{'address' | translate}}</th>
+                         <td>
+                             <input class="form-control" ng-model="nbrSimple.adress" placeholder="{{'address' | translate}}">
+                         </td>
+                     </tr>
+                     <tr>
+                         <th class="col-lg-2 text-right" scope="row">{{'phone' | translate}}{{'s' | translate}}</th>
+                         <td>
+                             <input class="form-control" ng-model="nbrSimple.phonesMap" placeholder="{{'phone' | translate}}{{'s' | translate}}">
+                         </td>
+                     </tr>
+                     <tr>
+                         <th class="col-lg-2 text-right" scope="row">{{'status' | translate}}{{'s' | translate}}</th>
+                         <td>
+                             <input class="form-control" ng-model="nbrSimple.status" placeholder="{{'status' | translate}}{{'s' | translate}}">
+                         </td>
+                     </tr>
+                     </tbody>
+                 </table>
+             </div>
+
+			<div class="cal-lg-1">
+				<button ng-show="client.phoneDialer" ng-click="manyAction.Hangup(Auth.SipNum);" class="btn btn-link" type="button"><i class="fa fa-tty fa-2x"></i></button>
+				<button class="btn btn-link" ng-model="Start" ng-click="manyAction.ProgressStop();StopWhileCall=true;autocallF()" uib-btn-checkbox> <i class="fa fa-stop" style="color:red;"></i></button>
+
+                <br/>
+            </div>
+         </div>
+
+        <div class="row">
+        <button ng-click="Get_cc_contacts();" class="btn btn-link">{{'history' | translate}}{{'s' | translate}}</button>
+        <div class="cal-lg-12" ng-show="cc_contacts.length > 0">
+           <table ng-table="table" class="table table-head-fixed table-hover borderless">
+               <tbody>
+                   <tr>
+                       <th>{{'date' | translate}}</th>
+                       <th>{{'numberNum' | translate}}</th>
+                       <th>{{'status' | translate}}</th>
+                       <th>{{'responsible' | translate}}</th>
+                       <th>{{'recording' | translate}}</th>
+                   </tr>
+                   <tr ng-repeat="items in cc_contacts | limitTo:limit track by $index">
+                    <td>
+                        <nobr>
+                            <span class="text-muted" ng-hide="items.isToday" ng-bind="items.Created | date:'MMM d, HH:mm'"> </span>
+                            <span class="text-muted" ng-show="items.isToday" ng-bind="items.Created | date:'HH:mm'"> </span>
+                        </nobr>
+                    </td>
+                    <td ng-bind="items.ccName"></td>
+                    <td >
+                        <span class="badge {{(items.dcStatusName | CallStatus).color}}">
+                            <i class="fa fa-arrow-left"   ng-show="e.IsOut"  title="{{e.IsOut | CallTypeFilters}}" style="color:green"></i>
+                            <i class="fa fa-arrow-right"  ng-show="!e.IsOut" title="{{e.IsOut | CallTypeFilters}}" style="color:blue"></i>
+                            {{(items.dcStatusName | CallStatus).disposition}}</span>
+                        </td>
+                        <td ng-bind="items.emName"></td>
+                        <td>
+                           <audio-player source="{{manyAction.MonitorUrl(items.LinkFile)}}" index="{{$index}}"></audio-player>
+                       </td>
+                   </tr>
+               </tbody>
+           </table>
+
+         </div>
+         </div>
+    </div>

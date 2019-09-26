@@ -1,0 +1,28 @@
+<div class="card-body  p-0">
+  <div class="row table hoverDiv" style="padding-bottom: 1%;" ng-repeat="(key,value) in group5 | limitTo:limit track by $index">
+      <div class="col-lg-1">
+        <div>
+          <b>{{key | translate}}</b><br>
+          <b style="color:gray">{{'numberCalls' | translate}}</b><br>
+          <b style="color:gray">{{'%' | translate}}</b><br>
+        </div>
+      </div>
+      <div class="col-lg-11">
+        <div style="cursor: pointer" class="report-item" ng-hide="Single && v.statusDate !== statusDate"  ng-repeat="(k,v) in value track by $index" ng-class="{'report-hover-all' : v.statusDate == statusDate, 'tab5' : (v.statusDate | date:'EEE' | translate) == 'вс' || (v.statusDate | date:'EEE' | translate) == 'сб'}" ng-click="showSingle(v.statusDate)"  ng-mouseenter="addClass(v.statusDate)" ng-mouseleave="removeClass()"> 
+            <div> 
+              <span uib-tooltip="{{'date'| translate}}">{{v.statusDate | date:'d MMM yyyy' | translate}}</span><br>
+
+              <div class="col-lg-6 no-padding" ng-if="v.statusDate != 'total'">
+                  <span  uib-tooltip="{{'date'| translate}}">{{v.statusDate | date:'EEE' | translate}}</span><br>
+              </div>
+              <div class="col-lg-6 no-padding text-right"  ng-class="{'col-lg-12': v.statusDate == 'total'}" >
+                <span uib-tooltip="{{'numberCalls'| translate}}"  ng-if="v.count" class="badge badge-default text-right" ng-bind="v.count"></span><br>
+                <span uib-tooltip="{{'%'| translate}}"  ng-if="v.count" class="badge text-right" ng-class="{'badge-primary' : v.percent <= 25,'badge-info' : v.percent > 25 && v.percent <= 50 ,'badge-warning' : v.percent > 50 && v.percent <= 75,'badge-success' : v.percent > 75 && v.percent <= 100}" ng-bind="v.percent"></span><br>
+              </div>
+              
+              
+             </div>
+        </div>
+      </div>
+  </div>
+</div> 

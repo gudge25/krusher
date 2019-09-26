@@ -1,0 +1,45 @@
+<br/>
+<br/>
+<br/>
+ 
+
+ 	C  <input type="text" class="form-control" ng-model="fromDate"  data-max-date="{{untilDate}}"  placeholder="From"  bs-datepicker style="width:10%; display: inline;background-color: lightyellow" ng-change="load();"> 
+	по <input type="text" class="form-control" ng-model="untilDate" data-max-date="{{NOW}}"  placeholder="Until" bs-datepicker style="width:10%; display: inline;background-color: lightyellow" ng-change="load();">
+			 
+<br/>
+<br/>
+
+<div ng-repeat="(key, value) in queuelog ">
+<b>ОЧЕРЕДЬ - {{key}}</b> 
+	<table class="table table-hover  table-striped"  style="width:30%">
+	      <thead>
+	       <tr>
+		  <th>#</th>
+		  <th>Оператор</th>
+		  <th>Количество принятых</th>
+		  <th>Время разговоров</th>
+		</tr>
+	      </thead>
+	      <tbody>
+		<tr ng-repeat="item in value">
+	       	  <th>{{$index}}</th>
+		  <th>{{item.agent}}</th>
+		  <td>{{item['count']}}</td>
+		  <td>{{item['sum']}}</td>
+		  
+		</tr>
+		 
+	      </tbody>
+	</table>
+<br/>
+<br/>	
+</div>
+
+
+
+ 
+
+
+<!--
+<highchart  config="chartConfig4" ></highchart>
+-->

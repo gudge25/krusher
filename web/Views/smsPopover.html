@@ -1,0 +1,13 @@
+<!-- <div>{{'phone' | translate}} {{e.ccName}}</div> -->
+<div class="form-group">
+
+  <label>{{'alfaname' | translate}}:</label>
+  <input ng-init="e.originator=SMSoriginame" class="form-control" ng-model="e.originator">
+    
+  <label>{{'text' | translate}} {{'SMS' | translate}}:</label>
+  <!-- <input type="text" ng-model="dynamicPopover.title" class="form-control"> -->
+  <textarea  rows="3" ng-model="e.text_sms" msd-elastic style="background-color: lightgoldenrodyellow;color: dimgrey;min-height: 96px;"  class="form-control" placeholder="{{'sendPlacehol' | translate}}"></textarea>
+  
+  <button ng-disabled="!e.text_sms" class="btn btn-outline-primary btn-sm float-right" style="margin-top:3%; margin-bottom:3%;"  ng-click="manyAction.smsSingle(e); manyAction.Find();" translate="send" ></button>
+</div>
+

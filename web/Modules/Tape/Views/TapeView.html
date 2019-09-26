@@ -1,0 +1,62 @@
+<section class="content">
+      <div class="row">
+        <div class="col-md-3">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i>  {{'filters' | translate}}</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <ul class="nav nav-pills nav-stacked">
+                <li ng-click="itemToShow = 'Документы'; showFilter = false">
+                  <a><i class="fa fa-circle-o text-aqua"></i> {{'documentation' | translate}}</a>
+                </li>
+                <li ng-click="itemToShow = 'Клиенты'; showFilter = true">
+                  <a><i class="fa fa-circle-o text-aqua"></i> {{'clients' | translate}}</a>
+                </li>
+              </ul>
+              <ui-select ng-model="model.emID" on-select="getData(model.emID)" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" ng-show="showFilter" style="margin-top: 20px">
+                <ui-select-match placeholder = "{{'responsible' | translate}}">{{$select.selected.emName}}</ui-select-match>
+                <ui-select-choices repeat="ab.emID as ab in employees.data | filter: $select.search " style="padding: 6px 0px">
+                  {{ab.emName}}
+                </ui-select-choices>
+              </ui-select>
+            </div>
+          </div>
+        </div>
+
+         <!--DATA RIGHT-->
+        <div class="col-md-9">
+          <!-- <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"> Лента </h3>
+             </div> -->
+            <!-- /.card-header -->
+            <!-- <div class="card-body p-0"> -->
+
+                <div class="table table-head-fixed-responsive mailbox-messages">
+                     <div class="col-lg-12" style="overflow-y: auto; height: 820px;" can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="100">
+
+                         <div ng-switch="itemToShow" >
+                            <div ng-switch-when='Документы'>
+                                <div ui-view='innerDocumentsView'></div>
+                                <div ng-include = "GulpViewPath + 'Tape/Views/InnerViews/innerDocumentsView.html'"></div>
+                            </div>
+                            <div ng-switch-default='Клиенты' >
+                                <div ui-view = 'innerClientView'></div>
+                                <div ng-include = "GulpViewPath + 'Tape/Views/InnerViews/innerClientView.html'"></div>
+                            </div>
+                        </div>
+
+                      </div>
+                </div>
+           <!--  </div> -->
+          <!-- </div> -->
+        </div>
+      </div>
+</section>

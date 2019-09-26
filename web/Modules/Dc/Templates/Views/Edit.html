@@ -1,0 +1,87 @@
+<section class="content">
+   
+  <div class="row">
+        <div class="col-md-3" ng-hide="hideItems">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i>  {{'info' | translate}}</h3>
+              <div class="card-tools"></div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tr>
+                        <td width="40%">{{'named' | translate}}</td>
+                        <td width="60%"><input class="form-control" ng-model="upd.dtName"></td>
+                    </tr>
+                    <tr>
+                        <td>{{'type' | translate}}</td>
+                        <td>
+                            <ui-select ng-model="upd.dcTypeID" theme="bootstrap4-1" class="normal" on-select="manyAction.Find();" style="width: 100%">
+                                <ui-select-match placeholder="{{'select' | translate}}" >{{$select.selected.dctName | translate}}</ui-select-match>
+                                <ui-select-choices repeat="a.dctID as a in docsTypes.data" >
+                                  {{a.dctName | translate}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'active' | translate}}</td>
+                        <td><label><input  type="checkbox" cb-switch ng-model="upd.isActive" /></label></td>
+                    </tr>
+                    <tr>
+                        <td>{{'default' | translate}}</td>
+                        <td><label><input  type="checkbox" cb-switch ng-model="upd.isDefault" /></label></td>
+                    </tr>
+                    <tr ng-include="'/Views/tableEdit.html'" ng-show="upd.Created"></tr>
+                    <tr ng-include="'/Views/tableEdit2.html'" ng-show="upd.Changed || upd.Changed==0"></tr>
+                </table>
+            </div>
+          </div>
+        </div>
+
+         <!--DATA RIGHT-->
+        <div ng-class="hideItems==true ? 'col-md-12' : 'col-md-9' ">
+          <div ng-class="hideItems==true ? '' : 'box card-info card-outline'">
+            <div class="card-header with-border" ng-hide='hideItems'>
+              <h3 class="card-title"> {{'template' | translate}}</h3>
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success" ng-click="manyAction.Update(upd,'Templates')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning" ui-sref="Templates">{{'cancel' | translate}}</button>
+                    </div>
+             </div>
+             <div class="card-header with-border" ng-show='hideItems'>
+              <h3 class="card-title"> {{'printeForm' | translate}}</h3>
+                    <div class="card-tools float-right">
+                        <button class="btn btn-warning" ng-click='$close()'>{{'cancel' | translate}}</button>
+                    </div>
+             </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+                <div class="table table-head-fixed-responsive mailbox-messages">
+                 <div class="col-lg-12">
+                    <div class="btn-group" ng-hide='hideItems'>
+                        <label class="btn btn-warning btn-sm" ng-model="settings" uib-btn-radio="'Editor'">{{'editor' | translate}}</label>
+                        <label class="btn btn-warning btn-sm" ng-model="settings" uib-btn-radio="'html'">{{'code' | translate}}</label>
+                        <label class="btn btn-warning btn-sm" ng-model="settings" uib-btn-radio="'Preview'" >{{'review' | translate}}</label>
+                    </div>
+                    <label ng-show="settings=='Preview'" class="btn btn-link btn-sm" pdf-save-button="idOne" pdf-name="krusher.pdf" ><i class="fa fa-print fa-lg"></i></label>
+                    <label ng-show="hideItems" class="btn btn-link btn-sm" pdf-save-button="Incoice" pdf-name="krusher.pdf" ><i class="fa fa-print fa-lg"></i></label>
+
+
+                    <div class="page" ng-show="settings=='Editor'" ng-hide='hideItems'> <textarea kendo-editor k-ng-model="upd.dtTemplate" style="width:100%; height: 100em;" ></textarea></div>
+                    <textarea ng-show="settings=='html'"  ng-hide='hideItems' class="form-control page" msd-elastic ng-model="upd.dtTemplate"></textarea>
+                    <div ng-show="settings=='Preview'" ng-hide='hideItems' class="page">
+                        <div bind-html-compile="upd.dtTemplate" pdf-save-content="idOne"></div>
+                    </div>
+                    <div ng-show='hideItems' class="page">
+                        <div bind-html-compile="upd.dtTemplate" pdf-save-content="Incoice"></div>
+                    </div>
+                  </div>
+
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>

@@ -1,0 +1,46 @@
+<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+    <b>{{'dateFrom'| translate}}</b>
+    <br>
+    <div class="form-group">
+            <p class="icon-group input-group">
+              <input ng-model="model.DateFrom" class="form-control" ng-model-options="{ updateOn: 'blur' }" style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;">
+                <span class="input-group-append">
+                  <button moment-picker="model.DateFrom" max-date="model.DateTo" class="btn btn-default">
+                      <i aria-hidden="true" class="fa fa-calendar"></i>
+                  </button>
+                </span>
+            </p>
+    </div>
+</div>
+<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+    <b>{{'dateTo'| translate}}</b>
+    <br>
+    <div class="form-group">
+          <p class="icon-group input-group">
+            <input ng-model="model.DateTo" class="form-control" ng-model-options="{ updateOn: 'blur' }" style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;">
+              <span class="input-group-append">
+                <button moment-picker="model.DateTo" min-date="model.DateFrom" class="btn btn-default">
+                    <i aria-hidden="true" class="fa fa-calendar"></i>
+                </button>
+              </span>
+          </p>
+    </div>
+</div>
+
+<div class="col-md-2">
+<b>{{'responsible'| translate}}</b>
+<ng-dropdown-multiselect  options="employees.data" selected-model="model.emIDs" theme="bootstrap4-1" class="normal" disabled="!can('EM','edit')"
+    extra-settings="{ scrollableHeight: '500px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'emName', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'emID', displayProp: 'emName', externalIdProp: 'emID'}"
+    translation-texts="texts">
+</ng-dropdown-multiselect>
+</div>
+
+<div class="col-md-2">
+<b>{{'status'| translate}}</b>
+<ui-select ng-model="model.onlineStatus" ng-change="Find()" theme="bootstrap4-1" class="normal" size="100%">
+    <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+    <ui-select-choices repeat="c.tvID as c in Enums.group[1035]  | filter: $select.search" >
+       {{c.Name | translate}}
+   </ui-select-choices>
+</ui-select>
+</div>

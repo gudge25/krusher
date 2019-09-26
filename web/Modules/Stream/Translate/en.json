@@ -1,0 +1,17 @@
+{
+		"find" : "Find",
+		"edited" : "Edited by",
+		"clientId" : "Client Id",
+		"personOrganization" : "Person / Organization",
+		"organization" : "Organization",
+		"clients" : "Сlients",
+		"documentDate" : "Document date",
+		"docStatus" : "Document status",
+		"document" : "Document",
+		"removed" : "deleted",
+		"seeComent" : "See comments",
+		"hideComent" : "Hide comments",
+		"removed" : "Removed",
+		"createdBy" : "Created",
+		"updated" : "Updated"
+	}

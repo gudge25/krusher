@@ -1,0 +1,53 @@
+<div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box" style="min-height:55px;">
+            <span class="info-box-icon bg-info elevation-1" style="line-height: 55px;height: 55px;"><i class="fa fa-clock"></i></span>
+            <div class="info-box-content" >
+              <span class="info-box-text">{{'total_avgwait'| translate}}\{{'Hold' | translate | lowercase}}</span>
+              <span class="info-box-number">{{total_avgwait}} <span ng-if="total_avghold">\{{total_avghold}}</span></span>
+            </div>
+           </div>
+         </div> 
+      
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box" style="min-height:55px;">
+            <span class="info-box-icon bg-danger elevation-1" style="line-height: 55px;height: 55px;"><i class="fa fa-clock"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">{{'total_summin'| translate}}</span>
+              <span class="info-box-number">{{total_summin}}</span>
+            </div>
+           </div>
+         </div>
+      
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box" style="min-height:55px;">
+            <span class="info-box-icon bg-success elevation-1" style="line-height: 55px;height: 55px;"><i class="fa fa-clock"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">{{'total_avgmin'| translate}}</span>
+              <span class="info-box-number">{{total_avgmin}}</span>
+            </div>
+           </div>
+         </div>
+      
+         <div class="col-md-3 col-sm-6 col-xs-12" >
+          <div class="info-box" style="min-height:55px;">
+            <span class="info-box-icon bg-warning elevation-1" style="line-height: 55px;height: 55px;"><i class="fa fa-clock"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">{{'total_avgbillmin'| translate}}</span>
+              <span class="info-box-number">{{total_avgbill}}</span>
+            </div>
+           </div>
+         </div>
+
+
+         <!-- <div class="col-md-2 col-sm-6 col-xs-12" >
+          <div class="info-box" style="min-height:55px;">
+            <span class="info-box-icon bg-default elevation-1" style="line-height: 55px;height: 55px;"><i class="fa fa-clock"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">{{'total_avghold'| translate}}</span>
+              <span class="info-box-number">{{total_avghold}}</span>
+            </div>
+           </div>
+         </div> -->
+
+</div>

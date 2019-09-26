@@ -1,0 +1,77 @@
+<div class="card card-info card-outline">
+        <div class="card-header">
+            <h3 class="card-title" translate="filters"></h3>
+            <div class="card-tools">
+                <global-button2 url=""></global-button>
+            </div>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="card-footer">
+                <div class="row">
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                                <b>{{'type'| translate}}</b>
+                                <ui-select ng-model="model.dctID" theme="bootstrap4-1" class="normal" on-select="manyAction.Find();"  style="width: 200px;" >
+                                        <ui-select-match placeholder="{{'select' | translate}}" >{{$select.selected.dctName | translate}}</ui-select-match>
+                                        <ui-select-choices repeat="a.dctID as a in docsTypes.data" >
+                                          {{a.dctName | translate}}
+                                        </ui-select-choices>
+                                </ui-select>
+                        </div>
+        
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                                <b>{{''| translate}}</b><br/>
+                                <input type="text" class="selectpicker form-control" ng-model="model.dcNo" ng-change="manyAction.Find()"/>
+
+                        </div>
+                        <div class="col-xl-2 col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <b>{{'dateFrom'| translate}}</b><br>
+                            <div class="input-group md-3">
+                                <input ng-model="model.dateFrom" class="form-control" ng-model-options="{ updateOn: 'blur' }" style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;">
+                                <div class="input-group-append">
+                                            <button moment-picker="model.dateFrom" max-date="model.DateTo" class="btn btn-default">
+                                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                            </button>
+                                </div>
+                            </div>            
+                        </div>
+                        <div class="col-xl-2 col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <b>{{'dateTo'| translate}}</b><br>
+                            <div class="input-group md-3">
+                                <input ng-model="model.dateTo" class="form-control" ng-model-options="{ updateOn: 'blur' }" style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;">
+                                <div class="input-group-append">
+                                            <button moment-picker="model.dateTo" min-date="model.dateFrom" class="btn btn-default">
+                                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                            </button>
+                                </div>
+                            </div> 
+                        </div>
+                  
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                                <b>{{'responsible'| translate}}</b><br/>
+                                <ui-select ng-model="model.emID" ng-change="manyAction.Find();" theme="bootstrap4-1" class="normal bg-custom-white" style="width: 200px;">
+                                  <ui-select-match allow-clear="true">{{$select.selected.emName}}</ui-select-match>
+                                  <ui-select-choices repeat="a.emID as a in employees.data" >
+                                    {{a.emName}}
+                                  </ui-select-choices>
+                                </ui-select> 
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                                <b>{{''| translate}}</b><br/>
+                                <input type="text" class="form-control" ng-model="model.clName" ng-change="manyAction.Find()"/>
+                                 
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                                <b>{{''| translate}}</b><br/>
+                                <input type="text" class="form-control" ng-model="model.dcComment" ng-change="manyAction.Find()"/>
+
+                                 
+                        </div>
+                        
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                                <ng-include src="'/Views/actives.html'"></ng-include>
+                        </div>
+               </div>
+            </div>
+        </div>
+</div>

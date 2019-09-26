@@ -1,0 +1,492 @@
+<header class="main-header" >
+    <!-- Logo -->
+    <a href="#!/Dashboard" class="logo" >
+      <span class="logo-mini">
+        <div class="image"><img src="/images/fa.png" style="width: 80%;"></div>
+      </span>
+      <span class="logo-lg">
+        <div class="image" ng-show="auth.FFF.logo_url"><img ng-src="{{auth.FFF.logo_url}}" style="width: 70%;"></div>
+        <div class="image" ng-show="!auth.FFF.logo_url"><img src="/images/krus_logo.png" style="width: 70%;"></div>
+      </span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+      <a class="sidebar-toggle" data-toggle="offcanvas" role="button" uib-tooltip="{{'hideMenu' | translate}}" tooltip-placement="bottom"></a>
+
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <p class="navbar-text" style="cursor: default;color:white;text-decoration: none;" ng-show="HotDial.FFF.ccName && HotDial.FFF.isDial">
+                <span ng-show="!HotDial.FFF.isBridge" ng-bind="(7006 | CallStatus).disposition"></span>
+                <span ng-show="HotDial.FFF.isBridge" ng-bind="(7007 | CallStatus).disposition"></span>
+                <i class="fa fa-spinner fa-pulse"></i>
+          </p>
+
+          <div class="navbar-form navbar-left" role="search" stop-event="click" ng-show="devicestatechange!='UNAVAILABLE' && WS">
+              <div class="input-group">
+                            <input ng-disabled="HotDial.FFF.isDial" placeholder="{{'CallInNumber' | translate}}" style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;" only-clear ng-model="HotDial.FFF.ccName" class="form-control" ng-change="ClearPhone()" ng-enter="manyAction.Call(HotDial.FFF,null)" ng-disabled="(call != HotDial.FFF.ccName && call)">
+                            <div class="input-group-append" ng-class="{ 'open' : (HotDial.FFF.ccName || dell) && auth.FFF.roleID } ">
+
+                              <button style="background-color: #fff;" ng-show="HotDial.FFF.ccName && !HotDial.FFF.isDial" ng-click="manyAction.Call(HotDial.FFF,null)" class="btn btn-default"><i style="color:green;" class="fa fa-phone"></i></button>
+                              <button style="background-color: #fff;" ng-show="HotDial.FFF.ccName && HotDial.FFF.isDial" ng-click="manyAction.Hangup(HotDial.FFF.ccName,null)" tooltip-placement="bottom" uib-tooltip ="{{'Hangup' | translate}}" class="btn btn-default"><i style="color:red;" class="fa fa-tty"></i></button>
+
+                              <button style="background-color: #fff;" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                 <span class="fa fa-caret-down"></span>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-right "   ng-click="$event.stopPropagation()" >
+                                <li class="dropdown-header" ng-show="Company.data2.length>0">{{'company' | translate}}</li>
+
+                                <li ng-click="$event.stopPropagation()">
+                                  <div class="menu-item">
+                                    <div class='form-group-sm'>
+                                      <div class="col-lg-12" ng-show="Company.data2.length>0">
+                                        <ui-select ng-model="HotDial.FFF.coID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" style="width:100% !important" ng-disabled="HotDial.FFF.ccName && HotDial.FFF.isDial">
+                                            <ui-select-match style="width:100% !important">{{$select.selected.coName}}</ui-select-match>
+                                            <ui-select-choices size="100%" style="width:100% !important" repeat="a.coID as a in Company.data2 | filter: $select.search track by $index">
+                                                {{a.coName}}
+                                            </ui-select-choices>
+                                        </ui-select>
+                                      </div>
+                                      <div class="col-lg-12">
+                                        <div id="phone">
+                                          <div id="wrapper" ng-click="$event.stopPropagation();">
+                                              <div class="key hover" ng-click="DialPad(1)">1</div>
+                                              <div class="key hover" ng-click="DialPad(2)">2</div>
+                                              <div class="key hover" ng-click="DialPad(3)">3</div>
+                                              <div class="clear"></div>
+                                              <div class="key hover" ng-click="DialPad(4)">4</div>
+                                              <div class="key hover" ng-click="DialPad(5)">5</div>
+                                              <div class="key hover" ng-click="DialPad(6)">6</div>
+                                              <div class="clear"></div>
+                                              <div class="key hover" ng-click="DialPad(7)">7</div>
+                                              <div class="key hover" ng-click="DialPad(8)">8</div>
+                                              <div class="key hover" ng-click="DialPad(9)">9</div>
+                                              <div class="clear"></div>
+                                              <div class="key nb" style="cursor: default;" ng-click="DialPad('*')"></div>
+                                              <div class="key hover" ng-click="DialPad(0)">0</div>
+                                              <div class="key nb" style="cursor: default;" ng-click="DialPad('#')"></div>
+                                              <div class="clear"></div>
+                                              <!-- <div class="key nb" ng-show="!HotDial.FFF.ccName" ></div> -->
+                                              <div class="key phone2 hover"  ng-click="$event.stopPropagation();dell=true;HotDial.FFF.ccName=null;" ng-show="HotDial.FFF.ccName && !HotDial.FFF.isDial"><i class="fa fa-times" aria-hidden="true"></i></div>
+                                              <div class="key nb" style="cursor: default;" ng-click="$event.stopPropagation();dell=true;HotDial.FFF.ccName=null;" ng-show="HotDial.FFF.ccName && HotDial.FFF.isDial"></div>
+
+                                              <div class="key phone hover" ng-click="manyAction.Call(HotDial.FFF,null)" ng-show="HotDial.FFF.ccName && !HotDial.FFF.isDial"><i class="fa fa-phone"></i></div>
+                                              <div class="key phone2 hover" ng-click="manyAction.Hangup(HotDial.FFF.ccName,null)" ng-show="HotDial.FFF.ccName && HotDial.FFF.isDial"  uib-tooltip ="{{'Hangup' | translate}}"><i class="fa fa-tty"></i></div>
+
+                                              <div class="key phone3 hover"   ng-click="dell=true;DialPadDelLast()" ng-show="HotDial.FFF.ccName && !HotDial.FFF.isDial"><i class="fa fa-arrow-left" aria-hidden="true"></i></div>
+                                              <div class="clear"></div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                  </div>
+                                 <!--  </div> -->
+                                  </div>
+                                </li>
+
+                              </ul>
+                            </div>
+                        </div>
+          </div>
+
+
+          <li class="dropdown notifications-menu" ng-show="Queues.myQueues.length>0">
+            <a  style="cursor: pointer;" class="dropdown-toggle" data-toggle="dropdown" uib-tooltip="{{'PauseInQueue' | translate}}" tooltip-placement="bottom"> <i class="fa fa-plane"></i> <span class="badge badge-default" ng-class="{'badge-success': Pause.AllBtn}" ng-bind="Queues.myQueues.length"></span></a>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu" ng-click="$event.stopPropagation()">
+                <li class="dropdown-header" ng-click="$event.stopPropagation()" ><b>{{'PauseInQueue' | translate}}</b></li>
+
+                <li ng-repeat="a in Queues.myQueues" >
+                    <div class="col-lg-12">
+                      <nobr>
+                        <a ng-href="/#!/QueueEdit/{{a.queID}}" ng-bind="a.queue_name"> </a>
+                        <label class="float-right" ><input type="checkbox" cb-switch ng-model="a.isPause" ng-change="PauseSingl(a);"/></label>
+                      </nobr>
+                    </div>
+                </li>
+               <!--  <br ng-show="Queues.myQueues.length>1"/>
+                <br ng-show="Queues.myQueues.length>1"/>
+                <br ng-show="Queues.myQueues.length>1"/> style="margin-top: 100px;"-->
+
+               <!--  <li  role="separator" class="divider" ng-show="Queues.myQueues.length>1"></li>
+                <li class="dropdown-header" ng-click="$event.stopPropagation();" ng-show="Queues.myQueues.length>1">{{'PauseInQueueAll' | translate}}</li> -->
+                <li  ng-click="$event.stopPropagation()" ng-show="Queues.myQueues.length>1">
+                  <div class="col-lg-12 no-padding">
+                    <small style="padding: 3px 20px;font-size: 12px; color: #777; white-space: nowrap;">{{'PauseInQueueAll' | translate}}</small>
+                  <div>
+                  <div class="col-lg-12">
+                    <a ng-href="/#!/Queue" ng-bind="'all' | translate"> </a>
+                    <label class="float-right"><input type="checkbox" cb-switch ng-model="Pause.AllBtn" ng-change="PauseAll();" ></label>
+                  </div>
+                </li>
+            </ul>
+          </li>
+
+          <li class="dropdown" >
+            <a  style="cursor: pointer;" class="dropdown-toggle" data-toggle="dropdown" uib-tooltip="{{'status' | translate}}" tooltip-placement="bottom"> 
+              <i class="fa fa-bullhorn" aria-hidden="true"></i> 
+              <span ng-if="EM.onlineStatus"> {{EM.onlineStatus | enums | translate}} </span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <li class="dropdown-header"><b>{{'status' | translate}}</b></li>
+                <li style="cursor: pointer;" ng-repeat="c in Enums.group[1035]" ng-class="{ 'active' : c.tvID == EM.onlineStatus}"> <a ng-href ng-click="UpdEm(c);">  {{c.Name | translate}} </a> </li>     
+            </ul>
+          </li>
+
+          <li class="dropdown" >
+            <a  style="cursor: pointer;" class="dropdown-toggle" data-toggle="dropdown" uib-tooltip="{{'quickCreation' | translate}}" tooltip-placement="bottom"> <i class="fa fa-plus"></i> </a>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <li class="dropdown-header"><b>{{'quickCreation' | translate}}</b></li>
+                <li> <a> <create-client/>  </a> </li>        <!-- Контакт -->
+                <li> <a> <create-deal/>    </a> </li>        <!-- Сделка -->
+                <li> <a> <create-form/>    </a> </li>        <!-- Анкета -->
+                <li> <a> <create-product/> </a> </li>        <!-- Товар -->
+                <li ng-hide="true"> <a> <create-invoice/> </a> </li>        <!-- Счёт -->
+                <li ng-hide="true"> <a> <create-payment/> </a> </li>        <!-- Платеж -->
+                <li ng-hide="true" ng-show="auth.FFF.Permission == 0"> <a> <create-completion/> </a> </li>  <!-- Акт выполненных работ -->
+                <li ng-hide="true" ng-show="auth.FFF.Permission == 0"> <a> <create-contract/> </a> </li>    <!-- Договор -->
+                <li ng-show="can('HotCreate','view')"> <a> <create-employee/>  </a> </li>        <!-- User -->
+                <li ng-show="can('HotCreate','view')"> <a> <create-trunk/>    </a> </li>        <!-- Trunk -->
+                <!--<li class="footer"><a href="#">View all</a></li>-->
+            </ul>
+          </li>
+
+          <li  uib-tooltip="{{'faq' | translate}}" tooltip-placement="bottom">
+            <a target="_blank" href="https://krusher.biz/faq/" ng-show="lang === 'ru'"><i class="fa fa-info"></i></a>
+            <a target="_blank" href="https://krusher.biz/en/faq/" ng-show="lang === 'en'"><i class="fa fa-info"></i></a>
+            <a target="_blank" href="https://krusher.biz/uk/faq/" ng-show="lang === 'ua'"><i class="fa fa-info"></i></a>
+          </li>
+
+
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" uib-tooltip="{{'languages' | translate}}" tooltip-placement="bottom">
+              <img ng-src="/LTE/dist/img/{{lang}}.svg" class="btn-lang" style="width: 20px; height: 16px">
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <li class="dropdown-header"><b>{{'languages' | translate}}</b></li>
+                <li  ng-class="{ 'active' : lang == 'en'}"><a ng-click="manyAction.changeLanguage('en')" style="cursor: pointer;"> <img src="/LTE/dist/img/en.svg" style="width: 20px"> English    </a> </li>
+                <li  ng-class="{ 'active' : lang == 'ru'}"><a ng-click="manyAction.changeLanguage('ru')" style="cursor: pointer;"> <img src="/LTE/dist/img/ru.svg" style="width: 20px"> Russian    </a> </li>
+                <li  ng-class="{ 'active' : lang == 'ua'}"><a ng-click="manyAction.changeLanguage('ua')" style="cursor: pointer;"> <img src="/LTE/dist/img/ua.svg" style="width: 20px"> Ukrainian  </a> </li>
+            </ul>
+          </li>
+
+
+          <!-- User Account: style can be found in dropdown.less -->
+          <!-- ng-class="{ 'open' : !hold && Pages.FFF.Filter && auth.FFF.roleID != 3 && (Pages.FFF.Filter.ffID || Pages.FFF.Filter.ffID == 0) && Pages.FFF.Filter.clStatus == 101 && auth.FFF.roleID != 3 && auth.FFF.sipName }" -->
+          <li class="dropdown user user-menu"  >
+            <a style="cursor: pointer;" class="dropdown-toggle" data-toggle="dropdown" ng-click="hold=false" uib-tooltip="{{'userSetting' | translate}}" tooltip-placement="bottom">
+              <img src="/images/avatar_2x.png" class="user-image" alt="User Image">
+              <span class="hidden-xs" ng-bind="auth.FFF.emName"></span>
+            </a>
+            <ul class="dropdown-menu"  style="opacity: 0.95" >
+              <!-- User image -->
+              <li class="user-header" style="height: auto;">
+                <!-- <i class="fa fa-times float-right" data-widget="collapse" ng-click="hold=true"></i> -->
+                <img src="/images/avatar_2x.png" class="img-circle" alt="User Image">
+                <p>
+                  {{auth.FFF.emName}} - {{auth.FFF.roleName}}
+                  <small ng-show="auth.FFF.sipLogin" ng-bind="'SIP/' + auth.FFF.sipLogin"></small>
+                  <!-- <small ng-show="auth.FFF.Queue">{{'userGroup' | translate}} <b> {{auth.FFF.Queue}} </b> </small>
+                  <small ng-hide="auth.FFF.Queue">{{'user' | translate}} <b>{{'not' | translate}}</b> {{'inGroups' | translate}}</small> -->
+                </p>
+              </li>
+
+
+              <!-- Menu Body -->
+
+              <li class="user-body" style="opacity: 0.97" ng-hide="MOD=='AST'">
+              <!-- AUTO CALL CONTROLL PANEL-->
+              <div class="row" ng-click="$event.stopPropagation()" style="opacity: 0.97;z-index: 99999;" >
+                  <div class="text-center" style="text-align:center" align="center">
+                                  <i class="fa fa-space-shuttle fa-lg"></i> <b>{{'control_autocall' | translate}} </b>
+                  </div>
+                  <br ng-show="Pages.FFF.Filter && auth.FFF.roleID != 3 && (Pages.FFF.Filter.ffID || Pages.FFF.Filter.ffID == 0) && Pages.FFF.Filter.clStatus == 101 && auth.FFF.roleID != 3 && auth.FFF.sipName"  />
+                  <div style="z-index: 99999;" class="input-group" class="navbar-form navbar-left" ng-show="Pages.FFF.Filter && auth.FFF.roleID != 3 && (Pages.FFF.Filter.ffID || Pages.FFF.Filter.ffID == 0) && Pages.FFF.Filter.clStatus == 101 && auth.FFF.roleID != 3 && auth.FFF.sipName" id="autocall">
+
+                     <div class="input-group-append">
+                      <a class="btn btn-link btn-sm" ng-href="/#!/client" uib-tooltip="ID файла для обзвона"><i class="fa fa-database"></i> <span class="badge badge-warning">{{Progress.FFF.ffID}}</span></a>
+                      <button ng-disabled="Progress.FFF.factor >= auth.FFF.count_of_calls || Play" ng-click="Progress.FFF.factor=Progress.FFF.factor+1" class="btn btn-custom btn-sm"><span class="glyphicon glyphicon-plus aligned"></span></button>
+                      <button ng-disabled="Play" class="btn btn-default btn-sm" uib-tooltip="{{'factorNumber' | translate}}">{{Progress.FFF.factor}}</button>
+                      <button ng-disabled="Progress.FFF.factor <= 1 || Play" ng-click="Progress.FFF.factor=Progress.FFF.factor-1" class="btn btn-custom btn-sm"><span class="glyphicon glyphicon-minus aligned"></span></button>
+                    </div>
+
+                    <div class='form-group-sm' style="z-index: 99999;">
+                      <ui-select ng-model="Progress.FFF.id_scenario" ng-change="AutoStatus()" theme="bootstrap4-1" class="normal bg-custom-white" style="max-width: 100px;z-index: 99999;"  uib-tooltip="{{'scenario' | translate}}">
+                          <ui-select-match  placeholder="{{'scenario' | translate}}">{{$select.selected.name_scenario}}</ui-select-match>
+                          <ui-select-choices  class="dropdown-menu-right" repeat="c.id_scenario as c in Scenario.data | filter: $select.search " >
+                              {{c.name_scenario}}
+                          </ui-select-choices>
+                      </ui-select>
+                    </div>
+                  </div>
+
+                  <div class="row" ng-show="Pages.FFF.Filter && auth.FFF.roleID != 3 && (Pages.FFF.Filter.ffID || Pages.FFF.Filter.ffID == 0) && Pages.FFF.Filter.clStatus == 101 && auth.FFF.roleID != 3 && auth.FFF.sipName">  
+                    <div class="col-lg-12 text-center">  
+                      <button class="btn btn-link" ng-model="Start" ng-hide="Play" uib-tooltip="{{'start' | translate}}" tooltip-placement="bottom" ng-disabled=" !Progress.FFF.id_scenario || !Progress.FFF.factor" uib-btn-checkbox ng-click="manyAction.ProgressStart();">  <i class="fa fa-play" style="color:green;"></i> </button>
+                      <button class="btn btn-link" ng-model="Start" ng-show="Play" uib-tooltip="{{'stop' | translate}}" tooltip-placement="bottom" uib-btn-checkbox ng-click="manyAction.ProgressStop();">            <i class="fa fa-stop" style="color:red;"></i></button>
+                    </div>
+                  </div>
+
+                  <table ng-hide="AutoProcess.length == 0"   class="table table-head-fixed table-hover borderless">
+                          <tr>
+                              <th class="'text-left'">{{'process' | translate}}</th>
+                              <th class="'text-left'">{{'user' | translate}}</th>
+                          </tr>
+                          <tr ng-repeat="e in AutoProcess | filter:searh" ng-class="{'tagBackgndo' : Progress.FFF.id_autodial == e.id_autodial}" >
+                              <td >  <a ng-href="/#!/AutoProcessEdit/{{e.id_autodial}}" uib-tooltip="{{e.errorDescription}}"> <button class="btn {{(e.process | ProcessStatus).color}} btn-xs" > {{(e.process | ProcessStatus).disposition}} {{e.TimeUpdated | date:'HH:mm'}}</button>   </a> </td>
+                              <td> <span ng-bind="e.emID | emFilters" uib-tooltip="{{e.id_scenario | scFilters}}"> </span> </td>
+                           </tr>
+                  </table>
+                  <br/>
+ 
+            <div style="overflow-y: scroll;height:22vh; " can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="10"
+              ng-show="(!Pages.FFF.Filter.ffID && Pages.FFF.Filter.ffID != 0) || (Pages.FFF.Filter.clStatus != 101) || (!auth.FFF.sipName) || (Scenario.data.length <= 0)">
+
+                  <div class="alert alert-warning" style="padding: 10px; margin-bottom: 10px;" ng-show="!Pages.FFF.Filter.ffID && Pages.FFF.Filter.ffID != 0">
+                    <h4><i class="icon fa fa-info"></i> {{'notification' | translate}}!</h4>
+                      {{'selectFileCall' | translate}}<br/>
+                      {{'sequence' | translate}}
+                  </div>
+
+                  <div class="alert alert-warning" style="padding: 10px; margin-bottom: 10px; "ng-show="Pages.FFF.Filter.clStatus != 101">
+                    <h4><i class="icon fa fa-info"></i> {{'notification' | translate}}!</h4>
+                      {{'callPosible' | translate}} <br/>
+                  </div>
+
+                  <div class="alert alert-warning" style="padding: 10px; margin-bottom: 10px; "ng-show="!auth.FFF.sipName">
+                    <h4><i class="icon fa fa-info"></i> {{'notification' | translate}}!</h4>
+                      {{'SIPPosible' | translate}} <br/>
+                  </div>
+
+                  <div class="alert alert-warning" style="padding: 10px; margin-bottom: 10px;" ng-show="Scenario.data.length <= 0">
+                    <h4><i class="icon fa fa-info"></i> {{'notification' | translate}}!</h4>
+                      {{'ScenarioPosible' | translate}} <br/>
+                  </div>
+
+                </div>
+            </div>
+ 
+              </li>
+              <!-- Menu Footer-->
+              <li class="user-footer" style="background-color: #605ca8;">
+                <div class="row no-padding">
+                  <div class="col-xs-4 text-center" style="position:inherit !important">
+                    <a ng-show="can('FOP2','view')" href="#!/edit/employee/{{auth.FFF.emID}}" class="btn btn-primary">{{'profile' | translate}}</a>
+                  </div>
+
+                  <div class="col-xs-4 text-center" style="position:inherit !important">
+                    <a target="_blank" ng-show="can('FOP2','view') && auth.FFF.sipLogin && auth.FFF.fop2_secret" href="fop2/?exten={{auth.FFF.sipLogin}}&pass={{auth.FFF.fop2_secret}}" class="btn btn-primary">{{'FOP2' | translate}}</a>
+                  </div>
+
+                  <div class="col-xs-4 text-center" style="position:inherit !important">
+                    <button class="btn btn-warning" stop-event="click" ng-click="LogOut()"> {{'exit' | translate}}</button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <!-- Control Sidebar Toggle Button -->
+         <!-- <li>
+            <a data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+          </li>-->
+        </ul>
+      </div>
+    </nav>
+
+
+
+
+<!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Create the tabs -->
+    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+      <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <!-- Home tab content -->
+      <div class="tab-pane" id="control-sidebar-home-tab">
+        <h3 class="control-sidebar-heading">Recent Activity</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                <p>Will be 23 on April 24th</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-user bg-yellow"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+
+                <p>New phone +1(800)555-1234</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+
+                <p>nora@example.com</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-file-code-o bg-green"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+
+                <p>Execution time 5 seconds</p>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- /.control-sidebar-menu -->
+
+        <h3 class="control-sidebar-heading">Tasks Progress</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Custom Template Design
+                <span class="badge badge-danger float-right">70%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Update Resume
+                <span class="badge badge-success float-right">95%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Laravel Integration
+                <span class="badge badge-warning float-right">50%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Back End Framework
+                <span class="badge badge-primary float-right">68%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- /.control-sidebar-menu -->
+
+      </div>
+      <!-- /.tab-pane -->
+      <!-- Stats tab content -->
+      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+      <!-- /.tab-pane -->
+      <!-- Settings tab content -->
+      <div class="tab-pane" id="control-sidebar-settings-tab">
+        <form method="post">
+          <h3 class="control-sidebar-heading">General Settings</h3>
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Report panel usage
+              <input type="checkbox" class="float-right" checked>
+            </label>
+
+            <p>
+              Some information about this general settings option
+            </p>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Allow mail redirect
+              <input type="checkbox" class="float-right" checked>
+            </label>
+
+            <p>
+              Other sets of options are available
+            </p>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Expose author name in posts
+              <input type="checkbox" class="float-right" checked>
+            </label>
+
+            <p>
+              Allow the user to show his name in blog posts
+            </p>
+          </div>
+          <!-- /.form-group -->
+
+          <h3 class="control-sidebar-heading">Chat Settings</h3>
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Show me as online
+              <input type="checkbox" class="float-right" checked>
+            </label>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Turn off notifications
+              <input type="checkbox" class="float-right">
+            </label>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Delete chat history
+              <a href="javascript:void(0)" class="text-red float-right"><i class="fa fa-trash"></i></a>
+            </label>
+          </div>
+          <!-- /.form-group -->
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+  <span id="wsPopupCtrl" ng-controller="wsPopupCtrl"></span>
+</header>

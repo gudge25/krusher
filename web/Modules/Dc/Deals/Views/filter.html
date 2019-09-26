@@ -1,0 +1,55 @@
+<div class="card card-info card-outline">
+        <div class="card-header">
+            <h3 class="card-title" translate="filters"></h3>
+            <div class="card-tools">
+                <global-button2 url=""></global-button>
+            </div>
+        </div>
+    
+        <div class="card-body p-0">
+            <div class="card-footer">
+                <div class="row">
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                                <b>{{'client'| translate}}</b>
+    
+                                <div class="input-group">
+                                    <input ng-hide="client"
+                                    ng-model="model.clID"
+                                    uib-typeahead="a.clID as a.clName for a in manyAction.SearchClient($viewValue)"
+                                    class="form-control"
+                                    placeholder="{{'selectCustomer' | translate}}"
+                                    typeahead-wait-ms="250"
+                                    typeahead-on-select="manyAction.Find();"
+                                    ng-enter="manyAction.Find();"
+                                    ng-class="{'rounded-left' : model.clID , 'rounded' : !model.clID}"/>
+                                    
+    
+                                    <span class="input-group-append">
+                                        <button ng-show="model.clID" type="button" class="btn btn-default rounded-right" data-toggle="dropdown" aria-expanded="false" ng-click="model.clID=null;manyAction.Find();">
+                                            <i class="fa fa-times" ></i>
+                                        </button>
+                                    </span>
+                                </div>
+                        </div>
+     
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12" >
+                                <b>{{'responsible'| translate}}</b>
+                                <div class="input-group">
+                                    <ui-select ng-model="model.emID " theme="bootstrap4-1" class="normal"  ng-disabled="!can('EM','edit')" on-select="manyAction.Find();" style="width: 100%">
+                                        <ui-select-match placeholder="{{'responsible' | translate}}" >{{$select.selected.emName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.emID as a in employees.data" >
+                                        {{a.emName}}
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                            <button ng-show="model.emID" type="button" class="btn btn-default custom-right-position" ng-click="model.emID = null;manyAction.Find();"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>
+                        </div>     
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                                <ng-include src="'/Views/actives.html'"></ng-include>
+                        </div>
+               </div>
+            </div>
+        </div>
+    </div>

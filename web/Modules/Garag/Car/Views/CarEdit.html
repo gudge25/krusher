@@ -1,0 +1,38 @@
+<div class="col-lg-2" style="border-right: 1px solid #e7e7e7;">
+
+</div>
+
+
+<div class="col-lg-10">
+    <div class="col-lg-6">
+        <br/>
+        <b>Редактировать</b>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="text-right">
+            <div class="btn-group" style="margin: 2%">
+                <button type="button" class="btn btn-success" ng-click="manyAction.Update(upd,'Car')">Сохранить</button>
+                <button type="button" class="btn btn-warning" ui-sref="Car">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <table class="table table-head-fixed table-hover borderless" style="margin: 1% 0;">
+            <tr>
+                <td style="width: 150px;">Марка</td>
+                <td><input  type="text" class="form-control" ng-model="upd.carName" placeholder="Введите марку"/></td>
+            </tr>
+            <tr>
+                <td style="width: 150px;">Номер</td>
+                <td><input  type="text" class="form-control" ng-model="upd.carNo" placeholder="Введите номер"/></td>
+            </tr>
+            <tr>
+                <td style="width: 150px;">Активный</td>
+                <td><input  type="checkbox" class="form-control" ng-model="upd.isActive" /></td>
+            </tr>
+
+        </table>
+    </div>
+</div>

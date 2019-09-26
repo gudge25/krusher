@@ -1,0 +1,86 @@
+<!--  <section class="content">-->
+      <div class="row">
+        <div class="col-lg-3">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i>  {{'actualization' | translate}}</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body p-0">
+               <div class="col-lg-12" can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="100">
+                    <br/>
+                    <i class="fa fa-list-ul fa-lg"></i> <b>{{'listOfBbases' | translate}}</b> <i class="fa fa-reply fa-lg float-right" style="cursor: pointer;color: #0075b0;" ng-show="SaBD_status" ng-click="Clean()"></i>
+                    <hr />
+
+                    <div class="list-group" ng-repeat="(key, values) in BasesSaBDGroup  track by $index" ng-init="x[$index].status = manyAction.xCheck(x[$index])" >
+                        <!--Base-->
+                        <a style="color:orange;" ng-show="Filter.BaseName == key || !Filter.BaseName"><b>{{key}} </b>
+                            <i class="fa fa-angle-right fa-lg"  ng-show="!x[$index].status" ng-click="x[$index].status = true"></i>
+                            <i class="fa fa-angle-down fa-lg"   ng-show="x[$index].status"  ng-click="x[$index].status = false" ></i>
+                        </a>
+
+                        <!--Files-->
+                            <a class="list-group-item"
+                                ng-show="x[$parent.$index].status && ( a.ffID == Filter.ffID || !Filter.ffID )"
+                                ng-click="Filter.ffID = a.ffID; Filter.BaseName=key; GetStatus(a.ffID);"
+                                style="margin-left: 5%;border:0;padding:0;"
+                                ng-repeat="a in values track by $index"
+                                title="{{a.Created | date:'dd.MM HH:mm'}}"
+                                ng-class="{'disabled' :  a.ffID == Filter.ffID}"
+                                >
+                                <i class="fa fa-database fa-lg" ng-show="SaBD_status"></i> {{a.ffName}}
+                            </a>
+
+                        <!--Status-->
+                        <div ng-show="Filter.BaseName == key && SaBD_status ">
+                            <a  class="list-group-item btn" style="margin-left: 5%;border:0;padding:0;text-align:left;"
+                                ng-click     = "$event.stopPropagation()"
+                                ng-hide      = "AutoHand && value.FilterID == 1003"
+                                ng-repeat    = "value in SaBD_status track by $index">
+                                    <nbr-client style="color:darkblue;margin-left:5%;" ng-show="value.clID" data="{{value.clID}}" type="hand">{{value.Name}}</nbr-client>
+                                    <span ng-hide="value.clID">
+                                            <hr ng-show="value.FilterID == 1004"/>
+                                            {{value.Name}}
+                                    </span>
+                                    <span  class="badge badge-important"> {{value.Qty}}</span>
+                            </a>
+                        </div>
+                        <hr ng-show="values[$index].ffID == Filter.ffID">
+                    </div>
+                </div>
+
+            </div>
+          </div>
+        </div>
+        </div>
+
+
+        <div class="row" ng-show="Filter.ffID">
+         <div class="col-lg-3">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i>  {{'autoCall' | translate}}</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="col-lg-12">
+                    <div >
+                        <button class="btn btn-link"> <i class="fa fa-plus" ng-click="Progress.FFF.factor=Progress.FFF.factor+1" style="cursor: pointer;"></i>  {{Progress.FFF.factor}} <i class="fa fa-minus"  style="cursor: pointer;" ng-click="Progress.FFF.factor=Progress.FFF.factor-1"></i></button>
+                        <button class="btn btn-link" ng-model="Start" ng-click="manyAction.ProgressStart(Progress);AutoHand=true;"  ng-hide="autocall.FFF" uib-btn-checkbox> <i class="fa fa-play" style="color:green;"></i> </button>
+                        <button class="btn btn-link" ng-model="Start" ng-click="manyAction.ProgressStop();AutoHand=false;"          ng-show="autocall.FFF" uib-btn-checkbox> <i class="fa fa-stop" style="color:red;"></i></button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        </div>

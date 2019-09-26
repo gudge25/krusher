@@ -1,0 +1,42 @@
+<div ng-include="'/build/Asterisk/SIP/Views/filter.html'"></div>
+
+<div  class="card card-info card-outline" >
+    <ng-include src="'/Views/findPlaceholder.html'"></ng-include>
+
+    <div class="card-body  p-0">
+        <div class="row">
+            <div class="col-lg-12 " style="overflow-y: auto; height: 65vh;" can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="100">
+                <ng-include src="'/Views/LoadingTable.html'"></ng-include>
+                        <table class="table table-head-fixed  table-hover" ng-hide="global.Loading || data.length < 1">
+                            <tr ng-click="manyAction.Find()">
+                                <th ng-include="'/Views/ng-table/checkbox.html'" ng-click="$event.stopPropagation()" width="1%"></th>
+                                <th ng-init="o1='sipName'" ng-click="manyAction.order(o1);">
+                                    <nobr>{{'named' | translate}} <span ng-show="order==o1" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                </th>
+                                <th ng-init="o13='nat'" ng-click="manyAction.order(o13);">
+                                    <nobr>{{'nat' | translate}} <span ng-show="order==o13" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                </th>
+                                <th ng-init="o2='callerid'" ng-click="manyAction.order(o2);">
+                                    <nobr>{{'callerid' | translate}} <span ng-show="order==o2" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                </th>
+                                <th ng-init="o4='emID'" ng-click="manyAction.order(o4);">
+                                    <nobr>{{'users' | translate}} <span ng-show="order==o4" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                </th>
+                                <th ng-init="o11='isActive'" ng-click="manyAction.order(o11);">
+                                        <nobr>{{'active' | translate}} <span ng-show="order==o11" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                </th>
+                            </tr>
+                            <tr ng-repeat="e in data | limitTo:limit track by $index" ng-class="{ 'table-secondary' : e.sipID == Auth.sipID }">
+                                <td ng-include="'/Views/checkboxOne.html'"></td>
+                                <td><a ui-sref="SIPEdit( {'sipID': e.sipID, 'sipName' : e.sipName })">{{e.sipName}}</a></td>
+                                <td style="width: 25%" ng-bind="e.nat | enums"></td>
+                                <td ng-bind="e.callerid"></td>
+                                <td > <span ng-show="e.emID" ng-bind="e.emID | emFilters"></span></td>
+                                <td width="1%"><input type="checkbox" cb-switch disabled ng-model="e.isActive"/></td>
+                            </tr>
+                        </table>
+            </div>
+        </div>    
+        <div ng-include="'/Views/pagination.html'"></div>
+    </div>
+</div>

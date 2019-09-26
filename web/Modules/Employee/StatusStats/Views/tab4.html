@@ -1,0 +1,65 @@
+<div class="card-body  p-0" ng-show="data4.length != []" style="height:72vh;overflow-y: auto;" can-load="canLoad" infinite-scroll="manyAction.loadMore(data4.length)"  threshold="10">
+    <div ng-show="data4.length != []" style="height:72vh;overflow-y: auto;" can-load="canLoad" infinite-scroll="manyAction.loadMore(data4.length)"  threshold="10" >
+            <table class="table table-head-fixed table-hover" ng-hide="global.Loading">
+                <thead>
+                    <tr ng-click="tabset(4);">
+                        <th class="rotate" ng-init="o401='Created'" ng-click="orderF(o401);">
+                            <div>{{'date' | translate}} <span ng-show="order2==o401" ng-include="'/Views/orderSpan.html'"></span></div>
+                        </th>
+                        <th class="rotate" ng-init="o401='Created'" ng-click="orderF(o401);">
+                                <div>{{'time' | translate}} <span ng-show="order2==o401" ng-include="'/Views/orderSpan.html'"></span></div>
+                        </th>
+                        <th class="rotate" ng-init="o402='emID'" ng-click="orderF(o402);">
+                            <div><nobr>{{'user' | translate}} <span ng-show="order2==o402" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                        </th>
+                        <th class="rotate" ng-init="o403='duration'" ng-click="orderF(o403);">
+                            <div><nobr> 
+                                {{'duration' | translate}} <span ng-show="order2==o403" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                        </th>
+                        <th class="rotate" ng-init="o409='serviceLevel'" ng-click="orderF(o409);">
+                            <div><nobr> 
+                                {{'expectation' | translate}} <span ng-show="order2==o409" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                        </th>
+                        <th class="rotate" ng-init="o408='holdtime'" ng-click="orderF(o408);">
+                                <div><nobr>{{'Hold' | translate}} <span ng-show="order2==o408" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                        </th>
+                        <th class="rotate" ng-init="o404='ccName'" ng-click="orderF(o404);">
+                            <div><nobr> 
+                                {{'Phone' | translate}} <span ng-show="order2==o404" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                        </th>
+                        <th class="rotate" ng-init="o405='ContactStatusName'" ng-click="orderF(o405);">
+                            <div><nobr>{{'status' | translate}} <span ng-show="order2==o405" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                        </th>
+                        <th class="rotate" ng-init="o406='Comment'" ng-click="orderF(o406);">
+                            <div><nobr> 
+                                {{'Comment' | translate}} <span ng-show="order2==o406" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                        </th>
+                        <th class="rotate" ng-init="o407='adsName'" ng-click="orderF(o407);">
+                            <div><nobr> 
+                                {{'address' | translate}} <span ng-show="order2==o407" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                        </th>
+                    </tr>
+                </thead>
+                <thead>  
+                    <tr ng-repeat="e in data4 | limitTo:limit track by $index">
+                        <td width="1%"> <nobr><span ng-bind="e.Created | date:'d MMM yyyy'" ></span></nobr> </td>
+                        <td width="1%"> <nobr><span ng-bind="e.Created | date:'HH:mm'" ></span></nobr> </td>
+                        <td width="1%"> 
+                                <nobr ng-show="e.emID">
+                                        <i class="fa fa-user"></i>
+                                        <a ng-bind="e.emID | emFilters"></a>
+                                </nobr>
+                        </td>
+                        <td> <span class="badge badge-secondary" ng-bind="e.duration"></span></td>
+                        <td> <span class="badge badge-secondary" ng-bind="e.serviceLevel"></span></td>
+                        <td> <span class="badge badge-secondary" ng-bind="e.holdtime"></span></td>
+                        <td> <div ng-include="'/Views/DialButton.html'"></div> </td>
+                        <td> <span class="badge badge-success" ng-bind="e.ContactStatusName | translate"></span></td>
+                        <td> <span ng-bind="e.Comment"></span></td>
+                        <td> <span ng-bind="e.adsName"></span></td> 
+                    </tr>
+                </thead>    
+            </table> 
+ 
+        </div>
+</div>

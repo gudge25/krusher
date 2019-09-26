@@ -1,0 +1,218 @@
+
+<div ng-include="'/build/Callincard/Views/top.html'"></div>
+<div ng-include="'/build/Callincard/Views/filter.html'"></div>
+
+<div  class="card card-warning card-outline">
+
+    <!-- <ng-include src="'/Views/findPlaceholder.html'"></ng-include> -->
+
+    <div class="card-body p-0">
+      <div class="row">
+        <div class="col-lg-12" >
+            <div style="height:72vh;overflow-y: auto;" can-load="canLoad" infinite-scroll="manyAction.loadMore(data.length)"  threshold="10">
+                  <ng-include src="'/Views/LoadingTable.html'"></ng-include>
+                  <table class="table table-head-fixed table-hover borderless" ng-hide="global.Loading">
+                    <thead>
+                        <tr ng-click="Find()" >
+                            <th ng-include="'/Views/ng-table/checkbox.html'" ng-click="$event.stopPropagation()"  width="1%" ng-if="can('EM','edit')"/>
+                            <th ng-init="o1='ccName'" ng-click="manyAction.order(o1);">
+                                <nobr>{{'numberNum' | translate}} <span ng-show="order==o1" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o2='Created'" ng-click="manyAction.order(o2);">
+                                <nobr>{{'date' | translate}} <span ng-show="order==o2" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o3='dcStatusName'" ng-click="manyAction.order(o3);">
+                                <nobr>{{'status' | translate}} <span ng-show="order==o3" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o4='CallType'" ng-click="manyAction.order(o4);">
+                                <nobr>{{'type' | translate}} <span ng-show="order==o4" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o10='destination'" ng-click="manyAction.order(o10);">
+                                <nobr>{{'destination' | translate}} <span ng-show="order==o10" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o11='destdata'" ng-click="manyAction.order(o11);">
+                                <nobr>{{'destdata' | translate}} <span ng-show="order==o11" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o5='emID'" ng-click="manyAction.order(o5);" ng-show="ColemName || order == o5">
+                                <nobr>{{'responsible' | translate}} <span ng-show="order==o5" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o6='clName'" ng-click="manyAction.order(o6);">
+                                <nobr>{{'client' | translate}} <span ng-show="order==o6" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o7='channel'" ng-click="manyAction.order(o7);">
+                                <nobr>{{'trunk' | translate}} <span ng-show="order==o7" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o9='coName'" ng-click="manyAction.order(o9);" ng-show="Company.data.length>0">
+                                <nobr>{{'company' | translate}} <span ng-show="order==o9" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-show="ColRecord">{{'recording' | translate}}</th>
+                            <th ng-init="o8='target'" ng-click="manyAction.order(o8);" ng-show="ColTarget || order == o8">
+                                <nobr>{{'target' | translate}} <span ng-show="order==o8" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                            <th ng-init="o12='billsec'" ng-click="manyAction.order(o12);" ng-show="ColBillsec || order == o12">
+                                <nobr>{{'talkTime' | translate}} <span ng-show="order==o12" ng-include="'/Views/orderSpan.html'"/></nobr>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat='e in data | limitTo:limit track by $index'  ng-class="{'table-secondary' : e.ccName == Hover }" ng-mouseenter="addClass(e.ccName)" ng-mouseleave="removeClass()">
+                            <td width="1%" ng-if="can('EM','edit')" ng-include="'/Views/checkboxOne.html'"></td>
+
+                            <td  width="1%">
+                                <div ng-if="e.CallType !== 101312" ng-include="'/Views/DialButton.html'"></div>
+
+                                <!-- SMS -->
+                                <span ng-if="e.CallType === 101312">
+                                   <nobr> 
+                                        <span style="cursor: pointer;"  ng-if="showSMSsingle" >
+                                            <i class="fas fa-sms" popover-title="{{ 'send' | translate }} SMS {{'na' | translate}} {{e.ccName}}" popover-trigger="click" popover-popup-delay="0" uib-popover-template="'/Views/smsPopover.html'" ></i>
+                                        </span>
+                                        <span class="text-orange" ng-bind="e.ccName"></span> 
+                                    </nobr>
+
+                                </span>
+                            </td>
+                            <td  width="1%">
+                                <nobr  uib-popover-html="htmlPopover3(e)" popover-trigger="'mouseenter'" >
+                                    <span  class="text-muted" ng-hide="e.isToday" ng-bind="e.Created | date:'MMM d, HH:mm'"> </span>
+                                    <span class="text-muted" ng-show="e.isToday" ng-bind="e.Created | date:'HH:mm'"> </span>
+                                </nobr>
+                            </td>
+                            <td  width="1%"> 
+                                    <div class="btn-group" ng-show="e.dcStatusName">
+                                        <nobr>
+                                            <button class="btn btn-link btn-xs" style="cursor: default;">
+                                                <i class="fa fa-arrow-circle-up fa-lg"  ng-show="e.IsOut"    aria-hidden="true" uib-tooltip="{{e.IsOut | CallTypeFilters}}" style="color:grey;"></i>
+                                                <i class="fa fa-arrow-circle-down fa-lg"  ng-show="!e.IsOut"   aria-hidden="true" uib-tooltip="{{e.IsOut | CallTypeFilters}}" style="color:black;"></i>
+                                            </button>
+
+                                            <span class="badge badge-primary" ng-show="e.transferFrom || e.transferTo" uib-tooltip="{{'transfer' | translate}} {{'from' | translate}} {{e.transferFrom}} {{'to' | translate}} {{e.transferTo}}">{{'t' | translate}}</span>
+
+                                            <button ng-if="e.dcStatusName != 'BLOCKED'" style="cursor: default;" class="btn {{(e.dcStatusName | CallStatus).color}} btn-xs" ng-bind="(e.dcStatusName | CallStatus).disposition"></button>
+                                            <a ng-if="e.dcStatusName == 'BLOCKED'"  uib-tooltip="{{'BLOCKEDdesc'| translate}}" href="//krusher.biz/price/" target="_blank" style="cursor: pointer;" class="btn {{(e.dcStatusName | CallStatus).color}} btn-xs" ng-bind="(e.dcStatusName | CallStatus).disposition"></a>
+                                            <!-- <i class="fa fa-comment-dots"  uib-tooltip="{{'status' | translate}}: {{e.ContactStatus | enums}},  {{'note' | translate}}: {{e.Comment}}" ng-show="e.ContactStatus || e.Comment"></i> -->
+                                            <i class="fa fa-comment-dots" uib-popover-html="htmlPopover(e)" popover-trigger="'mouseenter'" ng-show="e.ContactStatus || e.Comment"></i>
+                                            <i  ng-if="e.isMissed && !e.IsOut" class="fa fa-paper-plane text-red" uib-tooltip="{{'missedCall' | translate}}" ></i>
+                                        </nobr>
+                                    </div>
+                            </td>
+
+                            <td width="1%">
+                                <nobr ng-show="e.CallType"> 
+                                    <span ng-bind="e.CallType | enums | translate" ng-if="e.id_scenario || e.id_autodial" uib-popover-html="htmlPopover2(e)" popover-trigger="'mouseenter'"></span>
+                                    <span ng-bind="e.CallType | enums | translate" ng-if="!e.id_scenario && !e.id_autodial" ></span>
+                                </nobr>
+                            </td>
+
+                            <td  width="1%">
+                                <nobr ng-show="e.destination"><span ng-bind="e.destination | enums | translate"> </span></nobr>
+                            </td>
+
+                            <td  width="1%">
+                                <nobr ng-show="e.destdata"><span ng-bind="e.destdata | destdata:e.destination"> </span></nobr>
+                            </td>
+
+                            <td  width="1%" ng-show="ColemName || order == o5">
+                                <nobr ng-show="e.emID">
+                                  <i class="fa fa-user"></i>
+                                  <span ng-bind="e.emName" uib-tooltip="SIP/{{e.SIP}}"> </span>
+                                </nobr>
+                            </td>
+                            <td>
+                                <div uib-dropdown ng-show="e.clID && e.dcStatusName == 'ANSWERED' " uib-tooltip="{{'action'| translate}}">
+                                    <a id="single-button" href="#" ng-click="$event.stopPropagation()" uib-dropdown-toggle  >
+                                        <i class="fa fa-user" ng-show="e.IsPerson"      uib-tooltip="{{e.IsPerson | Person}}" tooltip-placement="left"></i>
+                                        <i class="fa fa-building" ng-hide="e.IsPerson"  uib-tooltip="{{e.IsPerson | Person}}" tooltip-placement="left"></i>
+                                        <span ng-bind="e.clName"></span> <span class="caret"></span>
+                                    </a>
+                                    <div class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
+                                        <a class="dropdown-item" ng-show="e.clID" href="#!/clientPreView/{{e.clID}}"  >{{'open'| translate}}</a>
+                                        <a class="dropdown-item" ng-click="$event.stopPropagation()"><create-deal data="{{e}}" ></create-deal></a>
+                                        <a class="dropdown-item" ng-click="$event.stopPropagation()"><create-form data="{{e}}" ></create-form></a>
+                                        <a class="dropdown-item" ng-click="$event.stopPropagation()"><edit-callingcard data="{{e}}" ></edit-callingcard></a>
+                                    </div>
+                                </div>
+                                <a ng-show="e.clID && e.dcStatusName != 'ANSWERED'" href="#!/clientPreView/{{e.clID}}"  uib-tooltip="{{'open'| translate}}">
+                                        <i class="fa fa-user"     ng-show="e.IsPerson"  uib-tooltip="{{e.IsPerson | Person}}" tooltip-placement="left"></i>
+                                        <i class="fa fa-building" ng-hide="e.IsPerson"  uib-tooltip="{{e.IsPerson | Person}}" tooltip-placement="left"></i>
+                                        <span ng-bind="e.clName"></span>
+                                </a>
+                                <a ng-show="!e.clID" href>
+                                    <create-client data="{{e.ccName}}"> </create-client>
+                                </a>
+                            </td>
+                            <td  width="1%">
+                                <nobr ng-hide="e.channel == 'trunk' || !e.channel">
+                                  <i class="fa fa-road"></i>
+                                  <span ng-bind="e.channel" uib-tooltip-html="'<span>{{'file'| translate}}:{{e.ffName }}</span>'"></span>
+                                </nobr>
+                            </td>
+                            <td  width="1%" ng-show="Company.data.length>0">
+                                <nobr ng-show="e.coName">
+                                  <i class="fa fa-building"></i>
+                                  <span ng-bind="e.coName"></span>
+                                </nobr>
+                            </td>
+                            <td width="1%" ng-show="ColRecord">
+                                <div ng-show="e.LinkFile && e.dcStatusName == 'ANSWERED' && e.CallType !== 101312">
+                                    <audio-player source="{{manyAction.MonitorUrl(e.LinkFile)}}" index="{{$index}}"></audio-player>
+                                </div>
+                                <!-- SMS -->
+                                <span ng-if="e.CallType === 101312">
+                                    <nobr><span class="text-orange" ng-bind="e.LinkFile"></span></nobr>
+                                </span>
+                            </td>
+                            <td width="1%" style="max-width: 110px;" ng-show="ColTarget || order == o8">
+                                  <span ng-repeat="a in e.target track by $index" class="badge badge-secondary" ng-bind="a"></span>
+                            </td>
+                            <td  width="1%" ng-show="ColBillsec || order == o12">
+                                <nobr>
+                                    <span class="text-muted" ng-show="e.billsec && e.billsec != '00:00'" ng-bind="e.billsec"> </span>
+                                </nobr>
+                            </td>
+                      </tr>
+                    </tbody>   
+        </table>
+    </div>
+
+    </div>
+    </div>
+    
+</div>
+
+
+ <!--PAGINATIONS-->
+<div class=" clearfix">
+    <div class="mailbox-controls" ng-hide="total_count == 0 || global.Loading" >
+        <div class="row">
+            <div class="col-lg-10">        
+                <ul uib-pagination
+                    total-items     = "total_count"
+                    ng-model        = "model.CurrentPage"
+                    items-per-page  = "model.limit"
+                    max-size        = "5"
+                    class           = "pagination-sm"
+                    boundary-links  = "true"
+                    rotate          = "false"
+                    num-pages       = "numPages"
+                    ng-click        = "Pagintion(model.limit)"
+                    previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                    style           = "margin:0px;"
+                    >
+                </ul>
+            </div>
+            <div class="col-lg-2 float-right">
+                <ui-select ng-model="model.limit" theme="bootstrap4-1" ng-change="model.CurrentPage=1; Find()" class="normal " >
+                    <ui-select-match placeholder="{{'limit' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices position="up" repeat="a.Name as a in limitList| filter: $select.search " placeholder="{{'limit' | translate}}">
+                    {{a.Name}}
+                </ui-select-choices>
+            </ui-select>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
+
+</div>

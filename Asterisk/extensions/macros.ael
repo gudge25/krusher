@@ -1,0 +1,165 @@
+macro GetFreeDev(ARG,Type){
+        x=3;
+begin:
+        Set(y=${FIELDQTY(ARG,|)});
+        while (${y} > 0) {
+            Set(DEV=${CUT(ARG,|,${y})});
+            if( "${y}" == "${FIELDQTY(ARG,|)}" ){
+                //FIRST SIM
+                if("${DEVICE_STATE(SIP/${DEV})}" != "UNKNOWN" && "${DEVICE_STATE(SIP/${DEV})}" != "INVALID" && "${DEVICE_STATE(SIP/${DEV})}" != "UNAVAILABLE" && "${SIPPEER(${DEV},curcalls)}" < "${SIPPEER(${DEV},limit)}") Set(free=${DEV});
+            }
+            else {
+                //SECOND - ENDS SIM
+                if("${DEVICE_STATE(SIP/${DEV})}" != "UNKNOWN" && "${DEVICE_STATE(SIP/${DEV})}" != "INVALID" && "${DEVICE_STATE(SIP/${DEV})}" != "UNAVAILABLE" && "${SIPPEER(${DEV},curcalls)}" < "${SIPPEER(${DEV},limit)}") { if( "${free}" != "") { Set(delim=,); } Set(free=${free}${delim}${DEV}); }
+            }
+            y=${y}-1;
+        }
+        switch ("${Type}") {
+            case "random":    Set(free=${CUT(free,\,,${RAND(1,${FIELDQTY(free,\,)})})});  break;
+            default: break;
+        }
+    //for krusher
+        if("${free}" != "")
+                channel=${free};
+        else {
+                if( ${x} > 0 ) {
+                        x=${x}-1; Wait(2); goto begin;
+                } else {
+                         disposition=LIMIT; &postCallincard(); Hangup;
+                }
+        }
+        catch h { Hangup; }
+        return;
+}
+//EXAMPLE    &GetFreeDev(7001|7002|7003|7004|7005,random); Dial(SIP/${free}/${EXTEN});
+
+macro volume(a){
+        MSet(VOLUME(TX)=${a},VOLUME(RX)=${a});
+        return;
+}
+
+macro checkDial(){
+        NoOp(${DIALSTATUS});
+        NoOp(${HANGUPCAUSE});
+        switch ("${DIALSTATUS}") {
+            case "BUSY"             : agi(googletts.agi,"вызываемый клиент занят!",ru); break;
+            case "NOANSWER"         : agi(googletts.agi,"вызываемый клиент неответил!",ru); break;
+            case "CONGESTION"       : agi(googletts.agi,"все линии заняты",ru); break;
+            case "CHANUNAVAI"       : agi(googletts.agi,"все линии недоступны",ru); break;
+            default                 : agi(googletts.agi,"вызываемый клиент ${DIALSTATUS}!",ru); break;
+        }
+
+        catch h { Hangup; }
+        return;
+}
+
+macro busy(){
+        // if( "${DIALSTATUS}" = "BUSY" || "${DIALSTATUS}" = "CONGESTION" || "${DIALSTATUS}" = "CHANUNAVAIL" ){ agi(googletts.agi,"все линии заняты!",ru);  &postCallincard();}
+        return;
+}
+
+macro post_call(){
+        //&line();
+        if( "${DIALSTATUS}" == "ANSWER" )	{ CDR(hanguped)=called; };
+        Hangup;
+        catch h { Hangup; }
+        return;
+}
+
+macro catch_h(){
+        if( "${DIALSTATUS}" == "ANSWER" && "${CDR(hanguped)}" != "called") { CDR(hanguped)=caller; }
+        Hangup;
+        catch h { Hangup; }
+        return;
+}
+ 
+macro clear(EXT){
+        Set(ccName=${FILTER(0-9_,${EXT})});
+        if( "${LEN(${ccName})}"  == "9" && "${ccName:0:1}" != "0")    ccName=0${ccName};
+        if( "${LEN(${ccName})}"  == "7")                             ccName=044${ccName};
+        if( "${LEN(${ccName})}"  == "10" && "${ccName:0:1}" == "0")   ccName=38${ccName};
+        return;
+}
+
+macro sticking(TYPE){
+    NoOp(${ApiPin}${ccName}/${TYPE}/${Aid});
+
+    switch ("${TYPE}") {
+            //Extension
+            case "101402"           : Set(pin=${SHELL(${ApiPin}${ccName}/${TYPE}/${Aid} | jq --raw-output -r '.SIP' | tr -d '\n' )});
+                                      if("${pin}" != "" && "${pin}" != "null")
+                                            if( "${DEVICE_STATE(SIP/${pin}_${Aid})}" == "NOT_INUSE") Dial(SIP/${pin}_${Aid},20);
+                                      break;
+            //Queue
+            case "101401"           : Set(pin=${SHELL(${ApiPin}${ccName}/${TYPE}/${Aid} | jq --raw-output -r '.queID' | tr -d '\n' )});
+                                      if("${pin}" != "" && "${pin}" != "null")
+                                            Answer; Set(GLOBAL(isQueue${ccName})=true);    Queue(${pin},${optionsIn},,,,,,Q);
+                                      break;
+
+            default                 : NoOp(ERROR PIN!!!!); break;
+    }
+    catch h { &postCallincard(); Hangup; }
+    return;
+}
+
+macro GetclName(){
+    Set(clName=${SHELL(${ApiFindClient}${Aid}/${ccName} | jq --raw-output -r '.[0].clName' | tr -d '\n' ) });
+    if("${clName}" != "null" && "${clName}" != "") {
+            //MSet(CONNECTEDLINE(name,i)=${clName},CONNECTEDLINE(num,i)=${ccName});
+            Set(CONNECTEDLINE(name,i)=${clName});
+            Set(CONNECTEDLINE(num,i)=${ccName});
+            if("${IsOut}" == "false") Set(CALLERID(name)=${clName});
+    }
+    return;
+}
+
+macro holiday(){
+       ifTime(*|*|06-08|jan) { Answer; PlayBack(/home/nerabochee); Hangup; }
+       return;
+}
+
+macro say_money(){
+        Answer;
+        if("${curName}" = "")     curName=uah;
+        if("${sum}" = "")         sum=0;
+        agi(d2ms.agi,${sum},${curName});
+        return;
+}
+
+macro google_tts(FIELDS){
+        Answer;
+        if("${langName}" == "")    langName=uk;
+        Set(y=${FIELDQTY(FIELDS,|)});
+        for(x=1; ${x} <= ${y}; x=${x} + 1) {
+                 NoOP(${CUT(FIELDS,|,${x})});
+                 NoOp(${${CUT(FIELDS,|,${x})}});
+                agi(googletts.agi,'${${CUT(FIELDS,|,${x})}}',${langName});
+        }
+	return;
+}
+ 
+macro abstractBase(){
+        Mset(GLOBAL(isQueue${ccName})=,GLOBAL(AidQ)=,GLOBAL(target${ccName})=);
+        &block();
+        return;
+}
+
+macro abstractBaseIn(){
+        Mset(ccName=${CALLERID(num)},IsOut=false);
+        &mix_krusher();
+        &clear(${CALLERID(num)});
+        &GetclName();
+        if("${coName}" != "")Set(CALLERID(name)=${CALLERID(name)}:${coName});
+        &block();
+        return;
+}
+
+macro block(){
+    Set(GROUP()=${Aid});
+    //Noop(Total number of calls : ${GROUP_COUNT(${Aid})});
+    if( "${TariffLimit}" == "null" || "${TariffLimit}" == "")  TariffLimit = 0;
+    if( ${GROUP_COUNT(${Aid})} > ${TariffLimit}) { Noop(========BLOCKED========"${GROUP_COUNT(${Aid})}" > "${TariffLimit}"==); disposition=BLOCKED; &postCallincard(); Hangup; }
+    return;
+}
+
+//System(${ApiRecordForce} -d '{  "Aid": 1,  "record_source": "${LinkFile}.wav"}');

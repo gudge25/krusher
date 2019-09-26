@@ -1,0 +1,56 @@
+<footer class="main-footer">
+
+	<div class="float-right hidden-xs">
+			<b ng-bind="'version' | translate"></b>
+			<span ng-bind="version"></span>
+			  <!-- {{'from2' | translate}}
+			<span class="text-muted" ng-bind="versionDate"/> -->
+	</div>
+	<div class="float-right hidden-xs">
+			<b ng-bind="'tariff' | translate"></b>
+			<a target="_blank" href="//krusher.biz/price/" ng-show="lang === 'ru'">{{auth.FFF.hosting_type | enums}}</a>
+            <a target="_blank" href="//krusher.biz/en/price/" ng-show="lang === 'en'">{{auth.FFF.hosting_type | enums}}</a>
+            <a target="_blank" href="//krusher.biz/uk/price/" ng-show="lang === 'ua'">{{auth.FFF.hosting_type | enums}}</a>
+            &nbsp;&nbsp;&nbsp;
+	</div>
+	<div class="float-right btn-group hidden-xs dropup">
+			<!-- <a style="cursor: pointer;" class="dropdown-toggle" data-toggle="dropdown">
+				<i class="fa fa-user text-aqua"></i> {{auth.FFF.client_name}}
+			</a> -->
+			<!-- <ul class="dropdown-menu dropdown-menu-right" role="menu">
+				<li ng-show="auth.FFF.vTigerID && (auth.FFF.emName == 'SuperAdmin' || auth.FFF.emName == 'SuperAdmin' || auth.FFF.emName == 'Zhdanov Dima' )"><a style="cursor: pointer;" href="http://crm.asterisk.biz.ua/index.php?module=Accounts&view=Detail&record={{auth.FFF.vTigerID}}" target="_blank"> {{'open' | translate}} </a> </li>
+ 
+				<li ng-show="auth.FFF.url"><a><b ng-bind="'domain' | translate"></b> {{auth.FFF.url}}  </a> </li>
+				<li ng-show="auth.FFF.phone"><a><b ng-bind="'phone' | translate"></b> {{auth.FFF.phone}}  </a> </li>
+				<li ng-show="auth.FFF.email_info"><a><b ng-bind="'Email' | translate"></b> {{auth.FFF.email_info}}  </a> </li>
+				<li ng-show="auth.FFF.id_currency"><a><b ng-bind="'currencyNew' | translate"></b> {{auth.FFF.id_currency | enums}}  </a> </li>
+				<li ng-show="auth.FFF.date_fee"><a><b ng-bind="'date_fee' | translate"></b> {{auth.FFF.date_fee}}  </a> </li>
+				<li ng-show="auth.FFF.balance_amount"><a><b ng-bind="'balance_amount' | translate"></b> {{auth.FFF.balance_amount}}  </a> </li>
+				<li ng-show="auth.FFF.logo_url"><a><b ng-bind="'logo_url' | translate"></b> {{auth.FFF.logo_url}}  </a> </li>
+			</ul> -->
+			 
+					<a href class="dropdown-toggle" data-toggle="dropdown" style="cursor: pointer;"> 
+					<i class="fa fa-user"></i> {{auth.FFF.client_name}} </a>
+					<div class="dropdown-menu dropdown-menu-right" role="menu">
+ 						<a class="dropdown-item" ng-show="auth.FFF.url"> <b ng-bind="'domain' | translate"></b> {{auth.FFF.url}}  </a>  
+						<a class="dropdown-item" ng-show="auth.FFF.phone"> <b ng-bind="'phone' | translate"></b> {{auth.FFF.phone}}  </a>  </a>  
+						<a class="dropdown-item" ng-show="auth.FFF.email_info"> <b ng-bind="'Email' | translate"></b> {{auth.FFF.email_info}}  </a>   
+						<a class="dropdown-item" ng-show="auth.FFF.id_currency"> <b ng-bind="'currencyNew' | translate"></b> {{auth.FFF.id_currency | enums}}  </a>   
+						<a class="dropdown-item" ng-show="auth.FFF.date_fee"> <b ng-bind="'date_fee' | translate"></b> {{auth.FFF.date_fee}} </a>   
+						<a class="dropdown-item" ng-show="auth.FFF.balance_amount"> <b ng-bind="'balance_amount' | translate"></b> {{auth.FFF.balance_amount}} </a>   
+						<a class="dropdown-item" ng-show="auth.FFF.logo_url"> <b ng-bind="'logo_url' | translate"></b> {{auth.FFF.logo_url}}  </a>    
+						<a class="dropdown-item" ng-show="auth.FFF.vTigerID && (auth.FFF.emName == 'SuperAdmin' || auth.FFF.emName == 'SuperAdmin' || auth.FFF.emName == 'Zhdanov Dima' )">  </a>   
+					 </div>
+			 
+			&nbsp;&nbsp;&nbsp;
+	</div>
+
+	<div class="float-right hidden-xs" ng-show="auth.FFF.count_of_calls">
+			<b ng-bind="'callpersec' | translate"></b>
+			<span ng-bind="auth.FFF.count_of_calls"></span>
+			&nbsp;&nbsp;&nbsp;
+ 	</div>
+
+
+	<span> <strong><a target="_blank" href="https://krusher.biz"  ng-bind="'aster' | translate"></a>.</strong> &copy; 2016-<span  ng-bind="NowDate"></span> <span  ng-bind="'allRights' | translate"/> .</span>
+</footer>

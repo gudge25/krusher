@@ -1,0 +1,72 @@
+<div class="card card-info card-outline">
+<div class="card-header with-border">
+       <div>
+           <h3 class="card-title">{{'filters'| translate}}</h3>
+           
+       </div>
+</div>
+
+<div class="card-tools">
+    <div class="noneBoard">
+        <div class="row">
+            <div class="col-md-1">
+                        <b>{{'region'| translate}}</b>
+                    <ui-select ng-model="model.rgID" ng-change="Find(model)" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                        <ui-select-match >{{$select.selected.rgName}}</ui-select-match>
+                        <ui-select-choices repeat="reg.rgID as reg in Regions.data | filter: $select.search" style="padding: 6px 0px">
+                            {{reg.rgName}}
+                        </ui-select-choices>
+                    </ui-select>
+            </div>
+            <div class="col-md-1" >
+                 <b>{{'country' | translate}}</b>
+                <ui-select ng-model="model.cID" theme="bootstrap4-1" class="normal ng-pristine ng-valid ng-touched" ng-change="manyAction.limit();GetArea()">
+                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.cName}}</ui-select-match>
+                            <ui-select-choices repeat="a.cID as a in Countries.data | filter: $select.search">
+                                        {{a.cName}}
+                            </ui-select-choices>
+                </ui-select>
+            </div>
+
+            <div style="display: inline-block;float: right; margin:10px 17px 5px; border: none;">
+                <div class="btn-group" style="float: right;">
+                  <ng-include src="'/Views/btnCustomLogic.html'"/>
+                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li role="menuitem"><a ui-sref="RegionNew" ><i class="fa fa-plus"></i> {{'new' | translate}}</a></li>
+                    <li role="menuitem" ng-show="dataIsChecked"><a ng-click="manyAction.manyDelete(data)"><i class="fa fa-trash"></i> {{'del' | translate}}</a></li>
+                    <li><a ng-click="manyAction.ClearFilter()" >
+                           <i class="fa fa-undo"></i>{{'Clear_filter'| translate}}
+                        </a>
+                    </li>
+                  </ul>
+                </div>
+                <!-- <br>
+                <label ng-show="data.length > 0">{{'findPlaceholder'| translate}} {{data.length}} {{'from'| translate}} {{total_count}}</label> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-body">
+    <div class="col-lg-12" >
+      <ng-include src="'/Views/LoadingTable.html'"></ng-include>
+        <table class="table table-head-fixed table-hover" ng-hide="global.Loading">
+            <tr ng-click="manyAction.Find()">
+                <th ng-include="'/Views/ng-table/checkbox.html'" ng-click="$event.stopPropagation()" width="1%"/>
+                <th ng-init="o3='rgName'" ng-click="manyAction.order(o3);">
+                    <nobr>{{'region' | translate}} <span ng-show="order==o3" ng-include="'/Views/orderSpan.html'"/></nobr>
+                </th>
+                 <th ng-init="o4='cName'" ng-click="manyAction.order(o4);">
+                    <nobr>{{'country' | translate}} <span ng-show="order==o4" ng-include="'/Views/orderSpan.html'"/></nobr>
+                </th>
+            </tr>
+            <tr ng-repeat="e in data | limitTo:limit track by $index" >
+                <td ng-include="'/Views/checkboxOne.html'"/>
+                <td> <a ng-href="/#!/RegionEdit/{{e.rgID}}/{{e.cID}}"  ng-bind="e.rgName"></a> </td>
+                <td ng-bind="e.cName"></td>
+             </tr>
+        </table>
+        <div ng-include="'/Views/pagination.html'"></div>
+    </div>
+</div>
+</div>

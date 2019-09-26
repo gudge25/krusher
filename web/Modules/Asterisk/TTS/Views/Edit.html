@@ -1,0 +1,79 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tr>
+                        <td width="50%">{{'TTS' | translate}}</td>
+                        <td width="50%">
+                                <input only-clear ng-model="upd.ttsName"   class="form-control" />
+                        </td>
+                    </tr>
+                    <tr ng-if="upd.engID === 102401">
+                        <td>{{'Fields' | translate}}</td>
+                        <td>
+                            <ui-select  multiple tagging tagging-label="(custom 'new' label)" ng-model="upd.ttsFields" theme="bootstrap4-1" sortable="true" ng-disabled="disabled" style='height: auto;'>
+                                <ui-select-match placeholder="{{'select' | translate}}">{{$item.fieldName}}</ui-select-match>
+                                <ui-select-choices repeat="a.ttsfID as a in TTSFields  | filter:$viewValue">{{a.fieldName}}</ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>{{'recording' | translate}} {{'before' | translate}}</td>
+                        <td>
+                            <ui-select  multiple tagging tagging-label="(custom 'new' label)" ng-model="upd.recIDBefore" theme="bootstrap4-1" sortable="true" ng-disabled="disabled" style='height: auto;'>
+                                <ui-select-match placeholder="{{'select' | translate}}">{{$item.record_name}}</ui-select-match>
+                                <ui-select-choices repeat="a.record_id as a in Record.data  | filter:$viewValue">{{a.record_name}}</ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'recording' | translate}} {{'after' | translate}} </td>
+                        <td>
+                            <ui-select  multiple tagging tagging-label="(custom 'new' label)" ng-model="upd.recIDAfter" theme="bootstrap4-1" sortable="true" ng-disabled="disabled" style='height: auto;'>
+                                <ui-select-match placeholder="{{'select' | translate}}">{{$item.record_name}}</ui-select-match>
+                                <ui-select-choices repeat="a.record_id as a in Record.data  | filter:$viewValue">{{a.record_name}}</ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'engine' | translate}}</th>
+                        <td>
+                            <div class="input-group">
+                                <ui-select ng-model="upd.engID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                    <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                                    <ui-select-choices repeat="c.tvID as c in Enums.group[1024] | filter: $select.search " >
+                                        {{c.Name}}
+                                    </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-append">
+                                     <button ng-show="upd.engID" type="button" class="btn btn-default" ng-click="upd.engID = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-include="'/Views/tableEdit.html'" ng-show="upd.Created"></tr>
+                    <tr ng-include="'/Views/tableEdit2.html'" ng-show="upd.Changed || upd.Changed==0"></tr>
+                </table>
+            </div>
+          </div>
+        </div>
+        <!--DATA RIGHT-->
+        <div class="col-lg-8">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-click="manyAction.Update(upd,'TTS')" ng-hide="manyAction.Check_upd_old()">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="TTS">{{'cancel' | translate}}</button>
+                    </div>
+        </div>
+    </div>
+</section>

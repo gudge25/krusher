@@ -1,0 +1,50 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-3">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i> {{'productsData' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tbody>
+                    <tr>
+                        <td>{{'category' | translate}}</td>
+                        <td><input class="form-control" ng-model="new.pctName" placeholder="Введите категорию"></td>
+                    </tr>
+                    <tr>
+                        <td>{{'parentID' | translate}}</td>
+                        <td>
+                            <ui-select ng-model="upd.ParentID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                <ui-select-match placeholder="{{'selectParent' | translate}}">{{$select.selected.pctName}}</ui-select-match>
+                                <ui-select-choices repeat="c.pctID as c in data | filter: $select.search" >
+                                   {{c.pctName}}
+                                </ui-select-choices>
+                           </ui-select>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-9">
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"> {{'info' | translate}}</h3>
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-disabled="!new.pctName" ng-click="manyAction.Save(new,'Categories')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="Categories">{{'cancel' | translate}}</button>
+                    </div>
+             </div>
+          </div>
+        </div>
+    </div>
+</section>

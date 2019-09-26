@@ -1,0 +1,222 @@
+<section class="content">
+    <div class="row">
+        <div class="col-md-4">
+ 
+ 
+          <!-- Profile Image -->
+          <div class="card card-info card-outline card-widget widget-user-2">
+            <div class="widget-user-header">
+                        <div class="widget-user-image">
+                          <img class="img-circle elevation-2 img-responsive " src="/images/avatar_2x.png">
+                        </div>
+                         <h3 class="widget-user-username"  ng-bind="em.emName">Nadia Carmichael</h3>
+                        <h5 class="widget-user-desc"  ng-bind="em.roleName | translate">Lead Developer</h5>
+            </div>
+
+            <div class="card-body box-profile p-2">
+                <!-- <img class="profile-user-img img-responsive img-circle elevation-2" src="/images/avatar_2x.png"> -->
+                <!--  <h3 class="profile-username text-center" ng-bind="em.emName"></h3> -->
+                <!-- <p class="text-muted text-center " ng-bind="em.emName"> </p> -->
+
+                    <table class="table table-head-fixed table-hover  borderless login-card-body" >
+                        <tr>
+                            <td width="50%">{{'name' | translate}}</td>
+                            <td><input only-clear class="form-control" ng-model="em.emName" placeholder="{{'typeName' | translate}}"/></td>
+                        </tr>
+                        <tr>
+                            <td>{{'login' | translate}}</td>
+                            <td>
+                                <div class="has-feedback" ng-class="{ 'has-error' : !em.LoginName.length && edit, 'has-success' : em.LoginName }">
+                                    <input ng-disabled="!can('EM','edit')" ng-model="em.LoginName"  class="form-control" ng-maxlength="30" ng-change="edit=true;CheckLogin();" placeholder="{{'login' | translate}}" pattern="^[a-zA-Z0-9._-]+$" required>
+                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                    <span class="help-block" ng-show="!em.LoginName.length && edit">{{'typeLogin'| translate}} <br/> {{'typeLoginLeng'| translate}}</span>
+                                </div>
+                                <br ng-if="existLogin">
+                                <div class="alert alert-warning" ng-if="existLogin">
+                                        <i class="icon fa fa-info"></i> {{'existLogin' | translate}}
+                                </div>                           
+                        </tr>
+                        <tr>
+                            <td>{{'chief' | translate}}</td>
+                            <td>
+                                <div class="input-group" >
+                                    <ui-select ng-model="em.ManageID" theme="bootstrap4-1" class="normal bg-custom-white"  ng-disabled="!can('EM','edit')">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.emName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.emID as a in employees.data | filter: $select.search" ui-disable-choice="a.emID === Auth.FFF.emID" >
+                                            {{a.emName}}
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append" ng-if="em.ManageID" >
+                                            <button class="btn btn-default" ng-click="em.ManageID = null;"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'role' | translate}}</td>
+                            <td>
+                                <ui-select ng-model="em.roleID" ng-change="F()" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" ng-disabled="!can('EM','edit') || !can('Role','edit')">
+                                    <ui-select-match >{{$select.selected.roleName | translate}}</ui-select-match>
+                                    <ui-select-choices repeat= "a.roleID as a in Role.data | filter: $select.search" >
+                                       {{a.roleName | translate}}
+                                   </ui-select-choices>
+                                </ui-select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'status' | translate}}</td>
+                            <td>
+                                <ui-select ng-model="em.onlineStatus" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                            <ui-select-choices repeat="c.tvID as c in Enums.group[1035]" >
+                                             {{c.Name | translate}}
+                                            </ui-select-choices>
+                                </ui-select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'company' | translate}}</td>
+                            <td>
+                                <!-- <ui-select ng-model="em.coID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" ng-disabled="!can('EM','edit') || !can('Role','edit')">
+                                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.coName | translate}}</ui-select-match>
+                                            <ui-select-choices repeat="c.coID as c in Company.data" >
+                                             {{c.coName | translate}}
+                                            </ui-select-choices>
+                                </ui-select> -->
+                                <ng-dropdown-multiselect  options="Company.data" selected-model="em.coIDs"
+                                        extra-settings="{ scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'coName', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'coID', displayProp: 'coName', externalIdProp: 'coID'}"
+                                        translation-texts = "texts">
+                                </ng-dropdown-multiselect>
+                            </td>
+                        </tr>    
+                        <tr>
+                            <td>{{'webPassword' | translate}}</td>
+                            <td>
+                                <div class="has-feedback" ng-class="{'has-error' : em.Password.length < 12,'has-success' : em.Password.length >= 12 }">
+                                    <input ng-model="em.Password" type="password" class="form-control" placeholder="{{'password' | translate}}">
+                                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                    <span class="help-block" ng-show="em.Password.length < 12">{{'passwLeng'| translate}}</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'active' | translate}}</td>
+                            <td><label><input type="checkbox" cb-switch ng-model="em.isActive"/></label></td>
+                        </tr>
+                        <tr>
+                            <td><span class="direct-chat-timestamp" style="display: inline-block; font-size: 12px">{{'created' | translate}}</span></td>
+                            <td>
+                                <span style="float: right; font-size: 12px" >
+                                    <span class="direct-chat-timestamp" ng-bind="em.CreatedBy | emFilters" uib-tooltip="{{ em.CreatedBy | emFilters}} {{em.Created | date:'MMM d, HH:mm'}}" tooltip-trigger="mouseenter" tooltip-placement="top" ></span>
+                                    <span class="direct-chat-timestamp" ng-bind="em.Created | date:'MMM d, HH:mm'"> </span>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="direct-chat-timestamp" style="display: inline-block; font-size: 12px">{{'editedBy' | translate}}</span></td>
+                            <td>
+                                <span style="float: right; font-size: 12px" >
+                                    <span class="direct-chat-timestamp" ng-bind="em.ChangedBy | emFilters" uib-tooltip="{{ em.ChangedBy | emFilters}} {{em.Changed | date:'MMM d, HH:mm'}}" ></span>
+                                    <span class="direct-chat-timestamp" ng-bind="em.Changed | date:'MMM d, HH:mm'" > </span>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+            </div>
+           </div>
+
+          <!-- About Me Box -->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+                <h3 class="card-title"><i class="fas fa-edit"></i> {{'extensionNumber' | translate}} <span ng-show="em.sipName == sip[0].sipName"> {{em.SipNum}}</span></h3>
+            </div>
+            <div class="card-body p-2">
+                    <table class="table table-head-fixed table-hover borderless" ng-repeat="e in sip" >
+                        <tr>
+                            <td width="50%">{{'numberNum' | translate}}</td>
+                            <td>
+                                
+                                <div class="input-group" >
+                                        <ui-select  ng-model="em.sipData" class="normal bg-custom-white"  theme="bootstrap4-1" size="100%"
+                                                on-select="e.selectedSip=1;Sip2Em();isEdit=true;"
+                                                ng-change="e.selectedSip=0;em.sipName = em.sipID = e.sipID = e.sipName = null; test($select.search);isEdit=true"
+                                                ng-disabled="!can('EM','edit')"  >
+                                            <ui-select-match placeholder="{{'SIP' | translate}}" >{{$select.selected.sipName}}</ui-select-match>
+                                            <ui-select-choices  repeat="a.sipID as a in Sips.data | filter: $select.search" ui-disable-choice="Check(a);" > <!--  | filter:{isActive:true}" $select.selected.sipID -->
+                                                SIP/{{a.sipName}}
+                                            </ui-select-choices>
+                                        </ui-select>
+                                 
+                                        <span class="input-group-append">
+                                            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-disabled="!can('EM','edit')">
+                                                <i class="fa fa-wrench"></i>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                    <a ng-hide="sip[0].sipName" class="dropdown-item" ng-click="$event.stopPropagation()"> <create-sip> </create-sip></a> 
+                                                    <a ng-show="sip[0].sipName" class="dropdown-item" ng-click="$event.stopPropagation();check=true" ng-show="!check">
+                                                            <i class="fa fa-trash" ></i> {{'del' | translate}}
+                                                    </a>
+                                                    <a ng-show="sip[0].sipName" class="dropdown-item" ng-click="$event.stopPropagation();" ng-show="check">
+                                                            <i style="cursor: pointer;" ng-show="check" ng-click="check=false" class="fa fa-times fa-lg"> </i>
+                                                            <i style="cursor: pointer;" ng-show="check" class="fa fa-check fa-lg" ng-click="SipDel(sip[0]);check=false"> </i>
+                                                    </a>
+                                                    <a ng-show="sip[0].sipName" class="dropdown-item" ng-click="$event.stopPropagation();SipClean();"> <i class="fa fa-undo"></i> {{'clear' | translate}} </a> 
+                                                    <a ng-show="sip[0].sipName" class="dropdown-item" ui-sref="SIPEdit( {'sipID': sip[0].sipID, 'sipName': sip[0].sipName })" > <i class="fas fa-edit"></i> {{'edit' | translate}}  </a> 
+                                            </ul>
+                                        </span>
+                                </div>
+  
+
+                             </td>
+                        </tr>
+
+                    </table>
+                </div>
+           </div>
+
+          <!-- About Me Box -->
+          <div class="card card-info card-outline" ng-hide="isEdit || (!sip[0].sipLogin && !sip[0].sipPass)">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i> {{'sipInfoReg' | translate}} </h3>
+            </div>
+            <div class="card-body p-2">
+                    <table class="table table-head-fixed table-hover borderless">
+                        <tr>
+                            <td>SIP {{'server' | translate}}:{{'port' | translate}}</td>
+                            <td><span ng-bind="hostname+':'+sipport"></span></td>
+                        </tr>
+                        <tr>
+                            <td width="50%">SIP {{'login' | translate}}</td>
+                            <td width="50%"><span ng-bind="sip[0].sipLogin"></span></td>
+                        </tr>
+                        <tr>
+                            <td>SIP {{'password' | translate}}</td>
+                            <td><span ng-bind="sip[0].sipPass"></span></td>
+                        </tr>
+                        <tr>
+                            <td>SIP {{'codecs' | translate}}</td>
+                            <td><span>G711 a-law, G711 u-law, GSM</span></td>
+                        </tr>
+                        <tr>
+                            <td>RTP {{'ports' | translate}}</td>
+                            <td><span>10000-20000</span></td>
+                        </tr>
+                    </table>
+            </div>
+           </div>
+
+         </div>
+        <div class="col-lg-3">
+            <show-comments data="{{em}}"></show-comments>
+        </div>
+       
+        <!--DATA RIGHT-->
+        <div class="col-lg-5">
+
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-click="Save(em,sip[0])" ng-disabled="sip[0].secret.length < 12 || (em.Password.length < 12 && em.Password.length != 0)">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="employee">{{'cancel' | translate}}</button>
+                    </div>
+          </div>
+    </div>
+</section>

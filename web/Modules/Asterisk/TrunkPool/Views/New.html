@@ -1,0 +1,43 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i> {{'new' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body">
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'TrunkPool' | translate}}</div>
+                    <div class="col-lg-6 no-padding">
+                      <input only-clear class="form-control"  ng-model="new.poolName">
+                    </div>
+                </div>
+
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'priority' | translate}}</div>
+                    <div class="col-lg-6 no-padding">
+                        <input numeric-only class="form-control" ng-model="new.priority">
+                    </div>
+                </div>
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'active' | translate}} </div>
+                    <div class="col-lg-6 no-padding"><label><input type="checkbox" cb-switch ng-model="new.isActive"></label> </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-8">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-click="manyAction.Save(new,'TrunkPool')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="TrunkPool">{{'cancel' | translate}}</button>
+                    </div>
+        </div>
+    </div>
+</section>

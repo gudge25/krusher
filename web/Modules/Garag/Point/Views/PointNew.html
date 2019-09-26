@@ -1,0 +1,36 @@
+<div class="col-lg-2" style="border-right: 1px solid #e7e7e7;">
+
+</div>
+
+
+<div class="col-lg-10">
+    <div class="col-lg-6">
+        <br/>
+        <b>Данные опратора</b>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="text-right">
+            <div class="btn-group" style="margin: 2%">
+                <button ng-disabled=" !new.pntName && !new.isActive" ng-click="manyAction.Save(new,'Point')" class="btn btn-success">Сохранить</button>
+                <a href="#!/Point" class="btn btn-warning">Отмена</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+    <table class="table table-head-fixed table-hover borderless">
+        <tbody>
+        <tr>
+            <td>Пункт назначения</td>
+            <td><input class="form-control" type="text" ng-model="new.pntName" ></td>
+        </tr>
+
+        <tr>
+            <td>Активный</td>
+            <td><input  type="checkbox"  class="form-control" ng-model="new.isActive"/></td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+</div>

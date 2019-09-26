@@ -1,0 +1,42 @@
+<div class="card card-info card-outline">
+<div class="card-body">
+    <div class="card-tools float-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" uib-tooltip="{{'Collapse' | translate}}">
+            <i class="fa fa-minus"></i>
+        </button>
+    </div>
+
+    <div class="col-lg-12">
+        <br>
+        <div class="btn-group float-right" uib-dropdown is-open="status.isopen">
+            <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled">
+                {{'actions' | translate}} <span class="caret"></span>
+            </button>
+            <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+                <li role="menuitem"><a ui-sref="BrandsNew" ><i class="fa fa-plus"></i> {{'new' | translate}}</a></li>
+                <li role="menuitem"><a  ng-click="manyAction.manyDelete(data)"><i class="fa fa-trash"></i> {{'del' | translate}}</a></li>
+            </ul>
+        </div>
+
+        <br>
+        <br>
+        <table ng-table="tableParams" show-filter="false" class="table table-head-fixed table-hover borderless">
+            <tbody>
+                <tr>
+                    <th style="width: 3%" ng-include="'Views/ng-table/checkbox.html'" class="text-center">
+                    </th>
+                    <th>{{'brand' | translate}}</th>
+                </tr>
+                <tr ng-repeat="e in data | filter:searh"  >
+                    <td style="width: 3%" header="'Views/ng-table/checkbox.html'" class="text-center">
+                        <checkbox class="btn-info" ng-model="e.isChecked" ng-change="selectEntity();" ng-class="{selected: e.isChecked}"></checkbox>
+                    </td>
+                    <td data-title="'Бренд'" header-class="'text-left'">
+                        <a ng-href="/#!/BrandsEdit/{{e.bID}}"> {{e.bName}} </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>

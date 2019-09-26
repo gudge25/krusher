@@ -1,0 +1,418 @@
+
+ <section class="content">
+      <div class="row">
+        <div class="col-md-3 no-padding"  >
+
+          <div class="card card-info card-outline" style="height: auto;" >
+            <div class="card-header with-border">
+                <div class="card-title">
+                <i class="fa fa-list-ul "></i>
+                <span >{{'listOfFiles' | translate}}</span>
+
+                </div>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool"  ng-show="Summary || cl_status" stop-event="click" ng-click="Clean()"><i class="fa fa-reply float-right" style="cursor: pointer;color: #0075b0;"></i></button>
+                <!-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button> -->
+              </div>
+            </div>
+            <div class="card-body p-1">
+                <aside>
+                    <div class="">
+                              <!-- Sidebar Menu -->
+                        <nav class="ml-auto">
+                            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                              <!-- <li class="nav-header" translate="menu"></li> -->
+  
+                              <li style="border-bottom:0px;" class="nav-item has-treeview" ng-disabled="LoadStatus"  ng-repeat="(key, values) in BasesSaBDGroup track by $index" ng-init="x[$index].length = values.length;x[$index].status = manyAction.xCheck(x[$index])" ng-show="!hot" ng-class="{' menu-open' : key==country}">
+                                  <!--Base-->
+                                  <a style="cursor: pointer;color:orange" class="nav-link" ng-show="Filter.BaseName == key || !Filter.BaseName">
+                                      <i class="fa fa-list-alt"> </i>
+                                      <p>
+                                          &#160; <b ng-bind="key"></b>
+                                          <i class="fas fa-angle-left right"></i>
+                                      </p>
+                                  </a>
+                                  <ul class="nav nav-treeview">
+                                    <!--FILE-->
+                                    <li class="nav-item" ng-show="( a.ffID == Filter.ffID || (!Filter.ffID && Filter.ffID !=0 ))"
+                                      ng-repeat="a in values track by $index"
+                                      title="{{a.Created | date:'dd.MM HH:mm'}}"
+                                      ng-class="{'disabled' :  a.ffID == Filter.ffID}"
+                                    >
+                                      <a class="nav-link" ng-show="!LoadStatus && !cl_status" style="background-color: white !important; cursor: pointer;" ng-click="GetStatus(a.ffID);Filter.ChildIndex = false;Filter.BaseName=key;$event.stopPropagation()">
+                                        <i class="fa fa-database fa-lg text-blue"></i> <span class="text-black" ng-bind="a.ffName"></span>
+                                      </a>
+  
+                                      <a class="nav-link" ng-show="LoadStatus || cl_status" style="background-color: white !important;">
+                                        <i class="fa fa-database fa-lg text-blue"></i> <span class="text-black" ng-bind="a.ffName"></span>
+                                        <span class="float-right-container">
+                                          <span ng-show="LoadStatus"  class="text-yellow">
+                                              <i  class="fa fa-spinner fa-pulse fa-fw"></i>
+                                              <span ng-bind="'Loading'| translate"></span>
+                                          </span>
+                                        </span>
+                                      </a>
+                                      <!--INFO-->
+                                      <ul ng-show="Filter.BaseName == key && showInfo==true" ng-click="$event.stopPropagation()" style="list-style: none;">
+                                          <li >
+                                                  <div style="background-color: white !important;color:black;">
+                                                      <i class="fa fa-info "></i> {{'info' | translate}}
+                                                  </div>
+                                                  <ul class="treeview-menu"  style="display: block;">
+                                                    <!--Status-->
+                                                    <li class="d-flex flex-column">
+                                                        <a style="background-color: white !important;color:black; margin: 2px 0;"
+                                                          ng-repeat    = "value in cl_status track by $index"
+                                                          ng-show   = "cl_status  && (value.FilterID==1001 || value.FilterID==1002)"
+                                                          class     = "disabled"
+                                                          >
+                                                            <div class="d-flex justify-content-between" style="height: 20px">
+                                                              <div style="color:{{(value.Name | ClientStatus).color}};display: inline-block;float: left;" >
+                                                                  {{(value.Name | ClientStatus).status}}
+                                                              </div>
+                                                              <div ng-bind="value.Qty" class="badge badge-primary"></div>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                  </ul>
+                                            </li>
+                                      </ul>
+                                      <ul ng-show="Filter.BaseName == key && showStatus==true" ng-click="$event.stopPropagation()" style="list-style: none;">
+                                          <!--Status-->
+                                          <li >
+                                                   <div style="background-color: white !important;color:black;"
+                                                      >
+                                                      <div style="display: block;">
+                                                        <i class="fas fa-chart-pie"></i> {{'status' | translate}} <!-- <pre>{{value|json}}-{{Filter|json}}</pre> -->
+                                                      </div>
+                                                  </div>
+                                                  <ul class="treeview-menu" style="display: block; list-style:none;">
+                                                    <!--Status-->
+                                                    <li  class="d-flex flex-column" ng-repeat="value in cl_status track by $index" ng-show="cl_status && (value.FilterID==1003 || value.FilterID==1004)">
+                                                             <a style="color:black; cursor: pointer; margin: 2px 0;height: 20px"
+                                                                ng-hide       = "value.Name == statusName"
+                                                                ng-click     = "ChildIndex($index);Filter.Pages.CurrentPage=1;x='start';Filter.Filter.FilterID=value.FilterID;Filter.Filter.Name=value.Name;FindClient(Filter.Filter);"
+                                                              ><!-- FindClient(value); -->
+                                                                  <div class="d-flex justify-content-between" style="height: 20px" >
+                                                                    <div style="color:{{(value.Name | ClientStatus).color}};display: inline-block;float: left;" >
+                                                                        {{(value.Name | ClientStatus).status}}
+                                                                    </div>
+                                                                    <div ng-bind="value.Qty" class="badge" ng-class="{'badge-danger' : (value.Name == 103 || value.Name == 203), 'badge-success' : (value.Name == 201 || value.Name == 202), 'badge-warning' : (value.Name == 206 || value.Name == 205 || value.Name == 102),'badge-primary' : value.Name == 101,'badge-info' : value.Name == 204}"></div>
+                                                                  </div>
+                                                            </a>
+  
+                                                            <a style="margin: 2px 0;"
+                                                                ng-show      = "value.Name == statusName"
+                                                              >
+                                                                  <div class="d-flex justify-content-between" ng-class = "{'tagBackgnd' : value.Name == statusName}" style="height: 20px">
+                                                                    <div style="color:{{(value.Name | ClientStatus).color}};display: inline-block;float: left;" >
+                                                                        {{(value.Name | ClientStatus).status}}
+                                                                    </div>
+                                                                    <div ng-bind="value.Qty" class="badge" ng-class="{'badge-danger' : (value.Name == 103 || value.Name == 203), 'badge-success' : (value.Name == 201 || value.Name == 202), 'badge-warning' : (value.Name == 206 || value.Name == 205 || value.Name == 102),'badge-primary' : value.Name == 101,'badge-info' : value.Name == 204}"></div>
+                                                                  </div>
+                                                            </a>
+                                                    </li>
+                                                  </ul>
+                                            </li>
+                                      </ul>
+                                      <ul ng-show="Filter.BaseName == key && showDocs==true" ng-click="$event.stopPropagation()" style="list-style: none;">
+                                          <!--Status-->
+                                          <li >
+                                                   <div style="background-color: white !important;color:black;"
+                                                      >
+                                                      <div style="display: block;">
+                                                        <i class="fa fa-file-alt "></i> {{'documentation' | translate}}
+                                                      </div>
+                                                  </div>
+                                                  <ul class="treeview-menu"  style="display: block; list-style:none;">
+                                                    <!--Status-->
+                                                    <li  class="d-flex flex-column">
+                                                             <a style="background-color: white !important;color:black; margin: 2px 0;"
+                                                                ng-show      = "cl_status && value.FilterID < 100 && value.FilterID > 0 "
+                                                                ng-repeat    = "value in cl_status track by $index"
+                                                                class        = "disabled"
+                                                                >
+                                                                  <div class="d-flex justify-content-between" style="height: 20px">
+                                                                    <div style="color:{{(value.Name | ClientStatus).color}};display: inline-block;float: left;">
+                                                                        {{(value.Name | ClientStatus).status}}
+                                                                    </div>
+                                                                    <div ng-bind="value.Qty" class="badge badge-primary"></div>
+                                                                  </div>
+                                                            </a>
+                                                    </li>
+                                                  </ul>
+                                            </li>
+                                      </ul>
+                                    
+                                    
+                                    </li>
+                                    <!-- <li class="nav-item"><a class="nav-link" ui-sref="Scenario" ng-class="{'active':S=='Scenario'}">    <i class="fa fa-circle-o nav-icon"></i>     <p translate="scenario"></p></a></li>
+                                    <li class="nav-item"><a class="nav-link" ui-sref="Recall" ng-class="{'active':S=='Recall'}">      <i class="fa fa-circle-o nav-icon"></i>       <p translate="Recalls"></p></a></li> -->
+                                  </ul>
+                              </li>
+                            </ul>
+                        </nav> 
+                    <div>
+                </aside>
+
+
+            </div>
+          </div>
+
+          <!--TAGS-->
+          <div class="card card-info card-outline" ng-show="Tags.data">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-tags"></i> {{'tags' | translate}}</h3>
+              <div class="card-tools">
+                <!-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button> -->
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" ng-click="Filter.Filter.tagID = null;FindClient(Filter.Filter)"  ng-class="{'tagBackgnd' : !tagNumber }" style="cursor: pointer;" >
+                            <i class="fa fa-circle-o text-aqua" ng-class="{'selected-templ' : !tagNumber}"></i>
+                           {{'all' | translate}}
+                         </a>
+                    </li>
+                    <li class="nav-item" data-ng-repeat="a in Tags.data track by $index">
+                        <a class="nav-link" style="cursor: pointer;" ng-class="{'tagBackgnd' : tagNumber == a.tagID}" ng-click="Filter.Filter.tagID = a.tagID;FindClient(Filter.Filter);">
+                          <i class="fa fa-circle-o text-aqua" ng-class="{'selected-templ' : tagNumber == a.tagID}"></i>
+                          <span ng-bind="a.tagName"></span>
+                          <span class="badge badge-warning float-right" ng-bind="a.Qty"></span>
+                        </a>
+                    </li>
+              </ul>
+            </div>
+          </div>
+         
+          <!--SUMMARY-->
+          <div class="card card-info card-outline" ng-show="Summary">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-chart-pie"></i>{{'countries' | translate}} {{'statistics' | translate | lowercase}}</h3>
+
+              <div class="card-tools">
+                <!-- <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i></button> -->
+              </div>
+            </div>
+            <div class="card-body p-0">
+            
+              <ul class="nav flex-column">
+                  <li class="nav-item" ng-repeat="e in Summary track by $index">
+                      <a class="nav-link" ng-show="Filter.Filter.cID != e.cID"  ng-click="Filter.Filter.cID = e.cID;FindClient(Filter.Filter);" style="cursor: pointer;" uib-tooltip="{{e.rgName}}" ng-class="{'table-active' : Filter.Filter.cID == e.cID}" ng-disabled="global.Loading">
+                          <!-- <i class="far fa-circle" ng-class="{'selected-templ' : Filter.Filter.cID == e.cID}"></i> -->
+                          <span ng-bind="e.cName" ng-show="e.cName">  </span>
+                          <span ng-bind="'all' | translate" ng-hide="e.cName">  </span>
+                          <span ng-show="e.rgName"  uib-tooltip="{{'region' | translate}}"> | {{e.rgName}} </span>
+                          <span  ng-show="e.isMobile">| {{'Mobile' | translate}} </span>
+                          <span  ng-hide="e.isMobile">| {{'LendLine' | translate}} </span>
+
+                          <span class="badge badge-warning float-right"  ng-class="{'badge-primary' : e.isMobile}"  ng-bind="e.Count" ></span>
+                      </a>
+
+                      <a class="nav-link" ng-show="Filter.Filter.cID == e.cID" style="cursor: pointer;" uib-tooltip="{{e.rgName}}" ng-class="{'tagBackgnd' : Filter.Filter.cID == e.cID, 'selected-templ' : Filter.Filter.cID == e.cID}" ng-disabled="global.Loading">
+                          <!-- <i class="far fa-circle" ng-class="{'selected-templ' : Filter.Filter.cID == e.cID}"></i> -->
+                          <span ng-bind="e.cName" ng-show="e.cName">  </span>
+                          <span ng-bind="'all' | translate" ng-hide="e.cName">  </span>
+                          <span ng-show="e.rgName"  uib-tooltip="{{'region' | translate}}"> | {{e.rgName}} </span>
+                          <span  ng-show="e.isMobile">| {{'Mobile' | translate}} </span>
+                          <span  ng-hide="e.isMobile">| {{'LendLine' | translate}} </span>
+                          <span class="badge badge-warning float-right"  ng-class="{'badge-primary' : e.isMobile}"  ng-bind="e.Count" ></span>
+                      </a>
+                  </li>
+              </ul>
+
+
+            </div>
+          </div>
+        </div>
+
+         <!--DATA RIGHT-->
+        <div class="col-md-9 " >
+          <div class="card card-info card-outline ">
+            <div class="card-header "><!--  with-border -->
+             <!--  <div class="card-tools float-right"> -->
+                <div class="row d-flex justify-content-between">
+<!--                   <div class="col-lg-1" ><h3 class="card-title">{{'contact' | translate}}</h3> </div>
+    -->            <div class="col-lg-2">
+                        <div class="input-group">
+                            <input ng-model="Filter.Filter.CallDate" ng-enter="FindClient(Filter.Filter)" class="form-control" ng-model-options="{ updateOn: 'blur' }" placeholder="{{'dateFrom'| translate}}">
+                            <div class="input-group-append">
+                                <button moment-picker="Filter.Filter.CallDate"
+                                                    format="YYYY-MM-DD"
+                                                    today="true"
+                                                    locale="ru"
+                                                    start-view="month"
+                                                    max-date="Filter.Filter.CallDateTo"
+                                                    class="btn btn-default">
+                                <i class="fa fa-calendar"></i>
+                              </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2" ng-show="Filter.Filter.CallDate">
+                      <div class="input-group">
+                          <input ng-model="Filter.Filter.CallDateTo" ng-enter="FindClient(Filter.Filter)" class="form-control" ng-model-options="{ updateOn: 'blur' }" placeholder="{{'dateTo'| translate}}">
+                          <div class="input-group-append">
+                              <button moment-picker="Filter.Filter.CallDate"
+                                                  format="YYYY-MM-DD"
+                                                  today="true"
+                                                  locale="ru"
+                                                  start-view="month"
+                                                  max-date="Filter.Filter.CallDateTo"
+                                                  class="btn btn-default">
+                              <i class="fa fa-calendar"></i>
+                            </button>
+                          </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-2" >
+                          <div class="input-group">
+                            <input ng-hide="client"
+                               type="text"
+                               ng-model="Filter.Filter.clName"
+                               uib-typeahead="a.clName for a in manyAction.SearchClient($viewValue)"
+                               class="form-control rounded"
+                               placeholder="{{'selectCustomer' | translate}}"
+                               typeahead-wait-ms="250"
+                               typeahead-on-select="FindClient(Filter.Filter)"
+                               ng-enter="FindClient(Filter.Filter)"/>
+
+                            <span class="input-group-append">
+                                  <button ng-show="Filter.Filter.clName" type="button" class="btn btn-default" data-toggle="dropdown" aria-expanded="false" ng-click="Filter.Filter.clName=null;FindClient(Filter.Filter)">
+                                    <i class="fa fa-times" ></i>
+                                  </button>
+                            </span>
+                          </div>
+                    </div>
+
+                    <div class="col-lg-2" >
+                        <ui-select ng-model="Filter.Filter.emID" ng-change="Filter.Pages.CurrentPage=1;FindClient(Filter.Filter);" theme="bootstrap4-1" class="normal bg-custom-white">
+                            <ui-select-match placeholder="{{'responsible' | translate}}" class="">{{$select.selected.emName}}</ui-select-match>
+                            <ui-select-choices repeat="a.emID as a in employees.data | filter: $select.search  | filter:{isActive:true}" >
+                               {{a.emName}}
+                            </ui-select-choices>
+                       </ui-select>
+                    </div>
+                    
+                    <div class="col-lg-2">
+                        <ui-select ng-model="Filter.Filter.cID" ng-change="manyAction.limit();FindClient(Filter.Filter);" theme="bootstrap4-1" class="normal bg-custom-white">
+                            <ui-select-match placeholder="{{'countries' | translate}}">{{$select.selected.cName}}</ui-select-match>
+                            <ui-select-choices repeat="a.cID as a in Countries.data | filter: $select.search" >
+                               {{a.cName}}
+                            </ui-select-choices>
+                       </ui-select>
+                    </div>
+                    
+                    <div class="card-tools">
+                        <div class="btn-group">
+                            <button class="btn btn-tool" ng-disabled="global.Loading || global.NewProgerss " ng-click="global.Loading=true;manyAction.Find(ItemsSrv)">
+                                <i ng-hide="global.Loading" class="fa fa-search"></i>
+                                <span ng-hide="global.Loading" ng-bind="'find'| translate"></span>
+                                
+                                <i ng-show="global.Loading" class="fa fa-spinner fa-pulse fa-fw"></i>
+                                <span ng-show="global.Loading" ng-bind="'Loading'| translate"></span>
+                            </button>                                 
+                            
+                            <button class="btn btn-tool dropdown-toggle" data-toggle="dropdown"  ng-disabled="!can('EM','edit')">
+                                <i class="fa fa-wrench"></i>      
+                                &nbsp;  <span  ng-show="!global.Loading && dataIsChecked>0" class="badge badge-secondary navbar-badge" ng-bind="dataIsChecked"></span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                <a class="dropdown-item" ng-show="dataIsChecked" style="cursor: pointer;" ng-show="data.length !=0 " ng-click="manyAction.open(data)" style="cursor: pointer;"><span><i class="fas fa-edit"></i> {{'massedit' | translate}}</span></a> 
+                                <a class="dropdown-item" ng-show="dataIsChecked" style="cursor: pointer;" ng-show="data.length !=0" ng-click="manyAction.manyDelNew()" style="cursor: pointer;"><span><i class="fa fa-trash"></i> {{'del' | translate}}</span></a> 
+                                <a class="dropdown-item" ng-hide="global.Loading" ng-click="ClearFilter()" style="cursor: pointer;">
+                                     <span> <i class="fa fa-undo"></i> {{'Clear_filter'| translate}} </span>
+                                </a>
+                            </div>
+                            <!-- <ng-include src="'/Views/FilteCollapse.html'"></ng-include> -->
+                        </div>
+                        <!-- <div> <nobr> <label ng-show="data.length > 0">{{'findPlaceholder'| translate}} {{data.length}} {{'from'| translate}} {{total_count}}</label> </nobr></div>   -->
+
+                    </div>
+                </div>
+             </div>
+            <!-- /.card-header -->
+            <div class="card-body  p-0" ng-show="data">
+                <ng-include src="'/Views/LoadingTable.html'"></ng-include>
+                <div ng-show="data && total_count != 0" class="table table-head-fixed-responsive mailbox-messages" style="overflow-y: auto; height: 650px;" can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="100">
+                     <table class="table table-head-fixed table-hover borderless" ng-hide="global.Loading">
+                       <thead>
+                        <tr ng-click="FindClient(Filter.Filter);">
+                          <th ng-include="'/Views/ng-table/checkbox.html'" ng-click="$event.stopPropagation()"/ width="1%"></th>
+                          <th ng-init="o1='Phone'" ng-click="manyAction.order(o1);">
+                              <nobr>{{'phone' | translate}} <span ng-show="order==o1" ng-include="'/Views/orderSpan.html'"/></nobr>
+                          </th>
+                          <th ng-if="ColccQty"></th>
+                          <th ng-init="o2='clName'" ng-click="manyAction.order(o2);">
+                              <nobr>{{'name' | translate}} <span ng-show="order==o2" ng-include="'/Views/orderSpan.html'"/></nobr>
+                          </th>
+                          <th ng-click="$event.stopPropagation()" ng-show="ColEmail">Email</th>
+                          <th ng-init="o3='CallDate'" ng-click="manyAction.order(o3);" ng-show="ColCallDate">
+                              <nobr>{{'dateOfCommunications' | translate}} <span ng-show="order==o3" ng-include="'/Views/orderSpan.html'"/></nobr>
+                          </th>
+                          <th>{{'create' | translate}}</th>
+                          <th ng-init="o4='emID'" ng-click="manyAction.order(o4);" ng-show="ColemName">
+                              <nobr>{{'responsible' | translate}} <span ng-show="order==o4" ng-include="'/Views/orderSpan.html'"/></nobr>
+                          </th>
+                          <th ng-show="ColComment">{{'comments' | translate}}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="e in data | limitTo:limit track by $index">
+                            <td ng-include="'/Views/checkboxOne.html'"/>
+                            <td width="1%">
+                                <nobr>
+                                    <span ng-include="'/Views/DialButton.html'"></span>
+                                </nobr>
+                            </td>
+
+                            <td width="1%" style="padding:0px;" ng-if="ColccQty">
+                                <nobr>
+                                    <label ng-show="e.ccQty>0" uib-tooltip="{{'qtyCall' | translate}}" tooltip-placement="right" ng-bind="e.ccQty" class="badge" ng-class="{'badge-danger' : (e.ccStatus == 103 || e.ccStatus == 203), 'badge-success' : (e.ccStatus == 201 || e.ccStatus == 202), 'badge-warning' : (e.ccStatus == 206 || e.ccStatus == 205 || e.ccStatus == 102),'badge-primary' : e.ccStatus == 101,'badge-info' : e.ccStatus == 204}" style="float: initial;"></label>
+                                </nobr>
+                            </td>
+                            <td >
+                                <nobr>
+                                  <span class="fa-stack" ng-hide="e.isActive"   uib-tooltip="{{'notactive' | translate}} {{e.IsPerson | Person | lowercase}}">
+                                        <i class="fa fa-user fa-stack-1x"" ng-show="e.IsPerson"></i>
+                                        <i class="fa fa-building fa-stack-1x"" ng-hide="e.IsPerson"></i>
+                                        <i class="fa fa-ban fa-stack-2x" style="color:Tomato"></i>
+                                  </span>
+                                  <span class="fa-stack" ng-show="e.isActive"  uib-tooltip="{{e.IsPerson | Person}}">
+                                    <i class="fa fa-user" ng-show="e.IsPerson"></i>
+                                    <i class="fa fa-building" ng-hide="e.IsPerson"></i>
+                                  </span>
+                                  <b><a style="color:{{(e.clStatus | ClientStatus).color}}" ui-sref="preView({clID:e.clID})" ng-bind="e.clName"></a></b>
+                                    
+                                </nobr>
+                            </td>
+                            <td width="1%" ng-show="ColEmail"> <nobr ng-show="e.Email" ><i class="fa fa-envelope-o"></i> <span ng-bind="e.Email"></span></nobr></td>
+                            <td width="1%" ng-show="ColCallDate">
+                                <nobr ng-show="e.CallDate">  <i class="fa fa-calendar"></i>
+                                         <span class="text-muted" ng-bind="e.CallDate | date:'yyyy MMM d, HH:MM'"> </span>
+                                </nobr>
+                            </td>
+                            <td width="1%">
+                                <nobr>
+                                        <span class="text-muted" ng-show="e.isToday" ng-bind="e.Created | date:'HH:mm'"> </span>
+                                        <span class="text-muted" ng-hide="e.isToday" ng-bind="e.Created | date:'MMM d'"> </span>
+                                </nobr>
+                            </td>
+                            <td width="1%" ng-bind="e.emName" ng-show="ColemName"> </td>
+                            <td ng-show="ColComment">
+                                <span ng-bind="e.Comment" class="comment" ></span>
+                            </td>
+                        </tr>
+                      </tbody>
+                     </table>
+                </div>
+                <div ng-include="'/Views/pagination.html'"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>

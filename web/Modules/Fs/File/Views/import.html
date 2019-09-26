@@ -1,0 +1,280 @@
+ <section class="content">
+      <div class="row">
+        <div class="col-md-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i>  {{'uploadedFiles' | translate}}</h3>
+              <div class="card-tools">
+                <div class="btn-group" style="padding-left: 10px;" >
+                        <nz-toggle tri-toggle ng-model="isActive" val-null="" tip-false="'notactive' | translate" tip-null="'All' | translate" tip-true="'active' | translate"></nz-toggle>
+                </div>
+                <button class="btn btn-tool" data-widget="collapse" ng-click="FilteCollapse=true" ng-show="!FilteCollapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-tool" data-widget="collapse" ng-click="FilteCollapse=false" ng-show="FilteCollapse"><i class="fa fa-plus"></i></button>
+              </div>
+            </div>
+
+            <div class="card-body p-0" style="overflow-y: auto;height:60vh" can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="100">
+                <ul class="nav flex-column" ng-show="templates">
+                    <li class="nav-item" ng-repeat="c in File.data | filter: {'isActive' : isActive } | limitTo:limit track by $index" ng-hide="c.ffID == 0 || c.ffID === null " uib-tooltip="{{c.Created | date:'dd.MM HH:mm'}}">
+                        <a href class="nav-link">
+                                <b> {{c.ffName}}</b> 
+                                <!-- <span class="float-right badge bg-default">31</span> -->
+                                <span class="badge float-right bg-info" ng-click="$event.stopPropagation();">
+                                        <i style="cursor: pointer;" class="fa fa-trash" ng-show="!check" ng-click="check=true" style="cursor: pointer;"></i>
+                                        <i style="cursor: pointer;" ng-show="check" ng-click="check=false" class="fa fa-times fa-lg"> </i>
+                                        <i style="cursor: pointer;" ng-show="check" class="fa fa-check fa-lg" ng-click="Del(c.ffID);check=false"> </i>
+                                  </span> 
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+          </div>
+        </div>
+         <!--DATA RIGHT-->
+        <div class="col-md-4">
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"> {{'downloadFile' | translate}} (csv,xlsx,xls)</h3>
+             </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+
+                <div class="table table-head-fixed-responsive mailbox-messages" style="overflow-x: inherit;">
+                        <div class="col-lg-12 text-left">
+                            <div>
+                                <b>1. {{'selectTemplate' | translate}}</b> <br/><br/>
+                                <ui-select ng-model="fsFile.TemplateTId" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                    <ui-select-match placeholder="{{'select' | translate}}">
+                                        <span ng-show="$select.selected.ftName" >{{$select.selected.ftName + ' ( ' +$select.selected.delimiter + ' , ' + $select.selected.Encoding+' )'}}</span>
+                                        <span ng-hide="$select.selected.ftName"></span>
+
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="a.ftID as a in templates | filter: $select.search" style='position: inherit;'>
+                                        <span ng-show="a.ftName" >{{ a.ftName + ' ( ' +a.delimiter + ' , ' + a.Encoding+' )'}}</span>
+                                        <span ng-hide="a.ftName"></span>
+                                    </ui-select-choices>
+                            </div>
+                            <div  ng-show="fsFile.TemplateTId">
+                                    <hr/>
+                                    <b>2. {{'categories' | translate}}</b> <br/><br/>
+                                    <ui-select ng-model="fsFile.dbID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.dbName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.dbID as a in Bases.data | filter: $select.search" >
+                                        {{a.dbName}}
+                                        </ui-select-choices>
+                                    </ui-select>
+                            </div>
+                            <!-- <div  ng-show="fsFile.TemplateTId && fsFile.dbID">
+                                    <hr/>
+                                    <b>3. {{'setPreferences' | translate}}</b> <br/><br/>
+                                    <div class="row">
+                                        <div class="col-lg-7">{{'numberDialing' | translate}}:</div>   <div class="col-lg-5"> <input type="number"   class="form-control" ng-model="fsFile.DialOuts"   uib-tooltip="{{'textDialing' | translate}}" tooltip-trigger="mouseenter"   /></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-7">{{'delimiterLists' | translate}}{{'textIndicates' | translate}}:</div>
+                                        <div class="col-lg-5"> <checkbox class="btn-info" ng-model="fsFile.isRobocall" uib-tooltip="{{'textIndicates' | translate}}" tooltip-trigger="mouseenter"   /></checkbox></div>
+                                    </div>
+
+                            </div> -->
+
+                            <!-- <div  ng-show="fsFile.TemplateTId && fsFile.dbID">
+                                    <hr/>
+                                    <b>3. {{'setPreferences' | translate}}</b> <br/><br/>
+                                    <div class="row">
+                                        <div class="col-lg-7">{{'ttsID' | translate}}:</div>
+                                        <div class="col-lg-5">
+                                            <ui-select ng-model="fsFile.ttsID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                                <ui-select-match >{{$select.selected.ttsName}}</ui-select-match>
+                                                <ui-select-choices repeat="a.ttsID as a in TTS | filter: $select.search" >
+                                                {{a.ttsName}}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-lg-7">{{'delimiterLists' | translate}}, <br/>{{'textIndicates' | translate}}:</div>
+                                        <div class="col-lg-5"> <checkbox class="btn-info" ng-model="fsFile.isRobocall" uib-tooltip="{{'textIndicates' | translate}}" tooltip-trigger="mouseenter"   /></checkbox></div>
+                                    </div>
+
+                            </div> -->
+
+                            
+                            
+                            <div ng-show="fsFile.TemplateTId && fsFile.dbID"> 
+                                <hr/>
+                                <b>3. {{'recommendation' | translate}}</b> <i class="icon fa fa-asterisk"></i>  <br/><br/>
+                                <div class="alert " ng-class="{'alert-warning' : !Agree, 'alert-success' : Agree}">
+                                          1. {{ 'imp1' | translate }} (csv,xlsx,xls)
+                                    <br/> 2. {{ 'imp2' | translate }} 
+                                    <br/> 3. {{ 'imp3' | translate }} 
+                                    <br/> 4. {{ 'All' | translate }} {{ 'contacts' | translate | lowercase }} ({{ 'cnumbers' | translate }}) {{ 'imp3' | translate }} .
+                                    <br/> 5. {{ 'imp5' | translate }} {{ 'menu' | translate }} => CRM => {{ 'clients' | translate }} => {{ 'file' | translate }} => {{ 'ringing' | translate }}
+                                    <br/> 6. {{ 'contacts' | translate }} ({{ 'cnumbers' | translate }}) {{ 'imp6' | translate }} {{ 'menu' | translate }} => CRM => {{ 'clients' | translate }} => {{ 'file' | translate }}  => {{ 'trash' | translate }}
+                                    <br/> 7. {{ 'imp71' | translate }} ({{ 'fullName' | translate }}) {{ 'imp72' | translate }} "noname"
+                                    <br/> 8. {{ 'imp8' | translate }} "{{ 'fullName' | translate }}" {{ 'and' | translate }} "{{ 'phoneDialer' | translate }}"
+                                    <br/> 9. {{ 'imp9' | translate }} 
+                                </div>
+                                <div class="card-tools float-right" ng-hide="Agree">
+                                    <button class="btn btn-primary btn-sm" ng-click="Agree=true;">{{'Agree' | translate}}</button>
+                                </div>
+                            </div>
+
+                            <div ng-show="fsFile.TemplateTId && fsFile.dbID && Agree">
+                                    <hr/>
+                                    <b>4. {{'selectFile' | translate}}</b> <br/><br/>
+                                    <form method='post'  id="formID" name="uploadForm" enctype="multipart/form-data" > <!-- style="position: relative;bottom: 34px;opacity: 0;" -->
+                                        <input type='file' id="fileMobile" name="file" file-model="fileToUpload" onchange="getFileData(this)">
+                                        <div  ng-show="!match && fileToUpload" class="text-red">
+                                            {{'fileExtension' | translate}}
+                                        </div>
+                                    </form>
+                            </div>
+
+                            <div ng-hide="!match">
+                                    <hr/>
+                                    <b>5. {{'toDownlFile' | translate}}</b> <br/><br/>
+                                    <div class="text-right">
+                                        <div style="margin: 2%">
+                                            <button ng-click="submit(fsFile);" ng-show="fileToUpload && !upload.data && !load" class="btn btn-success "  >{{'Download' | translate}}</button>
+                                            <button ng-show="fileToUpload && !upload.data && load == 'ok!'" disabled class="btn btn-warning"  >{{'loading' | translate}}...</button>
+                                            <button ng-show="fileToUpload" class="btn btn-warning" ng-click="Clear();">{{'cancel' | translate}}</button>
+                                        </div>
+                                    </div>
+                            </div>
+                            <br/> 
+                        </div>
+
+<!--
+    Output Format:
+    <select name="format">
+        <option value="csv" selected> CSV</option>
+        <option value="json"> JSON</option>
+        <option value="form"> FORMULAE</option>
+    </select><br />
+    <input type="radio" name="format" value="csv" checked> CSV<br>
+    <input type="radio" name="format" value="json"> JSON<br>
+    <input type="radio" name="format" value="form"> FORMULAE<br>
+
+    <div id="drop">Drop an XLSX / XLSM / XLSB / ODS / XLS / XML file here to see sheet data</div>
+    <p><input type="file" name="xlfile" id="xlf" /> ... or click here to select a file</p>
+
+    <textarea id="b64data">... or paste a base64-encoding here</textarea>
+    <input type="button" id="dotext" value="Click here to process the base64 text" onclick="b64it();"/><br />
+    Advanced Demo Options: <br />
+    <div hidden>
+        Use Web Workers: (when available) <input type="checkbox" name="useworker" checked><br />
+        Use Transferrables: (when available) <input type="checkbox" name="xferable" checked><br />
+        Use readAsBinaryString: (when available) <input type="checkbox" name="userabs" checked><br />
+    </div>
+     <pre id="out"></pre>-->
+
+
+                     </div>
+                </div>
+            </div>
+          </div>
+
+
+
+
+
+
+    <!-- <div class="col-md-4">
+        <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i>  {{'expQuest' | translate}}</h3>
+            </div>
+            <div class="card-body p-0">
+                <div class="table table-head-fixed-responsive mailbox-messages" style="padding: 15px;overflow-x: inherit;">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div>
+                                    <b>1. {{'form' | translate}}:</b>
+                                    <ui-select ng-model="fm.tpID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.tpName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.tpID as a in formTypes | filter: $select.search | filter:{isActive:isActive}" >
+                                            {{a.tpName}}
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <br>
+                                <div>
+                                    <b>2. {{'bases' | translate}}:</b>
+                                    <ui-select ng-model="fm.ffID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.ffName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.ffID as a in File.data | filter: $select.search | filter:{isActive:isActive}" >
+                                            {{a.ffName}}
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div ng-show="fm.ffID && fm.tpID">
+                                    <hr />
+                                    <b >{{'export' | translate}}</b>
+                                    <button  class="btn btn-success" style="cursor: pointer;"  title="{{'exportFile' | translate}}:{{fm.ffID}}" ng-click="ExportForms(fm.ffID,fm.tpID)" ng-show="fm.ffID && fm.tpID"><i class="fa fa-download" aria-hidden="true"></i></button>
+                                </div>
+
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <hr/>
+                        <div>
+                            <b>{{'exportReport' | translate}} Billing </b><br/><br/>
+                            <div>
+                                    <b>{{'date'| translate}}:</b><br>
+                                    <div class="input-group md-3">
+                                        <input ng-model="billing.date" class="form-control" ng-model-options="{ updateOn: 'blur' }" style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;">
+                                        <div class="input-group-append">
+                                                    <button  class="btn btn-success" style="cursor: pointer;" ng-show="billing.date" ng-click="ExportBilling(billing.date)"><i class="fa fa-download" aria-hidden="true"></i></button>
+
+                                                    <button moment-picker="billing.date" format="YYYY-MM-DD" class="btn btn-default">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </button>
+                                        </div>
+                                    </div>            
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</section>
+
+<!-- <script type="text/javascript">
+
+        var fileMobile = document.getElementById('fileMobile');
+    function handleFile(e) {
+        rABS = document.getElementsByName("userabs")[0].checked;
+        use_worker = document.getElementsByName("useworker")[0].checked;
+        var files = e.target.files;
+        console.log(files)
+
+        var f = files[0];
+        {
+            var reader = new FileReader();
+            var name = f.name;
+            reader.onload = function(e) {
+                if(typeof console !== 'undefined') console.log("onload", new Date(), rABS, use_worker);
+                var data = e.target.result;
+                if(use_worker) {
+                    xw(data, process_wb);
+                } else {
+                    var wb;
+                    if(rABS) {
+                        wb = X.read(data, {type: 'binary'});
+                    } else {
+                        var arr = fixdata(data);
+                        wb = X.read(btoa(arr), {type: 'base64'});
+                    }
+                    process_wb(wb);
+                }
+            };
+            if(rABS) reader.readAsBinaryString(f);
+            else reader.readAsArrayBuffer(f);
+        }
+    }
+    if(fileMobile.addEventListener) fileMobile.addEventListener('change', handleFile, false);
+</script> -->

@@ -1,0 +1,89 @@
+<div class="card card-info card-outline">
+
+<div class="card-header with-border">
+       <div>
+           <h3 class="card-title">{{'filters'| translate}}</h3>
+           
+       </div>
+</div>
+
+<div class="card-tools">
+    <div class="noneBoard">
+        <div class="row">
+            <div class="col-md-1" >
+                 <b>{{'operator' | translate}}</b>
+                <ui-select ng-model="model.oID" theme="bootstrap4-1" class="normal ng-pristine ng-valid ng-touched" ng-change="manyAction.limit();GetArea()">
+                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.oName}}</ui-select-match>
+                            <ui-select-choices repeat="a.oID as a in Operators.data | filter: $select.search">
+                                {{a.oName}}
+                            </ui-select-choices>
+                </ui-select>
+            </div>
+
+            <div style="display: inline-block;float: right; margin:10px 17px 5px; border: none;">
+                <div class="btn-group" style="float: right;">
+                  <ng-include src="'/Views/btnCustomLogic.html'"/>
+                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li role="menuitem"><a ui-sref="OperatorNew" ><i class="fa fa-plus"></i> {{'new' | translate}}</a></li>
+                    <li role="menuitem" ng-show="dataIsChecked"><a ng-click="manyAction.manyDelete(data)"><i class="fa fa-trash"></i> {{'del' | translate}}</a></li>
+                    <li><a ng-click="manyAction.ClearFilter()" >
+                           <i class="fa fa-undo"></i>{{'Clear_filter'| translate}}
+                        </a>
+                    </li>
+                  </ul>
+                </div>
+                <!-- <br> -->
+                <!-- <label ng-show="data.length > 0">{{'findPlaceholder'| translate}} {{data.length}} {{'from'| translate}} {{total_count}}</label> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card-body">
+    <div class="col-lg-12">
+        <!-- <div class="col-lg-2 text-right" >
+            <ui-select ng-model="Filter.rcID" theme="bootstrap4-1" class="normal ng-pristine ng-valid ng-touched" >
+                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                        <ui-select-choices repeat="a.rcID as a in countries | filter: $select.search">
+                                    {{a.Name}}
+                        </ui-select-choices>
+            </ui-select>
+        </div>
+ -->
+        <!-- <div class="btn-group float-right" uib-dropdown is-open="status.isopen">
+            <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled">
+                {{'actions' | translate}}<span class="caret"></span>
+            </button>
+            <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+                <li role="menuitem"><a ui-sref="OperatorNew" ><i class="fa fa-plus"></i> {{'new' | translate}}</a></li>
+                <li role="menuitem"><a  ng-click="manyAction.manyDelete(data)"><i class="fa fa-trash"></i> {{'del' | translate}}</a></li>
+            </ul>
+        </div> -->
+
+    </div>
+    <div class="col-lg-12" style="overflow-y: scroll; height: 650px;" can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="100">
+      <ng-include src="'/Views/LoadingTable.html'"></ng-include>
+        <table class="table table-head-fixed table-hover" ng-hide="global.Loading">
+            <tr ng-click="manyAction.Find()">
+                <th ng-include="'/Views/ng-table/checkbox.html'" ng-click="$event.stopPropagation()" width="1%"/>
+                <th ng-init="o1='oName'" ng-click="manyAction.order(o1);">
+                    <nobr>{{'operator' | translate}} <span ng-show="order==o1" ng-include="'/Views/orderSpan.html'"/></nobr>
+                </th>
+                <th ng-init="o2='MNC'" ng-click="manyAction.order(o2);">
+                    <nobr>{{'MNC' | translate}} <span ng-show="order==o2" ng-include="'/Views/orderSpan.html'"/></nobr>
+                </th>
+                <th ng-init="o3='MCC'" ng-click="manyAction.order(o3);">
+                    <nobr>{{'MCC' | translate}} <span ng-show="order==o3" ng-include="'/Views/orderSpan.html'"/></nobr>
+                </th>
+            </tr>
+            <tr ng-repeat="e in data | limitTo:limit track by $index" >
+                <td ng-include="'/Views/checkboxOne.html'"/>
+                <td data-title="'Оператор'" header-class="'text-left'"> <a ng-href="/#!/OperatorEdit/{{e.oID}}" ng-bind="e.oName"></a></td>
+                <td ng-bind="e.MNC"></td>
+                <td ng-bind="e.MCC"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</div>

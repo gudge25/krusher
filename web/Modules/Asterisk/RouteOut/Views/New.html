@@ -1,0 +1,132 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i> {{'new' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'names' | translate}}</div>
+                    <div class="col-lg-6 no-padding">
+                        <div class="has-feedback" ng-class="{ 'has-error' : !new.roName.length, 'has-success' : new.roName }">
+                                    <input ng-model="new.roName" class="form-control" placeholder="{{'enterTitle' | translate}}" ng-change="edit2=true;" only-clear ng-maxlength="200" required/>                                    
+                                    <span class="glyphicon glyphicon-asterisk form-control-feedback"></span>
+                                    <span class="help-block" ng-show="!new.roName.length && edit2">{{'typeSIPLeng'| translate}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'callerid' | translate}}</div>
+                    <div class="col-lg-6 no-padding">
+                        <div class="has-feedback" ng-class="{ 'has-error' : !new.callerID.length && edit3, 'has-success' : new.callerID }">
+                                <input ng-change="edit3=true;" ng-disabled="!can('EM','edit')" ng-model="new.callerID"  class="form-control" ng-maxlength="30" placeholder="{{'callerid' | translate}}" pattern="^[a-zA-Z0-9.+\-\[\]]+$" required>
+                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                <span class="help-block" ng-show="!new.callerID.length && edit3">{{'typeSIPLeng'| translate}}</span>
+                        </div>
+                     </div>
+                </div>
+
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'prefix' | translate}}</div>
+                    <div class="col-lg-6 no-padding">
+                        <div class="input-group">
+                            <input numeric-only class="form-control" ng-model="new.prefix">
+                            <span class="input-group-append">
+                                    <button type="button" class="btn btn-default" ng-click="new.prefix=new.prefix+1;"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="new.prefix=new.prefix-1;"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'prepend' | translate}}</div>
+                    <div class="col-lg-6 no-padding">
+                        <div class="has-feedback" ng-class="{ 'has-error' : !new.prepend.length && edit6, 'has-success' : new.prepend }">
+                                <input ng-change="edit6=true;" ng-disabled="!can('EM','edit')" ng-model="new.prepend"  class="form-control" ng-maxlength="30" pattern="^[a-zA-Z0-9.+\-\[\]\*]+$" required>
+                                <!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
+                                <span class="help-block" ng-show="!new.prepend.length && edit6">{{'typeSIPLeng'| translate}}, *</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row hoverDiv">
+                        <div class="col-lg-6 no-padding">{{'category' | translate}} </div>
+                        <div class="col-lg-6 no-padding">
+                            <div class="input-group">
+                                <ui-select ng-model="new.category" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                        <ui-select-choices repeat="c.tvID as c in Enums.group[1026] | filter: $select.search" >
+                                            {{c.Name | translate}}
+                                        </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                </div>
+                <div class="row hoverDiv">
+                        <div class="col-lg-6 no-padding">{{'destination' | translate}} </div>
+                        <div class="col-lg-6 no-padding">
+                            <div class="input-group">
+                                <div class="has-feedback" ng-class="{ 'has-error' : !new.destination, 'has-success' : new.destination }">
+                                        <ui-select ng-model="new.destination" ng-change="new.destdata=null;edit4=true;" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" required>
+                                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                                <ui-select-choices repeat="c.tvID as c in Enums.group[1014] | filter: $select.search"  ui-disable-choice="c.tvID == 101411 || c.tvID == 101406">{{c.Name | translate}}</ui-select-choices>
+                                        </ui-select>
+                                        <span class="help-block" ng-show="!new.destination.length && edit4">{{'typeSIPLeng'| translate}}</span>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <ng-include src="'/Views/destdataNew.html'"></ng-include>
+                <div class="row hoverDiv" ng-show="(new.destination == 101403 || new.destination == 101409 )&& new.destdata">
+                            <div class="col-lg-6 no-padding">{{'destdata2' | translate}} </div>
+                            <div class="col-lg-6 no-padding">
+                                <div class="input-group">
+                                    <input  class="form-control" ng-model="new.destdata2"/>
+                                    <span class="input-group-append">
+                                        <button ng-show="new.destdata2" type="button" class="btn btn-default" ng-click="new.destdata2 = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                </div>
+                <div class="row hoverDiv">
+                        <div class="col-lg-6 no-padding">{{'priority' | translate}}</div>
+                        <div class="col-lg-6 no-padding">
+                            <div class="input-group">
+                                <input numeric-only class="form-control" ng-model="new.priority">
+                                <span class="input-group-append">
+                                        <button type="button" class="btn btn-default" ng-click="new.priority=new.priority+1;"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-default" ng-click="new.priority=new.priority-1;"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                </div>
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'active' | translate}} </div>
+                    <div class="col-lg-6 no-padding"><label><input type="checkbox" cb-switch ng-model="new.isActive"></label> </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-8">
+          <!-- <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"> {{'info' | translate}}</h3> -->
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-disabled="!new.roName || !new.destination"  ng-click="manyAction.Save(new,'RouteOut')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="RouteOut">{{'cancel' | translate}}</button>
+                    </div>
+            <!--  </div>
+          </div> -->
+        </div>
+    </div>
+</section>

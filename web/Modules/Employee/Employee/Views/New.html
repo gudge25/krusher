@@ -1,0 +1,171 @@
+<div class="modal-content2">
+<div class="modal-header">
+        <div class="row">
+                <div class="col-6-lg"><img class="profile-user-img img-responsive img-circle" src="/images/avatar_2x.png" alt="User profile picture"></div>
+                <div class="col-6-lg">        
+                    <h3 class="text-muted text-center" ng-bind="em.emName"></h3>
+                </div>
+        </div>
+</div>
+<div class="modal-body p-0">
+              <b>&#160; {{'employeeData' | translate}}</b>
+              <table class="table table-head-fixed table-hover borderless login-card-body">
+                    <tr>
+                        <td width="40%">{{'name' | translate}}</td>
+                        <td width="60%"><input only-clear class="form-control" type="text" ng-model="em.emName" placeholder="{{'name' | translate}}"></td>
+                    </tr>
+                    <tr>
+                        <td>{{'login' | translate}}</td>
+                        <td>
+                            <div class="has-feedback" ng-class="{ 'has-error' : !em.LoginName.length && edit, 'has-success' : em.LoginName }">
+                                <input ng-model="em.LoginName"  class="form-control" ng-maxlength="30" ng-change="edit=true;CheckLogin();" placeholder="{{'login' | translate}}" pattern="^[a-zA-Z0-9._-]+$" required>
+                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                <span class="help-block" ng-show="!em.LoginName.length && edit">{{'typeLogin'| translate}} <br/> {{'typeLoginLeng'| translate}}</span>
+                            </div>
+                            <br ng-if="existLogin">
+                            <div class="alert alert-warning" ng-if="existLogin">
+                                    <i class="icon fa fa-info"></i> {{'existLogin' | translate}}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'chief' | translate}}</td>
+                        <td>
+                            <div class="input-group" >
+                                    <ui-select ng-model="em.ManageID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" ng-disabled="!can('EM','edit')">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.emName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.emID as a in employees.data | filter: $select.search ">
+                                            {{a.emName}}
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                            <button ng-show="em.ManageID" type="button" class="btn btn-default" ng-click="em.ManageID = null;"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'role' | translate}}</td>
+                        <td>
+                            <select class="form-control ng-pristine ng-valid ng-touched" ng-model="em.roleID" ng-options="a.roleID as a.roleName | translate for a in Role.data ">
+                                <option value="" disabled>{{'selectRole' | translate}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <!-- <tr>
+                        <td width="50%">{{'status' | translate}}</td>
+                        <td width="50%">
+                            <ui-select ng-model="em.onlineStatus" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                        <ui-select-choices repeat="c.tvID as c in Enums.group[1035]" >
+                                         {{c.Name | translate}}
+                                        </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr> -->
+                    <tr>
+                            <td>{{'company' | translate}}</td>
+                            <td>
+                                <!-- <ui-select ng-model="em.coID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.coName | translate}}</ui-select-match>
+                                            <ui-select-choices repeat="c.coID as c in Company.data" >
+                                             {{c.coName | translate}}
+                                            </ui-select-choices>
+                                </ui-select> -->
+                                <ng-dropdown-multiselect  options="Company.data" selected-model="em.coIDs"
+                                        extra-settings="{ scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'coName', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'coID', displayProp: 'coName', externalIdProp: 'coID'}"
+                                        translation-texts = "texts">
+                                </ng-dropdown-multiselect>
+                            </td>
+                    </tr>    
+                    <tr>
+                        <td>{{'webPassword' | translate}}</td>
+                        <td>
+                            <div class="has-feedback" ng-class="{'has-error' : em.Password.length < 12,'has-success' : em.Password.length >= 12 }">
+                                <input ng-model="em.Password" type="password" class="form-control" placeholder="{{'password' | translate}}">
+                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                <span class="help-block" ng-show="em.Password.length < 12">{{'passwLeng'| translate}}</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <hr/>
+                    <b>&#160; {{'extensionNumber' | translate}}</b>
+                    <table class="table table-head-fixed table-hover borderless login-card-body">
+                            <tr>
+                                <td width="50%">
+                                        <span ng-if="sip[0].sipID"  ng-bind="'exist' | translate "></span> 
+                                        <span ng-if="!sip[0].sipID" ng-bind="'new' | translate "></span> 
+                                        {{'numberNum' | translate | lowercase}} 
+                                </td>
+                                <td>
+                                    <div class="has-feedback" ng-class="{ 'has-error' : (!searchclient && edit2 || searchclient.emID), 'has-success' : searchclient && !searchclient.emID }"> <!-- sip[0].selectedSip=1;Sip2Em(); -->
+                                        <input
+                                                    ng-maxlength="30" pattern="^[a-zA-Z0-9._-]+$"
+                                                    name="name"
+                                                    class="form-control"
+                                                    ng-model="searchclient"
+                                                    uib-typeahead="a as a.sipName for a in Sips.dataAll | filter: { sipName : $viewValue }"
+                                                    placeholder="SIP {{'exten' | translate}}"
+                                                    typeahead-wait-ms="250"
+                                                    typeahead-on-select="Select(searchclient);" 
+                                                    typeahead-select-on-exact="true"
+                                                    typeahead-show-hint="true"
+                                                    ng-class="{'nonBorder': searchclient}"
+                                                    ng-change="Changed();"
+                                                    ng-disabled="!can('EM','edit')"
+                                                    />
+                                        <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                                        <span class="help-block" ng-show="!searchclient && edit2"> {{'typeSIPLeng'| translate}}</span>
+                                        <span class="help-block" ng-show="searchclient.emID && edit2"> {{'errorSIP'| translate}}</span>
+                                        <!-- ui-disable-choice="Check(a);" typeahead-show-hint="true"-->
+                                    </div>
+                                 </td>
+                            </tr>
+
+                            <!-- <tr ng-hide="( searchclient.emID && edit2 ) || !searchclient || sip[0].sipID">
+                                <td>{{'nat' | translate}}</td>
+                                <td>
+                                    <ui-select ng-model="sip[0].nat" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match >{{$select.selected.Name}}</ui-select-match>
+                                        <ui-select-choices repeat="c.tvID as c in Enums.group[1025] | filter: $select.search " >
+                                            {{c.Name}}
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </td>
+                            </tr> -->
+
+                            <!-- <tr ng-show="sip[0].sipID && !searchclient.emID">
+                                    <td>{{'nat' | translate}}</td>
+                                    <td>
+                                        <span ng-bind="sip[0].nat | enums"></span>
+                                    </td>
+                            </tr> -->
+
+                            <tr ng-hide="( searchclient.emID && edit2 ) || !searchclient || sip[0].sipID">
+                                <td>SIP {{'password' | translate}}</td>
+                                <td>
+                                    <div class="has-feedback" ng-class="{'has-error' : ( !sip[0].secret || sip[0].secret.length < 12),'has-success' : sip[0].secret.length >= 12 }">
+                                        <input ng-model="sip[0].secret" type="password" class="form-control" placeholder="{{'password' | translate}}">
+                                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                        <span class="help-block" ng-show="sip[0].secret.length < 12">{{'passwLeng'| translate}}</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-hide="( searchclient.emID && edit2 ) || !searchclient">
+                                <td>{{'active' | translate}}</td>
+                                <td><label><input ng-disabled="sip[0].sipID && !searchclient.emID" type="checkbox" cb-switch ng-model="sip[0].isActive"/></label></td>
+                            </tr>
+                    </table>
+    </div>
+
+    <div class="modal-footer">
+            <div class="text-right">
+                <div class="float-right">
+                    <button ng-disabled="( !sip[0].sipID && ( sip[0].secret.length < 12 || !sip[0].secret) ) || existLogin || !em.emName || !em.LoginName || !em.roleID || (!sip.sipName && !searchclient) || (!em.Password || em.Password.length < 12) || searchclient.emID " ng-click="Save();$close()" class="btn btn-success btn-sm">{{'save' | translate}}</button>
+                    <button ng-click="$close()" class="btn btn-warning btn-sm">{{'cancel' | translate}}</button>
+                </div>
+            </div>
+    </div>
+
+</div>

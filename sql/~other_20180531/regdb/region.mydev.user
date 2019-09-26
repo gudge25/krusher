@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Devart (www.devart.com), the Project Options File -->
+<!-- Modifying this generated file will probably render it invalid -->
+<Options Version="3.0">
+  <Documents>
+    <Document Moniker=".\reg_country.sql" ActiveView="Code" Factory="{3586cc08-aeb7-47f4-a38f-1700741266f6}" />
+    <Document Moniker=".\reg_district.sql" ActiveView="Code" Factory="{3586cc08-aeb7-47f4-a38f-1700741266f6}" />
+    <Document Moniker=".\reg_gmt.sql" ActiveView="Code" Factory="{3586cc08-aeb7-47f4-a38f-1700741266f6}" />
+    <Document Moniker=".\reg_kladr.sql" ActiveView="Code" Factory="{3586cc08-aeb7-47f4-a38f-1700741266f6}" />
+    <Document Moniker=".\reg_operator.sql" ActiveView="Code" Factory="{3586cc08-aeb7-47f4-a38f-1700741266f6}" />
+    <Document Moniker=".\reg_plan.sql" ActiveView="Code" Factory="{3586cc08-aeb7-47f4-a38f-1700741266f6}" />
+    <Document Moniker=".\reg_region.sql" ActiveView="Code" Factory="{3586cc08-aeb7-47f4-a38f-1700741266f6}" />
+    <Document Moniker=".\reg_socr.sql" ActiveView="Code" Factory="{3586cc08-aeb7-47f4-a38f-1700741266f6}" />
+    <Document Moniker=".\reg_area.sql" ActiveView="Code" Factory="{3586cc08-aeb7-47f4-a38f-1700741266f6}" />
+  </Documents>
+  <Services>
+    <Service GUID="{0999c6f0-1cd0-40e9-8fc7-e3a1da27eb24}">
+      <Persist />
+    </Service>
+    <Service GUID="{661ce5b0-2dad-4ebf-b060-c08542ecaf7e}">
+      <Persist />
+    </Service>
+    <Service GUID="{811fba21-97c2-44b6-8c1c-eae1f1315f2d}">
+      <Persist />
+    </Service>
+    <Service GUID="{c7b76517-6978-4a0b-8d38-57b7f7223edb}">
+      <Persist />
+    </Service>
+    <Service GUID="{e86507ae-fc27-47e0-925b-3c3e655520d4}">
+      <Persist>
+        <Configurations>
+          <Active>dev</Active>
+        </Configurations>
+      </Persist>
+    </Service>
+  </Services>
+</Options>

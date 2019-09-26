@@ -1,0 +1,25 @@
+<div ng-include="'/build/Us/Measures/Views/filter.html'"></div>
+
+<div  class="card card-info card-outline" >
+    <ng-include src="'/Views/findPlaceholder.html'"></ng-include>
+
+<div class="card-body  p-0">
+    <table class="table table-head-fixed table-hover">
+            <tr ng-click="manyAction.Find()">
+                <th ng-include="'/Views/ng-table/checkbox.html'" ng-click="$event.stopPropagation()" width="1%"/>
+                <th ng-init="o1='msName'" ng-click="manyAction.order(o1);">
+                    <nobr>{{'measurement' | translate}} <span ng-show="order==o1" ng-include="'/Views/orderSpan.html'"/></nobr>
+                </th>
+                <th ng-init="o11='isActive'" ng-click="manyAction.order(o11);">
+                        <nobr>{{'active' | translate}} <span ng-show="order==o11" ng-include="'/Views/orderSpan.html'"/></nobr>
+                </th>
+            </tr>
+            <tr ng-repeat="e in data | limitTo:limit track by $index" >
+                <td ng-include="'/Views/checkboxOne.html'"/>
+                <td > <a ng-href="/#!/MeasuresEdit/{{e.msID}}"> {{e.msName}} </a> </td>
+                <td width="1%"><input type="checkbox" cb-switch disabled ng-model="e.isActive"/></td>
+            </tr>
+     </table>
+</div>
+</div>
+</div>

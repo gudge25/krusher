@@ -1,0 +1,48 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-3">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i> {{'operatorData' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tbody>
+                    <tr>
+                        <td>{{'telecomOperat' | translate}}</td>
+                        <td><input class="form-control" type="text" ng-model="new.ropName" ></td>
+                    </tr>
+
+                    <tr>
+                        <td>{{'country' | translate}}</td>
+                        <td>
+                            <select class="form-control ng-pristine ng-valid ng-touched" ng-model="new.rcID" ng-options="a.rcID as a.rcName for  a in countries">
+                                <option value="">{{'selectConnectCountry' | translate}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-9">
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"> {{'info' | translate}}</h3>
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-disabled="!new.ropName && !new.rcID" ng-click="manyAction.Save(new,'operator')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="operator">{{'cancel' | translate}}</button>
+                    </div>
+             </div>
+          </div>
+        </div>
+    </div>
+</section>

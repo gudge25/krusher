@@ -1,0 +1,19 @@
+    <div class="row hoverDiv" ng-show="upd.Created">
+        <div class="col-lg-6"><span class="direct-chat-timestamp" style="display: inline-block; font-size: 12px">{{'created' | translate}}</span></div>
+        <div class="col-lg-6">
+                <span style="float: right; font-size: 12px" >
+                        <span class="direct-chat-timestamp" ng-bind="upd.CreatedBy | emFilters" uib-tooltip="{{ upd.CreatedBy | emFilters}} {{upd.Created | date:'MMM d, HH:mm'}}" tooltip-trigger="mouseenter" tooltip-placement="top" ></span>
+                        <span class="direct-chat-timestamp" ng-bind="upd.Created | date:'MMM d, HH:mm'"> </span>
+                </span>
+        </div>
+    </div>
+
+    <div class="row hoverDiv" ng-show="upd.Changed || upd.Changed==0">
+            <div class="col-lg-6"><span class="direct-chat-timestamp" style="display: inline-block; font-size: 12px">{{'editedBy' | translate}}</span></div>
+            <div class="col-lg-6">
+                    <span style="float: right; font-size: 12px" >
+                            <span class="direct-chat-timestamp" ng-bind="upd.ChangedBy | emFilters" uib-tooltip="{{ upd.ChangedBy | emFilters}} {{upd.Changed | date:'MMM d, HH:mm'}}" ></span>
+                            <span class="direct-chat-timestamp" ng-bind="upd.Changed | date:'MMM d, HH:mm'" > </span>
+                    </span>
+            </div>
+    </div>

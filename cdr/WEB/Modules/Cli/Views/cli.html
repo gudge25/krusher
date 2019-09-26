@@ -1,0 +1,93 @@
+﻿
+<div class="page-header" style="margin-top:55px;">
+  <h1>Остановка и перезапуск Asterisk   </h1>
+</div> 
+ 
+<div class="container-fluid">
+  <div class="row">
+		<div class="col-md-3"> 
+
+			<b>Show Status</b> <br/>
+			<div class="btn-group" ng-show="check">
+			  <button type="button" class="btn btn-success" ng-click="CLI('uptime')">Uptime</button>
+			  <button type="button" class="btn btn-success" ng-click="CLI('calls')"> Calls </button>		
+			</div>
+			<hr/>
+			<b>Reload</b> <br/>
+			<div class="btn-group" ng-show="check">
+			  <button type="button" class="btn btn-primary" ng-click="CLI('reload')">Reload</button>			 
+			</div>
+			<hr/>
+			
+			
+			<b>Restart</b>  
+			{{value1}}: <input type="checkbox" ng-model="value1" ng-true-value="Enabled" ng-false-value="Disabled"> <br/>
+			<br/>
+			<div class="btn-group" ng-show="check && value1 == 'Enabled'">
+			  <button type="button" class="btn btn-warning" ng-click="CLI('stop')">				Now</button>
+			  <button type="button" class="btn btn-warning" ng-click="CLI('stop_gracefully')">	Gracefully</button>
+			  <button type="button" class="btn btn-warning" ng-click="CLI('stop_convenient')">	When convenient</button>
+			</div>
+			<hr/>
+			
+			<div class="row">
+				<div class="col-md-9">
+					<b>Stop</b>  
+					{{value2}}: <input type="checkbox" ng-model="value2" ng-true-value="Enabled" ng-false-value="Disabled"> <br/>
+					<br/>
+					<div class="btn-group" ng-show="check && value2 == 'Enabled'">
+					  <button type="button" class="btn btn-danger" ng-click="CLI('restart')">	Now</button>
+					  <button type="button" class="btn btn-danger" ng-click="CLI('gracefully')">Gracefully</button>
+					  <button type="button" class="btn btn-danger" ng-click="CLI('convenient')">When convenient</button>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<b>Start</b> <br/>
+					<br/>
+					<div class="btn-group" ng-show="check && value2 == 'Enabled'">
+					  <button type="button" class="btn btn-success" ng-click="CLI('abort')">Start</button>			 
+					</div>
+				</div>
+			</div>		
+			<hr/>
+			
+			<b>Abort</b> <br/>
+			<div class="btn-group">
+			  <button type="button" class="btn btn-info" ng-click="CLI('start')">Abort</button>
+			</div>
+		</div>
+		
+		<div class="col-md-9">
+			<p>
+			Описание 
+			<br/> 
+			<br/>Для проверки статуса:
+			<br/><b>show status uptime</b>, — Эта команда показивает сколько Asterisk работает.
+			<br/><b>show status calls</b>, — Эта команда показивает сколько активных звонков сейчас работает.
+			<br/>
+			<br/>Для остановки и перезагрузки Asterisk, есть несколько команд:
+			<br/><b>stop now</b> — Эта команда останавливает Asterisk немедленно, заканчивая все текущие вызовы.
+			<br/><b style="color:orange">stop gracefully</b> — Эта команда предотвращает новые вызовы, но позволяет закончить текущие звонки. Когда все звонки закончились, Asterisk останавливается.
+			<br/><b>stop when convenient</b> — Эта команда ждет, пока в Asterisk будет вызовов, а затем останавливает службу. Это не мешает новым вызовам.
+			<br/>
+			<br/>Для перезапуска аналогично:
+			<br/><b>restart now</b>, — Эта команда перегружает Asterisk немедленно, заканчивая все текущие вызовы.
+			<br/><b style="color:orange">restart gracefully</b> — Эта команда предотвращает новые вызовы, но позволяет закончить текущие звонки. Когда все звонки закончились, Asterisk перегружается.
+			<br/><b>restart when convenient</b> — Эта команда ждет, пока в Asterisk будет вызовов, а затем перегружает службу. Это не мешает новым вызовам.
+			<br/>
+			<br/>Существует также команда, если вы измените свое мнение.
+			<br/><b>abort</b> — Эта команда отменяет выключения или перезагрузки, которые вы ранее запустили.
+			
+			<br/>
+			<br/>Для обновления конфигурации:
+			<br/><b>reload</b>, — Эта команда обновляет конфигурации Asterisk не перегружая его.
+			
+			<br/>
+			<br/>Для запуска астериска если он остановлен:
+			<br/><b>start</b>, — Эта команда запускает Asterisk.
+			</p>
+
+		
+		</div>
+  </div>
+</div>

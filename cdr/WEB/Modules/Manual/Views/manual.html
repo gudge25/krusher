@@ -1,0 +1,54 @@
+<div class="list-group">
+  <a class="list-group-item active">
+    Для установки.
+  </a>
+  <a class="list-group-item"><b>скачасть код и распаковать</b> 
+  	 
+  	<br/><span style="color:blue;">cd /var/www/html/cdr wget http://asterisk.biz.ua/app/cdr.tar.gz && tar xvzf cdr.tar.gz </span></a>
+ 
+
+ 
+  <a class="list-group-item"><b>добавить в</b> 
+  	<br/><span style="color:blue;">nano /etc/httpd/conf.d/cdr.conf</span> <br/><br/>
+
+	  Alias /cdr /var/www/html/cdr/WEB<br/>
+
+	&lt;Directory "/var/www/html/cdr/WEB"&gt;  <br/>
+	    Options FollowSymLinks<br/>
+	    AllowOverride None<br/>
+	    Order allow,deny<br/>
+	    Allow from all<br/>
+	&lt;/Directory&gt;<br/>
+	<br/>
+	  Alias /monitor /var/spool/asterisk/monitor/<br/>
+
+	&lt;Directory "/var/spool/asterisk/monitor/"&gt;  <br/>
+	    Options FollowSymLinks<br/>
+	    AllowOverride None<br/>
+	    Order allow,deny<br/>
+	    Allow from all<br/>
+	&lt;/Directory&gt;<br/>
+  </a>
+  <a  class="list-group-item"><b>настроить ДБ для CDR </b> 
+  	<br/><span style="color:blue;"> nano ../settings.php </span> <br/><br/>
+	   <br/>
+	/* DB SETTINGS */<br/>
+	$HOST		="hostname";<br/>
+	$USER		="user";<br/>
+	$PASS		="******";<br/>
+	$DB		="dbname";<br/>
+	$RecordsFile 	="http://server/monitor/";<br/>
+	$appdir		="/var/www/html/cdr"; <br/>
+	 <br/>
+  </a>
+    <a  class="list-group-item"><b>настроить macros mix для ael </b> 
+  	<br/><span style="color:blue;"> nano /etc/asterisk/extensions.ael </span> <br/><br/>
+	  
+	macro mix()<br/>
+	{  <br/>    	
+                CDR(recordingfile)=true;<br/>
+                MixMonitor(${UNIQUEID}.wav,b);<br/>
+                return; <br/>
+          }<br/>
+  </a>
+</div>

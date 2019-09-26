@@ -1,0 +1,177 @@
+<div class="well" style="background-color: white">
+    <div>
+        <div class="text-right col-md-12">
+            <button ng-disabled="!Completion.dcNo || !Completion.dcSum" ng-click="PostCompletionItems(Completion,''); formClassInvalid = 'invalid-form-class';uiSelectSetClass();CompletionForm.$valid && uiSelectClassValidation.valid && CompletionItemsForm.$valid; $close()" class="btn btn-success">{{'save'|translate}}</button>
+            <button ng-click="cancel()" class="btn btn-warning">{{'clear'|translate}}</button>
+            <button ng-show='showBtn' ng-click="close()" class="btn btn-warning">{{'cancel'|translate}}</button>
+            <button ng-hide='showBtn' ng-click="$close()" class="btn btn-warning">{{'cancel'|translate}}</button>
+            <div class="btn-group float-right" uib-dropdown is-open="status.isopen" style="margin-left: 3px;">
+                    <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled">
+                      {{'actions'| translate}} <span class="caret"></span>
+                    </button>
+                    <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+                      <li role="menuitem">
+                        <!-- <a ui-sref="TemplatesEdit({'dctID': 8, 'dtID': 12 })" ng-click=setData()><i class="fa fa-print" style="margin-right: 0px;"></i> {{'printeForm' | translate}}</a> -->
+                        <a ><i class="fa fa-print" style="margin-right: 0px;"></i> {{'printeForm' | translate}}</a>
+                      </li>
+                      <li role="menuitem" ng-repeat="a in Templates"><a ng-click="$parent.dtTemplate=a.dtTemplate;setData();open(a.dtID)" ng-bind="a.dtName" ></a></li>
+                    </ul>
+              </div>
+        </div>
+    </div>
+<form class="css-form" ng-class="formClassInvalid" name="CompletionForm">
+    <table class="table table-head-fixed noBoard">
+        <tbody>
+          <tr>
+            <td class="col-md-3">{{'numberNum'|translate}}</td><td class="col-md-3 "><input type="text" class="form-control" ng-model="Completion.dcNo" ng-required="true"></td>
+            <td class="col-md-3">{{'date'|translate}}</td>   <td class="col-md-3">
+              <!-- <p class="input-group custom-datepicker-buttons">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="Completion.dcDate" is-open="datepicker.opened" datepicker-options="dateOptions" />
+                    <span class="input-group-append">
+                    <button type="button" class="btn btn-default" ng-click="datepicker.opened=true"><i class="fa fa-calendar"></i></button>
+                    </span>
+                </p> -->
+                                  <p class="icon-group input-group">
+                                    <input class="form-control" ng-model="Completion.dcDate" ng-model-options="{ updateOn: 'blur' }" placeholder="{{'select a date' | translate}}">
+                                      <span class="input-group-append">
+                                        <button moment-picker="Contract.dcDate"
+                                                format="YYYY-MM-DD"
+                                                today="true"
+                                                locale="ru"
+                                                start-view="month"
+                                                change="ctrl.setFormattedDate(newValue)"
+                                                type="button" class="btn btn-default">
+                                          <i aria-hidden="true" class="fa fa-calendar"></i>
+                                        </button>
+                                      </span>
+                                  </p>
+            </td>
+          </tr>
+          <tr>
+            <td>{{'VAT'|translate}}</td>   <td><input type="number" class="form-control" ng-model="Completion.VATSum"  min="0"></td>
+            <td>{{'foundationDocument'|translate}}</td>
+            <td>
+              <div class="input-group">
+                    <input required="true" class="form-control" ng-model="Completion.dcDisplayLink" value="{{Completion.dcTypeL ? Completion.dcTypeL+' ' : ''}}{{Completion.dcNoL ? ' №'+Completion.dcNoL : ''}}{{Completion.dcDateL ? (' от '+ (Completion.dcDateL | date:'dd.MM.yyyy HH:mm:ss')) : ''}}" disabled>
+                    <span class="input-group-append">
+                         <open-docs-link-search data="Completion"/>
+                    </span>
+                </div>
+            </td>
+          </tr>
+          <tr>
+            <td>{{'Comment'|translate}}</td>   <td><input type="text" class="form-control" ng-model="Completion.dcComment"></td>
+            <td>{{'amount'|translate}}</td>   <td><input type="number" class="form-control" ng-model="Completion.dcSum" min="0" ng-required="true"></td>
+          </tr>
+          <tr>
+            <td>{{'status'|translate}}</td>   <td>
+              <ui-select ng-model="Completion.dcStatus" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                          <ui-select-match >{{$select.selected.p.Name}}</ui-select-match>
+                          <ui-select-choices repeat="a.p.tvID as a in enumsResult | filter: $select.search" >
+                            {{a.p.Name}}
+                        </ui-select-choices>
+                    </ui-select>
+            </td>
+            <td>{{'clientName'|translate}}</td>   <td>
+              <div class="input-group">
+                    <input class="form-control" type="text" ng-model="Completion.clName" disabled ng-required="true">
+                    <span class="input-group-append">
+                        <open-client-search data="Completion"/>
+                    </span>
+                </div>
+            </td>
+          </tr>
+           <tr>
+            <td>{{'delivery'|translate}}</td>   <td>
+              <input type="textarea" class="form-control" ng-model="Completion.Delivery" ng-required="true">
+            </td>
+
+            <td>{{'responsible'|translate}}</td>
+            <!-- <pre>{{Employees|json}}</pre> -->
+            <td>
+              <ui-select ng-model="Completion.emID"  theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                <ui-select-match allow-clear="false">{{$select.selected.emName}}</ui-select-match>
+                <ui-select-choices repeat="a.emID as a in employees.data | filter: $select.search"" >
+                  {{a.emName}}
+                </ui-select-choices>
+              </ui-select>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+</form>
+
+</div>
+
+<!-- Completion ITEMS -->
+<div class="well" style="min-height:100px; background-color: white"">
+            <div class="text-right" style="float:right">
+                <button class="text-right btn btn-primary" ng-click="addCompletionItem()" style="margin:2%; margin-right: 10px ;color: #fff;background-color: #0275d8;border-color: #0275d8;">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+            </div>
+<form novalidate class="css-form" ng-class="formClassInvalid" name="CompletionItemsForm">
+    <table class="table table-head-fixed noBoard" ng-table="tableParams" ng-show="CompletionItems.length" style="margin: 1% 0;">
+            <tr>
+              <th>№</th>
+              <th>{{'named'|translate}}</th>
+              <th>{{'number'|translate}}</th>
+              <th>{{'price'|translate}}</th>
+              <th>{{'Comment'|translate}}</th>
+            </tr>
+            <tr ng-repeat="CompletionItem in CompletionItems track by $index">
+                <td>
+                     {{$index+1}}
+                </td>
+
+                <td  style="width: 300px">
+                    <div class="input-group">
+                      <span class="input-group-append">
+                          <button class="form-control">  <create-product data="CompletionItems"/> </button>
+                      </span>
+                      <div ng-model="CompletionItem.psName" >
+                       <!--  <ui-select ng-click="uiSelectClassValidation.dirty = true; uiSelectSetClass();"
+                          reset-search-input="false"
+                          ng-model="$select.search"
+                          model="CompletionItem.psName"
+                          theme="bootstrap4-1"
+                          class="{{uiSelectClassValidation.class}}"
+                          style="width: 100%;">
+                          <ui-select-match  placeholder="{{'select' | translate}}">{{CompletionItem.psName = $select.search;$select.selected; }}</ui-select-match>
+                          <ui-select-choices repeat="a in ProductNames | filter: $select.search">
+                            {{a}}
+                          </ui-select-choices>
+                        </ui-select> -->
+                        <ui-select ng-model="CompletionItem.iName;" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" >
+                          <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.psName}}</ui-select-match>
+                          <ui-select-choices repeat="c.psName as c in Products| filter: $select.search" >
+                            {{c.psName}}
+                          </ui-select-choices>
+                        </ui-select>
+                      </div>
+                    </div>
+
+                </td>
+
+                <td >
+
+                        <input class="form-control" type="number" ng-required="true" ng-model="CompletionItem.iQty" min="1" ng-change="getSum(CompletionItems);"/>
+
+                </td>
+
+                <td >
+                     <input class="form-control" type="number" ng-required="true" ng-model="CompletionItem.iPrice" min="1" ng-change="getSum(CompletionItems);"/>
+                </td>
+
+                <td >
+                     <input class="form-control" type="text" ng-model="CompletionItem.iComments" />
+                </td>
+                <td  >
+                      <button class="text-right btn btn-danger" ng-click="delCompletionItem(CompletionItem)">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+                </td>
+            </tr>
+        </table>
+</div>
+</form>

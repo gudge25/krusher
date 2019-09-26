@@ -1,0 +1,170 @@
+<div class="row" style="margin-top:55px;">
+
+		 <div class="col-md-2" style="overflow: auto; height: 850px;">
+ 			<!--  <button type="button" class="btn btn-success" ng-click="save()">Сохранить</button>
+			<button type="button" class="btn btn-success" ng-click="add()">Добавить пользователя</button> -->
+			 <input  type="text"   class="form-control" ng-model="q" style="width:100%; display: inline;" placeholder="Поиск..." ng-click="show=''">
+
+ 
+			
+			 <div class="list-group">
+			  <a   class="list-group-item active">
+			    Протокол SIP найдено:{{sippeers.length}}
+			  </a>
+			  <a ng-repeat="(key,val) in sippeers | filter:{ 'name': q } | filter:q2 | orderBy:'name'  track by $index" class="list-group-item" ng-click="$parent.show=val.name">  
+				<i class="fa fa-phone fa-lg" ></i>  <b>{{val.name}}</b>  {{val.callerid}}
+				
+				<span ng-show=" !CancelOrder" class="badge" style="color:black;background-color:white;"><i class="fa fa-trash-o" ng-click="CancelOrder=true" ></i> </span>
+			        
+					<div class="btn-group btn-toggle"    ng-show="CancelOrder"   style="position:absolute;right:0px;top:4px;"   >
+							<button class="btn btn-success btn-sm "  ng-click="delete($index,val.id);CancelOrder=false; "  >        Да</button>
+							<button class="btn btn-default btn-sm "  ng-click="CancelOrder=false; "  >                            Нет</button>
+					</div>
+				 
+				<!--<span class="badge" style="color:black;background-color:white;"><i class="fa fa-trash-o" ng-click="delete($index,val.id)"></i> </span>-->
+			<!--	<span class="badge" style="color:black;background-color:white;"> <i class="fa fa-users " ng-show="val.context"></i> {{val.context}}  </span>-->
+				  
+			  </a>
+
+			</div> 
+ 
+		</div>
+
+		<div class="col-md-6" style="overflow: auto; height: 880px;"> 
+					 <div class="col-md-12"  > 
+			<button type="button" class="btn btn-success" ng-click="add_first();add_show='true';" ng-hide="add_show">Добавить пользователя</button> 
+			<button type="button" class="btn btn-primary" ng-click="Test_jeka(); " ng-hide="add_show">Для тестов (Жека) </button>
+			<button type="button" class="btn btn-primary" ng-click="Test_anton(); " ng-hide="add_show">Для тестов (Anton) </button>
+			<button type="button" class="btn btn-primary" ng-click="KET(); " ng-hide="add_show">Для тестов (KET) </button>
+			<button type="button" class="btn btn-primary" ng-click="panew()">Для тестов (Панев) </button>
+						<table class="table-responsive table-condensed " ng-show="add_show" >
+						<tr>
+							<td><input type="{{type(key2)}}" 		class="form-control" ng-model="add_client.name" 		placeholder="name"></td>
+						 	<td><input type="{{type('secret')}}" 		class="form-control" ng-model="add_client.secret" 		placeholder="secret"></td>
+					 		<!--<td><input type="{{type(key2)}}" 		class="form-control" ng-model="add_client.allow" 		placeholder="allow"></td>
+							<td><input type="{{type(key2)}}" 		class="form-control" ng-model="add_client.insecure" 		placeholder="insecure"></td>
+							<td><input type="{{type(key2)}}" 		class="form-control" ng-model="add_client.qualify" 		placeholder="qualify"></td>
+							<td><input type="{{type(key2)}}" 		class="form-control" ng-model="add_client.type" 		placeholder="type"></td>
+							<td><input type="{{type(key2)}}" 		class="form-control" ng-model="add_client.callLimit" 		placeholder="callLimit"></td>
+							<td><input type="{{type(key2)}}" 		class="form-control" ng-model="add_client.disallow" 		placeholder="disallow"></td>
+							<td><input type="{{type(key2)}}" 		class="form-control" ng-model="add_client.language" 		placeholder="language"></td>
+							<td><input type="{{type(key2)}}" 		class="form-control" ng-model="add_client.callerid" 		placeholder="callerid"></td>
+							<td><input type="{{type(key2)}}" 		class="form-control" ng-model="add_client.dtmfmode" 		placeholder="dtmfmode"></td>
+							<td><input type="{{type(key2)}}" 		class="form-control" ng-model="add_client.textsupport" 		placeholder="textsupport"></td>-->
+							<td><input type="{{type(key2)}}" 		class="form-control" ng-model="add_client.callerid" 		placeholder="callerid"></td>
+							<td><input type="{{type(key2)}}" 		class="form-control" ng-model="add_client.context"	 	placeholder="context"></td> 
+							<td><input type="{{type(key2)}}" 		class="form-control" ng-model="add_client.host" 		placeholder="host"></td>							
+							<td><input type="{{type(key2)}}" 		class="form-control" ng-model="add_client.nat" 			placeholder="nat"></td>
+							<!-- <td><input type="{{type(key2)}}" 		class="form-control" ng-model="add_client.transport" 		placeholder="transport"></td> -->
+						</tr>
+						<tr>
+							<td> <button type="button" class="btn btn-default" ng-click="add_show=false;" >Отменить</button> </td>
+							<td> <button type="button" class="btn btn-success" ng-click="add();add_show=false;" >Сохранить</button> </td>
+						</tr>			
+						</table>
+			
+			</div> 
+			<div  data-ng-repeat="(key,val) in sippeers track by $index " >		<!--   | filter:{ 'callerid': q } | filter:q2  -->
+ 
+				<div ng-show="$parent.show == val.name || q == val.name" >  <!--  id="{{$index}} "  class="collapse "ng-class="{ 'in': q.length >= 3 && key == 0}" -->
+
+					<div class="col-md-12" ng-repeat="(key2,val2) in sippeers[key]  track by $index" ng-show="key2 == 'secret' || key2 == 'name' || key2 == 'host' || key2 == 'context' || key2 == 'nat' || key2 == 'callerid' ">
+						<table class="table-responsive table-condensed table-hover "  >
+						<tr>						
+						
+						<td><input type="{{type(key2)}}" class="form-control" ng-model="val[key2]" ng-change="$parent.save_client='true'"></td>
+						<td><font color="gray">{{key2}}</font></td>
+						</tr>
+						</table>
+					</div>
+					 
+				 <br/><br/>
+				<button ng-show="save_client" type="button" class="btn btn-success" ng-click="save( key ); save_client = false">Сохранить</button>	
+				</div> 
+				
+			</div>
+
+
+		</div>
+		
+		
+		<div class="col-md-2" style="overflow: auto; height: 850px;">
+	 
+		<input  type="text"   class="form-control" ng-model="value_g1" style=" display: inline;" placeholder="+ Добавить группу" ng-enter="addGroup(value_g1);value_g1=''">
+		
+ 
+			<div class="list-group">
+			  <a class="list-group-item active">
+			   Группы:{{group.length}}
+			  </a>
+			  <a ng-repeat="(key,val) in group  track by $index" class="list-group-item" ng-click="$parent.show=val.name">  
+				{{val.name}}
+				<span class="badge" style="color:black;background-color:white;"><i class="fa fa-trash-o" ng-click="delete_g($index)"></i> </span>			  
+			  </a>
+
+			</div>		
+		</div>
+		
+	 
+	<div class="col-md-12"  >	
+	
+	
+	
+	
+	 <div class='contentWrapper ng-cloak'>
+        <div class='content'>
+          <div class="row-fluid">
+            <ul class="thumbnails">
+              <li class="span3" style='margin-left:10px;'>
+                <div class="thumbnail" data-drop="true" ng-model='list1' data-jqyoui-options="optionsList1" jqyoui-droppable="{multiple:true}">
+                  <div class="caption">
+                    <div class="btn btn-info btn-draggable" ng-repeat="item in list1" ng-show="item.title" data-drag="{{item.drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="list1" jqyoui-draggable="{index: {{$index}},animate:true}">{{item.title}}</div>
+                  </div>
+                </div>
+              </li>
+              <li class="span3" style='margin-left:10px;'>
+                <div class="thumbnail" data-drop="true" ng-model='list2' data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=list2])'}"  jqyoui-droppable="{multiple:true}">
+                  <div class="caption">
+                    <div class="btn btn-info btn-draggable" ng-repeat="item in list2" ng-show="item.title" data-drag="{{item.drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="list2" jqyoui-draggable="{index: {{$index}},animate:true}">{{item.title}}</div>
+                  </div>
+                </div>
+              </li>
+              <li class="span3" style='margin-left:10px;'>
+                <div class="thumbnail" data-drop="true" ng-model='list3' data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=list3])'}"  jqyoui-droppable="{multiple:true}">
+                  <div class="caption">
+                    <div class="btn btn-info btn-draggable" ng-repeat="item in list3" ng-show="item.title" data-drag="{{item.drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="list3" jqyoui-draggable="{index: {{$index}},animate:true}">{{item.title}}</div>
+                  </div>
+                </div>
+              </li>
+              <li class="span3" style='margin-left:10px;'>
+                <div class="thumbnail" data-drop="true" ng-model='list4' data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=list4])'}"  jqyoui-droppable="{multiple:true}">
+                  <div class="caption">
+                    <div class="btn btn-info btn-draggable" ng-repeat="item in list4" ng-show="item.title" data-drag="{{item.drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="list4" jqyoui-draggable="{index: {{$index}},animate:true}">{{item.title}}</div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="navbar-inner">
+        <div class="container form-inline" style="text-align: center;">
+          <div class="btn btn-droppable" ng-repeat="item in list5" data-drop="true" ng-model='list5' data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=list5])'}"  jqyoui-droppable="{index: {{$index}}}">
+            <div class="btn btn-info btn-draggable" data-drag="{{item.drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="list5" jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true}" ng-hide="!item.title">{{item.title}}</div>
+          </div>
+        </div>
+      </div>
+     </div> 
+</div>
+
+    <style>
+      .thumbnail { height: 280px !important; }
+      .btn-droppable { width: 180px; height: 30px; padding-left: 4px; }
+      .btn-draggable { width: 160px; }
+      .emage { height: 215px; }
+      h1 { padding: .2em; margin: 0; }
+      #products { float:left; width: 500px; margin-right: 2em; }
+      #cart { width: 200px; float: left; margin-top: 1em; }
+      #cart ol { margin: 0; padding: 1em 0 1em 3em; }
+    </style>
+ 

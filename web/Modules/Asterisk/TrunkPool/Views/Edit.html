@@ -1,0 +1,170 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="row hoverDiv">
+                    <div class="col-lg-6">{{'TrunkPool' | translate}}</div>
+                    <div class="col-lg-6">
+                      <input only-clear class="form-control" ng-disabled="upd.coID" ng-model="upd.poolName">
+                    </div>
+                </div>
+
+                <div class="row hoverDiv">
+                    <div class="col-lg-6">{{'priority' | translate}}</div>
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <input numeric-only class="form-control" ng-model="upd.priority" ng-disabled="upd.coID">
+                            <span class="input-group-append">
+                                <button type="button" class="btn btn-default" ng-disabled="upd.coID" ng-click="upd.priority=upd.priority+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                <button type="button" class="btn btn-default" ng-disabled="upd.coID" ng-click="upd.priority=upd.priority-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row hoverDiv">
+                        <div class="col-lg-6 no-padding">{{'company' | translate}}</div>
+                        <div class="col-lg-6 no-padding">
+                                <ui-select ng-model="upd.coID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" ng-disabled="true">
+                                    <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.coName}}</ui-select-match>
+                                    <ui-select-choices repeat="a.coID as a in Company.data | filter: $select.search">
+                                        {{a.coName}}
+                                    </ui-select-choices>
+                                </ui-select>
+                        </div>
+                </div>
+                <div class="row hoverDiv">
+                    <div class="col-lg-6">{{'active' | translate}} </div>
+                    <div class="col-lg-6"><label><input type="checkbox" cb-switch ng-disabled="upd.coID" ng-model="upd.isActive"></label> </div>
+                </div>
+
+                <div class="row hoverDiv" ng-show="upd.coID">
+                    <div class="alert alert-warning" style="padding: 10px; margin-bottom: 10px;width: 100%;" >
+                        <h4><i class="icon fa fa-info"></i> {{'notification' | translate}}!</h4>
+                            {{'AutoCreate' | translate}}<br/>
+                    </div>
+                </div>
+                <ng-include src="'/Views/divEdit.html'"></ng-include> 
+            </div>
+        </div>
+    </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-6">
+            <div class="card card-info card-outline">
+                <div class="card-header with-border">
+                    <h3 class="card-title"> {{'routRules' | translate}}</h3>
+                    <!-- <div style="display: inline-block;float: right; border: none;">
+                        <div class="btn-group" style="float: right;">
+                            <button ng-disabled="global.Loading || global.NewProgerss" class="btn" ng-class="{'btn-warning' : global.Loading , 'btn-success' : !global.Loading}" ng-click="global.Loading=true;manyAction.Find(ItemsSrv)">
+                                                <span ng-hide="global.Loading" ng-bind="'find'| translate"></span>
+
+                                                <i ng-show="global.Loading" class="fa fa-spinner fa-pulse fa-fw"></i>
+                                                <span ng-show="global.Loading" ng-bind="'Loading'| translate"></span>
+
+                                                &nbsp; <i ng-show='dataIsChecked==1' class="fa fa-user"></i>
+                                                <i ng-show='dataIsChecked>1' class="fa fa-users"></i>
+                                                <span class="badge badge-warning" ng-show='dataIsChecked>0'>{{dataIsChecked}}</span>
+                            </button>
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" ng-disabled="upd.coID">
+                                                <i class="fa fa-wrench"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                                <li role="menuitem" ng-hide="checkLast" ><a ng-click="manyAction.addItems()" ><i class="fa fa-plus"></i> {{'new' | translate}}</a></li>
+                                                <li role="menuitem" ng-show="dataIsChecked"><a ng-click="manyAction.manyDelete(Items,ItemsSrv)"><i class="fa fa-trash"></i> {{'del' | translate}}</a></li>
+                            </ul>
+                        </div>
+                        <br>
+                        <label ng-show="Items.length > 0">{{'findPlaceholder'| translate}} {{Items.length}} {{'from'| translate}} {{total_count}}</label>
+                    </div> -->
+                    <div class="card-tools">
+                            <div class="btn-group">
+                                <button class="btn btn-tool" ng-disabled="global.Loading || global.NewProgerss " ng-click="global.Loading=true;manyAction.Find(ItemsSrv)">
+                                    <i ng-hide="global.Loading" class="fa fa-search"></i>
+                                    <span ng-hide="global.Loading" ng-bind="'find'| translate"></span>
+                                    
+                                    <i ng-show="global.Loading" class="fa fa-spinner fa-pulse fa-fw"></i>
+                                    <span ng-show="global.Loading" ng-bind="'Loading'| translate"></span>
+                                </button>                                 
+                                
+                                <button class="btn btn-tool dropdown-toggle" data-toggle="dropdown"  ng-disabled="!can('EM','edit') || upd.coID">
+                                    <i class="fa fa-wrench"></i>      
+                                    &nbsp;  <span  ng-show="!global.Loading && dataIsChecked>0" class="badge badge-secondary navbar-badge" ng-bind="dataIsChecked"></span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                    <a class="dropdown-item" href ng-click="manyAction.addItems()" ng-hide="checkLast" ><i class="fa fa-plus"></i> {{'new' | translate}}</a>
+                                    <a class="dropdown-item" href ng-click="manyAction.manyDelete(Items,ItemsSrv)" ng-show="dataIsChecked"><i class="fa fa-trash"></i> {{'del' | translate}}</a></li>
+                                </div>
+                                <ng-include src="'/Views/FilteCollapse.html'"></ng-include>
+                            </div>
+                        </div>
+                </div>
+
+                <div class="card-body p-0" ng-show="Items">
+                    <div  style="overflow-y: auto; height: 70vh;" can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="100">
+                            <table class="table table-head-fixed table-hover dataTable">
+                                <tr>
+                                    <th ng-include="'/Views/ng-table/checkbox.html'" ng-click="$event.stopPropagation()"></th>
+                                    <th ng-init="o1='trID'" ng-click="manyAction.order(o1);">
+                                        <nobr>{{'trunk' | translate}} <span ng-show="order==o1" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                    </th>
+                                    <th ng-init="o2='percent'" ng-click="manyAction.order(o2);">
+                                        <nobr>{{'weight' | translate}} %<span ng-show="order==o2" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                    </th>
+                                    <th ng-init="o9='isActive'" ng-click="manyAction.order(o9);">
+                                        <nobr>{{'active' | translate}} <span ng-show="order==o9" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                    </th>
+                                </tr>
+                                <tr ng-repeat="e in Items | limitTo:limit track by $index">
+                                        <td width="1%"" ng-include="'/Views/checkboxOne.html'" ></td>
+                                        <td style="width: 20%">
+                                            <ui-select ng-model="e.trID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" ng-disabled="upd.coID">
+                                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.trName}}</ui-select-match>
+                                                <ui-select-choices repeat="a.trID as a in Trunk.data | filter: $select.search" ui-disable-choice="Check(a)">
+                                                    {{a.trName}}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            <span class="input-group-append"> <button ng-show="upd.invalid_destdata" type="button" class="btn btn-default" ng-click="e.trID = null"><i class="fa fa-times" aria-hidden="true"></i> </button> </span>
+                                        <td style="width: 20%">
+                                            <div class="input-group">
+                                                <input numeric-only class="form-control" ng-model="e.percent" ng-disabled="upd.coID">
+                                                <span class="input-group-append">
+                                                    <button type="button" class="btn btn-default" ng-click="e.percent=e.percent+1" ng-disabled="upd.coID"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                                    <button type="button" class="btn btn-default" ng-click="e.percent=e.percent-1" ng-disabled="upd.coID"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td width="1%"><label class="float-right"><input type="checkbox" cb-switch ng-disabled="upd.coID" ng-model="e.isActive"></label></td>
+                                        <!-- <td width="1%" class="text-center">
+                                            <a >
+                                                <i style="cursor: pointer;" class="fa fa-trash" ng-show="!check" ng-click="$event.stopPropagation();check=true" style="cursor: pointer;"></i>
+                                                <i style="cursor: pointer;" ng-show="check" ng-click="check=false" class="fa fa-times fa-lg"> </i>
+                                                <i style="cursor: pointer;" ng-show="check" class="fa fa-check fa-lg" ng-click="dellItems(e);check=false"> </i>
+                                            </a>
+                                        </td> -->
+                                </tr>
+                            </table>
+                    </div>
+                    <div ng-include="'/Views/paginationItems.html'"></div>
+                    </div>
+
+            </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-2">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-disabled="upd.coID" ng-click="manyAction.Update(upd,'TrunkPool');manyAction.ItemsEdit('TrunkPool');">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="TrunkPool">{{'cancel' | translate}}</button>
+                    </div>
+        </div>
+    </div>
+</section>

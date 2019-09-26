@@ -1,0 +1,14 @@
+const h = `${window.location.origin}/api/`;
+
+const API = {
+  "active": `ws://${window.location.hostname}:3000`,
+  "astSippeers": `${h}ast/sippeers`,
+  "fsFiles": `${h}fs/files/10/1`,
+  "reg": {
+    "regions": `${h}reg/regions`,
+    "gmt": `${h}reg/gmt`,
+    "operators": `${h}reg/operators`,
+    "countries": `${h}reg/countries`,
+    "Phone": `${h}reg/regions/phone`,
+    "Areas": `${h}reg/areas`
+}

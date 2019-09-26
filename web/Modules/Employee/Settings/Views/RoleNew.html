@@ -1,0 +1,30 @@
+<div class="col-lg-2" style="border-right: 1px solid #e7e7e7;">
+
+</div>
+
+
+<div class="col-lg-10">
+    <br>
+    <div class="text-right">
+        <div class="btn-group">
+            <button ng-disabled=" !new.roleName && !new.Permission" ng-click="Save(new)" class="btn btn-success">Сохранить</button>
+            <a href="#!/Role" class="btn btn-warning">Отмена</a>
+        </div>
+    </div>
+    <br>
+    <span class="text-center">
+        <h3>Данные</h3>
+    </span>
+    <table class="table table-head-fixed table-bordered table table-striped">
+        <tbody>
+        <tr>
+            <td>Роль</td>
+            <td><input class="form-control" type="text" ng-model="new.roleName" ></td>
+        </tr>
+        <tr>
+            <td>Уровень доступа</td>
+            <td><input class="form-control" type="number" ng-model="new.Permission" ></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

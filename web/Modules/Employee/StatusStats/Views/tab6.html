@@ -1,0 +1,157 @@
+<div class="card-body  p-0" ng-show="data6.length != []" style="height:72vh;overflow-y: auto;" can-load="canLoad" infinite-scroll="manyAction.loadMore(data6.length)"  threshold="10">
+  <div ng-show="data6.length != []" style="height:72vh;overflow-y: auto;" can-load="canLoad" infinite-scroll="manyAction.loadMore(data6.length)"  threshold="10" >
+          <table class="table table-head-fixed no-margin table-hover table-bordered" ng-hide="global.Loading">
+                <thead>
+                    <tr>
+                      <th colspan="2" class="text-center" ng-show="model6.step == 0"> <h4><b>{{'date' | translate}}</b></h3>          </th>
+                      <th colspan="1" class="text-center" ng-show="model6.step == 1"> <h4><b>{{'date' | translate}}</b></h3>          </th>
+                      <th colspan="1" class="text-center"> <h4><b>{{'AllCall' | translate}}</b></h3>          </th>
+                      <th colspan="4" class="text-center"> <h4><b>{{'LostCalls2' | translate}}</b></h3>      </th>
+                      <th colspan="4" class="text-center"> <h4><b>{{'ReceivedCalls2' | translate}}</b></h3>  </th>
+                      <th colspan="2" class="text-center"> <h4><b>{{'KPI' | translate}}</b></h3>           </th>
+                      <th colspan="5" class="text-center"> <h4><b>{{'' | translate}}</b></h3>           </th>
+                    </tr>    
+                    <tr ng-click="tabset(6);">
+                      <th class="rotate" ng-init="o601='Period'" ng-click="orderF(o601);">
+                          <div>{{'day' | translate}} <span ng-show="order2==o601" ng-include="'/Views/orderSpan.html'"></span></div>
+                      </th>
+                      <th ng-show="model6.step == 0" class="rotate" ng-init="o602='hourPeriod'" ng-click="orderF(o602);">
+                          <div><nobr>{{'byhour' | translate}} <span ng-show="order2==o602" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>
+                      <th class="rotate" ng-init="o603='CallsCount'" ng-click="orderF(o603);">
+                          <div><nobr> 
+                              {{'CallsCount' | translate}} <span ng-show="order2==o603" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>
+                      <th class="rotate" ng-init="o613='LostBefore5sec'" ng-click="orderF(o613);">
+                          <div><nobr> < 5 {{'sec2' | translate}} <span ng-show="order2==o613" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>
+                      <!--<th class="rotate" ng-init="o614='LostBefore5secPercent'" ng-click="orderF(o614);">
+                          <div><nobr>{{'%' | translate}} <span ng-show="order2==o614" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>-->
+                      <th class="rotate" ng-init="o615='LostBefore30sec'" ng-click="orderF(o615);">
+                          <div><nobr>< 30 {{'sec2' | translate}} <span ng-show="order2==o615" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>
+                      <!--<th class="rotate" ng-init="o616='LostBefore30secPercent'" ng-click="orderF(o616);">
+                          <div><nobr>{{'%' | translate}} <span ng-show="order2==o616" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>-->
+                 
+                      <th class="rotate" ng-init="o620='LostAfter60sec'" ng-click="orderF(o620);">
+                          <div><nobr>> 60 < {{'sec2' | translate}} <span ng-show="order2==o620" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>
+                      <!--<th class="rotate" ng-init="o621='LostAfter60secPercent'" ng-click="orderF(o621);">
+                          <div><nobr>{{'%' | translate}} <span ng-show="order2==o621" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>-->
+                      <th class="rotate" ng-init="o622='LostCalls'" ng-click="orderF(o622);">
+                          <div><nobr>{{'LostCalls' | translate}} <span ng-show="order2==o622" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>
+
+                     <th class="rotate" ng-init="o612='ReceivedCalls'" ng-click="orderF(o612);">
+                          <div><nobr>{{'ReceivedCalls' | translate}} <span ng-show="order2==o612" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>
+                      <th class="rotate" ng-init="o604='ReceivedBefore20sec'" ng-click="orderF(o604);">
+                          <div><nobr> 
+                              < 20 {{'sec2' | translate}} <span ng-show="order2==o604" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>
+                      <!--<th class="rotate" ng-init="o605='ReceivedBefore20secPercent'" ng-click="orderF(o605);">
+                          <div><nobr>{{'%' | translate}} <span ng-show="order2==o605" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>-->
+                      <th class="rotate" ng-init="o606='ReceivedBefore30sec'" ng-click="orderF(o606);">
+                          <div><nobr> 
+                              < 30 {{'sec2' | translate}} <span ng-show="order2==o606" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>
+                      <!--<th class="rotate" ng-init="o607='ReceivedBefore30secPercent'" ng-click="orderF(o607);">
+                          <div><nobr> 
+                              {{'%' | translate}} <span ng-show="order2==o607" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>-->
+                      <th class="rotate" ng-init="o610='ReceivedAfter60sec'" ng-click="orderF(o610);">
+                          <div><nobr> 
+                              > 60 < {{'sec2' | translate}} <span ng-show="order2==o610" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>
+                      <!--<th class="rotate" ng-init="o611='ReceivedAfter60secPercent'" ng-click="orderF(o611);">
+                          <div><nobr>{{'%' | translate}} <span ng-show="order2==o611" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th> -->
+                      <th class="rotate" ng-init="o624='SL'" ng-click="orderF(o624);">
+                        <div><nobr>{{'SL' | translate}} <span ng-show="order2==o624" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>
+                      <th class="rotate" ng-init="o625='SL'" ng-click="orderF(o625);">
+                        <div><nobr>{{'LCR' | translate}} <span ng-show="order2==o625" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>
+                      <th class="rotate" ng-init="o626='ATT'" ng-click="orderF(o626);">
+                        <div><nobr>{{'ATT' | translate}} <span ng-show="order2==o626" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>
+                      <th class="rotate" ng-init="o627='HT'" ng-click="orderF(o627);">
+                          <div><nobr>{{'HT' | translate}} <span ng-show="order2==o627" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>
+                      <th class="rotate" ng-init="o623='AHT'" ng-click="orderF(o623);">
+                        <div><nobr>{{'AHT' | translate}} <span ng-show="order2==o623" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>
+                      <th class="rotate" ng-init="o628='Recalls'" ng-click="orderF(o628);">
+                          <div><nobr>{{'Recalls' | translate}} <span ng-show="order2==o628" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>
+                      <th class="rotate" ng-init="o629='RLCR'" ng-click="orderF(o629);">
+                        <div><nobr>{{'RLCR' | translate}} <span ng-show="order2==o629" ng-include="'/Views/orderSpan.html'"/></nobr></div>
+                      </th>
+                    </tr>
+                </thead>  
+                <tbody>   
+                    <tr ng-repeat="e in data6 | limitTo:limit track by $index">
+                      <td width="1%"> <nobr><span ng-bind="e.Period | date:'d MMM yyyy'" ></span></nobr> </td>
+                      <td ng-show="model6.step == 0" width="1%"> <nobr><span ng-bind="e.hourPeriod" ></span></nobr> </td>
+                      <td> <span class="badge badge-secondary" ng-bind="e.CallsCount"></span></td>
+                      <td> <span class="badge badge-warning" ng-bind="e.LostBefore5sec"></span></td>
+                      <!--<td> <span class="badge badge-warning" ng-bind="e.LostBefore5secPercent"></span></td>-->
+                      <td> <span class="badge badge-warning" ng-bind="e.LostBefore30sec"></span></td>
+                      <!--<td> <span class="badge badge-warning" ng-bind="e.LostBefore30secPercent"></span></td>-->
+                      <td> <span class="badge badge-warning" ng-bind="e.LostAfter30sec"></span></td>
+                      <!--<td> <span class="badge badge-warning" ng-bind="e.LostAfter30secPercent"></span></td>-->
+                      <td> <span class="badge badge-warning" ng-bind="e.LostCalls"></span></td>
+
+                      <td> <span class="badge badge-success" ng-bind="e.ReceivedCalls"></span></td>
+                      <td> <span class="badge badge-success" ng-bind="e.ReceivedBefore20sec"></span></td>
+                      <!--<td> <span class="badge badge-success" ng-bind="e.ReceivedBefore20secPercent"></span></td>-->
+                      <td> <span class="badge badge-success" ng-bind="e.ReceivedBefore30sec"></span></td>
+                      <!--<td> <span class="badge badge-success" ng-bind="e.ReceivedBefore30secPercent"></span></td>-->
+                      <td> <span class="badge badge-success" ng-bind="e.ReceivedAfter30sec"></span></td>
+                      <!--<td> <span class="badge badge-success" ng-bind="e.ReceivedAfter30secPercent"></span></td>-->
+                      <td> <span class="badge badge-primary" ng-bind="e.SL"></span></td>
+                      <td> <span class="badge badge-primary" ng-bind="e.LCR"></span></td>
+                      <td> <span class="badge badge-primary" ng-bind="e.ATT"></span></td>
+                      <td> <span class="badge badge-primary" ng-bind="e.HT"></span></td>
+                      <td> <span class="badge badge-primary" ng-bind="e.AHT"></span></td>
+                      <td> <span class="badge badge-primary" ng-bind="e.Recalls"></span></td>
+                      <td> <span class="badge badge-primary" ng-bind="e.RLCR"></span></td>
+                    </tr>
+                    <tr class="active">
+                      <td colspan="2" width="1%" ng-show="model6.step == 0"> {{'total' | translate}} </td>
+                      <td colspan="1" width="1%" ng-show="model6.step == 1"> {{'total' | translate}} </td>
+                      <td> <span class="badge badge-secondary" ng-bind="total6.callscount"></span></td>
+                      <td> <span class="badge badge-warning" ng-bind="total6.lostbefore5sec"></span></td>
+                      <!--<td> <span class="badge badge-warning" ng-bind="total6.lostbefore5secpercent"></span></td>-->
+                      <td colspan="2" class="text-center"> <span class="badge badge-warning" ng-bind="total6.lostbefore30sec+total6.lostafter30sec"></span></td>
+                      <!--<td> <span class="badge badge-warning" ng-bind="total6.lostbefore30secpercent"></span></td>-->
+                      <!--<td> <span class="badge badge-warning" ng-bind="total6.lostafter30sec"></span></td>-->
+                      <!--<td> <span class="badge badge-warning" ng-bind="total6.lostafter30secpercent"></span></td>-->
+                      <td> <span class="badge badge-warning" ng-bind="total6.lostcalls"></span></td>
+
+                      <td> <span class="badge badge-success" ng-bind="total6.receivedcalls"></span></td>
+                      <td> <span class="badge badge-success" ng-bind="total6.receivedbefore20sec"></span></td>
+                     <!-- <td> <span class="badge badge-success" ng-bind="total6.receivedbefore20secpercent"></span></td>-->
+                      <td colspan="2" class="text-center"> <span class="badge badge-success" ng-bind="total6.receivedbefore30sec+total6.receivedafter30sec"></span></td>
+                      <!--<td> <span class="badge badge-success" ng-bind="total6.receivedbefore30secpercent"></span></td>-->
+                       <!--<td> <span class="badge badge-success" ng-bind="total6.receivedafter30sec"></span></td>-->
+                      <!--<td> <span class="badge badge-success" ng-bind="total6.receivedafter30secpercent"></span></td>-->
+
+                      <td> <span class="badge badge-primary" ng-bind="total6.sl"></span></td>
+                      <td> <span class="badge badge-primary" ng-bind="total6.lcr"></span></td>
+
+                      <td> <span class="badge badge-primary" ng-bind="total6.att"></span></td>
+                      <td> <span class="badge badge-primary" ng-bind="total6.ht"></span></td>
+                      <td> <span class="badge badge-primary" ng-bind="total6.aht"></span></td>
+                      <td> <span class="badge badge-primary" ng-bind="total6.recalls"></span></td>
+                      <td> <span class="badge badge-primary" ng-bind="total6.rlcr"></span></td>
+                    </tr>
+                </tbody>   
+          </table> 
+
+      </div>
+</div>

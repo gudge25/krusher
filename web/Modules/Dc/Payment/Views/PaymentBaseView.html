@@ -1,0 +1,87 @@
+<!-- <form novalidate class="css-form" ng-class="formClassInvalid" name="PaymentForm">
+    <table class="table table-head-fixed table-bordered">
+        <tbody>
+          <tr>
+            <td class="col-md-3">Номер</td><td class="col-md-3 "><input type="text" class="form-control"  ng-model="payment.dcNo"></td>
+            <td class="col-md-3">Дата</td>   <td class="col-md-3">
+              <p class="input-group custom-datepicker-buttons">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="payment.dcDate" is-open="datepicker.opened" datepicker-options="dateOptions" />
+                    <span class="input-group-append">
+                    <button type="button" class="btn btn-default" ng-click="datepickerOpen()"><i class="fa fa-calendar"></i></button>
+                    </span>
+                </p>
+            </td>
+          </tr>
+          <tr>
+            <td>Тип</td>   
+            <td>
+              <ui-select ng-model="payment.dcType" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                <ui-select-match allow-clear="true">{{$select.selected.dctName}}</ui-select-match>
+                <ui-select-choices repeat="a.dctID as a in docsTypes | filter: $select.search"" >
+                  {{a.dctName}}
+                </ui-select-choices>
+              </ui-select>
+            </td>
+            <td>Документ основания</td>
+            <td>
+              <div class="input-group">
+                    <input class="form-control" type="text" ng-model="payment.dcLink">
+                    <span class="input-group-append">
+                        <button class="form-control" ng-click="openDocsLinkSearchModal();"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </span>
+                </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Коментарий</td>   <td><input type="text" class="form-control" ng-model="payment.dcComment"></td>
+            <td>Сума</td>   <td><input type="number" class="form-control" ng-model="payment.dcSum"></td>
+          </tr>
+          <tr>
+            <td>Статус</td>   <td>
+              <ui-select ng-model="payment.dcStatus" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"> 
+                          <ui-select-match >{{$select.selected.p.Name}}</ui-select-match>
+                          <ui-select-choices repeat="a.p.tvID as a in dcStatusEnum | filter: $select.search" >
+                            {{a.p.Name}}
+                        </ui-select-choices>
+                    </ui-select>
+            </td>
+            <td>Имя клиента</td>   <td>
+              <div class="input-group">
+                    <input class="form-control" type="text" ng-model="payment.clName">
+                    <span class="input-group-append">
+                        <button class="form-control" ng-click="openClientSearchModal()"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </span>
+                </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Тип оплаты (Приход/Расход)</td>   <td>
+              <ui-select ng-model="payment.PayType" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"> 
+                          <ui-select-match >{{$select.selected.p.Name}}</ui-select-match>
+                          <ui-select-choices repeat="a.p.tvID as a in payTypeEnum | filter: $select.search" >
+                            {{a.p.Name}}
+                        </ui-select-choices>
+                    </ui-select>
+            </td>
+            <td>Способ оплаты (Безнал/Наличные)</td>   <td>
+               <ui-select ng-model="payment.PayMethod" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"> 
+                          <ui-select-match >{{$select.selected.p.Name}}</ui-select-match>
+                          <ui-select-choices repeat="a.p.tvID as a in payMethodEnum | filter: $select.search" >
+                            {{a.p.Name}}
+                        </ui-select-choices>
+                    </ui-select>
+            </td>
+          </tr>
+          <tr>
+            <td>Ответственный</td>   <td>
+              <ui-select ng-model="payment.emID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"> 
+                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.emName}}</ui-select-match>
+                <ui-select-choices repeat="a.emID as a in Employees | filter: $select.search"" >
+                  {{a.emName}}
+                </ui-select-choices>
+              </ui-select>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+</form> -->

@@ -1,0 +1,108 @@
+#phone {   /*background:url(https://blogs.which.co.uk/technology/files/2013/03/iphone_5_hero.jpg) no-repeat 50.4% top;
+  background-size: contain;
+  height:655px;*/
+}
+#wrapper {
+  width:222px;
+  /*height:410px;*/
+  margin:0 auto 0 auto;
+  position:relative;
+  /*top:116px;*/
+  padding:24px 0 0 0;
+  background:#fff;
+}
+.key {
+  border-radius: 100%;
+  color:#444;
+  width:60px;
+  height:56px;
+  text-align:center;
+  font-size:30px;
+  float:left;
+  box-sizing:border-box;
+  padding:5px 0 0 0;
+  margin:0 7px 10px 7px;
+  /*border:1px solid #444;*/
+  cursor:pointer;
+/*  background-color: #2D2D2D;
+  color: white;*/
+}
+
+/*.key {
+  color: white;
+  font-size: 30px;
+  float: left;
+  background-color: #2D2D2D;
+  text-align: center;
+  width: 60px;
+  height: 56px;
+  border-radius: 100%;
+  margin: 10px 0px;
+  padding-top: 4px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.key.clicked {
+  animation: pulse-gray linear 0.5s 1;
+}
+.key:nth-child(3n-1) {
+  margin: 10px calc(50% - 90px);
+}*/
+
+.key span {
+  display:block;
+  color:#444;
+  text-align:center;
+  font-size:12px;
+  text-transform:uppercase;
+}
+.key.special {
+  line-height:46px;
+}
+.key.nb {
+  border:none;
+}
+.key.phone {
+  background:#5CDB74;
+  border:none;
+  color:#FFF;
+  line-height:46px;
+  font-size:20px;
+  margin-bottom: 25px;
+  box-shadow: 0px  25px 30px -15px black;
+}
+
+.key.phone2 {
+  background:#dd4b39;
+  border:none;
+  color:#FFF;
+  line-height:46px;
+  font-size:20px;
+  margin-bottom: 25px;
+  box-shadow: 0px  25px 30px -15px black;
+}
+
+.key.phone3 {
+  background:#0073b7;
+  border:none;
+  color:#FFF;
+  line-height:46px;
+  font-size:20px;
+  margin-bottom: 25px;
+  box-shadow: 0px  25px 30px -15px black;
+}
+
+
+.clear {
+  clear:both;
+}
+
+.hover:hover
+{
+    background-color: #2D2D2D;
+    color: white;
+    transition-property: background-color .2s linear 0s;
+    -moz-transition: background-color .2s linear 0s;
+    -webkit-transition: background-color .2s linear 0s;
+    -o-transition: background-color .2s linear 0s;
+}

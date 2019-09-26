@@ -1,0 +1,69 @@
+<div class="btn-group">
+        <button class="btn btn-tool" ng-disabled="global.Loading" ng-click="global.Loading=true;manyAction.Find()">
+          <i ng-hide="global.Loading" class="fa fa-search"></i>
+          <span ng-hide="global.Loading" ng-bind="'find'| translate"></span>
+          
+          <i ng-show="global.Loading" class="fa fa-spinner fa-pulse fa-fw"></i>
+          <span ng-show="global.Loading" ng-bind="'Loading'| translate"></span>
+        </button>
+
+        <!-- <button class="btn btn-tool"  ng-show="data.length > 0"  ng-click="Export()" uib-tooltip="{{'export'| translate}} " ><i class="fa fa-download"></i></button> -->
+        <!-- <button class="dropdown-item" ng-if="dirUrl == 'fsNew' && data.length > 0" ui-sref="migration" uib-tooltip="{{'export'| translate}} "><span><i class="fa fa-upload"></i> </button>  -->
+          
+        
+        <button class="btn btn-tool" ng-if="dirUrl == 'fsNew' && data.length > 0" ui-sref="migration" uib-tooltip="{{'import'| translate}} " ><i class="fa fa-upload"></i></button>
+        
+        
+        <button class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
+          <i class="fa fa-wrench"></i>      
+          &nbsp;  <span  ng-show="!global.Loading && dataIsChecked>0" class="badge badge-secondary navbar-badge" ng-bind="dataIsChecked"></span>
+
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" role="menu">
+              <!-- <a class="dropdown-item" ng-show="data.length > 0" style="cursor: pointer;" ng-click="Export()" ><span> <i class="fa fa-file-excel-o"></i> {{'export'| translate}} </span></a></li> -->
+              
+              <a href class="dropdown-item"  ng-if="dirUrl == 'SIPNew'" ng-click="$event.stopPropagation()"> <create-sip></create-sip> </a> 
+              <a href class="dropdown-item"  ng-if="dirUrl == 'employee'" ng-click="$event.stopPropagation()"> <create-employee></create-employee> </a> 
+              <a href class="dropdown-item"  ng-if="dirUrl == 'Trunk'" ng-click="$event.stopPropagation()"> <create-trunk></create-trunk> </a> 
+
+ 
+
+              <a class="dropdown-item" ng-if="dirUrl && dirUrl != 'StatusStats' && dirUrl != 'SIPNew' && dirUrl != 'employee' && dirUrl != 'Trunk'" href="#!/{{dirUrl}}" ><span><i class="fa fa-plus"></i> {{'new' | translate}}</span></a>
+              <a href class="dropdown-item" ng-if="!global.Loading" ng-click="manyAction.ClearFilter(data)"><span><i class="fa fa-undo"></i> {{'Clear_filter'| translate}} </span></a> 
+              <a href class="dropdown-item" ng-if="dataIsChecked" ng-click="manyAction.manyDelete(data)"><span><i class="fa fa-trash"></i> 
+                    {{'del' | translate}}
+                    <span  ng-show="!global.Loading && dataIsChecked>0" class="badge badge-danger right" ng-bind="dataIsChecked"></span>
+                </span>
+             </a> 
+         </div>
+         
+         <ng-include src="'/Views/FilteCollapse.html'"></ng-include>
+    </div>
+
+<!-- 
+    <div class="btn-group" style="float: right;display: flex;" >
+            <button ng-disabled="global.Loading" class="btn" ng-class="{'btn-warning' : global.Loading , 'btn-success' : !global.Loading}" ng-click="global.Loading=true;manyAction.Find()">
+                                <span ng-hide="global.Loading" ng-bind="'find'| translate"></span>
+        
+                                <i ng-show="global.Loading" class="fa fa-spinner fa-pulse fa-fw"></i>
+                                <span ng-show="global.Loading" ng-bind="'Loading'| translate"></span>
+        
+                                &nbsp; <i ng-show='dataIsChecked==1' class="fa fa-user"></i>
+                                <i ng-show='dataIsChecked>1' class="fa fa-users"></i>
+                                <span class="badge badge-warning" ng-show='dataIsChecked>0'>{{dataIsChecked}}</span>
+            </button>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-wrench"></i>
+            </button>
+            <div class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <a class="dropdown-item" ng-show="dirUrl && dirUrl != 'StatusStats'" href="#!/{{dirUrl}}" ><span><i class="fa fa-plus"></i> {{'new' | translate}}</span></a>
+                                <a class="dropdown-item" ng-show="dataIsChecked"ng-click="manyAction.manyDelete(data)"><span><i class="fa fa-trash"></i> {{'del' | translate}}</span></a>
+                                <a class="dropdown-item" ng-if="dirUrl == 'fsNew' && dataIsChecked" ng-click="manyAction.manyClear(data)"><span><i class="fa fa-trash"></i> {{'ClearClients' | translate}}</span></a>
+                                <a class="dropdown-item" ng-if="dirUrl == 'fsNew'" ui-sref="migration"><span><i class="fa fa-upload"></i> {{'import' | translate}}</span></a>
+                                <a class="dropdown-item" ng-hide="global.Loading" style="cursor: pointer;" ng-click="manyAction.ClearFilter()" >
+                                       <span><i class="fa fa-undo"></i> {{'Clear_filter'| translate}}</span>
+                                </a>
+                                 
+            </div>
+        </div>
+          -->

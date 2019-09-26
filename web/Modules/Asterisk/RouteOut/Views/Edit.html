@@ -1,0 +1,238 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline login-card-body p-0">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'names' | translate}}</div>
+                    <div class="col-lg-6 no-padding">
+                        <div class="has-feedback" ng-class="{ 'has-error' : !upd.roName.length, 'has-success' : upd.roName }">
+                                <input ng-model="upd.roName" class="form-control" placeholder="{{'enterTitle' | translate}}" ng-change="edit2=true;" only-clear ng-maxlength="200" required/>                                    
+                                <span class="glyphicon glyphicon-asterisk form-control-feedback"></span>
+                                <span class="help-block" ng-show="!upd.roName.length && edit2">{{'typeSIPLeng'| translate}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'callerid' | translate}}</div>
+                    <div class="col-lg-6 no-padding">
+                        <div class="has-feedback" ng-class="{ 'has-error' : !upd.callerID.length && edit3, 'has-success' : upd.callerID }">
+                                <input ng-change="edit3=true;" ng-disabled="!can('EM','edit')" ng-model="upd.callerID"  class="form-control" ng-maxlength="30" placeholder="{{'callerid' | translate}}" pattern="^[a-zA-Z0-9.+\-\[\]]+$" required>
+                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                <span class="help-block" ng-show="!upd.callerID.length && edit3">{{'typeSIPLeng'| translate}}, + - [ ]</span>
+                        </div>
+                     </div>
+                </div>
+
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'prefix' | translate}}</div>
+                    <div class="col-lg-6 no-padding">
+                        <div class="input-group">
+                            <input numeric-only class="form-control" ng-model="upd.prefix">
+                            <span class="input-group-append">
+                                    <button type="button" class="btn btn-default" ng-click="upd.prefix=upd.prefix+1;"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="upd.prefix=upd.prefix-1;"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'prepend' | translate}}</div>
+                    <div class="col-lg-6 no-padding">
+                        <div class="has-feedback" ng-class="{ 'has-error' : !upd.prepend.length && edit6, 'has-success' : upd.prepend }">
+                                <input ng-change="edit6=true;" ng-disabled="!can('EM','edit')" ng-model="upd.prepend"  class="form-control" ng-maxlength="30"  pattern="^[a-zA-Z0-9.+\-\[\]\*]+$" required>
+                                <!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
+                                <span class="help-block" ng-show="!upd.prepend.length && edit6">{{'typeSIPLeng'| translate}}, *</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row hoverDiv">
+                        <div class="col-lg-6 no-padding">{{'category' | translate}} </div>
+                        <div class="col-lg-6 no-padding">
+                            <div class="input-group">
+                                <ui-select ng-model="upd.category" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                        <ui-select-choices repeat="c.tvID as c in Enums.group[1026] | filter: $select.search" >
+                                            {{c.Name | translate}}
+                                        </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                </div>
+                <div class="row hoverDiv">
+                        <div class="col-lg-6 no-padding">{{'destination' | translate}} </div>
+                        <div class="col-lg-6 no-padding">
+                            <div class="input-group">
+                                <div class="has-feedback" ng-class="{ 'has-error' : !upd.destination, 'has-success' : upd.destination }">
+                                        <ui-select ng-model="upd.destination" ng-change="upd.destdata=null;edit4=true;" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" required>
+                                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                                <ui-select-choices repeat="c.tvID as c in Enums.group[1014] | filter: $select.search"  ui-disable-choice="c.tvID == 101411 || c.tvID == 101406">{{c.Name | translate}}</ui-select-choices>
+                                        </ui-select>
+                                        <span class="help-block" ng-show="!upd.destination.length && edit4">{{'typeSIPLeng'| translate}}</span>
+                                </div>   
+                            </div>    
+                        </div>
+                </div>
+                <ng-include src="'/Views/destdataUpd.html'"></ng-include>
+                <div class="row hoverDiv" ng-show="(upd.destination == 101403 || upd.destination == 101409)&& upd.destdata">
+                            <div class="col-lg-6 no-padding">{{'destdata2' | translate}} </div>
+                            <div class="col-lg-6 no-padding">
+                                <div class="input-group">
+                                    <input  class="form-control" ng-model="upd.destdata2"/>
+                                    <span class="input-group-append">
+                                        <button ng-show="upd.destdata2" type="button" class="btn btn-default" ng-click="upd.destdata2 = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                </div>
+                <div class="row hoverDiv">
+                        <div class="col-lg-6 no-padding">{{'company' | translate}}</div>
+                        <div class="col-lg-6 no-padding">
+                                <ui-select ng-model="upd.coID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" ng-disabled="true">
+                                    <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.coName}}</ui-select-match>
+                                    <ui-select-choices repeat="a.coID as a in Company.data | filter: $select.search">
+                                        {{a.coName}}
+                                    </ui-select-choices>
+                                </ui-select>
+                        </div>
+                </div>
+                <div class="row hoverDiv">
+                        <div class="col-lg-6 no-padding">{{'priority' | translate}}</div>
+                        <div class="col-lg-6 no-padding">
+                            <div class="input-group">
+                                <input numeric-only class="form-control" ng-model="upd.priority">
+                                <span class="input-group-append">
+                                        <button type="button" class="btn btn-default" ng-click="upd.priority=upd.priority+1;"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-default" ng-click="upd.priority=upd.priority-1;"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                </div>
+                <div class="row hoverDiv">
+                    <div class="col-lg-6 no-padding">{{'active' | translate}} </div>
+                    <div class="col-lg-6 no-padding"><label><input type="checkbox" cb-switch ng-model="upd.isActive"></label> </div>
+                </div>
+            
+                <ng-include src="'/Views/divEdit.html'"></ng-include>     
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-6">
+            <div class="card card-info card-outline">
+                <div class="card-header with-border">
+                    <h3 class="card-title"> {{'routRules' | translate}}</h3>
+                    <!-- <div style="display: inline-block;float: right; border: none;">
+                        <div class="btn-group" style="float: right;">
+                            <button ng-disabled="global.Loading || global.NewProgerss" class="btn" ng-class="{'btn-warning' : global.Loading , 'btn-success' : !global.Loading}"
+                                                ng-click="global.Loading=true;manyAction.Find(ItemsSrv)">
+                                                <span ng-hide="global.Loading" ng-bind="'find'| translate"></span>
+
+                                                <i ng-show="global.Loading" class="fa fa-spinner fa-pulse fa-fw"></i>
+                                                <span ng-show="global.Loading" ng-bind="'Loading'| translate"></span>
+
+                                                &nbsp; <i ng-show='dataIsChecked==1' class="fa fa-user"></i>
+                                                <i ng-show='dataIsChecked>1' class="fa fa-users"></i>
+                                                <span class="badge badge-warning" ng-show='dataIsChecked>0'>{{dataIsChecked}}</span>
+                            </button>
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                <i class="fa fa-wrench"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                                <li role="menuitem" ><a ng-click="manyAction.addItems()" ><i class="fa fa-plus"></i> {{'new' | translate}}</a></li>
+                                                <li role="menuitem" ng-show="dataIsChecked"><a ng-click="manyAction.manyDelete(Items,ItemsSrv)"><i class="fa fa-trash"></i> {{'del' | translate}}</a></li>
+                            </ul>
+                        </div>
+                        <br>
+                        <label ng-show="Items.length > 0">{{'findPlaceholder'| translate}} {{Items.length}} {{'from'| translate}} {{total_count}}</label>
+                    </div> -->
+                    <div class="card-tools">
+                        <div class="btn-group">
+                            <button class="btn btn-tool" ng-disabled="global.Loading || global.NewProgerss " ng-click="global.Loading=true;manyAction.Find(ItemsSrv)">
+                                <i ng-hide="global.Loading" class="fa fa-search"></i>
+                                <span ng-hide="global.Loading" ng-bind="'find'| translate"></span>
+                                
+                                <i ng-show="global.Loading" class="fa fa-spinner fa-pulse fa-fw"></i>
+                                <span ng-show="global.Loading" ng-bind="'Loading'| translate"></span>
+                            </button>                                 
+                            
+                            <button class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-wrench"></i>      
+                                &nbsp;  <span  ng-show="!global.Loading && dataIsChecked>0" class="badge badge-secondary navbar-badge" ng-bind="dataIsChecked"></span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                    <a href class="dropdown-item" ng-hide="checkLast"  ng-click="manyAction.addItems()" ><i class="fa fa-plus"></i> {{'new' | translate}}</a>
+                                    <a href class="dropdown-item" ng-show="dataIsChecked" ng-click="manyAction.manyDelete(Items,ItemsSrv)"><i class="fa fa-trash"></i> {{'del' | translate}}</a>
+                            </div>
+                            <ng-include src="'/Views/FilteCollapse.html'"></ng-include>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0" ng-show="Items">
+
+                    <div  style="overflow-y: auto; height: 70vh;" can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="100">
+                            <table class="table table-head-fixed table-hover dataTable login-card-body">
+                                <tr>
+                                    <th ng-include="'/Views/ng-table/checkbox.html'" ng-click="$event.stopPropagation()"></th>
+                                    <th ng-init="o7='pattern'" ng-click="manyAction.order(o7);">
+                                        <nobr>{{'pattern' | translate}} <span ng-show="order==o7" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                    </th>
+                                    <th ng-init="o8='callerID'" ng-click="manyAction.order(o8);">
+                                        <nobr>{{'callerid' | translate}} <span ng-show="order==o8" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                    </th>
+                                    <th ng-init="o9='isActive'" ng-click="manyAction.order(o9);">
+                                        <nobr>{{'active' | translate}} <span ng-show="order==o9" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                    </th>
+                                </tr>
+                                <tr ng-repeat="e in Items | limitTo:limit track by $index">
+                                        <td ng-include="'/Views/checkboxOne.html'" width="1%" ></td>
+                                        <td style="width: 40%">
+                                            <div class="has-feedback" ng-class="{ 'has-error' : !e.pattern.length && edit2, 'has-success' : e.pattern }">
+                                                    <input ng-change="edit2=true;" ng-disabled="!can('EM','edit')" ng-model="e.pattern"  class="form-control" ng-maxlength="30" placeholder="{{'template' | translate}}" pattern="^[a-zA-Z0-9.+\-\[\]]+$" required>
+                                                    <span class="glyphicon glyphicon-road form-control-feedback"></span>
+                                                    <span class="help-block" ng-show="!e.pattern.length && edit2">{{'typeSIPLeng'| translate}}, + - [ ]</span>
+                                            </div>
+                                        </td>
+                                        <td style="width: 20%">
+                                            <div class="has-feedback" ng-class="{ 'has-error' : !e.callerID.length && edit, 'has-success' : e.callerID }">
+                                                    <input ng-change="edit=true;" ng-disabled="!can('EM','edit')" ng-model="e.callerID"  class="form-control" ng-maxlength="30" placeholder="{{'callerid' | translate}}" pattern="^[a-zA-Z0-9.\-\[\]]+$" required>
+                                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                                    <span class="help-block" ng-show="!e.callerID.length && edit">{{'typeSIPLeng'| translate}}, + - [ ]</span>
+                                            </div>
+                                        </td>
+                                        <td width="1%"><label><input type="checkbox" cb-switch ng-model="e.isActive"></label></td>
+                                </tr>
+                            </table>
+                    </div>
+                    <div ng-include="'/Views/paginationItems.html'"></div>
+                </div>
+            </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-2">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-disabled="!upd.roName || !upd.destination" ng-click="manyAction.Update(upd,'RouteOut');manyAction.ItemsEdit('RouteOut');">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="RouteOut">{{'cancel' | translate}}</button>
+                    </div>
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,85 @@
+<div class="modal-content2">
+<div class="modal-header">
+        <b>{{'productsData' | translate}}</b>
+</div>
+
+
+<div class="modal-body p-0">
+            <table class="table table-head-fixed table-hover borderless login-card-body">
+                 <tr>
+                        <td width="40%">{{'name'|translate}}</td>
+                        <td width="60%">
+                            <input ng-hide="client"
+                            type="text"
+                            ng-model="new.psName"
+                            uib-typeahead="a.psName for a in manyAction.SearchProduct($viewValue)"
+                            class="form-control"
+                            placeholder="{{'newProductName'|translate}}"
+                            typeahead-wait-ms="500"
+                            typeahead-on-select="Select(new.psName)"
+                            ng-class="{'btn-warning': name == new.psName}"
+                            typeahead-no-results="noResults"
+                            >
+                            <span ng-show="name == new.psName"> * {{'productExists'|translate}}</span>
+                        </td>
+                </tr>
+                <tr>
+                        <td>{{'productStatus'|translate}}</td>
+                        <td>
+                            <ui-select ng-model="new.psState" theme="bootstrap4-1" class="normal" >
+                                <ui-select-match placeholder="{{'select' | translate}}" allow-clear="true">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="c.tvID as c in enums | filter: $select.search" >
+                                    {{c.Name}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{'productCode'|translate}}</td>
+                    <td><input class="form-control" type="text" ng-model="new.psCode" placeholder="{{'enterCode'|translate}}"></td>
+                </tr>
+                <tr>
+                    <td>{{'category'|translate}}</td>
+                    <td>
+                        <ui-select ng-model="new.pctID"  theme="bootstrap4-1" class="normal" >
+                            <ui-select-match placeholder="{{'select' | translate}}" allow-clear="true">{{$select.selected.pctName}}</ui-select-match>
+                            <ui-select-choices repeat="c.pctID as c in Categories | filter: $select.search" >
+                                {{c.pctName}}
+                            </ui-select-choices>
+                        </ui-select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{'brand'|translate}}</td>
+                    <td>
+                        <ui-select ng-model="new.bID"  theme="bootstrap4-1" class="normal" >
+                            <ui-select-match placeholder="{{'select' | translate}}" allow-clear="true">{{$select.selected.bName}}</ui-select-match>
+                            <ui-select-choices repeat="c.bID as c in Brands | filter: $select.search" >
+                                {{c.bName}}
+                            </ui-select-choices>
+                        </ui-select>
+                    </tr>
+                    <tr>
+                        <td>{{'selectMeasurement'|translate}}</td>
+                        <td>
+                            <ui-select ng-model="new.msID"  theme="bootstrap4-1" class="normal" >
+                                <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.msName}}</ui-select-match>
+                                <ui-select-choices repeat="c.msID as c in Measures | filter: $select.search" >
+                                    {{c.msName}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+             </table>
+</div>
+
+<div class="modal-footer">
+        <div class="text-right">
+            <div class="float-right">
+                <button ng-disabled="!new.psName || name == new.psName" ng-click="manyAction.Save(new,'');$close(new)" class="btn btn-success btn-sm">{{'save' | translate}}</button>
+                <button ng-click="$close()" class="btn btn-warning btn-sm">{{'cancel' | translate}}</button>
+            </div>
+        </div>
+</div>
+</div>

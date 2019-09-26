@@ -1,0 +1,76 @@
+<div class="card-body  p-0" ng-show="data2.length != []" style="height:72vh;overflow-y: auto;" can-load="canLoad" infinite-scroll="manyAction.loadMore(data2.length)"  threshold="10">
+    <div ng-show="data2.length != []" style="height:72vh;overflow-y: auto;" can-load="canLoad" infinite-scroll="manyAction.loadMore(data2.length)"  threshold="10" >
+            <table class="table table-head-fixed table-hover table-bordered" ng-hide="global.Loading">
+                <thead>
+                    <tr>
+                        <th colspan="2" class="text-center"> <h4><b>{{'info' | translate}}</b></h3>          </th>
+                        <th colspan="3" class="text-center"> <h4><b>{{'AllCall' | translate}}</b></h3>          </th>
+                        <th colspan="3" class="text-center"> <h4><b>{{'AllAnswer' | translate}}</b></h3>      </th>
+                        <th colspan="3" class="text-center"> <h4><b>{{'AllNoAnswer' | translate}}</b></h3>  </th>
+                    </tr>  
+                   
+                    <tr ng-click="tabset(2);">
+                        <th ng-init="o21='Period'" ng-click="orderF(o21);">
+                            <nobr>{{'date' | translate}} <span ng-show="order2==o21" ng-include="'/Views/orderSpan.html'"/></nobr>
+                        </th>
+                        <th ng-init="o24='emID'" ng-click="orderF(o24);">
+                            <nobr>{{'user' | translate}} <span ng-show="order2==o24" ng-include="'/Views/orderSpan.html'"/></nobr>
+                        </th>
+                        <th ng-init="o25='OutFull'" ng-click="orderF(o25);">
+                            <nobr><i class="fa fa-arrow-circle-up fa-lg" uib-tooltip="{{true | CallTypeFilters}}" style="color:grey;"></i> 
+                                {{'Outgoing' | translate}} <span ng-show="order2==o25" ng-include="'/Views/orderSpan.html'"/></nobr>
+                        </th>
+                        <th ng-init="o23='InFull'" ng-click="orderF(o23);">
+                            <nobr><i class="fa fa-arrow-circle-down fa-lg" uib-tooltip="{{false | CallTypeFilters}}" style="color:black;"></i> 
+                                {{'Incoming' | translate}} <span ng-show="order2==o23" ng-include="'/Views/orderSpan.html'"/></nobr>
+                        </th>
+                        <th ng-init="o26='Full'" ng-click="orderF(o26);">
+                            <nobr>{{'all' | translate}} <span ng-show="order2==o26" ng-include="'/Views/orderSpan.html'"/></nobr>
+                        </th>
+                        <th ng-init="o28='OutAnswered'" ng-click="orderF(o28);">
+                            <nobr><i class="fa fa-arrow-circle-up fa-lg" uib-tooltip="{{true | CallTypeFilters}}" style="color:grey;"></i> 
+                                {{'Outgoing' | translate}} <span ng-show="order2==o28" ng-include="'/Views/orderSpan.html'"/></nobr>
+                        </th>
+                        <th ng-init="o29='InAnswered'" ng-click="orderF(o29);">
+                            <nobr><i class="fa fa-arrow-circle-down fa-lg" uib-tooltip="{{false | CallTypeFilters}}" style="color:black;"></i> 
+                                {{'Incoming' | translate}} <span ng-show="order2==o29" ng-include="'/Views/orderSpan.html'"/></nobr>
+                        </th>
+                        <th ng-init="o210='Answered'" ng-click="orderF(o210);">
+                            <nobr>{{'all' | translate}} <span ng-show="order2==o210" ng-include="'/Views/orderSpan.html'"/></nobr>
+                        </th>
+                        <th ng-init="o211='OutNoAnswered'" ng-click="orderF(o211);">
+                            <nobr><i class="fa fa-arrow-circle-up fa-lg" uib-tooltip="{{true | CallTypeFilters}}" style="color:grey;"></i> 
+                                {{'Outgoing' | translate}} <span ng-show="order2==o211" ng-include="'/Views/orderSpan.html'"/></nobr>
+                        </th>
+                        <th ng-init="o212='InNoAnswered'" ng-click="orderF(o212);">
+                            <nobr><i class="fa fa-arrow-circle-down fa-lg" uib-tooltip="{{false | CallTypeFilters}}" style="color:black;"></i> 
+                                {{'Incoming' | translate}} <span ng-show="order2==o212" ng-include="'/Views/orderSpan.html'"/></nobr>
+                        </th>
+                        <th ng-init="o213='NoAnswered'" ng-click="orderF(o213);">
+                            <nobr>{{'all' | translate}} <span ng-show="order2==o213" ng-include="'/Views/orderSpan.html'"/></nobr>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="e in data2  | limitTo:limit track by $index">
+                        <td width="1%"> <nobr><span ng-bind="e.Period | date:'MMM d'" ></span></nobr> </td>
+                        <td width="10%">
+                            <nobr ng-show="e.emID">
+                              <i class="fa fa-user"></i>
+                              <a ng-bind="e.emID | emFilters"></a>
+                            </nobr>
+                        </td>
+                        <td> <span class="badge badge-success" ng-bind="e.OutFull"></span></td>
+                        <td> <span class="badge badge-warning" ng-bind="e.InFull"></span></td>
+                        <td> <span class="badge badge-primary" ng-bind="e.Full"></span></td>
+                        <td> <span class="badge badge-success" ng-bind="e.OutAnswered"></span></td>
+                        <td> <span class="badge badge-warning" ng-bind="e.InAnswered"></span></td>
+                        <td> <span class="badge badge-primary" ng-bind="e.Answered"></span></td>
+                        <td> <span class="badge badge-success" ng-bind="e.OutNoAnswered"></span></td>
+                        <td> <span class="badge badge-warning" ng-bind="e.InNoAnswered"></span></td>
+                        <td> <span class="badge badge-primary" ng-bind="e.NoAnswered"></span></td>
+                     </tr>
+                </tbody>     
+         </table> 
+        </div>
+</div>

@@ -1,0 +1,30 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-3">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body  p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <thead>
+                        <th><b>{{'numberNum' | translate}}</b></th>
+                        <th><b>{{'Comment' | translate}}</i></b></th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="e in CommentList" >
+                            <td ng-bind="e.comID"></td>
+                            <td><a ng-href="/#!/CommentEdit/{{e.comID}}" ng-bind="e.comName"></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+    </div>
+</section>

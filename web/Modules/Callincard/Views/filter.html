@@ -1,0 +1,248 @@
+
+<div class="card card-info card-outline">
+        <div class="card-header">
+            <h3 class="card-title">{{'filters'|translate}} &#160<checkbox ng-model="additional"></checkbox>&#160 <small class="text-muted">{{'additional options' | translate}}</small></h3>
+            <div class="card-tools">
+                    <nobr>
+                            <span class="direct-chat-timestamp " ng-show="data.length > 0">{{'findPlaceholder'| translate}} {{data.length}} {{'from'| translate}} {{total_count}}</span>
+                    </nobr>
+                <div class="btn-group">
+                    <button class="btn btn-tool" ng-disabled="global.Loading || !model.DateFrom || !model.DateTo" ng-click="global.Loading=true;Find()" >
+                      <i ng-hide="global.Loading" class="fa fa-search"></i>
+                      <span ng-hide="global.Loading" ng-bind="'find'| translate"></span>
+                      &nbsp;  <span  ng-show="!global.Loading && dataIsChecked>0" class="badge badge-warning navbar-badge" ng-bind="dataIsChecked"></span>
+                      
+                      <i ng-show="global.Loading" class="fa fa-spinner fa-pulse fa-fw"></i>
+                      <span ng-show="global.Loading" ng-bind="'Loading'| translate"></span>
+                    </button>
+
+                    <button class="btn btn-tool" ng-disabled="global.Loading || !model.DateFrom || !model.DateTo" ng-show="data.length > 0"  ng-click="Export()" uib-tooltip="{{'export'| translate}} " ><i class="fa fa-download"></i></button>
+
+                    <button class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-wrench"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                          <!-- <a class="dropdown-item" ng-show="data.length > 0" style="cursor: pointer;" ng-click="Export()" ><span> <i class="fa fa-file-excel-o"></i> {{'export'| translate}} </span></a></li> -->
+                          <a class="dropdown-item" ng-click="Clear();Find('button')" style="cursor: pointer;" ><span><i class="fa fa-undo"></i> {{'Clear_filter'| translate}} </span></a> 
+                          <a class="dropdown-item" ng-show="dataIsChecked" ng-click="manyAction.manyDelete(data)"><span><i class="fa fa-trash"></i> {{'del' | translate}}</span></a> 
+                          <div class="dropdown-divider"></div>
+                          <h6 class="dropdown-header" translate="RecordsExport" ng-click="$event.stopPropagation()"></h6>
+
+                          <ui-select  ng-click="$event.stopPropagation()" ng-init="model.convertFormat = 104003" ng-model="model.convertFormat" theme="bootstrap4-1" class="normal bg-custom-white dropdown-item" size="100%">
+                                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                                                <ui-select-choices repeat="c.tvID as c in Enums.group[1040] | filter: $select.search" >
+                                                    {{c.Name}}
+                                                </ui-select-choices>
+                          </ui-select>
+                          <button class=" btn btn-link" href ng-disabled="global.Loading" ng-if="data.length > 0 && model.DateFrom && model.DateTo && model.convertFormat"  ng-click="RecordsExport()" uib-tooltip="{{'RecordsExport'| translate}} "><span><i class="fa fa-download"></i> <span translate="RecordsExport"></span> </button> 
+
+                         
+
+                    </div>
+                </div>
+                
+                <button class="btn btn-tool" data-widget="collapse" ng-click="FilteCollapse=true" ng-show="!FilteCollapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-tool" data-widget="collapse" ng-click="FilteCollapse=false" ng-show="FilteCollapse"><i class="fa fa-plus"></i></button>
+            </div>
+
+        </div>
+        <div class="card-body p-0">
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <b>{{'dateFrom'| translate}}</b><br>
+                        <div class="input-group md-3">
+                            <input ng-model="model.DateFrom" class="form-control" ng-model-options="{ updateOn: 'blur' }" style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;">
+                            <div class="input-group-append">
+                                        <button moment-picker="model.DateFrom" max-date="model.DateTo" class="btn btn-default">
+                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                        </button>
+                            </div>
+                        </div>            
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <b>{{'dateTo'| translate}}</b><br>
+                        <div class="input-group md-3">
+                            <input ng-model="model.DateTo" class="form-control" ng-model-options="{ updateOn: 'blur' }" style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;">
+                            <div class="input-group-append">
+                                        <button moment-picker="model.DateTo" min-date="model.DateFrom" class="btn btn-default">
+                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                        </button>
+                            </div>
+                        </div> 
+                    </div>
+      
+                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                        <b>{{'phone'| translate}}</b>
+                          <ui-select  multiple tagging tagging-label="" theme="bootstrap4-1" on-select="ClearPhone();" ng-model="model.ccNames" sortable="true"  class="normal bg-custom-white" size="100%" style="min-height: 34px !important; padding-left: 6px !important; border-radius: 3px;">
+                                <ui-select-match  placeholder="380971112233">{{$item}}</ui-select-match>
+                                <ui-select-choices repeat="a in [] | filter:$viewValue ">{{a}}</ui-select-choices>
+                          </ui-select>
+                    </div>
+
+                    <div class="col-xl-1 col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                            <b>{{'status'| translate}}</b>
+                            <!-- <ng-dropdown-multiselect  options=" Enums.group[7]" selected-model="model.dcStatuss"
+                                        extra-settings="{ buttonClasses : 'btn btn-white', searchField: 'Name', enableSearch: true, keyboardControls: true, styleActive : true, styleActive : true, idProperty: 'tvID', displayProp: 'Name', externalIdProp: 'tvID'}"
+                                        translation-texts = "texts"  >
+                                  </ng-dropdown-multiselect> -->
+                                  <ng-dropdown-multiselect  options="f" selected-model="model.dcStatuss"
+                                        extra-settings="{ buttonClasses : 'btn btn-white', searchField: 'disposition', enableSearch: true, keyboardControls: true, styleActive : true, styleActive : true, idProperty: 'tvID', displayProp: 'disposition', externalIdProp: 'tvID'}"
+                                        translation-texts = "texts"  >
+                                  </ng-dropdown-multiselect>
+                    </div>
+                    
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <b>{{'responsible'| translate}}</b>
+                            <ng-dropdown-multiselect  ng-show="Auth.roleID!=2" options="employees.data" selected-model="model.emIDs" disabled="!can('EM','edit')" 
+                                extra-settings="{ template: '<b> {{option.emName}} </b> <small ng-if=\'option.sipName\'> SIP/{{option.sipName}} </small>', scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'emName', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'emID',  externalIdProp: 'emID'}"
+                                translation-texts = "texts">
+                            </ng-dropdown-multiselect>
+                            <ng-dropdown-multiselect  ng-show="Auth.roleID==2" options="employees.group[Auth.emID]" selected-model="model.emIDs"  disabled="!can('EM','edit')" ng-disabled="!can('EM','edit')"
+                                extra-settings="{ template: '<b> {{option.emName}} </b> <small ng-if=\'option.sipName\'> SIP/{{option.sipName}} </small>', scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'emName', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'emID', externalIdProp: 'emID'}"
+                                translation-texts = "texts">
+                            </ng-dropdown-multiselect>                           
+                    </div>
+      
+                    <div class="col-xl-3 col-lg-5 col-md-4 col-sm-8 col-xs-12">
+                            <b>{{'callType'| translate}}</b><br/>
+                            <div class="btn-group">
+                                    <button type="button" class="btn btn-white" ng-class="{'active' :  model.IsOut===null}" ng-click="model.IsOut=null">{{'All'| translate}}</button>
+                                    <button type="button" class="btn btn-white" ng-class="{'active' :  model.IsOut===true}" ng-click="model.IsOut=true" ><i class="fa fa-arrow-circle-up fa-lg" style="color:grey;" ></i>{{'Outgoing'| translate}}</button>
+                                    <button type="button" class="btn btn-white" ng-class="{'active' :  model.IsOut===false}" ng-click="model.IsOut=false"><i class="fa fa-arrow-circle-down fa-lg" style="color:black;" ></i>{{'Incoming'| translate}}</button>
+                            </div>
+                    </div>
+
+                    
+               <!-- </div>
+               <div class="row"> -->
+                
+                    <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-xs-12" ng-if="additional">
+                                <b>{{'talkTime'| translate}}, {{'sec'| translate}}</b>
+                                <div class="input-group md-3">
+                                    <!-- /btn-group -->
+                                    <input numeric-only  ng-model="model.billsec" class="form-control" style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;">
+      
+                                    <div class="input-group-append">
+                                      <button class="btn btn-default" ng-click="model.billsec=model.billsec+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                      <button class="btn btn-default" ng-click="model.billsec=model.billsec-1" ng-disabled="model.billsec <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                      <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <b>{{model.comparison}}</b>
+                                      </button>
+                                      <div class="dropdown-menu">
+                                         <a class="dropdown-item" href ng-click="model.comparison='>'"> > </a> 
+                                         <a class="dropdown-item" href ng-click="model.comparison='<'"> < </a>
+                                         <a class="dropdown-item" href ng-click="model.comparison='='"> = </a>
+                                      </div>
+                                    </div>
+                                </div>
+                    </div>
+                    
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-6 col-xs-12" ng-if="additional">
+                          <b>{{'grouped'| translate}}</b>
+                          <ui-select ng-model='model.select' ng-change="Find()" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                              <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                              <ui-select-choices repeat="a.NameT as a in callType ">
+                                  {{ a.Name | translate }}
+                              </ui-select-choices>
+                          </ui-select>
+                    </div>
+
+                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-6 col-xs-12" ng-if="additional">
+                            <b>{{'client'| translate}}</b>
+                              <ui-select  multiple tagging tagging-label=""  theme="bootstrap4-1" ng-model="model.clIDs" sortable="true"  class="normal " size="100%" style="min-height: 34px !important; padding-left: 6px !important; border-radius: 3px;">
+                                  <ui-select-match placeholder="{{'selectCustomer' | translate}}">{{$item.clName}}</ui-select-match>
+                                  <ui-select-choices repeat="a in ClientData | filter:$select.search"
+                                  refresh="SearchClient($select.search)" refresh-delay="0"
+                                  >{{a.clName}} </ui-select-choices>
+                              </ui-select>
+                    </div>
+      
+                    <div class="col-xl-1 col-lg-2 col-md-3 col-sm-6 col-xs-12" ng-show="File.data.length>0" ng-if="additional">
+                            <b>{{'file'| translate}}</b>
+                                <ng-dropdown-multiselect  options="File.data" selected-model="model.ffIDs"
+                                        extra-settings="{ scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'ffName', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'ffID', displayProp: 'ffName', externalIdProp: 'ffID'}"
+                                        translation-texts = "texts"  >
+                                </ng-dropdown-multiselect>
+                    </div>
+ 
+                    <div class="col-xl-1 col-lg-2 col-md-3 col-sm-6 col-xs-12" ng-show="Trunk.data.length>0" ng-if="additional">
+                                <b>{{'trunk' | translate}}</b>
+                                <ng-dropdown-multiselect  options="Trunk.data" selected-model="model.channels"
+                                    extra-settings="{ scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'trName', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'trID', displayProp: 'trName', externalIdProp: 'trID'}"
+                                    translation-texts = "texts"  >
+                                </ng-dropdown-multiselect>
+                    </div>
+      
+                    <div class="col-xl-1 col-lg-4 col-md-3 col-sm-6 col-xs-12" ng-show="Company.data.length>0" ng-if="additional">
+                            <b>{{'company'| translate}}</b>
+                            <ng-dropdown-multiselect  options="Company.data" selected-model="model.coIDs" disabled="Auth.coIDs.length > 0"
+                                extra-settings="{ scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'coName', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'coID', displayProp: 'coName', externalIdProp: 'coID'}"
+                                translation-texts = "texts"> 
+                            </ng-dropdown-multiselect>
+                    </div>
+      
+                    <div class="col-xl-1 col-lg-3 col-md-3 col-sm-6 col-xs-12"  ng-show="!can('chief','edit')" ng-if="additional">
+                                <b>{{'chief'| translate}}</b>
+                                <ng-dropdown-multiselect  options="employees.group['supervizor']" selected-model="model.ManageIDs"
+                                    extra-settings="{ scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'emName', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'emID', displayProp: 'emName', externalIdProp: 'emID'}"
+                                    translation-texts = "texts"  >
+                                </ng-dropdown-multiselect>
+                    </div>
+      
+                    <div class="col-xl-1 col-lg-4 col-md-3 col-sm-6 col-xs-12" ng-if="additional">
+                                <b> {{'type'| translate}}</b>
+                                <ng-dropdown-multiselect  options="Enums.group[1013]" selected-model="model.CallTypes"
+                                    extra-settings="{ buttonClasses : 'btn btn-white', searchField: 'Name', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'tvID', displayProp: 'Name', externalIdProp: 'tvID'}"
+                                    translation-texts = "texts"  >
+                                </ng-dropdown-multiselect>
+                    </div>
+      
+                    <div class="col-xl-1 col-lg-2 col-md-3 col-sm-6 col-xs-12" ng-hide="MOD=='AST' && Scenario.data.length>0 || !additional">
+                            <b>{{'scenario'| translate}}</b>
+                            <ng-dropdown-multiselect  options="Scenario.data" selected-model="model.id_scenarios"
+                                    extra-settings="{ scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'name_scenario', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'id_scenario', displayProp: 'name_scenario', externalIdProp: 'id_scenario'}"
+                                    translation-texts = "texts"  >
+                            </ng-dropdown-multiselect>
+                    </div>
+
+                    <div class="col-xl-1 col-lg-4 col-md-3 col-sm-6 col-xs-12" ng-hide="MOD=='AST' && File.Proccess.length>0 || !additional">
+                              <b>{{'process'| translate}}</b>
+                                <ng-dropdown-multiselect  options="Proccess.data" selected-model="model.id_autodials"
+                                    extra-settings="{ scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'id_autodial', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'id_autodial', displayProp: 'id_autodial', externalIdProp: 'id_autodial'}"
+                                    translation-texts = "texts">
+                                </ng-dropdown-multiselect>
+                    </div>
+      
+                    <!-- 3 level-->
+                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-6 col-xs-12" ng-hide="MOD=='AST' && Scenario.data.length>0 || !additional">
+                            <b>{{'status'| translate}} {{'appeals' | translate | lowercase}}</b>
+                            <ng-dropdown-multiselect  options="Enums.group[1036]" selected-model="model.ContactStatuses"
+                                    extra-settings="{ scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'Name', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'tvID', displayProp: 'Name', externalIdProp: 'tvID'}"
+                                    translation-texts = "texts"  >
+                            </ng-dropdown-multiselect>
+                    </div>
+
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-6 col-xs-12" ng-hide="MOD=='AST' && Scenario.data.length>0 || !additional">
+                            <b>{{'target'| translate}}</b>
+                            <br/>
+                            <!-- <checkbox class="btn-white" ng-model="model.target"></checkbox> -->
+                            
+                                <nz-toggle tri-toggle ng-model="model.target" ng-click="manyAction.Find()" tip-false="'false' | translate" tip-null="'All' | translate" tip-true="'true' | translate"></nz-toggle>    
+                             
+                    </div>
+
+                    <!-- <div class="col-xl-1 col-lg-4 col-md-3 col-sm-6 col-xs-12" ng-hide="MOD=='AST' && File.Proccess.length>0 || !additional">
+                              <b>{{'process'| translate}}</b>
+                                <ng-dropdown-multiselect  options="Proccess.data" selected-model="model.id_autodials"
+                                    extra-settings="{ scrollableHeight: '350px', scrollable: true, buttonClasses : 'btn btn-white', searchField: 'id_autodial', enableSearch: true, keyboardControls: true, styleActive : true, idProperty: 'id_autodial', displayProp: 'id_autodial', externalIdProp: 'id_autodial'}"
+                                    translation-texts = "texts">
+                                </ng-dropdown-multiselect>
+                    </div>
+                    "target": "string",
+                    ContactStatuses -->
+
+            </div>
+          </div>
+        </div>
+      </div>

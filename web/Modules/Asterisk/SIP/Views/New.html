@@ -1,0 +1,143 @@
+<div class="modal-content2">
+<div class="modal-header"><b>{{'new' | translate}}</b></div>
+
+
+<div class="modal-body">
+        <table class="table table-head-fixed table-hover borderless login-card-body">
+            <tr>
+                <td width="50%">{{'named' | translate}}</td>
+                <td width="50%">
+                    <div class="has-feedback" ng-class="{ 'has-error' : !new.sipName, 'has-success' : new.sipName }">
+                            <input ng-change="edit2=true;" ng-model="new.sipName"  class="form-control" ng-maxlength="30" placeholder="{{'typeName' | translate}}" pattern="^[a-zA-Z0-9._-]+$" required>
+                            <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                            <span class="help-block" ng-show="!new.sipName && edit2">{{'typeSIPLeng'| translate}}</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>{{'nat' | translate}}</th>
+                <td>
+                    <ui-select ng-model="new.nat" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                            <ui-select-match >{{$select.selected.Name}}</ui-select-match>
+                            <ui-select-choices repeat="c.tvID as c in Enums.group[1025] | filter: $select.search " >
+                                    {{c.Name}}
+                            </ui-select-choices>
+                    </ui-select>
+                </td>
+            </tr>
+            <tr>
+                <td>{{'DTMF' | translate}}</th>
+                <td>
+                            <ui-select ng-model="new.dtmfmode" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                <ui-select-match >{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="c.tvID as c in Enums.group[1029] | filter: $select.search " >
+                                    {{c.Name}}
+                                </ui-select-choices>
+                            </ui-select>
+                </td>
+            </tr>
+            <tr>
+                <td>{{'callerid' | translate}}</td>
+                <td>
+                    <div class="has-feedback" ng-class="{ 'has-error' : !new.callerid.length && edit3, 'has-success' : new.callerid }">
+                            <input ng-change="edit3=true;" ng-model="new.callerid"  class="form-control" ng-maxlength="30" placeholder="{{'callerid' | translate}}" pattern="^[a-zA-Z0-9.+\-\[\]]+$" required>
+                            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                            <span class="help-block" ng-show="!new.callerid.length && edit3">{{'typeSIPLeng'| translate}}, + - [ ]</span>
+                    </div>    
+                    <!-- <input only-clear class="form-control" ng-model="new.callerid"/> -->
+                </td>
+            </tr>
+           <!--  <tr>
+                <td>{{'callGroup' | translate}}</td>
+                <td>
+                        <div class="input-group">
+                            <input numeric-only class="form-control" ng-model="new.callgroup">
+                            <span class="input-group-append">
+                                <button type="button" class="btn btn-default" ng-click="new.callgroup=new.callgroup+1;new.pickupgroup = new.callgroup"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                <button type="button" class="btn btn-default" ng-click="new.callgroup=new.callgroup-1;new.pickupgroup = new.callgroup"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                            </span>
+                        </div>
+                </td>
+            </tr>
+            <tr>
+                <td>{{'pickUpGroup' | translate}}</td>
+                <td>
+                        <div class="input-group">
+                            <input numeric-only class="form-control" ng-model="new.pickupgroup">
+                            <span class="input-group-append">
+                                <button type="button" class="btn btn-default" ng-click="new.pickupgroup=new.pickupgroup+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                <button type="button" class="btn btn-default" ng-click="new.pickupgroup=new.pickupgroup-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                            </span>
+                        </div>
+                </td>
+            </tr> -->
+<!--             <tr>
+                <td>{{'user' | translate}}</td>
+                <td>
+                        <ui-select ng-model="new.emID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                            <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.emName}}</ui-select-match>
+                            <ui-select-choices repeat="a.emID as a in employees.data | filter: $select.search | filter:{isActive:true}">
+                                {{a.emName}}
+                            </ui-select-choices>
+                        </ui-select>
+                </td>
+            </tr> -->
+
+            <tr>
+                <td width="50%">{{'transport' | translate}}</td>
+                <td>
+                    <div class="input-group" style="width: 100%">
+                        <ui-select  multiple tagging tagging-label="(custom 'new' label)" ng-model="new.transport" theme="bootstrap4-1" sortable="true" style="min-height: 34px !important; padding-left: 6px !important; ">
+                            <ui-select-match  placeholder="{{'select' | translate}}">{{$item.Name}}</ui-select-match>
+                            <ui-select-choices repeat="a.tvID as a in Enums.group[1031]  | filter:$viewValue">{{a.Name}}</ui-select-choices>
+                        </ui-select>
+                        <span class="input-group-append">
+                            <button ng-show="new.transport" type="button" class="btn btn-default" ng-click="new.transport = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>{{'encryption' | translate}}</th>
+                <td><label><input type="checkbox" cb-switch ng-model="new.encryption"/></label></td>
+            </tr>
+
+            <tr>
+                <td>{{'lines' | translate}}</th>
+                <td>
+                    <div class="input-group">
+                        <input numeric-only class="form-control" ng-model="new.lines">
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-default" ng-click="new.lines=new.lines+1"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                            <button type="button" class="btn btn-default" ng-click="new.lines=new.lines-1"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>SIP {{'password' | translate}}</td>
+                <td>
+                    <div class="has-feedback" ng-class="{'has-error' : (!new.secret || new.secret.length < 12),'has-success' : new.secret.length >= 12 }">
+                                <input ng-model="new.secret" ng-change="edit3=true;" type="password" class="form-control" placeholder="{{'password' | translate}}">
+                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                <span class="help-block" ng-show="new.secret.length < 12 && edit3">{{'passwLeng'| translate}}</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>{{'active' | translate}}</td>
+                <td><label><input type="checkbox" cb-switch ng-model="new.isActive"/></label></td>
+            </tr>
+        </table>
+</div>
+        <div class="modal-footer">
+                <div class="text-right">
+                    <div class="float-right">
+                        <button ng-disabled="!new.sipName || (!new.secret || new.secret.length < 12)" ng-click="manyAction.Save(new,'');$close()" class="btn btn-success btn-sm">{{'save' | translate}}</button>
+                        <button ng-click="$close()" class="btn btn-warning btn-sm">{{'cancel' | translate}}</button>
+                    </div>
+                </div>
+        </div>
+</div>
+</div>

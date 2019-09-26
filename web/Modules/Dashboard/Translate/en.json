@@ -1,0 +1,13 @@
+{
+		"callsPerDay" : "Calls per day",
+		"controlPanel" : "Control panel",
+		"information" : "information about the load of the system by calls",
+		"successfulCalls" : "Successful calls",
+		"fromAllCalls" : "from all calls",
+		"unsuccessfulСcalls" : "Unsuccessful calls",
+		"missedCalls" : "Missed calls",
+		"callsHour" : "Calls by the hour",
+		"hours" : "Hours",
+		"numberOfCalls" : "Number of calls",
+		"callfinish": "Finish file"
+}

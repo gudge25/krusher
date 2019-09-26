@@ -1,0 +1,251 @@
+<div class="row">  
+    <div class="col-md-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i> 
+                   <b>{{'dealData' | translate}}</b>
+              </h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <div class="row">  
+              <div class="col-lg-12">
+                    <table class="table table-head-fixed table-hover borderless">
+                        <tbody>
+                            <tr>
+                                <td>{{'client'|translate}}</td>
+                                <td>
+                                    <div class="has-error" ng-hide="client" ng-form="subForm">
+                                        <input
+                                            name="name"
+                                            type="text"
+                                            class="form-control"
+                                            ng-model="searchclient"
+                                            uib-typeahead="a as a.clName for a in manyAction.SearchClient($viewValue)"
+                                            class="form-control"
+                                            placeholder="{{'selectCustomer'| translate}}"
+                                            typeahead-wait-ms="250"
+                                            ng-class="{'nonBorder': searchclient}"/>
+                                        <label ng-show='!searchclient' class="control-label" ><i class="fa fa-times-circle-o"></i> {{'inputTypefield'|translate}}</label>
+                                    </div>
+                                    <b ng-show="client">{{client.clName}}</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{'name'| translate}}</td>
+                                <td><input class="form-control" type="text" ng-model="new.dcNo" placeholder="{{'nameNewDeal' | translate}}"></td>
+                            </tr>
+                            <tr>
+                                <td>{{'documentNumber'| translate}}</td>
+                                <td><input class="form-control" type="text" ng-model="new.HasDocNo" placeholder="{{'documentNumber' | translate}}"></td>
+                            </tr>
+                            <tr>
+                                <td>{{'date' | translate}}</td>
+                                <td>
+                                    <!-- <form name="myform3">
+                                        <p class="input-group custom-datepicker-buttons">
+                                            <input      type            ="text"
+                                            name            ="data"
+                                            class           ="editor form-control"
+                                            ng-class        =" {'alert-danger':myform3.data.$error.pattern} "
+                                            ng-pattern      ='/^(\d{4})\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/'
+                                            ng-model        ="new.dcDate"
+                                            ng-maxlength    ="10"
+                                            ng-minxlength   ="10"
+                                            ng-required     ="true"
+                                            uib-tooltip     ="{{'example' | translate}}: 1987-01-01 , {{'dateFormat' | translate}}: гггг.мм.дд"
+                                            tooltip-trigger ="focus"
+                                            tooltip-placement="top"
+                                            placeholder     ="{{'example' | translate}}: 1987-01-01"
+                                            uib-datepicker-popup="{{format}}" is-open="datepicker.opened" datepicker-options="dateOptions"
+                                            />
+                                            <span class="input-group-append">
+                                                <button type="button" class="btn btn-default" ng-click="datepicker.opened=true;">
+                                                    <i class="fa fa-calendar"></i>
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </form>
+                                    <span  ng-show="myform3.data.$error.pattern">{{'wrongFormat' | translate}}!</span> -->
+
+
+                                <div class="form-group">
+                                  <p class="icon-group input-group">
+                                    <input ng-model="new.dcDate" class="form-control" ng-model-options="{ updateOn: 'blur' }">
+                                      <span class="input-group-append">
+                                        <button moment-picker="new.dcDate"
+                                                format="YYYY-MM-DD"
+                                                today="true"
+                                                locale="ru"
+                                                start-view="month"
+                                                change="ctrl.setFormattedDate(newValue)"
+                                                type="button" class="btn btn-default">
+                                          <i aria-hidden="true" class="fa fa-calendar"></i>
+                                        </button>
+                                      </span>
+                                  </p>
+                              </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{'status' | translate}}</td>
+                                <td>
+                                    <ui-select ng-model="new.dcStatus" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                            <ui-select-match >{{$select.selected.Name | translate}}</ui-select-match>
+                                            <ui-select-choices repeat="a.tvID as a in Enums.group[6] | filter: $select.search" >
+                                                {{a.Name | translate}}
+                                            </ui-select-choices>
+                                        </ui-select>
+                            </td>
+                                </tr>
+                                <tr>
+                                    <td>{{'responsible' | translate}}</td>
+                                    <td>
+                                        <ui-select ng-model="new.emID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                            <ui-select-match >{{$select.selected.emName}}</ui-select-match>
+                                            <ui-select-choices repeat="a.emID as a in employees.data | filter: $select.search | filter:{isActive:true}" >
+                                                {{a.emName}}
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </td>
+                            </tr>
+                            <tr>
+                                <td>{{'description' | translate}}</td>
+                                <td>
+                                    <textarea only-clear  maxlength="200" ng-model="new.dcComment" msd-elastic style="min-height: 102px; background-color: lightgoldenrodyellow;color: dimgrey" class="form-control" rows="3" id="comment" placeholder="{{'descriptionType' | translate}} "></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <!-- <td ng-show="new.dcLink">{{'relatedDocument' | translate}}</td>
+                                <td>
+                                    <span class="text-muted" ng-bind="DcLink.dcDate | date:'MMM d'"> </span>
+                                    <br/>
+
+                                    <b  ng-bind="DcLink.dctName"> </b>
+
+                                    <span ng-show="DcLink.dcStatus" class="label {{(DcLink.dcStatus | CallStatus).color}}">
+                                        <i class="fa fa-arrow-left"   ng-show="DcLink.IsOut"  title="{{DcLink.IsOut | CallTypeFilters}}" style="color:green"></i>
+                                        <i class="fa fa-arrow-right"  ng-show="!DcLink.IsOut" title="{{DcLink.IsOut | CallTypeFilters}}" style="color:blue"></i>
+                                        {{(DcLink.dcStatus | CallStatus).disposition}}
+                                    </span>
+                                </td> -->
+                                <td colspan="2" ng-show="new.dcLink">
+                                    <table ng-table="table" class="table table-head-fixed table-hover" >
+                                        <tr>
+                                            <th>{{'phone' | translate}}</th>
+                                            <th>{{'date' | translate}}</th>
+                                            <th>{{'status' | translate}}</th>
+                                            <!-- <th>{{'responsible' | translate}}</th>
+                                            <th>{{'source' | translate}}</th> -->
+                                            <th>{{'recording' | translate}}</th>
+                                        </tr>
+                                        <tr ng-repeat="e in DcLink | limitTo:limit track by $index" >
+                                            <td>  <div ng-include="'/Views/DialButton.html'"></div> </td>
+                                            <td>
+                                                <nobr uib-tooltip="{{'talkTime'| translate}}:{{e.billsec}}  {{'duration'| translate}}:{{e.duration}}  {{'expectation'| translate}}:{{e.holdtime}}" >
+                                                    <span class="text-muted" ng-hide="e.isToday" ng-bind="e.Created | date:'MMM d, HH:mm'"> </span>
+                                                    <span class="text-muted" ng-show="e.isToday" ng-bind="e.Created | date:'HH:mm'"> </span>
+                                                </nobr>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group" ng-show="e.dcStatusName">
+                                                    <button class="btn btn-link btn-xs">
+                                                        <i class="fa fa-arrow-circle-up fa-lg"  ng-show="e.IsOut"    aria-hidden="true" uib-tooltip="{{e.IsOut | CallTypeFilters}}" style="color:grey;"></i>
+                                                        <i class="fa fa-arrow-circle-down fa-lg"  ng-show="!e.IsOut"   aria-hidden="true" uib-tooltip="{{e.IsOut | CallTypeFilters}}" style="color:black;"></i>
+                                                    </button>
+                                                    <button class="btn {{(e.dcStatusName | CallStatus).color}} btn-xs" ng-bind="(e.dcStatusName | CallStatus).disposition"  uib-tooltip="{{e.CallType | enums | translate}}"></button>
+                                                </div>
+                                            </td>
+                                            <!-- <td> <span ng-bind="e.emName" uib-tooltip="SIP/{{e.SIP}}"></span> </td>
+                                            <td> <span ng-bind="e.channel" uib-tooltip-html="'<span>{{'file'| translate}}:{{e.ffName }}</span>'"></span> </td> -->
+                                            <td> <audio-player index = {{$index}} source="{{manyAction.MonitorUrl(e.LinkFile)}}" ng-show="e.LinkFile && e.dcStatusName == 'ANSWERED'"> </audio-player> </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr ng-show="new.dcSum">
+                                <td>{{'amount' | translate}}</td>
+                                <td><b><span  ng-bind="new.dcSum"></span> {{'UAH' | translate}}. </b></td>
+                            </tr>
+                        </tbody>
+                    </table>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!--DATA RIGHT-->
+        <div class="col-md-8">
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <b><h3 class="card-title">
+                    {{'product'|translate}}
+              </h3></b>
+              <div class="card-tools float-right">
+                    <button ng-disabled="!new.dcNo  || !new.clID" ng-click="manyAction.Save(new,'');ItemsEdit(upd2);$close()" class="btn btn-success btn-sm">{{'save'|translate}}</button>
+                    <button type="button" class="btn btn-warning btn-sm" ng-click="$close()">{{'cancel'|translate}}</button>
+              </div>
+             </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+                <div class="table table-head-fixed-responsive mailbox-messages" style="overflow-x: unset;">
+                 <div class="col-lg-12" >
+                        <table class="table table-head-fixed table-hover borderless" ng-show="showTab" ng-table="tableParams" style="margin: 1% 0;">
+                            <tr>
+                                <th></th>
+                                <th>{{'names' | translate}}</th>
+                                <th>{{'price' | translate}}</th>
+                                <th>{{'number' | translate}}</th>
+                            </tr>
+                            <tr ng-repeat="e in upd2 | filter:searh" >
+                                <td header-class="'text-left'" style="width:5%">
+                                    <button class="btn btn-link">    <i class="fa fa-shopping-cart fa-lg" style="margin-right: 3%;color:brown;"> </i> </button>
+                                </td>
+                                <td header-class="'text-left'" style="width: 40%;">
+                                    <ui-select ng-model="e.psID" theme="bootstrap4-1" class="normal bg-custom-white" on-select="psName(e,$select.selected);">
+                                        <ui-select-match allow-clear="true">{{$select.selected.psName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.psID as a in Products | filter: $select.search" >
+                                            {{a.psName}}
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </td>
+                                <td>
+                                        <div class="input-group" ng-show="e.psID>0">
+                                                <input numeric-only class="form-control" ng-change="Sum()" ng-model="e.iQty" ng-disabled="e.iQty < 1">
+                                                <span class="input-group-append">
+                                                    <button type="button" class="btn btn-default" ng-click="e.iQty=e.iQty+1;Sum();"  ><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                                    <button type="button" class="btn btn-default" ng-click="e.iQty=e.iQty-1;Sum();"  ng-disabled="e.iQty <= 1 || upd.iQty <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                                </span>
+                                        </div>
+                                </td>
+                                <td>
+                                        <div class="input-group" ng-show="e.psID>0">
+                                                <input numeric-only class="form-control" ng-change="Sum()" ng-model="e.iPrice" ng-disabled="e.iPrice < 1">
+                                                <span class="input-group-append">
+                                                    <button type="button" class="btn btn-default" ng-click="e.iPrice=e.iPrice+1;Sum();"  ><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                                    <button type="button" class="btn btn-default" ng-click="e.iPrice=e.iPrice-1;Sum();"  ng-disabled="e.iPrice <= 1 || upd.iPrice <= 0"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                                </span>
+                                        </div>
+                                </td>
+                                <td width="1%" ng-click="dellItems($index);Sum();"><a class="btn"><i class="fa fa-trash"> </i></a></td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <a style="cursor: pointer;" ng-click="addItems()"><i class="fa fa-plus"></i> {{'addProduct' | translate}}</a>
+                        <br/><br/>
+                        <a ng-click="$event.stopPropagation()"> <create-product/> </a>
+                        <br/><br/>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>

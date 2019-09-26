@@ -1,0 +1,177 @@
+ <!-- Main Sidebar Container -->
+ <aside ng-if="auth.FFF" class="main-sidebar sidebar-dark-primary elevation-4" >
+  <a href="#!/Dashboard" class="brand-link">
+      <div style="text-align: center;">
+        <img ng-if="!LogoHide" src="/images/krus_logo.png" alt="Krusher Logo" class=" rounded mx-auto " style="opacity: .9;max-height: 27px;">
+        <img ng-if="LogoHide" src="/images/fa.png" alt="Krusher Logo" class=" rounded mx-auto " style="opacity: .9;max-height: 27px;">
+      </div>   
+  </a>
+
+  <!-- Sidebar -->
+  <div class="sidebar"  style="overflow-x: hidden;overflow-x: hidden;">
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="pull-left image">
+        <img src="/images/avatar_2x.png" class="img-circle elevation-2" alt="User Image">
+      </div>
+      <div class="pull-left info">
+        <a class="d-block" ng-bind="auth.FFF.emName"> </a>
+        <a class="d-block" ng-if="devicestatechange">
+            <i class="fa fa-circle"
+              ng-class="{
+                          'text-success':devicestatechange      =='NOT_INUSE',
+                          'text-default':devicestatechange      =='RINGING',
+                          'text-warning':devicestatechange      =='BUSY',
+                          'text-primary':devicestatechange      =='INUSE',
+                          'text-warning':devicestatechange      =='ONHOLD',
+                          'text-danger': devicestatechange      =='UNAVAILABLE'
+                        }"
+              > </i> <small> &nbsp; SIP <span>{{devicestatechange | translate}}</span> </small>
+        </a>
+      </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav class="ml-auto">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-header" translate="menu"></li>
+        <li ng-show="can('DashBoard','view')"   class="nav-item">  <a  class="nav-link " ng-class="{'active':S=='Dashboard'}" ui-sref="Dashboard"><i class="nav-icon fas fa-tachometer-alt" ></i> <p translate="controlPanel"> </p></a> </li>  
+        <li ng-show="can('CallingCard','view')" class="nav-item" ><a class="nav-link" ng-class="{'active':S=='callingcard'}"  ui-sref="callingcard"><i class="nav-icon fa fa-phone"></i>    <p translate="appeals"> </p></a> </li>
+        
+        <li class="nav-item has-treeview" ng-hide="MOD=='AST'" ng-class="{'menu-open':S=='AutoProcess' || S=='Scenario' || S=='Recall'}">
+            <a style="cursor: pointer;" class="nav-link" ng-class="{'active':S=='AutoProcess' || S=='Scenario' || S=='Recall'}">
+                <i class="nav-icon fas fa-space-shuttle"></i>
+                <p>
+                    <span translate="autocall"></span>
+                    <i class="fas fa-angle-left right"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item"><a class="nav-link" ui-sref="AutoProcess" ng-class="{'active':S=='AutoProcess'}"> <i class="fa fa-circle-o nav-icon"></i>  <p translate="StartAutoProcess"></p></a></li>
+              <li class="nav-item"><a class="nav-link" ui-sref="Scenario" ng-class="{'active':S=='Scenario'}">    <i class="fa fa-circle-o nav-icon"></i>     <p translate="scenario"></p></a></li>
+              <li class="nav-item"><a class="nav-link" ui-sref="Recall" ng-class="{'active':S=='Recall'}">      <i class="fa fa-circle-o nav-icon"></i>       <p translate="Recalls"></p></a></li>
+            </ul>
+        </li>
+        
+        <li ng-show="can('CallingCard','view')" class="nav-item has-treeview" ng-hide="MOD=='AST'" ng-class="{'menu-open':S=='client' || S=='Bases' || S=='fs' || S=='Company' || S=='migration' || S=='fsTemplate'}" >
+            <a style="cursor: pointer;" class="nav-link" ng-class="{'active':S=='client' || S=='Bases' || S=='fs' || S=='Company' || S=='migration' || S=='fsTemplate'}">
+              <i class="nav-icon fa fa-users"></i>
+              <p>
+                  <span translate="CRM"></span>
+                  <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item"><a class="nav-link" ui-sref="client"     ng-class="{'active':S=='client'}"><i class="fa fa-users nav-icon"></i>          <p translate="clients"></p></a></li>
+              <li class="nav-item"><a class="nav-link" ui-sref="Bases"      ng-class="{'active':S=='Bases'}"><i class="fa fa-list-alt nav-icon"></i>        <p translate="categories"></p></a></li>
+              <li class="nav-item"><a class="nav-link" ui-sref="fs"         ng-class="{'active':S=='fs'}"><i class="fa fa-file nav-icon"></i>               <p translate="files"></p></a></li>
+              <li class="nav-item"><a class="nav-link" ui-sref="Company"    ng-class="{'active':S=='Company'}"><i class="fa fa-file-alt nav-icon"></i>     <p translate="companys"></p></a></li>
+              <li class="nav-item"><a class="nav-link" ui-sref="migration"  ng-class="{'active':S=='migration'}"><i class="fa fa-upload nav-icon"></i>      <p translate="import"> </p></a></li>
+              <li class="nav-item"><a class="nav-link" ui-sref="fsTemplate" ng-class="{'active':S=='fsTemplate'}"><i class="fa fa-file-alt nav-icon"></i>  <p translate="templates"></p></a></li>
+            </ul>
+        </li>
+
+        <li class="nav-item has-treeview" ng-hide="MOD=='AST'" ng-class="{'menu-open':S=='formsAll' || S=='Deals'}" >
+          <a style="cursor: pointer;" class="nav-link" ng-class="{'active':S=='formsAll' || S=='Deals'}">
+            <i class="fa fa-file-alt nav-icon"></i> 
+            <p>
+                <span translate="documents"></span>
+                <i class="right fa fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item" ng-show="can('Deal','view')"><a class="nav-link" ui-sref="Deals"     ng-class="{'active':S=='Deals'}"><i class="fa fa-briefcase nav-icon"></i> <p translate="deals"></p></a></li>
+            <li class="nav-item" ng-show="can('Form','view')"><a class="nav-link" ui-sref="formsAll"  ng-class="{'active':S=='formsAll'}"><i class="fa fa-check-square  nav-icon"></i> <p translate="forms"></p></a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item has-treeview" ng-class="{'menu-open':S=='report' || S=='StatusStats' || S=='Qreport' }">
+          <a style="cursor: pointer;" class="nav-link" ng-class="{'active':S=='report' || S=='StatusStats' || S=='Qreport'}">
+            <i class="nav-icon fas fa-chart-pie"></i> 
+            <p>
+                <span translate="report"></span>
+                <i class="right fa fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+              <li class="nav-item"><a class="nav-link" ui-sref="report"       ng-class="{'active':S=='report'}"><i class="fa fa-bar-chart nav-icon"></i>                  <p translate="statistics"></p></a></li>
+              <li class="nav-item"><a class="nav-link" ui-sref="StatusStats"  ng-class="{'active':S=='StatusStats'}"><i class="fa fa-bar-chart nav-icon"></i>             <p translate="byStatus"></p></a></li>
+              <li class="nav-item"ng-hide="MOD=='AST'"><a class="nav-link" ui-sref="Qreport"  ng-class="{'active':S=='Qreport'}"><i class="fa fa-bar-chart nav-icon"></i> <p translate="byForms"></p></a></li>            
+          </ul>
+        </li>
+
+        <li class="nav-item has-treeview" ng-show="can('Settings','view')" ng-class="{'menu-open':S=='employee'||S=='questionsAll'||S=='formEdit'||S=='RouteOut'||S=='RouteInc'||S=='Queue'||S=='SIP'||S=='Trunk'||S=='TrunkPool'||S=='IVR'||S=='Record'||S=='TTS'|| S=='CustomDestination'||S=='TimeGroup'||S=='CallBack'||S=='RecordsExport'||S=='Conference'||S=='TagList'||S=='commentlist'||S=='Role'||S=='Enums'||S=='Measures'}" > 
+          <a style="cursor: pointer;"  class="nav-link" ng-class="{'active':S=='employee'||S=='questionsAll'||S=='formEdit'||S=='RouteOut'||S=='RouteInc'||S=='Queue'||S=='SIP'||S=='Trunk'||S=='TrunkPool'||S=='IVR'||S=='Record'||S=='TTS'|| S=='CustomDestination'||S=='TimeGroup'||S=='CallBack'||S=='RecordsExport'||S=='Conference'||S=='TagList'||S=='commentlist'||S=='Role'||S=='Enums'||S=='Measures'}">
+            <i class="fa fa-cogs nav-icon"></i>
+            <p>
+                <span translate="settings"></span>
+                <i class="right fa fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+              <li class="nav-item" ng-hide="auth.FFF.roleID == 3"><a class="nav-link" ui-sref="employee" ng-class="{'active':S=='employee'}"><i class="fa fa-user nav-ico"></i> <p>{{'users' | translate}}</p></a></li>
+              <li class="nav-item has-treeview" ng-class="{'menu-open':S=='RouteOut'||S=='RouteInc'||S=='Queue'||S=='SIP'||S=='Trunk'||S=='TrunkPool'||S=='IVR'||S=='Record'||S=='TTS'|| S=='CustomDestination'||S=='TimeGroup'||S=='CallBack'||S=='Conference'||S=='RecordsExport'}">
+                <a style="cursor: pointer;" class="nav-link" ng-class="{'active':S=='RouteOut'||S=='RouteInc'||S=='Queue'||S=='SIP'||S=='Trunk'||S=='TrunkPool'||S=='IVR'||S=='Record'||S=='TTS'|| S=='CustomDestination'||S=='TimeGroup'||S=='CallBack'||S=='Conference'||S=='RecordsExport'}">
+                  <i class="fa fa-circle-o nav-icon"></i> 
+                  <p>
+                      <span translate="IP PBX"></span>
+                      <i class="right fa fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="RouteOut" ng-class="{'active':S=='RouteOut'}">           <i class="fa fa-circle-o nav-icon"></i> <p>{{'RouteOut' | translate}}</p></a></li>
+                  <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="RouteInc" ng-class="{'active':S=='RouteInc'}">           <i class="fa fa-circle-o nav-icon"></i> <p>{{'RouteInc' | translate}}</p></a></li>
+                  <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="Queue" ng-class="{'active':S=='Queue'}">              <i class="fa fa-circle-o nav-icon"></i> <p>{{'queues' | translate}}</p></a></li>
+                  <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="SIP" ng-class="{'active':S=='SIP'}">                <i class="fa fa-circle-o nav-icon"></i> <p>{{'SIP' | translate}}</p></a></li>
+                  <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="Trunk" ng-class="{'active':S=='Trunk'}">              <i class="fa fa-circle-o nav-icon"></i> <p>SIP {{'trunk' | translate}}</p></a></li>
+                  <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="TrunkPool" ng-class="{'active':S=='TrunkPool'}">          <i class="fa fa-circle-o nav-icon"></i> <p>{{'TrunkPool' | translate}}</p></a></li>
+                  <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="IVR" ng-class="{'active':S=='IVR'}">                <i class="fa fa-circle-o nav-icon"></i> <p>{{'IVR' | translate}}</p></a></li>
+                  <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="Record" ng-class="{'active':S=='Record'}">             <i class="fa fa-circle-o nav-icon"></i> <p>{{'recording' | translate}}</p></a></li>
+                  <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="TTS" ng-class="{'active':S=='TTS'}">                <i class="fa fa-circle-o nav-icon"></i> <p>{{'TTS' | translate}}</p></a></li>
+                  <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="CustomDestination" ng-class="{'active':S=='CustomDestination'}">  <i class="fa fa-circle-o nav-icon"></i> <p>{{'CustomDestination' | translate}}</p></a></li>
+                  <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="TimeGroup" ng-class="{'active':S=='TimeGroup'}">          <i class="fa fa-circle-o nav-icon"></i> <p>{{'TimeGroup' | translate}}</p></a></li>
+                  <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="CallBack" ng-class="{'active':S=='CallBack'}">           <i class="fa fa-circle-o nav-icon"></i> <p>{{'isCallback' | translate}}</p></a></li>
+                  <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="Conference" ng-class="{'active':S=='Conference'}">         <i class="fa fa-circle-o nav-icon"></i> <p>{{'Conference' | translate}}</p></a></li>
+                  <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="RecordsExport" ng-class="{'active':S=='RecordsExport'}">         <i class="fa fa-circle-o nav-icon"></i> <p>{{'RecordsExport' | translate}}</p></a></li>
+                </ul>
+              </li>
+              <li class="nav-item" ng-hide="MOD=='AST'"><a class="nav-link" href="/documentation" target="_blank"><i class="fa fa-circle-o nav-icon"></i> <p>API</p></a></li>
+              <li class="nav-item" ng-hide="MOD=='AST'"  ng-show="can('EditForm','view')"><a class="nav-link" ui-sref="formEdit"      ng-class="{'active':S=='formEdit'}"><i class="fa fa-circle-o nav-icon"></i> <p>{{'editingOfForm' | translate}}</p></a></li>
+              <li class="nav-item" ng-hide="MOD=='AST'"  ng-show="can('EditForm','view')"><a class="nav-link" ui-sref="questionsAll"  ng-class="{'active':S=='questionsAll'}"><i class="fa fa-circle-o nav-icon"></i> <p>{{'questions' | translate}}</p></a></li>
+              <li class="nav-item has-treeview" ng-hide="MOD=='AST'" ng-class="{'menu-open':S=='TagList'||S=='commentlist'||S=='Role'||S=='Enums'||S=='Measures'}">
+                <a style="cursor: pointer;" class="nav-link" ng-class="{'active':S=='TagList'||S=='commentlist'||S=='Role'||S=='Enums'||S=='Measures'}"><i class="fa fa-list-ol nav-icon"></i> 
+                  <p>
+                      <span translate="lists"></span>
+                      <i class="right fa fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="TagList" ng-class="{'active':S=='TagList'}"><i class="fa fa-tags nav-icon"></i> <p>{{'tags' | translate}}</p></a></li>
+                  <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="commentlist" ng-class="{'active':S=='commentlist'}"><i class="fa fa-comments-o  nav-icon"></i> <p>{{'comments' | translate}}</p></a></li>
+                  <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="Role" ng-class="{'active':S=='Role'}"><i class="fa fa-circle-o nav-icon"></i> <p>{{'roles' | translate}}</p></a></li>
+                  <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="Enums" ng-class="{'active':S=='Enums'}"><i class="fa fa-circle-o nav-icon"></i> <p>{{'Enums' | translate}}</p></a></li>
+                  <li class="nav-item" style="padding-left: .5rem;"><a class="nav-link" ui-sref="Measures" ng-class="{'active':S=='Measures'}"><i class="fa fa-truck nav-icon"></i> <p>{{'unit' | translate}}</p></a></li>
+                </ul>
+              </li>
+          </ul>
+        </li>
+
+        <li class="nav-item has-treeview">
+          <a style="cursor: pointer;" class="nav-link">
+            <i class="fa fa-life-ring nav-icon"></i>
+            <p>
+                <span translate="support"></span>
+                <i class="right fa fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+              <li class="nav-item"><a class="nav-link" href="http://support.asterisk.biz.ua" target="_blank" ><i class="fa fa-ticket-alt nav-icon"></i> <p>{{'ticket' | translate}}</p></a></li>
+              <li class="nav-item" ng-show="WS"><a class="nav-link" style="cursor: pointer;" > <create-question/> </a></li>
+              <li class="nav-item"><a class="nav-link" href="//docs.google.com/document/d/1fzxeWOkhz5eKbB8gUEy4jWi6S-qS4I_31WGtoM__nH8/edit" target="_blank"><i class="fa fa-info nav-icon"></i> <p>{{'FAQ' | translate}}</p></a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>

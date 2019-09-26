@@ -1,0 +1,161 @@
+<section class="content">
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+              <!-- Profile Image -->
+              <div class="card card-info card-outline" style="min-height: 563px">
+                    <div class="card-body card-profile p-2">
+                        <div class="row " style="padding: 10px;">
+                            <div class="col-lg-2">
+                                <span class="fa-stack fa-lg" ng-if="!client.isActive"   uib-tooltip="{{'notactive' | translate}} {{client.IsPerson | Person | lowercase}}">
+                                    <i class="fa fa-user fa-stack-1x" ng-show="client.IsPerson"></i>
+                                    <i class="fa fa-building fa-stack-1x" ng-hide="client.IsPerson"></i>
+                                    <i class="fa fa-ban fa-stack-2x" style="color:Tomato"></i>
+                                </span>
+    
+                                <div ng-if="client.isActive">
+                                    <i class="fa fa-user fa-3x" ng-show="client.IsPerson"      uib-tooltip="{{'physFace' | translate}}"></i>
+                                    <i class="fa fa-building fa-3x" ng-hide="client.IsPerson"  uib-tooltip="{{'jurFace' | translate}}"></i>
+                                </div>
+
+                                <!-- <div>
+                                    <i class="fa fa-user fa-3x" ng-show="client.IsPerson"      uib-tooltip="{{'physFace' | translate}}"></i>
+                                    <i class="fa fa-building fa-3x" ng-hide="client.IsPerson"  uib-tooltip="{{'jurFace' | translate}}"></i>
+                                    <img ng-hide="client.isActive || client" src="/images/ContactNotActive.png" class="summaryImg" style="width:20px;height: 20px;">
+                                </div> -->
+                            </div>
+                            <div class="col-lg-10">
+                                <h4 style="margin-top: 0%;" class="text-left"> <b  ng-bind="client.clName"></b></h4>
+                            </div>
+                        </div>
+    
+                        <div ng-repeat="tab in tabs" ng-show="{{tab.title == 'Инфо о контакте'}}" >
+                            <div class="card-header with-border" style="padding-left: 0;"><h3 class="card-title">{{'info' | translate}}</h3></div>
+                            <div bind-html-compile="tab.content" ></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Requisites -->
+                <div class="card card-info card-outline" ng-repeat="tab in tabs" ng-show="(Org.ShortName || Org.Bank || Org.Account || Org.TaxCode || Org.SortCode || Org.RegCode || Org.CertNumber || Org.KVED || Org.KVEDName || Org.OrgType) && tab.title == 'Инфо о контрагенте'">
+                    <div class="card-header with-border">
+                        <h3 class="card-title"> {{'requisites' | translate}}</h3>
+                    </div>
+                    <div class="card-body p-2">
+                        <div bind-html-compile="tab.content"></div>
+                    </div>
+                </div>
+
+            <div class="card card-info card-outline" ng-hide="true"> <!-- ng-show='keysOfDeals.length'  -->
+                <div class="card-header with-border">
+                    <h3 class="card-title">{{'documentation' | translate}}</h3>
+                </div>
+                <div class="card-body p-1">
+                    <li class="list-group-item" style="border: none; padding-left: 0px">
+                        <div ng-show="deals" can-load="canLoad" infinite-scroll="manyAction.loadMore()" threshold="100" style="padding-left: 10px; overflow-y: auto; height: 300px;" >
+                            <div  ng-repeat="(key, values) in deals | limitTo:limit track by $index" ng-init="x[$index].length = values.length;x[$index].status = manyAction.xCheck(x[$index])">
+                                <!-- Заголовок -->
+                                <a style="color : black;"><b>{{key|translate}} </b></a>
+                                <i class="fa fa-angle-left" style="font-size: 18px" aria-hidden="true" ng-show="!x[$index].status" ng-click="x[$index].status = true"></i>
+                                <i class="fa fa-angle-down" style="font-size: 18px" aria-hidden="true" ng-show="x[$index].status" ng-click="x[$index].status = false"></i>
+                                <br/>
+                                        <!-- Контакты -->
+                                        <a ng-show="x[$parent.$index].status && !a.dcNo && key == 'Обращение'" ng-repeat="a in values | limitTo:limit track by $index " title="{{'contact' | translate}}">
+                                            <p class="text-muted" style="padding-left: 10px" >
+                                                <nobr> <span class="text-muted" ng-bind="a.dcDate | date:'MMM d HH:MM'"> </span> </nobr>
+                                                <span class="float-right label {{(a.dcStatusName | CallStatus).color}}"> {{(a.dcStatusName | CallStatus).disposition}} </span>
+                                            <p>
+                                        </a>
+                                        <br ng-show="x[$parent.$index].status && !a.dcNo && key == 'Обращение'">
+                                        <hr ng-show="x[$parent.$index].status && !a.dcNo && key == 'Обращение'">
+
+                                        <!-- Сделки -->
+                                        <a ng-show="x[$parent.$index].status && a.dcNo && key == 'Сделка'" ng-href="/#!/DealEdit/{{a.dcID}}"  ng-repeat="a in values | limitTo:limit track by $index" title="{{a.emName}}">
+                                            <p class="text-muted" style="padding-left: 10px" >
+                                                <span > {{a.dcNo}} </span>
+                                                <span class="float-right" ng-class="{'label label-success' : a.dcStatusName === 'Закрыта удачно', 'label label-warning' : a.dcStatusName === 'Переговоры или отзыв' || a.dcStatusName === 'Поиск принимающих решение' || a.dcStatusName === 'Нуждается в анализе', 'label label-danger' : a.dcStatusName === 'Закрыта неудачно', 'label label-info': a.dcStatusName === 'Переговоры' || a.dcStatusName === 'Ценовое предложение' || a.dcStatusName === 'Анализ ситуации' || a.dcStatusName === 'Предложение' || a.dcStatusName === 'Оценка'}"> {{a.dcStatus}}</span>
+                                            </p>
+                                        </a>
+                                        <br ng-show="x[$parent.$index].status && a.dcNo && key == 'Сделка'" ng-href="/#!/DealEdit/{{a.dcID}}">
+                                        <hr ng-show="x[$parent.$index].status && a.dcNo && key == 'Сделка'" ng-href="/#!/DealEdit/{{a.dcID}}">
+
+                                        <!-- Путевые листы -->
+                                        <a ng-show="x[$parent.$index].status  && key == 'ПЛ'" ng-href="/#!/TravelListEdit/{{a.dcID}}"  ng-repeat="a in values | limitTo:limit track by $index" title=" {{a.emName}}">
+                                            <p class="text-muted" style="padding-left: 10px" >
+                                                <nobr> <span class="text-muted" ng-bind="a.dcDate | date:'MMM d'"> </span> </nobr>
+                                                <span class="badge float-right"> {{a.dcNo}} </span>
+                                                <br/>
+                                            </p>
+                                        </a>
+                                        <br ng-show="x[$parent.$index].status  && key == 'ПЛ'" ng-href="/#!/TravelListEdit/{{a.dcID}}" >
+                                        <hr ng-show="x[$parent.$index].status  && key == 'ПЛ'" ng-href="/#!/TravelListEdit/{{a.dcID}}" >
+
+                                                <!-- Анкета -->
+                                                <a ng-show="x[$parent.$index].status && a.dcNo && key == 'Анкета'" ng-href="/#!/form/{{a.dcID}}"  ng-repeat="a in values | limitTo:limit track by $index" title="{{a.emName}}">
+
+                                                    <p class="text-muted" style="padding-left: 10px" >
+                                                        <span>{{a.dcNo}} </span>
+                                                        <span class="badge float-right"> {{a.dcStatusName}} </span>
+                                                    </p>
+                                                </a>
+                                                <br ng-show="x[$parent.$index].status && a.dcNo && key == 'Анкета'" ng-href="/#!/form/{{a.dcID}}">
+                                                <hr ng-show="x[$parent.$index].status && a.dcNo && key == 'Анкета'" ng-href="/#!/form/{{a.dcID}}">
+
+                                                <!-- Счета -->
+                                                <a ng-show="x[$parent.$index].status && a.dcNo && key == 'Счет'" ng-href="/#!/Invoice/{{a.dcID}}"  ng-repeat="a in values | limitTo:limit track by $index" title="{{a.emName}}">
+                                                    <p class="text-muted" style="padding-left: 10px" >
+                                                        <span > {{a.dcNo}} </span>
+                                                        <span class="badge float-right"> {{a.dcStatusName}} </span>
+                                                    </p>
+                                                </a>
+                                                <br ng-show="x[$parent.$index].status && a.dcNo && key == 'Счет'" ng-href="/#!/Invoice/{{a.dcID}}" >
+                                                <hr ng-show="x[$parent.$index].status && a.dcNo && key == 'Счет'" ng-href="/#!/Invoice/{{a.dcID}}" >
+                                                <!-- Платеж -->
+                                                <a ng-show="x[$parent.$index].status && a.dcNo && key == 'Платеж'" ng-href="/#!/Payment/{{a.dcID}}"  ng-repeat="a in values | limitTo:limit track by $index" title="{{a.emName}}">
+                                                    <p class="text-muted" style="padding-left: 10px" >
+                                                        <span > {{a.dcNo}} </span>
+                                                        <span class="badge float-right"> {{a.dcStatusName}} </span>
+                                                    </p>
+                                                </a>
+                                                <br ng-show="x[$parent.$index].status && a.dcNo && key == 'Платеж'" ng-href="/#!/Payment/{{a.dcID}}">
+                                                <hr ng-show="x[$parent.$index].status && a.dcNo && key == 'Платеж'" ng-href="/#!/Payment/{{a.dcID}}">
+                                            </div>
+                                        </div>
+                                    </li>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-6 col-lg-6">
+                            <ng-include src="'/build/Client/Client/Views/PreView/Tabs.html'"/> 
+                        </div>
+                        <div class="col-3">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card-tools float-right">                                                
+                                        <div style="margin-left: 15px;display: inline-block;">
+                                                <button   class="btn btn-link" >
+                                                        <create-favorite class="ctate-favorite client" ></create-favorite>
+                                                </button>
+                                            <div class="btn-group float-right" uib-dropdown is-open="status.isopen">
+                                                <button id="single-button" class="btn btn-secondary" uib-dropdown-toggle ng-disabled="disabled">
+                                                    {{'actions' | translate}} <span class="caret"></span>
+                                                </button>
+                            
+                                                <div class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                                    <a class="dropdown-item" ui-sref="clientEdit( {'clID': client.clID })"><i class="fas fa-edit" style="margin-right: 0px;"></i> {{'edit' | translate}}</a> 
+                                                    <a class="dropdown-item" ng-click="ClientDelete(client)"><i class="fa fa-trash" style="margin-right: 0px;"></i> {{'del' | translate}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-12">    
+                                        <show-comments data="{{client}}"></show-comments>
+                                    </div>
+                            </div>
+                        </div>
+        </div>
+</section>

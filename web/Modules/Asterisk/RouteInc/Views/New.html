@@ -1,0 +1,193 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-4">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fa fa-edit"></i> {{'edit' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tr>
+                        <td width="50%">{{'DID' | translate}}</td>
+                        <td width="50%"><input only-clear class="form-control" ng-model="new.DID" ng-change="new.exten=new.DID"></td>
+                    </tr>
+                    <tr>
+                        <td>{{'trunk' | translate}}</td>
+                        <td>
+                            <ui-select ng-model="new.trID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.trName}}</ui-select-match>
+                                <ui-select-choices repeat="a.trID as a in Trunk.data | filter: $select.search">
+                                    {{a.trName}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'callerid' | translate}}</td>
+                        <td><input only-clear class="form-control"  ng-model="new.callerID"></td>
+                    </tr>
+                    <tr>
+                        <td>{{'destination' | translate}}</td>
+                        <td>
+                            <ui-select ng-model="new.destination" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                        <ui-select-choices repeat="c.tvID as c in DestType | filter: $select.search"  ui-disable-choice="c.tvID == 101406" >
+                                         {{c.Name | translate}}
+                                        </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr ng-show="new.destination"  ng-switch="new.destination">
+                        <td>{{'destdata' | translate}}</td>
+                        <td>
+                            <div ng-switch-when="101401">
+                                <ui-select  ng-model="new.destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.name}}</ui-select-match>
+                                        <ui-select-choices repeat="a.queID as a in Queues.data | filter: $select.search ">
+                                            {{a.name}}
+                                        </ui-select-choices>
+                                </ui-select>
+                            </div>
+
+                            <div ng-switch-when="101402">
+                                <ui-select ng-model="new.destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.emName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.emID as a in employees.data | filter: $select.search">
+                                            <b ng-bind-html="a.emName | highlight : $select.search"></b> <div ng-show="a.sipName" class="text-muted"><small>SIP/</small><small ng-bind-html="a.sipName"></small> </div>
+                                        </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div ng-switch-when="101403">
+                                <ui-select ng-model="new.destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.trName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.trID as a in Trunk.data | filter: $select.search ">
+                                            {{a.trName}}
+                                        </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div ng-switch-when="101405">
+                                <ui-select ng-model="new.destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.ivr_name}}</ui-select-match>
+                                        <ui-select-choices repeat="a.id_ivr_config as a in IVR.data | filter: $select.search ">
+                                            {{a.ivr_name}}
+                                        </ui-select-choices>
+                                </ui-select>
+                            </div>
+
+                            <div ng-switch-when="101407">
+                                <ui-select ng-model="new.destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.record_name}}</ui-select-match>
+                                        <ui-select-choices repeat="a.record_id as a in Record.data | filter: $select.search ">
+                                            {{a.record_name}}
+                                        </ui-select-choices>
+                                </ui-select>
+                            </div>
+
+                            <div ng-switch-when="101408" class="input-group" style="width: 100%">
+                                <ui-select ng-model="new.destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                    <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.cdName}}</ui-select-match>
+                                    <ui-select-choices repeat="a.cdID as a in CustomDestenation.data | filter: $select.search ">{{a.cdName}}</ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-append">
+                                    <button ng-show="new.destdata" type="button" class="btn btn-default" ng-click="new.destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                            <div ng-switch-when="101409" class="input-group" style="width: 100%">
+                                <ui-select ng-model="new.destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                    <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.poolName}}</ui-select-match>
+                                    <ui-select-choices repeat="a.poolID as a in TrunkPool.data | filter: $select.search ">{{a.poolName}}</ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-append">
+                                    <button ng-show="new.destdata" type="button" class="btn btn-default" ng-click="new.destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                            <div ng-switch-when="101410" class="input-group" style="width: 100%">
+                                    <ui-select ng-model="new.destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.tgName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.tgID as a in TimeGroup.data | filter: $select.search ">{{a.tgName}}</ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                        <button ng-show="new.destdata" type="button" class="btn btn-default" ng-click="new.destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                            </div>
+                            <div ng-switch-when="101411" class="input-group" style="width: 100%">
+                                    <ui-select ng-model="new.destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.cbName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.cbID as a in CallBack.data | filter: $select.search ">{{a.cbName}}</ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                        <button ng-show="new.destdata" type="button" class="btn btn-default" ng-click="new.destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                            </div>
+                            <div ng-switch-when="101412" class="input-group" style="width: 100%">
+                                    <ui-select ng-model="new.destdata" theme="bootstrap4-1" class="normal bg-custom-white" size="100%"">
+                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.cfName}}</ui-select-match>
+                                        <ui-select-choices repeat="a.cfID as a in Conference.data | filter: $select.search ">{{a.cfName}}</ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                        <button ng-show="new.destdata" type="button" class="btn btn-default" ng-click="new.destdata = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-show="new.destination == 101403 && new.destdata">
+                                <td>{{'destdata2' | translate}}</td>
+                                <td>
+                                    <div class="input-group" style="width: 100%">
+                                            <input  class="form-control" ng-model="new.destdata2"/>
+                                            <span class="input-group-append">
+                                                <button ng-show="new.destdata2" type="button" class="btn btn-default" ng-click="new.destdata2 = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                            </span>
+                                    </div>
+                                </td>
+                    </tr>
+                    <tr ng-show="new.destination == 101409 && new.destdata">
+                                <td>{{'destdata2' | translate}}</td>
+                                <td>
+                                    <div class="input-group" style="width: 100%">
+                                            <input  class="form-control" ng-model="new.destdata2"/>
+                                            <span class="input-group-append">
+                                                <button ng-show="new.destdata2" type="button" class="btn btn-default" ng-click="new.destdata2 = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                            </span>
+                                    </div>
+                                </td>
+                    </tr>
+                    <tr>
+                        <td>{{'stick_destination' | translate}}</td>
+                        <td>
+                            <div class="input-group" style="width: 100%">
+                                    <ui-select ng-model="new.stick_destination" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                                <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.Name | translate}}</ui-select-match>
+                                                <ui-select-choices repeat="c.tvID as c in DestTypeCB | filter: $select.search" ui-disable-choice="c.tvID != 101401 && c.tvID != 101402">
+                                                {{c.Name | translate}}
+                                                </ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-append">
+                                                <button ng-show="new.stick_destination" type="button" class="btn btn-default" ng-click="new.stick_destination = null"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    </span>
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'active' | translate}}</td>
+                        <td><label><input type="checkbox" cb-switch ng-model="new.isActive"></label></td>
+                    </tr>
+                </table>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-8">
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-disabled="!new.DID || !new.trID" ng-click="manyAction.Save(new,'RouteInc')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="RouteInc">{{'cancel' | translate}}</button>
+                    </div>
+        </div>
+    </div>
+</section>

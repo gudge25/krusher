@@ -1,0 +1,242 @@
+ <section class="content">
+      <div class="row">
+
+        <div class="col-md-4">
+          <!--TAGS-->
+          <div class="card">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i>  {{'forms' | translate}}</h3>
+              <div class="card-tools">
+                <div class="btn-group">
+                        <nz-toggle tri-toggle ng-model="model.isActive" tip-false="'notactive' | translate" tip-null="'All' | translate" tip-true="'active' | translate"></nz-toggle>
+                </div>
+                 <div class="btn-group">
+                    <button class="btn btn-link" ng-show="tpID && tpID !== null" stop-event="click" ng-click="Clear();"><i class="fa fa-reply float-right" style="cursor: pointer;color: #0075b0;"></i></button>
+                    <button  class="btn btn-tool dropdown-toggle" data-toggle="dropdown" ng-hide="newForm || tpID">
+                        <i class="fa fa-wrench"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu" >
+                        <li ng-click="NewCreate();" role="menuitem" ng-hide="checkLast" ><a class="dropdown-item"><i class="fa fa-plus"></i> {{'newForm' | translate}}</a></li>
+                    </ul>
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-0" >
+                <ul class="nav flex-column" ng-show="formTypes">
+                    <li class="nav-item" ng-repeat="f in formTypes track by $index"  uib-tooltip="{{f.Created | date:'dd.MM HH:mm'}}" ng-hide="(tpID && tpID != 'null') && tpID !== f.tpID">
+                        <a href class="nav-link" ng-click="ClearS();getForms(f);" ng-class="{'tagBackgnd' :  tpID == f.tpID}" style="cursor: pointer;">
+                                 
+                                <b ng-class="{'selected-templ' :  tpID == f.tpID}"> {{f.tpName}}</b>
+                                <span class="badge float-right float-right badge-info"  ng-click="$event.stopPropagation();">
+                                        <i style="cursor: pointer;" class="fa fa-trash" ng-show="!check" ng-click="check=true" style="cursor: pointer;"></i>
+                                        <i style="cursor: pointer;" ng-show="check" ng-click="check=false" class="fa fa-times fa-lg"> </i>
+                                        <i style="cursor: pointer;" ng-show="check" class="fa fa-check fa-lg" ng-click="delT(f);check=false"> </i>
+                                </span> 
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+
+          </div>
+        </div>
+        <!-- <pre>{{newForm|json}}</pre> -->
+        <!--NEW FORM !!!!!!!-->
+        <div class="col-lg-4" ng-show="newShow" >
+          <div class="card box-success">
+            <div class="card-header with-border">
+                <h3 class="card-title">{{'newForm' | translate}}</h3>
+                <div class="card-tools float-right" >
+                        <button class="btn btn-success btn-sm" ng-hide="Check_upd_old2()" ng-click="addFt(newForm);newForm=!newForm">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ng-click="newShow=false;Clear();getFormsAll()">{{'cancel' | translate}}</button>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                            <table class="table table-head-fixed table-hover borderless">
+                                    <tr>
+                                            <td width="40%">{{'named' | translate}}</td>
+                                            <td width="50%"><input class="form-control" ng-model="newForm.tpName" placeholder="{{'enterTitle' | translate}}"/></td>
+                                    </tr>
+                                    <tr>
+                                            <td>{{'file' | translate}}</td>
+                                            <td>
+                                                    <ui-select ng-model="newForm.ffID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%">
+                                                        <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.ffName}}</ui-select-match>
+                                                        <ui-select-choices repeat="a.ffID as a in File.data">
+                                                                    {{a.ffName}}
+                                                        </ui-select-choices>
+                                                    </ui-select>  
+                                            </td>
+                                    </tr>
+                                    <tr>
+                                            <td>{{'activeShe' | translate}}</td>
+                                            <td><label class="float-right"><input type="checkbox" cb-switch ng-model="newForm.isActive" placeholder="{{'activeShe' | translate}}"></label></td>
+                                    </tr> 
+                            </table>
+                    </div>
+            </div>
+        </div>
+        
+        <!--EDIT FORM !!!!!!!-->
+        <div class="col-lg-4" ng-show="tpID  && tpID !== null && !newShow" >
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+                <h3 class="card-title">{{'edit' | translate}}</h3>
+                <div class="card-tools float-right" ng-hide="Check_upd_old()">
+                        <button class="btn btn-success btn-sm" ng-click="EditForm(Form)">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ng-click="Clear();ClearS();getFormsAll()">{{'cancel' | translate}}</button>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+                            <table class="table table-head-fixed table-hover borderless">
+                                <tr>
+                                        <td width="40%">{{'named' | translate}}</td>
+                                        <td width="60%"><input class="form-control" ng-model="Form.tpName" placeholder="{{'enterTitle' | translate}}"/></td>
+                                </tr>
+                                <tr>
+                                        <td>{{'file' | translate}}</td>
+                                        <td>    <div class="input-group" style="width: 100%">
+                                                    <ui-select ng-model="Form.ffID" theme="bootstrap4-1" class="normal" size="100%">
+                                                        <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.ffName}}</ui-select-match>
+                                                        <ui-select-choices repeat="a.ffID as a in File.data">
+                                                                    {{a.ffName}}
+                                                        </ui-select-choices>
+                                                    </ui-select>
+                                                    <span class="input-group-append">
+                                                            <button ng-show="Form.ffID" type="button" class="btn btn-default" ng-click="Form.ffID = null;"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                                    </span>
+                                                </div>    
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td>{{'activeShe' | translate}}</td>
+                                        <td><label class="float-right"><input type="checkbox" cb-switch ng-model="Form.isActive" placeholder="{{'activeShe' | translate}}"></label></td>
+                                </tr>    
+                                <tr ng-show="Form.Created">
+                                    <td><span class="direct-chat-timestamp" style="display: inline-block; font-size: 12px">{{'created' | translate}}</span></td>
+                                    <td>
+                                        <span style="float: right; font-size: 12px" >
+                                            <span class="direct-chat-timestamp" ng-bind="Form.CreatedBy | emFilters" uib-tooltip="{{ Form.CreatedBy | emFilters}} {{Form.Created | date:'yyyy MMM d, HH:mm'}}" tooltip-trigger="mouseenter" tooltip-placement="top" ></span>
+                                            <span class="direct-chat-timestamp" ng-bind="Form.Created | date:'yyyy MMM d, HH:mm'"> </span>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr ng-show="Form.Changed || Form.Changed==0">
+                                        <td><span class="direct-chat-timestamp" style="display: inline-block; font-size: 12px">{{'editedBy' | translate}}</span></td>
+                                        <td>
+                                            <span style="float: right; font-size: 12px" >
+                                                <span class="direct-chat-timestamp" ng-bind="Form.ChangedBy | emFilters" uib-tooltip="{{ Form.ChangedBy | emFilters}} {{Form.Changed | date:'yyyy MMM d, HH:mm'}}" ></span>
+                                                <span class="direct-chat-timestamp" ng-bind="Form.Changed | date:'yyyy MMM d, HH:mm'" > </span>
+                                            </span>
+                                        </td>
+                                </tr>
+                            </table>
+                    </div>
+            </div>
+        </div>
+
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-4" ng-show="tpID" >
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+                <h3 class="card-title">{{'questAndAnsw' | translate}}</h3>
+                <!-- <div style="display: inline-block;float: right; border: none;">
+                        <div class="btn-group" style="float: right;">
+                            <button ng-hide="isEditItems" ng-disabled="global.Loading" class="btn" ng-class="{'btn-warning' : global.Loading , 'btn-success' : !global.Loading}" ng-click="global.Loading=true;manyAction.Find(ItemsSrv)">
+                                                <span ng-hide="global.Loading" ng-bind="'find'| translate"></span>
+
+                                                <i ng-show="global.Loading" class="fa fa-spinner fa-pulse fa-fw"></i>
+                                                <span ng-show="global.Loading" ng-bind="'Loading'| translate"></span>
+
+                                                &nbsp; <i ng-show='dataIsChecked==1' class="fa fa-user"></i>
+                                                <i ng-show="dataIsChecked>1" class="fa fa-users"></i>
+                                                <span class="badge badge-warning" ng-show='dataIsChecked>0'>{{dataIsChecked}}</span>
+                            </button>
+
+                            <button ng-show="isEditItems" class="btn btn-success" ng-click="manyAction.ItemsEdit('formEdit');isEditItems=false;">
+                                                <span  ng-bind="'save'| translate"></span>
+                            </button>
+
+                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                <i class="fa fa-wrench"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                                <li role="menuitem"><a ng-click="manyAction.addItems();isEditItems=true;" ><i class="fa fa-plus"></i> {{'new' | translate}}</a></li>
+                                                <li role="menuitem" ng-show="dataIsChecked"><a ng-click="manyAction.manyDelete(Items,ItemsSrv)"><i class="fa fa-trash"></i> {{'del' | translate}}</a></li>
+                                                <li role="menuitem" ng-show="dataIsChecked"><a ng-click="isEditItems=true;"><i class="fas fa-edit"></i>{{'edit' | translate}}</a></li>
+                            </ul>
+                        </div>
+                        <br>
+                        <label ng-show="Items.length > 0">{{'findPlaceholder'| translate}} {{Items.length}} {{'from'| translate}} {{total_count}}</label>
+                    </div> -->
+                    <div class="card-tools">
+                            <div class="btn-group">
+                                <button ng-hide="isEditItems" class="btn btn-tool" ng-disabled="global.Loading || global.NewProgerss " ng-click="global.Loading=true;manyAction.Find(ItemsSrv)">
+                                    <i ng-hide="global.Loading" class="fa fa-search"></i>
+                                    <span ng-hide="global.Loading" ng-bind="'find'| translate"></span>
+                                    
+                                    <i ng-show="global.Loading" class="fa fa-spinner fa-pulse fa-fw"></i>
+                                    <span ng-show="global.Loading" ng-bind="'Loading'| translate"></span>
+                                </button> 
+                                
+                                <button ng-show="isEditItems" class="btn btn-tool" ng-click="manyAction.ItemsEdit('formEdit');isEditItems=false;">
+                                        <span  ng-bind="'save'| translate"></span>
+                                </button>
+                                
+                                <button class="btn btn-tool dropdown-toggle" data-toggle="dropdown"  ng-disabled="!can('EM','edit')">
+                                    <i class="fa fa-wrench"></i>      
+                                    &nbsp;  <span  ng-show="!global.Loading && dataIsChecked>0" class="badge badge-secondary navbar-badge" ng-bind="dataIsChecked"></span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                    <a class="dropdown-item" href ng-click="manyAction.addItems();isEditItems=true;" ><i class="fa fa-plus"></i> {{'new' | translate}}</a> 
+                                    <a class="dropdown-item" href ng-show="dataIsChecked" ng-click="manyAction.manyDelete(Items,ItemsSrv)"><i class="fa fa-trash"></i> {{'del' | translate}}</a> 
+                                    <a class="dropdown-item" href ng-show="dataIsChecked" ng-click="isEditItems=true;"><i class="fas fa-edit"></i>{{'edit' | translate}}</a> 
+                
+                                </div>
+                                <ng-include src="'/Views/FilteCollapse.html'"></ng-include>
+                            </div>
+                        </div>
+            </div>
+
+            <div class="card-body p-0" ng-show="Items">
+                    <div  style="overflow-y: auto; height: 70vh;" can-load="canLoad" infinite-scroll="manyAction.loadMore()"  threshold="100">
+                            <table class="table table-head-fixed table-hover" ng-hide="Items.length < 1">
+                                <tr>
+                                    <th ng-include="'/Views/ng-table/checkbox.html'" ng-click="$event.stopPropagation()"></th>
+                                    <th ng-init="o1='qName'" ng-click="manyAction.order(o1);">
+                                        <nobr>{{'named' | translate}} <span ng-show="order==o1" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                    </th>
+                                    <th ng-init="o9='isActive'" ng-click="manyAction.order(o9);">
+                                        <nobr>{{'active' | translate}} <span ng-show="order==o9" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                    </th>
+                                </tr>
+                                <tr ng-repeat="e in Items | limitTo:limit track by $index">
+                                        <td width="1%" ng-include="'/Views/checkboxOne.html'" ></td>
+                                        <td>
+                                            <input ng-show="!e.qID || (isEditItems && e.isChecked)" ng-model="e.qName" class="form-control">
+                                             
+                                            <div style="cursor: pointer" ng-show="e.qID && (!isEditItems || (isEditItems && !e.isChecked))" uib-dropdown uib-tooltip="{{'action'| translate}}">
+                                                <a  id="single-button" href ng-click="$event.stopPropagation()" uib-dropdown-toggle role="button">
+                                                    <span ng-bind="e.qName"></span> <span class="caret"></span>
+                                                </a>
+                                                <div class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
+                                                    
+                                                        <a class="dropdown-item" ng-href="/#!/questionsItemsAll/{{e.qID}}"> {{'open'| translate}} {{'answs' | translate | lowercase}} </a>
+                                                     
+                                                </div>
+                                            </div>
+ 
+                                        </td>
+                                        <td width="1%">
+                                            <label><input ng-disabled="!isEditItems || (isEditItems && !e.isChecked) " type="checkbox" ng-click="isEditItems=true" cb-switch ng-model="e.isActive"></label>
+                                        </td>
+                                </tr>
+                            </table>
+                    </div>
+                    <div ng-include="'/Views/paginationItems.html'"></div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,189 @@
+<div id="AutoProcess">
+
+           <div class="card card-widget widget-user ">
+             <div class="card-header bg-info" >
+              <h3 class="widget-user-username">{{'control_autocall' | translate}}</h3>
+             </div>
+            <div class="widget-user-image" style="top: 40px;">
+                 <span class="fa-stack fa-3x">
+                  <i class="fa fa-circle fa-stack-2x" style="color: lightgrey; top: -30px;"></i>
+                  <i class="fa fa-space-shuttle fa-stack-1x fa-inverse" style="top: -30px;"></i>
+                </span>
+             </div>
+            <div class="card-footer p-4" style="padding-bottom: 0px !important;">
+              <div class="row">
+                  <div class="col-md-1" >
+                      <div class="description-block" align="left" ng-if="Progress.FFF.id_autodial">
+                            <b class="text-left">{{'ID' | translate}}</b><br>
+                            <a class="btn btn-link " ng-href="/#!/AutoProcessEdit/{{Progress.FFF.id_autodial}}" uib-tooltip="ID файла для обзвона : {{Progress.FFF.id_autodial}}"> <span class="badge badge-secondary">{{Progress.FFF.id_autodial}}</span></a>
+
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                      <div class="description-block" align="left">
+                            <b class="text-left">{{'file' | translate}}</b>
+                            <ui-select ng-model="Progress.FFF.ffID" theme="bootstrap4-1" class="normal bg-custom-white" size="100%" uib-tooltip="Файл для обзвона" ng-disabled="Play ||  Progress.FFF.process==101602 ||  Progress.FFF.process==101603">
+                                <ui-select-match placeholder="{{'select' | translate}}">{{$select.selected.ffName}}</ui-select-match>
+                                <ui-select-choices  placeholder="{{'file' | translate}}" repeat="a.ffID as a in File.data| filter: $select.search " >
+                                   {{a.ffName}}
+                               </ui-select-choices>
+                            </ui-select>
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                      <div class="description-block" align="left">
+                            <b class="text-left">{{'scenario' | translate}}</b>
+                            <ui-select ng-model="Progress.FFF.id_scenario"theme="bootstrap4-1" class="normal bg-custom-white" uib-tooltip="{{'scenario' | translate}}" ng-disabled="Play ||  Progress.FFF.process==101602 ||  Progress.FFF.process==101603">
+                              <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.name_scenario}}</ui-select-match>
+                              <ui-select-choices  class="dropdown-menu-right" repeat="c.id_scenario as c in Scenario.data | filter: $select.search " >
+                                  {{c.name_scenario}}
+                              </ui-select-choices>
+                            </ui-select>
+                      </div>
+                  </div>
+                  <div class="col-md-2">
+                        <div class="description-block" align="left">
+                            <b class="text-left">{{'planDateBegin' | translate}}</b><br/>
+                            <div class="input-group md-3">
+                                    <input ng-model="Progress.FFF.planDateBegin" class="form-control" ng-model-options="{ updateOn: 'blur' }" style="border-top-left-radius: 3px;border-bottom-left-radius: 3px;" ng-disabled="Play || Progress.FFF.process==101602">
+                                    <div class="input-group-append">
+                                                <button moment-picker="Progress.FFF.planDateBegin" class="btn btn-default">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </button>
+                                    </div>
+                            </div> 
+                        </div>
+                  </div>
+                  <div class="col-md-1">
+                      <div class="description-block" align="left">
+                            <b class="text-left">{{'factor' | translate}}</b><br/>
+                            <div class="btn-group pull-left">
+                              <button ng-disabled="Progress.FFF.factor >= auth.FFF.count_of_calls || Play ||  Progress.FFF.process==101602" ng-click="Progress.FFF.factor=Progress.FFF.factor+1" class="btn btn-default"><span class="fa fa-plus aligned"></span></button>
+                              <button class="btn btn-default " uib-tooltip="{{'factorNumber' | translate}}">{{Progress.FFF.factor}}</button>
+                              <button ng-disabled="Progress.FFF.factor <= 0 || Play ||  Progress.FFF.process==101602" ng-click="Progress.FFF.factor=Progress.FFF.factor-1" class="btn btn-default"><span class="fa fa-minus aligned"></span></button>
+                            </div>
+                  </div>
+                 </div>
+
+                <div class="col-md-2">
+                  <div class="description-block">
+                     <button class="btn btn-app" ng-model="Start" ng-show="Progress.FFF.process!=101602" ng-disabled="!Progress.FFF.ffID || !Progress.FFF.id_scenario || !Progress.FFF.factor" uib-btn-checkbox
+                          ng-click="ProgressStart();"
+                         >
+                          <i class="fa fa-play" style="color:green;"></i>
+                          {{'start' | translate}}
+                     </button>
+
+                     <button class="btn btn-app" ng-model="Start" ng-show="Progress.FFF.process==101602" uib-btn-checkbox ng-click="ProgressStop();"> <!-- manyAction.ProgressStop();-->
+                          <i class="fa fa-stop" style="color:red;"></i>
+                          {{'stop' | translate}}
+                     </button>
+                  </div>
+                </div>
+
+              </div>
+
+             </div>
+          </div>
+      
+<div ng-include="'/build/Asterisk/AutoProcess/Views/filter.html'"></div>
+
+        <!-- <div  class="card card-info card-outline" >
+            <ng-include src="'/Views/findPlaceholder.html'"></ng-include> -->
+ 
+<div class="card card-info card-outline">
+    <ng-include src="'/Views/findPlaceholder.html'"></ng-include>
+
+    <div class="card-body p-0">
+        <div class="row">
+            <div class="col-12" >
+                
+                <div ng-show="data.length != []" style="height:72vh;overflow-y: auto;" can-load="canLoad" infinite-scroll="manyAction.loadMore(data.length)"  threshold="10" >
+                    <ng-include src="'/Views/LoadingTable.html'"></ng-include>
+                    <table class="table table-head-fixed table-hover borderless" ng-hide="global.Loading">
+                        <thead>
+                            <tr ng-click="manyAction.Find()"> <!-- ng-click="FindClient(Filter.Filter);" -->
+                                <th ng-include="'/Views/ng-table/checkbox.html'" ng-click="$event.stopPropagation()"  width="1%"/>
+                                <th  width="1%" ng-init="o1='process'" ng-click="manyAction.order(o1);">
+                                    <nobr>{{'process' | translate}} <span ng-show="order==o1" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                </th>
+                                <th ng-init="o2='ffID'" ng-click="manyAction.order(o2);">
+                                    <nobr>{{'file' | translate}} <span ng-show="order==o2" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                </th>
+                                <th ng-init="o3='id_scenario'" ng-click="manyAction.order(o3);">
+                                    <nobr>{{'scenario' | translate}} <span ng-show="order==o3" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                </th>
+                                <th ng-init="o4='emID'" ng-click="manyAction.order(o4);">
+                                    <nobr>{{'user' | translate}} <span ng-show="order==o4" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                </th>
+                                <th ng-init="o5='factor'" ng-click="manyAction.order(o5);">
+                                    <nobr>{{'factor' | translate}} <span ng-show="order==o5" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                </th>
+                                <th ng-init="o5='called'" ng-click="manyAction.order(o5);">
+                                    <nobr>{{'called' | translate}} <span ng-show="order==o5" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                </th>
+                            <!--  <th ng-init="o5='targetCalls'" ng-click="manyAction.order(o5);">
+                                    <nobr>{{'targetCalls' | translate}} <span ng-show="order==o5" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                </th> -->
+                                <th ng-init="o6='errorDescription'" ng-click="manyAction.order(o6);">
+                                    <nobr>{{'errorDescription' | translate}} <span ng-show="order==o6" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                </th>
+                            <!--  <th ng-init="o7='Created'" ng-click="manyAction.order(o7);">
+                                    <nobr>{{'Created' | translate}} <span ng-show="order==o7" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                </th> -->
+                                <th ng-init="o8='Changed'" ng-click="manyAction.order(o8);">
+                                    <nobr>{{'Changed' | translate}} <span ng-show="order==o8" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                </th>
+                                <th ng-init="o9='planDateBegin'" ng-click="manyAction.order(o9);">
+                                    <nobr>{{'planDateBegin' | translate}} <span ng-show="order==o9" ng-include="'/Views/orderSpan.html'"/></nobr>
+                                </th>
+                                <!-- <th  width="1%">
+                                    <nobr>{{'action' | translate}}</nobr>
+                                </th> -->
+                            </tr>
+                        </thead>    
+                        <tbody>
+                            <tr ng-repeat="e in data  | limitTo:limit track by $index" ng-click="SelectAutoProccess(e);" ng-class="{'table-primary': e.id_autodial === Progress.FFF.id_autodial}">
+                                <td ng-include="'/Views/checkboxOne.html'"/>
+                                <td > <a ng-href="/#!/AutoProcessEdit/{{e.id_autodial}}"><button class="btn {{(e.process | ProcessStatus).color}} btn-xs" ng-bind="(e.process | ProcessStatus).disposition"></button> </a> </td>
+                                <td>
+                                    <nobr ng-show="e.ffID">
+                                    <i class="fa fa-file"></i>
+                                    <a ng-href="/#!/fsEdit/{{e.ffID}}" ng-bind="e.ffID | ffFilters"></a>
+                                    </nobr>
+                                </td>
+                                <td > <nobr><a ng-href="/#!/ScenarioEdit/{{e.id_scenario}}" ng-bind="e.id_scenario | scFilters"></a> </nobr> </td>
+                                <td>
+                                    <nobr ng-show="e.emID">
+                                    <i class="fa fa-user"></i>
+                                    <a ui-sref="emEmployeeEdit( {'emID': e.emID })" ng-bind="e.emID | emFilters"></a>
+                                    </nobr>
+                                </td>
+                                <td ng-bind="e.factor"> </td>
+                                <td>
+                                    <small class="badge badge-success" ng-show="e.called" uib-tooltip="{{'qtyCall' | translate}}"  ng-bind="e.called"></small>
+                                </td>
+                                <!-- <td ng-bind="e.targetCalls"> </td> -->
+                                <td ng-bind="e.errorDescription"> </td>
+                                <!-- <td ng-bind="e.Created | date:'MMM d, HH:mm'"> </td> -->
+                                <td> <nobr><span ng-bind="e.Changed | date:'MMM d, HH:mm'" ng-hide="e.Created == e.Changed"></span></nobr> </td>
+                                <td width="1%"> <span ng-bind="e.planDateBegin | date:'MMM d, HH:mm'"></span> </td>
+                                <!-- <td>
+                                    <div class="input-group-append">
+                                    <button class="btn btn-link btn-sm" ng-show="e.process == 101603"  ng-click="ProgressStart(e);" >  <i class="fa fa-play" style="color:green;"></i> </button>
+                                    <button class="btn btn-link btn-sm" ng-show="e.process == 101602"  ng-click="ProgressStop(e);">     <i class="fa fa-stop" style="color:red;"></i></button>
+                                    </div>
+                                </td> -->
+                            </tr>
+                        </tbody>    
+                </table>
+                </div>
+                <div ng-include="'/Views/pagination.html'"></div>
+        </div>
+    </div>
+
+    </div>
+</div>
+
+ 
+</div>

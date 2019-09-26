@@ -1,0 +1,61 @@
+<section class="content">
+      <div class="row">
+        <div class="col-lg-3">
+          <!--TAGS-->
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"><i class="fas fa-edit"></i> {{'Area' | translate}}</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-head-fixed table-hover borderless">
+                    <tbody>
+                        <tr>
+                            <td>{{'Area' | translate}}</td>
+                            <td><input class="form-control" ng-model="new.raName"/></td>
+                        </tr>
+                        <tr>
+                            <td>{{'country' | translate}}</td>
+                            <td>
+                                <ui-select ng-model="new.rcID" theme="bootstrap4-1" class="normal ng-pristine ng-valid ng-touched" size="100%">
+                                    <ui-select-match  placeholder="{{'select' | translate}}">{{$select.selected.cName}}</ui-select-match>
+                                    <ui-select-choices repeat="c.cID as c in Countries.data | filter: $select.search">
+                                        {{c.cName}}
+                                </ui-select-choices>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'GMT' | translate}}</td>
+                            <td>
+                                <select class="form-control ng-pristine ng-valid ng-touched" ng-model="new.GMT" ng-options="a as a for a in gmt">
+                                    <option value="">{{'typeGMT' | translate}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'territory' | translate}}</td>
+                            <td><input class="form-control" ng-model="new.rkSocr"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+
+        <!--DATA RIGHT-->
+        <div class="col-lg-9">
+          <div class="card card-info card-outline">
+            <div class="card-header with-border">
+              <h3 class="card-title"> {{'info' | translate}}</h3>
+                    <div class="card-tools float-right">
+                        <button class="btn btn-success btn-sm" ng-disabled=" !new.aName && !new.cID" ng-click="manyAction.Save(new,'Location')">{{'save' | translate}}</button>
+                        <button class="btn btn-warning btn-sm" ui-sref="Location">{{'cancel' | translate}}</button>
+                    </div>
+             </div>
+          </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,31 @@
+<div class="modal-header">
+
+
+    <div class="col-lg-4">      <h4 class="modal-title">{{'callFromNumber' | translate}}:</h4> </div>
+    <div class="col-lg-4">      <h4 class="modal-title"><b>{{contacts.phone}}</b></h4> </div>
+    <div class="col-lg-4" ng-hide="contacts.clients.length > 0"><create-client data="{{contacts.phone}}" > </create-client></div>
+    <br/>
+</div>
+<div class="modal-body"  ng-show="contacts.clients.length > 0">
+    <table class="table table-head-fixed table-hover borderless">
+        <tbody>
+        <tr>
+            <td><p>{{'client' | translate}}<span ng-show="contacts.clients.length > 1">{{'s' | translate}}</span>:</p></td>
+            <td>
+                    <div data-ng-repeat="a in contacts.clients" >
+                         <b> <i class="fa fa-user fa-lg"></i>
+                             <a> <nbr-client ng-click="cancel()" style="color:darkblue;" ng-show="a.clID" data="{{a.clID}}" type="Auto">{{a.clName}}</nbr-client></a>
+                         </b>
+                        <hr/>
+
+                    </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">{{'cancel' | translate}}</button>
+</div>

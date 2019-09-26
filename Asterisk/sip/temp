@@ -1,0 +1,71 @@
+;-------------Bese temp--------------;
+[codecs](!)
+        disallow         = all
+        allow           = alaw,ulaw,gsm,g729
+
+[pickup](!)
+        callgroup       = 1
+        pickupgroup     = 1
+
+[base](!,codecs,pickup)
+        ;acl             = all
+        allowsubscribe  = no
+        host            = dynamic
+        type            = friend
+        language        = ru
+        transport       = udp
+        directmedia     = no
+        faxdetect       = no
+        qualify         = yes
+        qualifyfreq     = 60
+        nat             = force_rport,comedia
+        dtmfmode        = rfc2833
+        trustrpid       = yes
+        sendrpid        = pai
+
+[out](!)
+        context         = office
+        secret          = kjKKHJdskjAFJLldslacvkAVolesgnj
+
+[inc](!)
+        context         = incoming
+        secret          = kjKKHJdssssdskjAFJfLldsladsfsdfcvkAVoledsgsdfsgnjasdasd
+        allowsubscribe  = no
+        pedantic        = no
+        progressinband  = yes
+        callevents      = yes
+        callcounter     = yes
+        relaxdtmf       = yes
+        allowoverlap    = dtmf
+        minexpiry       = 3000
+        maxexpirey      = 3600
+        defaultexpirey  = 3300
+        insecure        = invite,port
+
+;-------------User temp--------------;
+;--Outgoing--;
+[users](!,base,out)
+        allowsubscribe  = yes
+        notifyringing   = yes
+        notifyhold      = yes
+        limitonpeer     = yes
+        subscribecontext= hints
+[webrtc](!,base,out)
+        encryption      = yes
+        avpf            = yes
+        icesupport      = yes
+        transport       = udp,ws,wss
+        force_avp       = yes
+        dtlsenable      = yes
+        dtlsverify      = no
+        dtlscertfile    = /etc/asterisk/keys/asterisk.pem
+        dtlsprivatekey  = /etc/asterisk/keys/asterisk.pem
+        dtlssetup       = actpass
+        videosupport    = yes
+        allow           = ulaw,alaw,h264,h263p,mpeg4
+
+;--Incoming--;
+[peers](!,base,inc)
+
+[goip](!,base,inc)
+        dtmfmode        = auto

@@ -1,0 +1,178 @@
+<div class="modal-content2">
+        <div class="modal-header">
+                <b>{{'filter' | translate}}</b>
+        </div>
+        
+ 
+        <div class="modal-body p-0">
+            <!-- {{upd|json}} -->
+                    <table class="table table-head-fixed table-hover borderless login-card-body">
+                        <tr ng-if="upd.DateFrom">
+                                <td width="40%">{{'dateFrom'|translate}}</td>
+                                <td width="60%">
+                                        <span  class="text-muted"  ng-bind="upd.DateFrom | date:'MMM d, HH:mm'"> </span>
+                                </td>
+                        </tr>
+                        <tr ng-if="upd.DateTo">
+                                <td width="40%">{{'dateTo'|translate}}</td>
+                                <td width="60%">
+                                        <span  class="text-muted"  ng-bind="upd.DateTo | date:'MMM d, HH:mm'"> </span>
+                                </td>
+                        </tr>
+                        <!-- <tr>
+                                <td>{{'ContactStatuses'|translate}}</td>
+                                <td>
+                                        <ui-select  multiple tagging tagging-label="" theme="bootstrap4-1" on-select="ClearPhone();" ng-model="upd.ContactStatuses" sortable="true"  class="normal bg-custom-white" size="100%" style="min-height: 34px !important; padding-left: 6px !important; border-radius: 3px;">
+                                                <ui-select-match  placeholder="380971112233">{{$item}}</ui-select-match>
+                                                <ui-select-choices repeat="a in [] | filter:$viewValue ">111{{a}}</ui-select-choices>
+                                        </ui-select>
+                                </td>
+                            </td>
+                        </tr> -->
+                        <tr ng-if="upd.CallTypes">
+                                <td>{{'type'|translate}}</td>
+                                <td>
+                                        <ui-select  multiple tagging tagging-label="" theme="bootstrap4-1" ng-model="upd.CallTypes" ng-disabled="true">
+                                                <ui-select-match>{{$item | enums | translate}}</ui-select-match>
+                                                <ui-select-choices repeat="a in [] | filter:$viewValue ">{{a | translate}}</ui-select-choices>
+                                        </ui-select>
+                                </td>
+                            </td>
+                        </tr>
+                        <tr ng-if="upd.channels">
+                                <td>{{'trunk'|translate}}</td>
+                                <td>
+                                        <ui-select  multiple tagging tagging-label="" theme="bootstrap4-1" ng-model="upd.channels" ng-disabled="true">
+                                                <ui-select-match placeholder="{{'select' | translate}}">{{$item.trName}}</ui-select-match>
+                                                <ui-select-choices repeat="a.trID as a in Trunk.data | filter:$viewValue ">{{a}}</ui-select-choices>
+                                        </ui-select> 
+                                </td>
+                            </td>
+                        </tr>
+
+                        <tr ng-if="upd.dcStatuss">
+                                <td>{{'status'|translate}}</td>
+                                <td>
+                                        <ui-select  multiple tagging tagging-label="" theme="bootstrap4-1" ng-model="upd.dcStatuss" ng-disabled="true">
+                                                <ui-select-match placeholder="{{'select' | translate}}">{{$item.disposition}}</ui-select-match>
+                                                <ui-select-choices repeat="a.tvID as a in f | filter:$viewValue ">{{a.disposition}}</ui-select-choices>
+                                        </ui-select> 
+                                </td>
+                            </td>
+                        </tr>
+                        <tr ng-if="upd.coIDs">
+                                <td>{{'company'|translate}}</td>
+                                <td>
+                                        <ui-select  multiple tagging tagging-label="" theme="bootstrap4-1" ng-model="upd.coIDs" ng-disabled="true">
+                                                <ui-select-match placeholder="{{'select' | translate}}">{{$item.coName}}</ui-select-match>
+                                                <ui-select-choices repeat="a.coID as a in Company.data | filter:$viewValue ">{{a.coName}}</ui-select-choices>
+                                        </ui-select> 
+                                </td>
+                            </td>
+                        </tr>
+                         <tr ng-if="upd.ffIDs">
+                                <td>{{'file'|translate}}</td>
+                                <td>
+                                        <ui-select  multiple tagging tagging-label="" theme="bootstrap4-1" ng-model="upd.ffIDs" ng-disabled="true">
+                                                <ui-select-match placeholder="{{'select' | translate}}">{{$item.ffName}}</ui-select-match>
+                                                <ui-select-choices repeat="a.ffID as a in File.data | filter:$viewValue ">{{a.ffName}}</ui-select-choices>
+                                        </ui-select> 
+                                </td>
+                            </td>
+                        </tr>
+                        <tr ng-if="upd.emIDs">
+                                <td>{{'responsible'|translate}}</td>
+                                <td>
+                                        <ui-select  multiple tagging tagging-label="" theme="bootstrap4-1" ng-model="upd.emIDs" ng-disabled="true">
+                                                <ui-select-match placeholder="{{'select' | translate}}">{{$item.emName}}</ui-select-match>
+                                                <ui-select-choices repeat="a.emID as a in employees.data | filter:$viewValue ">{{a.emName}}</ui-select-choices>
+                                        </ui-select> 
+                                </td>
+                            </td>
+                        </tr>
+                        <tr ng-if="upd.clIDs">
+                                <td>{{'clients'|translate}}</td>
+                                <td>
+                                        <!-- <ui-select  multiple tagging tagging-label="" theme="bootstrap4-1" ng-model="upd.clIDs" ng-disabled="true">
+                                                <ui-select-match placeholder="{{'select' | translate}}">{{$item.clName}}</ui-select-match>
+                                                <ui-select-choices repeat="a.clID as a in employees.data | filter:$viewValue ">{{a.clName}}</ui-select-choices>
+                                        </ui-select>  -->
+                                        <ui-select  multiple tagging tagging-label=""  theme="bootstrap4-1" ng-model="upd.clIDs" sortable="true"  class="normal " size="100%" style="min-height: 34px !important; padding-left: 6px !important; border-radius: 3px;">
+                                            <ui-select-match placeholder="{{'selectCustomer' | translate}}">{{$item.clName}}</ui-select-match>
+                                            <ui-select-choices repeat="a in ClientData | filter:$select.search"
+                                            refresh="SearchClient($select.search)" refresh-delay="0"
+                                            >{{a.clName}} </ui-select-choices>
+                                        </ui-select>
+                                </td>
+                            </td>
+                        </tr>
+                        <tr ng-if="upd.ccNames">
+                                <td>{{'phone'|translate}}</td>
+                                <td>
+                                        <ui-select  multiple tagging tagging-label="" theme="bootstrap4-1" ng-model="upd.ccNames" ng-disabled="true">
+                                                <ui-select-match placeholder="{{'select' | translate}}">{{$item}}</ui-select-match>
+                                                <ui-select-choices repeat="a in [] | filter:$viewValue ">{{a}}</ui-select-choices>
+                                        </ui-select> 
+                                </td>
+                            </td>
+                        </tr>
+
+
+
+
+                        <tr>
+                            <td>{{'callType'|translate}}</td>
+                            <td> 
+                                <div class="btn-group">
+                                    <button class="btn btn-default" ng-class="{'active' :  upd.IsOut===null}" ng-click="upd.IsOut=null">{{'All'| translate}}</button>
+                                    <button class="btn btn-default" ng-class="{'active' :  upd.IsOut===true}" ng-click="upd.IsOut=true"><i class="fa fa-arrow-circle-up fa-lg" style="color:grey;" ></i> {{'Outgoing'| translate}}</button>
+                                    <button class="btn btn-default" ng-class="{'active' :  upd.IsOut===false}" ng-click="upd.IsOut=false"><i class="fa fa-arrow-circle-down fa-lg" style="color:black;" ></i> {{'Incoming'| translate}}</button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        
+
+
+                        <tr ng-if="upd.billsec">
+                            <td>{{'talkTime'|translate}}</td>
+                            <td><span ng-bind="upd.billsec"></td>
+                        </tr>
+                        <tr ng-if="upd.comparison && upd.billsec">
+                            <td>{{'comparison'|translate}}</td>
+                            <td><span ng-bind="upd.comparison"></td>
+                        </tr>
+                        <tr ng-if="upd.dcIDs">
+                            <td>{{'dcIDs'|translate}}</td>
+                            <td><span ng-bind="upd.dcIDs"></td>
+                        </tr>
+                        <tr ng-if="upd.destdata">
+                            <td>{{'destdata'|translate}}</td>
+                            <td><span ng-bind="upd.destdata"></td>
+                        </tr>
+                        <tr ng-if="upd.destdata2">
+                            <td>{{'destdata2'|translate}}</td>
+                            <td><span ng-bind="upd.destdata2"></td>
+                        </tr>
+                        <tr ng-if="upd.destination">
+                            <td>{{'destination'|translate}}</td>
+                            <td><span ng-bind="upd.destination"></td>
+                        </tr>
+                        <tr ng-if="upd.convertFormat">
+                                        <td>{{'format'|translate}}</td>
+                                        <td><span ng-bind="upd.convertFormat | enums"></td>
+                        </tr>
+
+                        
+                     </table>
+        </div>
+        
+        <div class="modal-footer">
+                <div class="text-right">
+                    <div class="float-right">
+                        <button ng-disabled="!upd.psName || name == upd.psName" ng-click="manyAction.Save(new,'');$close(new)" class="btn btn-success btn-sm">{{'save' | translate}}</button>
+                        <button ng-click="$close()" class="btn btn-warning btn-sm">{{'cancel' | translate}}</button>
+                    </div>
+                </div>
+        </div>
+        </div>

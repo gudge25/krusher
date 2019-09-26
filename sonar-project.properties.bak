@@ -1,0 +1,24 @@
+#must be unique in a given SonarQube instance
+sonar.projectKey=Krusher
+# this is the name and version displayed in the SonarQube UI. Was mandatory prior to SonarQube 6.1.
+sonar.projectName=Krusher
+sonar.projectVersion=1.0
+
+# Path is relative to the sonar-project.properties file. Replace "\" by "/" on Windows.
+# This property is optional if sonar.modules is set.
+#sonar.sources=.
+sonar.sources=hapi, web
+
+# excluded folders
+sonar.exclusions=/web/js/**/*, /web/build/**/*, /web/LTE/**/*, /web/fonts/**/*, /web/images/**/*
+
+
+# Encoding of the source code. Default is default system encoding
+sonar.sourceEncoding=UTF-8
+
+# Set gitlab analysis to exit instead of notifying via commit message
+sonar.gitlab.failure_notification_mode=exit-code
+
+#Login pass
+sonar.login=admin
+sonar.password=Qwerty7321
